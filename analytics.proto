@@ -1,0 +1,103 @@
+package Analytics;
+
+import "modeldata.proto";
+
+enum Compression
+{
+	Compression_None	= 0;
+	Compression_FastLZ	= 1;
+}
+
+// the root message that we compile, encode and send to the server containing all the necessary bits for the server to do cool stuff with
+message SystemClientInfo
+{
+	required string			userId								= 1; // unique user identification, mac address, steam id, whatever is usable
+	required string			mapId								= 2; // the map name
+	required string			enumClassId							= 3; // the named class enumeration to use to look up numeric weapon ids for this client
+	required string			enumWeaponId						= 4; // the named weapon enumeration to use to look up numeric weapon ids for this client
+}
+
+message SystemNavNotFound
+{
+	required string					mapName						= 1;
+}
+
+message SystemNavAutoDownloaded
+{
+	required string					mapName						= 1;
+}
+
+message SystemAssert
+{
+	required string					condition					= 1;
+	optional string					file						= 2;
+	optional int32					line						= 3;
+}
+
+message SystemCrash
+{
+	required string					info						= 1;
+}
+
+message SystemModelData
+{
+	optional Compression			compressionType				= 1 [default=Compression_None];
+	required string					modelName					= 2;
+	required bytes					modelBytes					= 3;
+}
+
+message GameEntityInfo
+{
+	required int32					entityId					= 1;
+	required int32					classId						= 2;
+	required modeldata.Vec3			position					= 3;
+	required modeldata.Euler		orient						= 4;
+}
+
+message GameEntityList
+{
+	repeated GameEntityInfo			entities					= 1;
+}
+
+message GameWeaponFired
+{
+	required int32					weaponId					= 1;
+	required modeldata.Vec3			position					= 2;
+}
+
+message GameDeath
+{
+	required int32					killedByClass				= 1; // this class Id maps to an enumeration defined by the client who is communicating this message
+	required int32					killedByWeapon				= 2; // this weapon Id maps to an enumeration defined by the client who is communicating this message
+	required int32					killedByHealth				= 3; // how much health did they have left when they killed me
+}
+
+message GameTookDamage
+{
+	required int32					weaponId					= 1;
+	required modeldata.Vec3			position					= 2;
+}
+
+message GameNavigationStuck
+{
+	required modeldata.Vec3			position					= 1;
+}
+
+message MessageUnion
+{
+	required int64					timestamp						= 1;
+
+	oneof msg {
+		SystemNavNotFound			systemNavNotFound				= 2;
+		SystemNavAutoDownloaded		systemNavDownloaded				= 3;
+		SystemAssert				systemAssert					= 4;
+		SystemCrash					systemCrash						= 5;
+		SystemModelData				systemModelData					= 6;
+
+		GameEntityList				gameEntityList					= 100;
+		GameWeaponFired				gameWeaponFired					= 101;
+		GameDeath					gameDeath						= 102;
+		GameTookDamage				gameTookDamage					= 103;
+		GameNavigationStuck			gameNavigationStuck				= 104;
+	}
+}
