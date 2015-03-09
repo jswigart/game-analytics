@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="dependencies">
+      <UniqueIdentifier>{f250cc76-7b7f-4705-ba1b-694d4fe956dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\json-cpp">
+      <UniqueIdentifier>{779589d5-73b4-4d55-93b4-f9a84936a4b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\md5">
+      <UniqueIdentifier>{c9adc451-e293-442f-b11d-3b068e2266ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\sha1">
+      <UniqueIdentifier>{a73cfb87-a824-424a-9776-352ecd3ab0c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\sqlite">
+      <UniqueIdentifier>{922441a0-d2a9-4985-959b-eae24a403fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{e79d87ae-9a9e-4f7c-ae76-84d2e924d20c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\enet">
+      <UniqueIdentifier>{68dacb87-d1f1-4054-9263-be4229e259fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto\autogen">
+      <UniqueIdentifier>{19c2e679-a716-45a5-90fa-d8089af57c91}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameAnalytics.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\autolink.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\config.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\features.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\forwards.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\json.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\json_batchallocator.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\reader.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\value.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\json-cpp\json\writer.h">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\md5\md5.h">
+      <Filter>dependencies\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\smallsha1\sha1.h">
+      <Filter>dependencies\sha1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite\sqlite3.h">
+      <Filter>dependencies\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sqlite\sqlite3ext.h">
+      <Filter>dependencies\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="analytics.pb.h">
+      <Filter>proto\autogen</Filter>
+    </ClInclude>
+    <ClInclude Include="modeldata.pb.h">
+      <Filter>proto\autogen</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameAnalytics.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameAnalytics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\json-cpp\json\json_reader.cpp">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\json-cpp\json\json_value.cpp">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\json-cpp\json\json_writer.cpp">
+      <Filter>dependencies\json-cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\md5\md5.cpp">
+      <Filter>dependencies\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\smallsha1\sha1.cpp">
+      <Filter>dependencies\sha1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sqlite\shell.c">
+      <Filter>dependencies\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sqlite\sqlite3.c">
+      <Filter>dependencies\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\callbacks.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\compress.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\host.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\list.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\packet.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\peer.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\protocol.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\unix.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\enet-1.3.12\win32.c">
+      <Filter>dependencies\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="analytics.pb.cc">
+      <Filter>proto\autogen</Filter>
+    </ClCompile>
+    <ClCompile Include="modeldata.pb.cc">
+      <Filter>proto\autogen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dependencies\json-cpp\json\json_internalarray.inl">
+      <Filter>dependencies\json-cpp</Filter>
+    </None>
+    <None Include="dependencies\json-cpp\json\json_internalmap.inl">
+      <Filter>dependencies\json-cpp</Filter>
+    </None>
+    <None Include="dependencies\json-cpp\json\json_valueiterator.inl">
+      <Filter>dependencies\json-cpp</Filter>
+    </None>
+    <None Include="dependencies\json-cpp\json\sconscript">
+      <Filter>dependencies\json-cpp</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="analytics.proto">
+      <Filter>proto</Filter>
+    </CustomBuild>
+    <CustomBuild Include="modeldata.proto">
+      <Filter>proto</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
