@@ -70,17 +70,17 @@
     <ClInclude Include="dependencies\smallsha1\sha1.h">
       <Filter>dependencies\sha1</Filter>
     </ClInclude>
-    <ClInclude Include="..\sqlite\sqlite3.h">
-      <Filter>dependencies\sqlite</Filter>
-    </ClInclude>
-    <ClInclude Include="..\sqlite\sqlite3ext.h">
-      <Filter>dependencies\sqlite</Filter>
-    </ClInclude>
     <ClInclude Include="analytics.pb.h">
       <Filter>proto\autogen</Filter>
     </ClInclude>
     <ClInclude Include="modeldata.pb.h">
       <Filter>proto\autogen</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sqlite\sqlite3.h">
+      <Filter>dependencies\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sqlite\sqlite3ext.h">
+      <Filter>dependencies\sqlite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,12 +106,6 @@
     </ClCompile>
     <ClCompile Include="dependencies\smallsha1\sha1.cpp">
       <Filter>dependencies\sha1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sqlite\shell.c">
-      <Filter>dependencies\sqlite</Filter>
-    </ClCompile>
-    <ClCompile Include="..\sqlite\sqlite3.c">
-      <Filter>dependencies\sqlite</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\enet-1.3.12\callbacks.c">
       <Filter>dependencies\enet</Filter>
@@ -145,6 +139,12 @@
     </ClCompile>
     <ClCompile Include="modeldata.pb.cc">
       <Filter>proto\autogen</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\sqlite\shell.c">
+      <Filter>dependencies\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\sqlite\sqlite3.c">
+      <Filter>dependencies\sqlite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

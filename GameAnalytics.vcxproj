@@ -93,8 +93,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\sqlite\shell.c" />
-    <ClCompile Include="..\sqlite\sqlite3.c" />
     <ClCompile Include="analytics.pb.cc" />
     <ClCompile Include="dependencies\enet-1.3.12\callbacks.c" />
     <ClCompile Include="dependencies\enet-1.3.12\compress.c" />
@@ -110,12 +108,12 @@
     <ClCompile Include="dependencies\json-cpp\json\json_writer.cpp" />
     <ClCompile Include="dependencies\md5\md5.cpp" />
     <ClCompile Include="dependencies\smallsha1\sha1.cpp" />
+    <ClCompile Include="dependencies\sqlite\shell.c" />
+    <ClCompile Include="dependencies\sqlite\sqlite3.c" />
     <ClCompile Include="GameAnalytics.cpp" />
     <ClCompile Include="modeldata.pb.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\sqlite\sqlite3.h" />
-    <ClInclude Include="..\sqlite\sqlite3ext.h" />
     <ClInclude Include="analytics.pb.h" />
     <ClInclude Include="dependencies\json-cpp\json\autolink.h" />
     <ClInclude Include="dependencies\json-cpp\json\config.h" />
@@ -128,6 +126,8 @@
     <ClInclude Include="dependencies\json-cpp\json\writer.h" />
     <ClInclude Include="dependencies\md5\md5.h" />
     <ClInclude Include="dependencies\smallsha1\sha1.h" />
+    <ClInclude Include="dependencies\sqlite\sqlite3.h" />
+    <ClInclude Include="dependencies\sqlite\sqlite3ext.h" />
     <ClInclude Include="GameAnalytics.h" />
     <ClInclude Include="modeldata.pb.h" />
     <ClInclude Include="resource.h" />
