@@ -1,0 +1,1 @@
+Application to collect and visualize analytics event information from games.
