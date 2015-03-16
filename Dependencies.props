@@ -9,8 +9,8 @@
     <MD5>$(DEPENDENCIES)\md5</MD5>
     <SQLITE>$(DEPENDENCIES)\sqlite</SQLITE>
     <ENET>$(DEPENDENCIES)\enet-1.3.12</ENET>
-    <PROTOBUF>D:\Sourcecode\omnibot\trunk\Omnibot\dependencies\protobuf\</PROTOBUF>
-    <BOOST>D:\Sourcecode\omnibot\trunk\libs\boost\boost_1_57_0</BOOST>
+    <PROTOBUF>D:\git\protobuf\</PROTOBUF>
+    <BOOST>D:\Sourcecode\boost_1_57_0</BOOST>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)build/$(Configuration)/</OutDir>
