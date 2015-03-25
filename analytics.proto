@@ -49,9 +49,16 @@ message SystemModelData
 message GameEntityInfo
 {
 	required int32					entityId					= 1;
-	required int32					classId						= 2;
-	required modeldata.Vec3			position					= 3;
-	required modeldata.Euler		orient						= 4;
+	required int32					groupId						= 2;
+	required int32					classId						= 3;
+	required modeldata.Vec3			position					= 4;
+	required modeldata.Euler		orient						= 5;
+	optional int32					quantity					= 6;
+	optional int32					quantityMax					= 7;	
+	optional int32					health						= 8;
+	optional int32					healthMax					= 9;
+	optional int32					armor						= 10;
+	optional int32					armoryMax					= 11;
 }
 
 message GameEntityList

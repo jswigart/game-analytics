@@ -729,50 +729,120 @@ class GameEntityInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 entityid() const;
   inline void set_entityid(::google::protobuf::int32 value);
 
-  // required int32 classId = 2;
+  // required int32 groupId = 2;
+  inline bool has_groupid() const;
+  inline void clear_groupid();
+  static const int kGroupIdFieldNumber = 2;
+  inline ::google::protobuf::int32 groupid() const;
+  inline void set_groupid(::google::protobuf::int32 value);
+
+  // required int32 classId = 3;
   inline bool has_classid() const;
   inline void clear_classid();
-  static const int kClassIdFieldNumber = 2;
+  static const int kClassIdFieldNumber = 3;
   inline ::google::protobuf::int32 classid() const;
   inline void set_classid(::google::protobuf::int32 value);
 
-  // required .modeldata.Vec3 position = 3;
+  // required .modeldata.Vec3 position = 4;
   inline bool has_position() const;
   inline void clear_position();
-  static const int kPositionFieldNumber = 3;
+  static const int kPositionFieldNumber = 4;
   inline const ::modeldata::Vec3& position() const;
   inline ::modeldata::Vec3* mutable_position();
   inline ::modeldata::Vec3* release_position();
   inline void set_allocated_position(::modeldata::Vec3* position);
 
-  // required .modeldata.Euler orient = 4;
+  // required .modeldata.Euler orient = 5;
   inline bool has_orient() const;
   inline void clear_orient();
-  static const int kOrientFieldNumber = 4;
+  static const int kOrientFieldNumber = 5;
   inline const ::modeldata::Euler& orient() const;
   inline ::modeldata::Euler* mutable_orient();
   inline ::modeldata::Euler* release_orient();
   inline void set_allocated_orient(::modeldata::Euler* orient);
 
+  // optional int32 quantity = 6;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 6;
+  inline ::google::protobuf::int32 quantity() const;
+  inline void set_quantity(::google::protobuf::int32 value);
+
+  // optional int32 quantityMax = 7;
+  inline bool has_quantitymax() const;
+  inline void clear_quantitymax();
+  static const int kQuantityMaxFieldNumber = 7;
+  inline ::google::protobuf::int32 quantitymax() const;
+  inline void set_quantitymax(::google::protobuf::int32 value);
+
+  // optional int32 health = 8;
+  inline bool has_health() const;
+  inline void clear_health();
+  static const int kHealthFieldNumber = 8;
+  inline ::google::protobuf::int32 health() const;
+  inline void set_health(::google::protobuf::int32 value);
+
+  // optional int32 healthMax = 9;
+  inline bool has_healthmax() const;
+  inline void clear_healthmax();
+  static const int kHealthMaxFieldNumber = 9;
+  inline ::google::protobuf::int32 healthmax() const;
+  inline void set_healthmax(::google::protobuf::int32 value);
+
+  // optional int32 armor = 10;
+  inline bool has_armor() const;
+  inline void clear_armor();
+  static const int kArmorFieldNumber = 10;
+  inline ::google::protobuf::int32 armor() const;
+  inline void set_armor(::google::protobuf::int32 value);
+
+  // optional int32 armoryMax = 11;
+  inline bool has_armorymax() const;
+  inline void clear_armorymax();
+  static const int kArmoryMaxFieldNumber = 11;
+  inline ::google::protobuf::int32 armorymax() const;
+  inline void set_armorymax(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:Analytics.GameEntityInfo)
  private:
   inline void set_has_entityid();
   inline void clear_has_entityid();
+  inline void set_has_groupid();
+  inline void clear_has_groupid();
   inline void set_has_classid();
   inline void clear_has_classid();
   inline void set_has_position();
   inline void clear_has_position();
   inline void set_has_orient();
   inline void clear_has_orient();
+  inline void set_has_quantity();
+  inline void clear_has_quantity();
+  inline void set_has_quantitymax();
+  inline void clear_has_quantitymax();
+  inline void set_has_health();
+  inline void clear_has_health();
+  inline void set_has_healthmax();
+  inline void clear_has_healthmax();
+  inline void set_has_armor();
+  inline void clear_has_armor();
+  inline void set_has_armorymax();
+  inline void clear_has_armorymax();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::int32 entityid_;
-  ::google::protobuf::int32 classid_;
+  ::google::protobuf::int32 groupid_;
   ::modeldata::Vec3* position_;
+  ::google::protobuf::int32 classid_;
+  ::google::protobuf::int32 quantity_;
   ::modeldata::Euler* orient_;
+  ::google::protobuf::int32 quantitymax_;
+  ::google::protobuf::int32 health_;
+  ::google::protobuf::int32 healthmax_;
+  ::google::protobuf::int32 armor_;
+  ::google::protobuf::int32 armorymax_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
@@ -2376,15 +2446,39 @@ inline void GameEntityInfo::set_entityid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.entityId)
 }
 
-// required int32 classId = 2;
-inline bool GameEntityInfo::has_classid() const {
+// required int32 groupId = 2;
+inline bool GameEntityInfo::has_groupid() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GameEntityInfo::set_has_classid() {
+inline void GameEntityInfo::set_has_groupid() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GameEntityInfo::clear_has_classid() {
+inline void GameEntityInfo::clear_has_groupid() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void GameEntityInfo::clear_groupid() {
+  groupid_ = 0;
+  clear_has_groupid();
+}
+inline ::google::protobuf::int32 GameEntityInfo::groupid() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.groupId)
+  return groupid_;
+}
+inline void GameEntityInfo::set_groupid(::google::protobuf::int32 value) {
+  set_has_groupid();
+  groupid_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.groupId)
+}
+
+// required int32 classId = 3;
+inline bool GameEntityInfo::has_classid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GameEntityInfo::set_has_classid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GameEntityInfo::clear_has_classid() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void GameEntityInfo::clear_classid() {
   classid_ = 0;
@@ -2400,15 +2494,15 @@ inline void GameEntityInfo::set_classid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.classId)
 }
 
-// required .modeldata.Vec3 position = 3;
+// required .modeldata.Vec3 position = 4;
 inline bool GameEntityInfo::has_position() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void GameEntityInfo::set_has_position() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void GameEntityInfo::clear_has_position() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void GameEntityInfo::clear_position() {
   if (position_ != NULL) position_->::modeldata::Vec3::Clear();
@@ -2441,15 +2535,15 @@ inline void GameEntityInfo::set_allocated_position(::modeldata::Vec3* position) 
   // @@protoc_insertion_point(field_set_allocated:Analytics.GameEntityInfo.position)
 }
 
-// required .modeldata.Euler orient = 4;
+// required .modeldata.Euler orient = 5;
 inline bool GameEntityInfo::has_orient() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void GameEntityInfo::set_has_orient() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void GameEntityInfo::clear_has_orient() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void GameEntityInfo::clear_orient() {
   if (orient_ != NULL) orient_->::modeldata::Euler::Clear();
@@ -2480,6 +2574,150 @@ inline void GameEntityInfo::set_allocated_orient(::modeldata::Euler* orient) {
     clear_has_orient();
   }
   // @@protoc_insertion_point(field_set_allocated:Analytics.GameEntityInfo.orient)
+}
+
+// optional int32 quantity = 6;
+inline bool GameEntityInfo::has_quantity() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void GameEntityInfo::set_has_quantity() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void GameEntityInfo::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void GameEntityInfo::clear_quantity() {
+  quantity_ = 0;
+  clear_has_quantity();
+}
+inline ::google::protobuf::int32 GameEntityInfo::quantity() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.quantity)
+  return quantity_;
+}
+inline void GameEntityInfo::set_quantity(::google::protobuf::int32 value) {
+  set_has_quantity();
+  quantity_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.quantity)
+}
+
+// optional int32 quantityMax = 7;
+inline bool GameEntityInfo::has_quantitymax() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GameEntityInfo::set_has_quantitymax() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GameEntityInfo::clear_has_quantitymax() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void GameEntityInfo::clear_quantitymax() {
+  quantitymax_ = 0;
+  clear_has_quantitymax();
+}
+inline ::google::protobuf::int32 GameEntityInfo::quantitymax() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.quantityMax)
+  return quantitymax_;
+}
+inline void GameEntityInfo::set_quantitymax(::google::protobuf::int32 value) {
+  set_has_quantitymax();
+  quantitymax_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.quantityMax)
+}
+
+// optional int32 health = 8;
+inline bool GameEntityInfo::has_health() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void GameEntityInfo::set_has_health() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void GameEntityInfo::clear_has_health() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void GameEntityInfo::clear_health() {
+  health_ = 0;
+  clear_has_health();
+}
+inline ::google::protobuf::int32 GameEntityInfo::health() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.health)
+  return health_;
+}
+inline void GameEntityInfo::set_health(::google::protobuf::int32 value) {
+  set_has_health();
+  health_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.health)
+}
+
+// optional int32 healthMax = 9;
+inline bool GameEntityInfo::has_healthmax() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void GameEntityInfo::set_has_healthmax() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void GameEntityInfo::clear_has_healthmax() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void GameEntityInfo::clear_healthmax() {
+  healthmax_ = 0;
+  clear_has_healthmax();
+}
+inline ::google::protobuf::int32 GameEntityInfo::healthmax() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.healthMax)
+  return healthmax_;
+}
+inline void GameEntityInfo::set_healthmax(::google::protobuf::int32 value) {
+  set_has_healthmax();
+  healthmax_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.healthMax)
+}
+
+// optional int32 armor = 10;
+inline bool GameEntityInfo::has_armor() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void GameEntityInfo::set_has_armor() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void GameEntityInfo::clear_has_armor() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void GameEntityInfo::clear_armor() {
+  armor_ = 0;
+  clear_has_armor();
+}
+inline ::google::protobuf::int32 GameEntityInfo::armor() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.armor)
+  return armor_;
+}
+inline void GameEntityInfo::set_armor(::google::protobuf::int32 value) {
+  set_has_armor();
+  armor_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.armor)
+}
+
+// optional int32 armoryMax = 11;
+inline bool GameEntityInfo::has_armorymax() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void GameEntityInfo::set_has_armorymax() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void GameEntityInfo::clear_has_armorymax() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void GameEntityInfo::clear_armorymax() {
+  armorymax_ = 0;
+  clear_has_armorymax();
+}
+inline ::google::protobuf::int32 GameEntityInfo::armorymax() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.armoryMax)
+  return armorymax_;
+}
+inline void GameEntityInfo::set_armorymax(::google::protobuf::int32 value) {
+  set_has_armorymax();
+  armorymax_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.armoryMax)
 }
 
 // -------------------------------------------------------------------

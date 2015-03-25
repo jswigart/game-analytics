@@ -180,11 +180,18 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SystemModelData));
   GameEntityInfo_descriptor_ = file->message_type(6);
-  static const int GameEntityInfo_offsets_[4] = {
+  static const int GameEntityInfo_offsets_[11] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, entityid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, classid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, position_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, orient_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, quantity_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, quantitymax_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, health_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, healthmax_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, armor_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, armorymax_),
   };
   GameEntityInfo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -395,35 +402,39 @@ void protobuf_AddDesc_analytics_2eproto() {
     " \001(\005\"\033\n\013SystemCrash\022\014\n\004info\030\001 \002(\t\"{\n\017Sys"
     "temModelData\022A\n\017compressionType\030\001 \001(\0162\026."
     "Analytics.Compression:\020Compression_None\022"
-    "\021\n\tmodelName\030\002 \002(\t\022\022\n\nmodelBytes\030\003 \002(\014\"x"
-    "\n\016GameEntityInfo\022\020\n\010entityId\030\001 \002(\005\022\017\n\007cl"
-    "assId\030\002 \002(\005\022!\n\010position\030\003 \002(\0132\017.modeldat"
-    "a.Vec3\022 \n\006orient\030\004 \002(\0132\020.modeldata.Euler"
-    "\"=\n\016GameEntityList\022+\n\010entities\030\001 \003(\0132\031.A"
-    "nalytics.GameEntityInfo\"F\n\017GameWeaponFir"
-    "ed\022\020\n\010weaponId\030\001 \002(\005\022!\n\010position\030\002 \002(\0132\017"
-    ".modeldata.Vec3\"R\n\tGameDeath\022\025\n\rkilledBy"
-    "Class\030\001 \002(\005\022\026\n\016killedByWeapon\030\002 \002(\005\022\026\n\016k"
-    "illedByHealth\030\003 \002(\005\"E\n\016GameTookDamage\022\020\n"
-    "\010weaponId\030\001 \002(\005\022!\n\010position\030\002 \002(\0132\017.mode"
-    "ldata.Vec3\"8\n\023GameNavigationStuck\022!\n\010pos"
-    "ition\030\001 \002(\0132\017.modeldata.Vec3\"\310\004\n\014Message"
-    "Union\022\021\n\ttimestamp\030\001 \002(\003\0229\n\021systemNavNot"
-    "Found\030\002 \001(\0132\034.Analytics.SystemNavNotFoun"
-    "dH\000\022A\n\023systemNavDownloaded\030\003 \001(\0132\".Analy"
-    "tics.SystemNavAutoDownloadedH\000\022/\n\014system"
-    "Assert\030\004 \001(\0132\027.Analytics.SystemAssertH\000\022"
-    "-\n\013systemCrash\030\005 \001(\0132\026.Analytics.SystemC"
-    "rashH\000\0225\n\017systemModelData\030\006 \001(\0132\032.Analyt"
-    "ics.SystemModelDataH\000\0223\n\016gameEntityList\030"
-    "d \001(\0132\031.Analytics.GameEntityListH\000\0225\n\017ga"
-    "meWeaponFired\030e \001(\0132\032.Analytics.GameWeap"
-    "onFiredH\000\022)\n\tgameDeath\030f \001(\0132\024.Analytics"
-    ".GameDeathH\000\0223\n\016gameTookDamage\030g \001(\0132\031.A"
-    "nalytics.GameTookDamageH\000\022=\n\023gameNavigat"
-    "ionStuck\030h \001(\0132\036.Analytics.GameNavigatio"
-    "nStuckH\000B\005\n\003msg*;\n\013Compression\022\024\n\020Compre"
-    "ssion_None\020\000\022\026\n\022Compression_FastLZ\020\001", 1556);
+    "\021\n\tmodelName\030\002 \002(\t\022\022\n\nmodelBytes\030\003 \002(\014\"\365"
+    "\001\n\016GameEntityInfo\022\020\n\010entityId\030\001 \002(\005\022\017\n\007g"
+    "roupId\030\002 \002(\005\022\017\n\007classId\030\003 \002(\005\022!\n\010positio"
+    "n\030\004 \002(\0132\017.modeldata.Vec3\022 \n\006orient\030\005 \002(\013"
+    "2\020.modeldata.Euler\022\020\n\010quantity\030\006 \001(\005\022\023\n\013"
+    "quantityMax\030\007 \001(\005\022\016\n\006health\030\010 \001(\005\022\021\n\thea"
+    "lthMax\030\t \001(\005\022\r\n\005armor\030\n \001(\005\022\021\n\tarmoryMax"
+    "\030\013 \001(\005\"=\n\016GameEntityList\022+\n\010entities\030\001 \003"
+    "(\0132\031.Analytics.GameEntityInfo\"F\n\017GameWea"
+    "ponFired\022\020\n\010weaponId\030\001 \002(\005\022!\n\010position\030\002"
+    " \002(\0132\017.modeldata.Vec3\"R\n\tGameDeath\022\025\n\rki"
+    "lledByClass\030\001 \002(\005\022\026\n\016killedByWeapon\030\002 \002("
+    "\005\022\026\n\016killedByHealth\030\003 \002(\005\"E\n\016GameTookDam"
+    "age\022\020\n\010weaponId\030\001 \002(\005\022!\n\010position\030\002 \002(\0132"
+    "\017.modeldata.Vec3\"8\n\023GameNavigationStuck\022"
+    "!\n\010position\030\001 \002(\0132\017.modeldata.Vec3\"\310\004\n\014M"
+    "essageUnion\022\021\n\ttimestamp\030\001 \002(\003\0229\n\021system"
+    "NavNotFound\030\002 \001(\0132\034.Analytics.SystemNavN"
+    "otFoundH\000\022A\n\023systemNavDownloaded\030\003 \001(\0132\""
+    ".Analytics.SystemNavAutoDownloadedH\000\022/\n\014"
+    "systemAssert\030\004 \001(\0132\027.Analytics.SystemAss"
+    "ertH\000\022-\n\013systemCrash\030\005 \001(\0132\026.Analytics.S"
+    "ystemCrashH\000\0225\n\017systemModelData\030\006 \001(\0132\032."
+    "Analytics.SystemModelDataH\000\0223\n\016gameEntit"
+    "yList\030d \001(\0132\031.Analytics.GameEntityListH\000"
+    "\0225\n\017gameWeaponFired\030e \001(\0132\032.Analytics.Ga"
+    "meWeaponFiredH\000\022)\n\tgameDeath\030f \001(\0132\024.Ana"
+    "lytics.GameDeathH\000\0223\n\016gameTookDamage\030g \001"
+    "(\0132\031.Analytics.GameTookDamageH\000\022=\n\023gameN"
+    "avigationStuck\030h \001(\0132\036.Analytics.GameNav"
+    "igationStuckH\000B\005\n\003msg*;\n\013Compression\022\024\n\020"
+    "Compression_None\020\000\022\026\n\022Compression_FastLZ"
+    "\020\001", 1682);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "analytics.proto", &protobuf_RegisterTypes);
   SystemClientInfo::default_instance_ = new SystemClientInfo();
@@ -2318,9 +2329,16 @@ void SystemModelData::Swap(SystemModelData* other) {
 
 #ifndef _MSC_VER
 const int GameEntityInfo::kEntityIdFieldNumber;
+const int GameEntityInfo::kGroupIdFieldNumber;
 const int GameEntityInfo::kClassIdFieldNumber;
 const int GameEntityInfo::kPositionFieldNumber;
 const int GameEntityInfo::kOrientFieldNumber;
+const int GameEntityInfo::kQuantityFieldNumber;
+const int GameEntityInfo::kQuantityMaxFieldNumber;
+const int GameEntityInfo::kHealthFieldNumber;
+const int GameEntityInfo::kHealthMaxFieldNumber;
+const int GameEntityInfo::kArmorFieldNumber;
+const int GameEntityInfo::kArmoryMaxFieldNumber;
 #endif  // !_MSC_VER
 
 GameEntityInfo::GameEntityInfo()
@@ -2344,9 +2362,16 @@ GameEntityInfo::GameEntityInfo(const GameEntityInfo& from)
 void GameEntityInfo::SharedCtor() {
   _cached_size_ = 0;
   entityid_ = 0;
+  groupid_ = 0;
   classid_ = 0;
   position_ = NULL;
   orient_ = NULL;
+  quantity_ = 0;
+  quantitymax_ = 0;
+  health_ = 0;
+  healthmax_ = 0;
+  armor_ = 0;
+  armorymax_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2394,8 +2419,10 @@ void GameEntityInfo::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 15) {
-    ZR_(entityid_, classid_);
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(entityid_, groupid_);
+    ZR_(classid_, quantity_);
+    ZR_(quantitymax_, health_);
     if (has_position()) {
       if (position_ != NULL) position_->::modeldata::Vec3::Clear();
     }
@@ -2403,6 +2430,7 @@ void GameEntityInfo::Clear() {
       if (orient_ != NULL) orient_->::modeldata::Euler::Clear();
     }
   }
+  ZR_(healthmax_, armorymax_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -2431,13 +2459,28 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_classId;
+        if (input->ExpectTag(16)) goto parse_groupId;
         break;
       }
 
-      // required int32 classId = 2;
+      // required int32 groupId = 2;
       case 2: {
         if (tag == 16) {
+         parse_groupId:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &groupid_)));
+          set_has_groupid();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_classId;
+        break;
+      }
+
+      // required int32 classId = 3;
+      case 3: {
+        if (tag == 24) {
          parse_classId:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2446,29 +2489,119 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_position;
+        if (input->ExpectTag(34)) goto parse_position;
         break;
       }
 
-      // required .modeldata.Vec3 position = 3;
-      case 3: {
-        if (tag == 26) {
+      // required .modeldata.Vec3 position = 4;
+      case 4: {
+        if (tag == 34) {
          parse_position:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_position()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_orient;
+        if (input->ExpectTag(42)) goto parse_orient;
         break;
       }
 
-      // required .modeldata.Euler orient = 4;
-      case 4: {
-        if (tag == 34) {
+      // required .modeldata.Euler orient = 5;
+      case 5: {
+        if (tag == 42) {
          parse_orient:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_orient()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_quantity;
+        break;
+      }
+
+      // optional int32 quantity = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_quantity:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &quantity_)));
+          set_has_quantity();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(56)) goto parse_quantityMax;
+        break;
+      }
+
+      // optional int32 quantityMax = 7;
+      case 7: {
+        if (tag == 56) {
+         parse_quantityMax:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &quantitymax_)));
+          set_has_quantitymax();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(64)) goto parse_health;
+        break;
+      }
+
+      // optional int32 health = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_health:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &health_)));
+          set_has_health();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(72)) goto parse_healthMax;
+        break;
+      }
+
+      // optional int32 healthMax = 9;
+      case 9: {
+        if (tag == 72) {
+         parse_healthMax:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &healthmax_)));
+          set_has_healthmax();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(80)) goto parse_armor;
+        break;
+      }
+
+      // optional int32 armor = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_armor:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &armor_)));
+          set_has_armor();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(88)) goto parse_armoryMax;
+        break;
+      }
+
+      // optional int32 armoryMax = 11;
+      case 11: {
+        if (tag == 88) {
+         parse_armoryMax:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &armorymax_)));
+          set_has_armorymax();
         } else {
           goto handle_unusual;
         }
@@ -2506,21 +2639,56 @@ void GameEntityInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->entityid(), output);
   }
 
-  // required int32 classId = 2;
-  if (has_classid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->classid(), output);
+  // required int32 groupId = 2;
+  if (has_groupid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->groupid(), output);
   }
 
-  // required .modeldata.Vec3 position = 3;
+  // required int32 classId = 3;
+  if (has_classid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->classid(), output);
+  }
+
+  // required .modeldata.Vec3 position = 4;
   if (has_position()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->position(), output);
+      4, this->position(), output);
   }
 
-  // required .modeldata.Euler orient = 4;
+  // required .modeldata.Euler orient = 5;
   if (has_orient()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->orient(), output);
+      5, this->orient(), output);
+  }
+
+  // optional int32 quantity = 6;
+  if (has_quantity()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->quantity(), output);
+  }
+
+  // optional int32 quantityMax = 7;
+  if (has_quantitymax()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->quantitymax(), output);
+  }
+
+  // optional int32 health = 8;
+  if (has_health()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->health(), output);
+  }
+
+  // optional int32 healthMax = 9;
+  if (has_healthmax()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->healthmax(), output);
+  }
+
+  // optional int32 armor = 10;
+  if (has_armor()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->armor(), output);
+  }
+
+  // optional int32 armoryMax = 11;
+  if (has_armorymax()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->armorymax(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2538,23 +2706,58 @@ void GameEntityInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->entityid(), target);
   }
 
-  // required int32 classId = 2;
-  if (has_classid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->classid(), target);
+  // required int32 groupId = 2;
+  if (has_groupid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->groupid(), target);
   }
 
-  // required .modeldata.Vec3 position = 3;
+  // required int32 classId = 3;
+  if (has_classid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->classid(), target);
+  }
+
+  // required .modeldata.Vec3 position = 4;
   if (has_position()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->position(), target);
+        4, this->position(), target);
   }
 
-  // required .modeldata.Euler orient = 4;
+  // required .modeldata.Euler orient = 5;
   if (has_orient()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->orient(), target);
+        5, this->orient(), target);
+  }
+
+  // optional int32 quantity = 6;
+  if (has_quantity()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->quantity(), target);
+  }
+
+  // optional int32 quantityMax = 7;
+  if (has_quantitymax()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->quantitymax(), target);
+  }
+
+  // optional int32 health = 8;
+  if (has_health()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->health(), target);
+  }
+
+  // optional int32 healthMax = 9;
+  if (has_healthmax()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->healthmax(), target);
+  }
+
+  // optional int32 armor = 10;
+  if (has_armor()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->armor(), target);
+  }
+
+  // optional int32 armoryMax = 11;
+  if (has_armorymax()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->armorymax(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2576,25 +2779,76 @@ int GameEntityInfo::ByteSize() const {
           this->entityid());
     }
 
-    // required int32 classId = 2;
+    // required int32 groupId = 2;
+    if (has_groupid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->groupid());
+    }
+
+    // required int32 classId = 3;
     if (has_classid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->classid());
     }
 
-    // required .modeldata.Vec3 position = 3;
+    // required .modeldata.Vec3 position = 4;
     if (has_position()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->position());
     }
 
-    // required .modeldata.Euler orient = 4;
+    // required .modeldata.Euler orient = 5;
     if (has_orient()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->orient());
+    }
+
+    // optional int32 quantity = 6;
+    if (has_quantity()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->quantity());
+    }
+
+    // optional int32 quantityMax = 7;
+    if (has_quantitymax()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->quantitymax());
+    }
+
+    // optional int32 health = 8;
+    if (has_health()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->health());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 healthMax = 9;
+    if (has_healthmax()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->healthmax());
+    }
+
+    // optional int32 armor = 10;
+    if (has_armor()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->armor());
+    }
+
+    // optional int32 armoryMax = 11;
+    if (has_armorymax()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->armorymax());
     }
 
   }
@@ -2627,6 +2881,9 @@ void GameEntityInfo::MergeFrom(const GameEntityInfo& from) {
     if (from.has_entityid()) {
       set_entityid(from.entityid());
     }
+    if (from.has_groupid()) {
+      set_groupid(from.groupid());
+    }
     if (from.has_classid()) {
       set_classid(from.classid());
     }
@@ -2635,6 +2892,26 @@ void GameEntityInfo::MergeFrom(const GameEntityInfo& from) {
     }
     if (from.has_orient()) {
       mutable_orient()->::modeldata::Euler::MergeFrom(from.orient());
+    }
+    if (from.has_quantity()) {
+      set_quantity(from.quantity());
+    }
+    if (from.has_quantitymax()) {
+      set_quantitymax(from.quantitymax());
+    }
+    if (from.has_health()) {
+      set_health(from.health());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_healthmax()) {
+      set_healthmax(from.healthmax());
+    }
+    if (from.has_armor()) {
+      set_armor(from.armor());
+    }
+    if (from.has_armorymax()) {
+      set_armorymax(from.armorymax());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -2653,7 +2930,7 @@ void GameEntityInfo::CopyFrom(const GameEntityInfo& from) {
 }
 
 bool GameEntityInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
 
   return true;
 }
@@ -2661,9 +2938,16 @@ bool GameEntityInfo::IsInitialized() const {
 void GameEntityInfo::Swap(GameEntityInfo* other) {
   if (other != this) {
     std::swap(entityid_, other->entityid_);
+    std::swap(groupid_, other->groupid_);
     std::swap(classid_, other->classid_);
     std::swap(position_, other->position_);
     std::swap(orient_, other->orient_);
+    std::swap(quantity_, other->quantity_);
+    std::swap(quantitymax_, other->quantitymax_);
+    std::swap(health_, other->health_);
+    std::swap(healthmax_, other->healthmax_);
+    std::swap(armor_, other->armor_);
+    std::swap(armorymax_, other->armorymax_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
