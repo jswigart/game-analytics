@@ -13,7 +13,7 @@ MainWindow::MainWindow( QWidget* parent, Qt::WindowFlags flags )
 	QMenu* menu = menuBar->addMenu( "Test" );
 	menu->addAction( "Create view", this, SLOT( onCreateView() ) );
 
-	this->setCentralWidget( mdiArea_ );
+	setCentralWidget( mdiArea_ );
 }
 
 MainWindow::~MainWindow()

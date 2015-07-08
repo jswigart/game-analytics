@@ -38,8 +38,8 @@ class Vec4;
 class Euler;
 class Matrix4;
 class Node;
-class Mesh;
 class Material;
+class Mesh;
 class Scene;
 
 // ===================================================================
@@ -404,61 +404,61 @@ class Matrix4 : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .modeldata.Vec4 row0 = 1;
-  inline bool has_row0() const;
-  inline void clear_row0();
-  static const int kRow0FieldNumber = 1;
-  inline const ::modeldata::Vec4& row0() const;
-  inline ::modeldata::Vec4* mutable_row0();
-  inline ::modeldata::Vec4* release_row0();
-  inline void set_allocated_row0(::modeldata::Vec4* row0);
+  // required .modeldata.Vec4 axisX = 1;
+  inline bool has_axisx() const;
+  inline void clear_axisx();
+  static const int kAxisXFieldNumber = 1;
+  inline const ::modeldata::Vec4& axisx() const;
+  inline ::modeldata::Vec4* mutable_axisx();
+  inline ::modeldata::Vec4* release_axisx();
+  inline void set_allocated_axisx(::modeldata::Vec4* axisx);
 
-  // required .modeldata.Vec4 row1 = 2;
-  inline bool has_row1() const;
-  inline void clear_row1();
-  static const int kRow1FieldNumber = 2;
-  inline const ::modeldata::Vec4& row1() const;
-  inline ::modeldata::Vec4* mutable_row1();
-  inline ::modeldata::Vec4* release_row1();
-  inline void set_allocated_row1(::modeldata::Vec4* row1);
+  // required .modeldata.Vec4 axisY = 2;
+  inline bool has_axisy() const;
+  inline void clear_axisy();
+  static const int kAxisYFieldNumber = 2;
+  inline const ::modeldata::Vec4& axisy() const;
+  inline ::modeldata::Vec4* mutable_axisy();
+  inline ::modeldata::Vec4* release_axisy();
+  inline void set_allocated_axisy(::modeldata::Vec4* axisy);
 
-  // required .modeldata.Vec4 row2 = 3;
-  inline bool has_row2() const;
-  inline void clear_row2();
-  static const int kRow2FieldNumber = 3;
-  inline const ::modeldata::Vec4& row2() const;
-  inline ::modeldata::Vec4* mutable_row2();
-  inline ::modeldata::Vec4* release_row2();
-  inline void set_allocated_row2(::modeldata::Vec4* row2);
+  // required .modeldata.Vec4 axisZ = 3;
+  inline bool has_axisz() const;
+  inline void clear_axisz();
+  static const int kAxisZFieldNumber = 3;
+  inline const ::modeldata::Vec4& axisz() const;
+  inline ::modeldata::Vec4* mutable_axisz();
+  inline ::modeldata::Vec4* release_axisz();
+  inline void set_allocated_axisz(::modeldata::Vec4* axisz);
 
-  // required .modeldata.Vec4 row3 = 4;
-  inline bool has_row3() const;
-  inline void clear_row3();
-  static const int kRow3FieldNumber = 4;
-  inline const ::modeldata::Vec4& row3() const;
-  inline ::modeldata::Vec4* mutable_row3();
-  inline ::modeldata::Vec4* release_row3();
-  inline void set_allocated_row3(::modeldata::Vec4* row3);
+  // required .modeldata.Vec4 translation = 4;
+  inline bool has_translation() const;
+  inline void clear_translation();
+  static const int kTranslationFieldNumber = 4;
+  inline const ::modeldata::Vec4& translation() const;
+  inline ::modeldata::Vec4* mutable_translation();
+  inline ::modeldata::Vec4* release_translation();
+  inline void set_allocated_translation(::modeldata::Vec4* translation);
 
   // @@protoc_insertion_point(class_scope:modeldata.Matrix4)
  private:
-  inline void set_has_row0();
-  inline void clear_has_row0();
-  inline void set_has_row1();
-  inline void clear_has_row1();
-  inline void set_has_row2();
-  inline void clear_has_row2();
-  inline void set_has_row3();
-  inline void clear_has_row3();
+  inline void set_has_axisx();
+  inline void clear_has_axisx();
+  inline void set_has_axisy();
+  inline void clear_has_axisy();
+  inline void set_has_axisz();
+  inline void clear_has_axisz();
+  inline void set_has_translation();
+  inline void clear_has_translation();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::modeldata::Vec4* row0_;
-  ::modeldata::Vec4* row1_;
-  ::modeldata::Vec4* row2_;
-  ::modeldata::Vec4* row3_;
+  ::modeldata::Vec4* axisx_;
+  ::modeldata::Vec4* axisy_;
+  ::modeldata::Vec4* axisz_;
+  ::modeldata::Vec4* translation_;
   friend void  protobuf_AddDesc_modeldata_2eproto();
   friend void protobuf_AssignDesc_modeldata_2eproto();
   friend void protobuf_ShutdownFile_modeldata_2eproto();
@@ -521,33 +521,35 @@ class Node : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string name = 1;
-  inline bool has_name() const;
-  inline void clear_name();
-  static const int kNameFieldNumber = 1;
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
-  inline ::std::string* mutable_name();
-  inline ::std::string* release_name();
-  inline void set_allocated_name(::std::string* name);
+  // optional .modeldata.Vec3 eulerRotation = 1;
+  inline bool has_eulerrotation() const;
+  inline void clear_eulerrotation();
+  static const int kEulerRotationFieldNumber = 1;
+  inline const ::modeldata::Vec3& eulerrotation() const;
+  inline ::modeldata::Vec3* mutable_eulerrotation();
+  inline ::modeldata::Vec3* release_eulerrotation();
+  inline void set_allocated_eulerrotation(::modeldata::Vec3* eulerrotation);
 
-  // optional .modeldata.Matrix4 transformation = 2;
-  inline bool has_transformation() const;
-  inline void clear_transformation();
-  static const int kTransformationFieldNumber = 2;
-  inline const ::modeldata::Matrix4& transformation() const;
-  inline ::modeldata::Matrix4* mutable_transformation();
-  inline ::modeldata::Matrix4* release_transformation();
-  inline void set_allocated_transformation(::modeldata::Matrix4* transformation);
+  // optional .modeldata.Vec3 translation = 2;
+  inline bool has_translation() const;
+  inline void clear_translation();
+  static const int kTranslationFieldNumber = 2;
+  inline const ::modeldata::Vec3& translation() const;
+  inline ::modeldata::Vec3* mutable_translation();
+  inline ::modeldata::Vec3* release_translation();
+  inline void set_allocated_translation(::modeldata::Vec3* translation);
 
-  // optional uint32 subModel = 3;
-  inline bool has_submodel() const;
-  inline void clear_submodel();
-  static const int kSubModelFieldNumber = 3;
-  inline ::google::protobuf::uint32 submodel() const;
-  inline void set_submodel(::google::protobuf::uint32 value);
+  // optional string meshName = 3;
+  inline bool has_meshname() const;
+  inline void clear_meshname();
+  static const int kMeshNameFieldNumber = 3;
+  inline const ::std::string& meshname() const;
+  inline void set_meshname(const ::std::string& value);
+  inline void set_meshname(const char* value);
+  inline void set_meshname(const char* value, size_t size);
+  inline ::std::string* mutable_meshname();
+  inline ::std::string* release_meshname();
+  inline void set_allocated_meshname(::std::string* meshname);
 
   // repeated .modeldata.Node children = 4;
   inline int children_size() const;
@@ -561,176 +563,29 @@ class Node : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::modeldata::Node >*
       mutable_children();
 
-  // repeated uint32 meshIndex = 5;
-  inline int meshindex_size() const;
-  inline void clear_meshindex();
-  static const int kMeshIndexFieldNumber = 5;
-  inline ::google::protobuf::uint32 meshindex(int index) const;
-  inline void set_meshindex(int index, ::google::protobuf::uint32 value);
-  inline void add_meshindex(::google::protobuf::uint32 value);
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-      meshindex() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-      mutable_meshindex();
-
   // @@protoc_insertion_point(class_scope:modeldata.Node)
  private:
-  inline void set_has_name();
-  inline void clear_has_name();
-  inline void set_has_transformation();
-  inline void clear_has_transformation();
-  inline void set_has_submodel();
-  inline void clear_has_submodel();
+  inline void set_has_eulerrotation();
+  inline void clear_has_eulerrotation();
+  inline void set_has_translation();
+  inline void clear_has_translation();
+  inline void set_has_meshname();
+  inline void clear_has_meshname();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* name_;
-  ::modeldata::Matrix4* transformation_;
+  ::modeldata::Vec3* eulerrotation_;
+  ::modeldata::Vec3* translation_;
+  ::std::string* meshname_;
   ::google::protobuf::RepeatedPtrField< ::modeldata::Node > children_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > meshindex_;
-  ::google::protobuf::uint32 submodel_;
   friend void  protobuf_AddDesc_modeldata_2eproto();
   friend void protobuf_AssignDesc_modeldata_2eproto();
   friend void protobuf_ShutdownFile_modeldata_2eproto();
 
   void InitAsDefaultInstance();
   static Node* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class Mesh : public ::google::protobuf::Message {
- public:
-  Mesh();
-  virtual ~Mesh();
-
-  Mesh(const Mesh& from);
-
-  inline Mesh& operator=(const Mesh& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const Mesh& default_instance();
-
-  void Swap(Mesh* other);
-
-  // implements Message ----------------------------------------------
-
-  Mesh* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Mesh& from);
-  void MergeFrom(const Mesh& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional string name = 1;
-  inline bool has_name() const;
-  inline void clear_name();
-  static const int kNameFieldNumber = 1;
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline void set_name(const char* value, size_t size);
-  inline ::std::string* mutable_name();
-  inline ::std::string* release_name();
-  inline void set_allocated_name(::std::string* name);
-
-  // required uint32 materialIndex = 2;
-  inline bool has_materialindex() const;
-  inline void clear_materialindex();
-  static const int kMaterialIndexFieldNumber = 2;
-  inline ::google::protobuf::uint32 materialindex() const;
-  inline void set_materialindex(::google::protobuf::uint32 value);
-
-  // optional bytes vertices = 3;
-  inline bool has_vertices() const;
-  inline void clear_vertices();
-  static const int kVerticesFieldNumber = 3;
-  inline const ::std::string& vertices() const;
-  inline void set_vertices(const ::std::string& value);
-  inline void set_vertices(const char* value);
-  inline void set_vertices(const void* value, size_t size);
-  inline ::std::string* mutable_vertices();
-  inline ::std::string* release_vertices();
-  inline void set_allocated_vertices(::std::string* vertices);
-
-  // optional bytes faces = 4;
-  inline bool has_faces() const;
-  inline void clear_faces();
-  static const int kFacesFieldNumber = 4;
-  inline const ::std::string& faces() const;
-  inline void set_faces(const ::std::string& value);
-  inline void set_faces(const char* value);
-  inline void set_faces(const void* value, size_t size);
-  inline ::std::string* mutable_faces();
-  inline ::std::string* release_faces();
-  inline void set_allocated_faces(::std::string* faces);
-
-  // optional bool externalRef = 5;
-  inline bool has_externalref() const;
-  inline void clear_externalref();
-  static const int kExternalRefFieldNumber = 5;
-  inline bool externalref() const;
-  inline void set_externalref(bool value);
-
-  // @@protoc_insertion_point(class_scope:modeldata.Mesh)
- private:
-  inline void set_has_name();
-  inline void clear_has_name();
-  inline void set_has_materialindex();
-  inline void clear_has_materialindex();
-  inline void set_has_vertices();
-  inline void clear_has_vertices();
-  inline void set_has_faces();
-  inline void clear_has_faces();
-  inline void set_has_externalref();
-  inline void clear_has_externalref();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::std::string* name_;
-  ::std::string* vertices_;
-  ::google::protobuf::uint32 materialindex_;
-  bool externalref_;
-  ::std::string* faces_;
-  friend void  protobuf_AddDesc_modeldata_2eproto();
-  friend void protobuf_AssignDesc_modeldata_2eproto();
-  friend void protobuf_ShutdownFile_modeldata_2eproto();
-
-  void InitAsDefaultInstance();
-  static Mesh* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -838,6 +693,148 @@ class Material : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class Mesh : public ::google::protobuf::Message {
+ public:
+  Mesh();
+  virtual ~Mesh();
+
+  Mesh(const Mesh& from);
+
+  inline Mesh& operator=(const Mesh& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Mesh& default_instance();
+
+  void Swap(Mesh* other);
+
+  // implements Message ----------------------------------------------
+
+  Mesh* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Mesh& from);
+  void MergeFrom(const Mesh& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // optional bytes vertices = 2;
+  inline bool has_vertices() const;
+  inline void clear_vertices();
+  static const int kVerticesFieldNumber = 2;
+  inline const ::std::string& vertices() const;
+  inline void set_vertices(const ::std::string& value);
+  inline void set_vertices(const char* value);
+  inline void set_vertices(const void* value, size_t size);
+  inline ::std::string* mutable_vertices();
+  inline ::std::string* release_vertices();
+  inline void set_allocated_vertices(::std::string* vertices);
+
+  // optional bytes faces = 3;
+  inline bool has_faces() const;
+  inline void clear_faces();
+  static const int kFacesFieldNumber = 3;
+  inline const ::std::string& faces() const;
+  inline void set_faces(const ::std::string& value);
+  inline void set_faces(const char* value);
+  inline void set_faces(const void* value, size_t size);
+  inline ::std::string* mutable_faces();
+  inline ::std::string* release_faces();
+  inline void set_allocated_faces(::std::string* faces);
+
+  // optional bytes materialIndices = 4;
+  inline bool has_materialindices() const;
+  inline void clear_materialindices();
+  static const int kMaterialIndicesFieldNumber = 4;
+  inline const ::std::string& materialindices() const;
+  inline void set_materialindices(const ::std::string& value);
+  inline void set_materialindices(const char* value);
+  inline void set_materialindices(const void* value, size_t size);
+  inline ::std::string* mutable_materialindices();
+  inline ::std::string* release_materialindices();
+  inline void set_allocated_materialindices(::std::string* materialindices);
+
+  // repeated .modeldata.Material materials = 5;
+  inline int materials_size() const;
+  inline void clear_materials();
+  static const int kMaterialsFieldNumber = 5;
+  inline const ::modeldata::Material& materials(int index) const;
+  inline ::modeldata::Material* mutable_materials(int index);
+  inline ::modeldata::Material* add_materials();
+  inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
+      materials() const;
+  inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
+      mutable_materials();
+
+  // @@protoc_insertion_point(class_scope:modeldata.Mesh)
+ private:
+  inline void set_has_name();
+  inline void clear_has_name();
+  inline void set_has_vertices();
+  inline void clear_has_vertices();
+  inline void set_has_faces();
+  inline void clear_has_faces();
+  inline void set_has_materialindices();
+  inline void clear_has_materialindices();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* name_;
+  ::std::string* vertices_;
+  ::std::string* faces_;
+  ::std::string* materialindices_;
+  ::google::protobuf::RepeatedPtrField< ::modeldata::Material > materials_;
+  friend void  protobuf_AddDesc_modeldata_2eproto();
+  friend void protobuf_AssignDesc_modeldata_2eproto();
+  friend void protobuf_ShutdownFile_modeldata_2eproto();
+
+  void InitAsDefaultInstance();
+  static Mesh* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Scene : public ::google::protobuf::Message {
  public:
   Scene();
@@ -912,18 +909,6 @@ class Scene : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::modeldata::Mesh >*
       mutable_meshes();
 
-  // repeated .modeldata.Material materials = 3;
-  inline int materials_size() const;
-  inline void clear_materials();
-  static const int kMaterialsFieldNumber = 3;
-  inline const ::modeldata::Material& materials(int index) const;
-  inline ::modeldata::Material* mutable_materials(int index);
-  inline ::modeldata::Material* add_materials();
-  inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
-      materials() const;
-  inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
-      mutable_materials();
-
   // @@protoc_insertion_point(class_scope:modeldata.Scene)
  private:
   inline void set_has_rootnode();
@@ -935,7 +920,6 @@ class Scene : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::modeldata::Node* rootnode_;
   ::google::protobuf::RepeatedPtrField< ::modeldata::Mesh > meshes_;
-  ::google::protobuf::RepeatedPtrField< ::modeldata::Material > materials_;
   friend void  protobuf_AddDesc_modeldata_2eproto();
   friend void protobuf_AssignDesc_modeldata_2eproto();
   friend void protobuf_ShutdownFile_modeldata_2eproto();
@@ -1202,313 +1186,330 @@ inline void Euler::set_roll(float value) {
 
 // Matrix4
 
-// required .modeldata.Vec4 row0 = 1;
-inline bool Matrix4::has_row0() const {
+// required .modeldata.Vec4 axisX = 1;
+inline bool Matrix4::has_axisx() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Matrix4::set_has_row0() {
+inline void Matrix4::set_has_axisx() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Matrix4::clear_has_row0() {
+inline void Matrix4::clear_has_axisx() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Matrix4::clear_row0() {
-  if (row0_ != NULL) row0_->::modeldata::Vec4::Clear();
-  clear_has_row0();
+inline void Matrix4::clear_axisx() {
+  if (axisx_ != NULL) axisx_->::modeldata::Vec4::Clear();
+  clear_has_axisx();
 }
-inline const ::modeldata::Vec4& Matrix4::row0() const {
-  // @@protoc_insertion_point(field_get:modeldata.Matrix4.row0)
-  return row0_ != NULL ? *row0_ : *default_instance_->row0_;
+inline const ::modeldata::Vec4& Matrix4::axisx() const {
+  // @@protoc_insertion_point(field_get:modeldata.Matrix4.axisX)
+  return axisx_ != NULL ? *axisx_ : *default_instance_->axisx_;
 }
-inline ::modeldata::Vec4* Matrix4::mutable_row0() {
-  set_has_row0();
-  if (row0_ == NULL) row0_ = new ::modeldata::Vec4;
-  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.row0)
-  return row0_;
+inline ::modeldata::Vec4* Matrix4::mutable_axisx() {
+  set_has_axisx();
+  if (axisx_ == NULL) axisx_ = new ::modeldata::Vec4;
+  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.axisX)
+  return axisx_;
 }
-inline ::modeldata::Vec4* Matrix4::release_row0() {
-  clear_has_row0();
-  ::modeldata::Vec4* temp = row0_;
-  row0_ = NULL;
+inline ::modeldata::Vec4* Matrix4::release_axisx() {
+  clear_has_axisx();
+  ::modeldata::Vec4* temp = axisx_;
+  axisx_ = NULL;
   return temp;
 }
-inline void Matrix4::set_allocated_row0(::modeldata::Vec4* row0) {
-  delete row0_;
-  row0_ = row0;
-  if (row0) {
-    set_has_row0();
+inline void Matrix4::set_allocated_axisx(::modeldata::Vec4* axisx) {
+  delete axisx_;
+  axisx_ = axisx;
+  if (axisx) {
+    set_has_axisx();
   } else {
-    clear_has_row0();
+    clear_has_axisx();
   }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.row0)
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.axisX)
 }
 
-// required .modeldata.Vec4 row1 = 2;
-inline bool Matrix4::has_row1() const {
+// required .modeldata.Vec4 axisY = 2;
+inline bool Matrix4::has_axisy() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Matrix4::set_has_row1() {
+inline void Matrix4::set_has_axisy() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Matrix4::clear_has_row1() {
+inline void Matrix4::clear_has_axisy() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Matrix4::clear_row1() {
-  if (row1_ != NULL) row1_->::modeldata::Vec4::Clear();
-  clear_has_row1();
+inline void Matrix4::clear_axisy() {
+  if (axisy_ != NULL) axisy_->::modeldata::Vec4::Clear();
+  clear_has_axisy();
 }
-inline const ::modeldata::Vec4& Matrix4::row1() const {
-  // @@protoc_insertion_point(field_get:modeldata.Matrix4.row1)
-  return row1_ != NULL ? *row1_ : *default_instance_->row1_;
+inline const ::modeldata::Vec4& Matrix4::axisy() const {
+  // @@protoc_insertion_point(field_get:modeldata.Matrix4.axisY)
+  return axisy_ != NULL ? *axisy_ : *default_instance_->axisy_;
 }
-inline ::modeldata::Vec4* Matrix4::mutable_row1() {
-  set_has_row1();
-  if (row1_ == NULL) row1_ = new ::modeldata::Vec4;
-  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.row1)
-  return row1_;
+inline ::modeldata::Vec4* Matrix4::mutable_axisy() {
+  set_has_axisy();
+  if (axisy_ == NULL) axisy_ = new ::modeldata::Vec4;
+  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.axisY)
+  return axisy_;
 }
-inline ::modeldata::Vec4* Matrix4::release_row1() {
-  clear_has_row1();
-  ::modeldata::Vec4* temp = row1_;
-  row1_ = NULL;
+inline ::modeldata::Vec4* Matrix4::release_axisy() {
+  clear_has_axisy();
+  ::modeldata::Vec4* temp = axisy_;
+  axisy_ = NULL;
   return temp;
 }
-inline void Matrix4::set_allocated_row1(::modeldata::Vec4* row1) {
-  delete row1_;
-  row1_ = row1;
-  if (row1) {
-    set_has_row1();
+inline void Matrix4::set_allocated_axisy(::modeldata::Vec4* axisy) {
+  delete axisy_;
+  axisy_ = axisy;
+  if (axisy) {
+    set_has_axisy();
   } else {
-    clear_has_row1();
+    clear_has_axisy();
   }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.row1)
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.axisY)
 }
 
-// required .modeldata.Vec4 row2 = 3;
-inline bool Matrix4::has_row2() const {
+// required .modeldata.Vec4 axisZ = 3;
+inline bool Matrix4::has_axisz() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Matrix4::set_has_row2() {
+inline void Matrix4::set_has_axisz() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Matrix4::clear_has_row2() {
+inline void Matrix4::clear_has_axisz() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Matrix4::clear_row2() {
-  if (row2_ != NULL) row2_->::modeldata::Vec4::Clear();
-  clear_has_row2();
+inline void Matrix4::clear_axisz() {
+  if (axisz_ != NULL) axisz_->::modeldata::Vec4::Clear();
+  clear_has_axisz();
 }
-inline const ::modeldata::Vec4& Matrix4::row2() const {
-  // @@protoc_insertion_point(field_get:modeldata.Matrix4.row2)
-  return row2_ != NULL ? *row2_ : *default_instance_->row2_;
+inline const ::modeldata::Vec4& Matrix4::axisz() const {
+  // @@protoc_insertion_point(field_get:modeldata.Matrix4.axisZ)
+  return axisz_ != NULL ? *axisz_ : *default_instance_->axisz_;
 }
-inline ::modeldata::Vec4* Matrix4::mutable_row2() {
-  set_has_row2();
-  if (row2_ == NULL) row2_ = new ::modeldata::Vec4;
-  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.row2)
-  return row2_;
+inline ::modeldata::Vec4* Matrix4::mutable_axisz() {
+  set_has_axisz();
+  if (axisz_ == NULL) axisz_ = new ::modeldata::Vec4;
+  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.axisZ)
+  return axisz_;
 }
-inline ::modeldata::Vec4* Matrix4::release_row2() {
-  clear_has_row2();
-  ::modeldata::Vec4* temp = row2_;
-  row2_ = NULL;
+inline ::modeldata::Vec4* Matrix4::release_axisz() {
+  clear_has_axisz();
+  ::modeldata::Vec4* temp = axisz_;
+  axisz_ = NULL;
   return temp;
 }
-inline void Matrix4::set_allocated_row2(::modeldata::Vec4* row2) {
-  delete row2_;
-  row2_ = row2;
-  if (row2) {
-    set_has_row2();
+inline void Matrix4::set_allocated_axisz(::modeldata::Vec4* axisz) {
+  delete axisz_;
+  axisz_ = axisz;
+  if (axisz) {
+    set_has_axisz();
   } else {
-    clear_has_row2();
+    clear_has_axisz();
   }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.row2)
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.axisZ)
 }
 
-// required .modeldata.Vec4 row3 = 4;
-inline bool Matrix4::has_row3() const {
+// required .modeldata.Vec4 translation = 4;
+inline bool Matrix4::has_translation() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void Matrix4::set_has_row3() {
+inline void Matrix4::set_has_translation() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void Matrix4::clear_has_row3() {
+inline void Matrix4::clear_has_translation() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void Matrix4::clear_row3() {
-  if (row3_ != NULL) row3_->::modeldata::Vec4::Clear();
-  clear_has_row3();
+inline void Matrix4::clear_translation() {
+  if (translation_ != NULL) translation_->::modeldata::Vec4::Clear();
+  clear_has_translation();
 }
-inline const ::modeldata::Vec4& Matrix4::row3() const {
-  // @@protoc_insertion_point(field_get:modeldata.Matrix4.row3)
-  return row3_ != NULL ? *row3_ : *default_instance_->row3_;
+inline const ::modeldata::Vec4& Matrix4::translation() const {
+  // @@protoc_insertion_point(field_get:modeldata.Matrix4.translation)
+  return translation_ != NULL ? *translation_ : *default_instance_->translation_;
 }
-inline ::modeldata::Vec4* Matrix4::mutable_row3() {
-  set_has_row3();
-  if (row3_ == NULL) row3_ = new ::modeldata::Vec4;
-  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.row3)
-  return row3_;
+inline ::modeldata::Vec4* Matrix4::mutable_translation() {
+  set_has_translation();
+  if (translation_ == NULL) translation_ = new ::modeldata::Vec4;
+  // @@protoc_insertion_point(field_mutable:modeldata.Matrix4.translation)
+  return translation_;
 }
-inline ::modeldata::Vec4* Matrix4::release_row3() {
-  clear_has_row3();
-  ::modeldata::Vec4* temp = row3_;
-  row3_ = NULL;
+inline ::modeldata::Vec4* Matrix4::release_translation() {
+  clear_has_translation();
+  ::modeldata::Vec4* temp = translation_;
+  translation_ = NULL;
   return temp;
 }
-inline void Matrix4::set_allocated_row3(::modeldata::Vec4* row3) {
-  delete row3_;
-  row3_ = row3;
-  if (row3) {
-    set_has_row3();
+inline void Matrix4::set_allocated_translation(::modeldata::Vec4* translation) {
+  delete translation_;
+  translation_ = translation;
+  if (translation) {
+    set_has_translation();
   } else {
-    clear_has_row3();
+    clear_has_translation();
   }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.row3)
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Matrix4.translation)
 }
 
 // -------------------------------------------------------------------
 
 // Node
 
-// optional string name = 1;
-inline bool Node::has_name() const {
+// optional .modeldata.Vec3 eulerRotation = 1;
+inline bool Node::has_eulerrotation() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Node::set_has_name() {
+inline void Node::set_has_eulerrotation() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Node::clear_has_name() {
+inline void Node::clear_has_eulerrotation() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Node::clear_name() {
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_->clear();
+inline void Node::clear_eulerrotation() {
+  if (eulerrotation_ != NULL) eulerrotation_->::modeldata::Vec3::Clear();
+  clear_has_eulerrotation();
+}
+inline const ::modeldata::Vec3& Node::eulerrotation() const {
+  // @@protoc_insertion_point(field_get:modeldata.Node.eulerRotation)
+  return eulerrotation_ != NULL ? *eulerrotation_ : *default_instance_->eulerrotation_;
+}
+inline ::modeldata::Vec3* Node::mutable_eulerrotation() {
+  set_has_eulerrotation();
+  if (eulerrotation_ == NULL) eulerrotation_ = new ::modeldata::Vec3;
+  // @@protoc_insertion_point(field_mutable:modeldata.Node.eulerRotation)
+  return eulerrotation_;
+}
+inline ::modeldata::Vec3* Node::release_eulerrotation() {
+  clear_has_eulerrotation();
+  ::modeldata::Vec3* temp = eulerrotation_;
+  eulerrotation_ = NULL;
+  return temp;
+}
+inline void Node::set_allocated_eulerrotation(::modeldata::Vec3* eulerrotation) {
+  delete eulerrotation_;
+  eulerrotation_ = eulerrotation;
+  if (eulerrotation) {
+    set_has_eulerrotation();
+  } else {
+    clear_has_eulerrotation();
   }
-  clear_has_name();
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Node.eulerRotation)
 }
-inline const ::std::string& Node::name() const {
-  // @@protoc_insertion_point(field_get:modeldata.Node.name)
-  return *name_;
+
+// optional .modeldata.Vec3 translation = 2;
+inline bool Node::has_translation() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Node::set_name(const ::std::string& value) {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
+inline void Node::set_has_translation() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Node::clear_has_translation() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Node::clear_translation() {
+  if (translation_ != NULL) translation_->::modeldata::Vec3::Clear();
+  clear_has_translation();
+}
+inline const ::modeldata::Vec3& Node::translation() const {
+  // @@protoc_insertion_point(field_get:modeldata.Node.translation)
+  return translation_ != NULL ? *translation_ : *default_instance_->translation_;
+}
+inline ::modeldata::Vec3* Node::mutable_translation() {
+  set_has_translation();
+  if (translation_ == NULL) translation_ = new ::modeldata::Vec3;
+  // @@protoc_insertion_point(field_mutable:modeldata.Node.translation)
+  return translation_;
+}
+inline ::modeldata::Vec3* Node::release_translation() {
+  clear_has_translation();
+  ::modeldata::Vec3* temp = translation_;
+  translation_ = NULL;
+  return temp;
+}
+inline void Node::set_allocated_translation(::modeldata::Vec3* translation) {
+  delete translation_;
+  translation_ = translation;
+  if (translation) {
+    set_has_translation();
+  } else {
+    clear_has_translation();
   }
-  name_->assign(value);
-  // @@protoc_insertion_point(field_set:modeldata.Node.name)
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Node.translation)
 }
-inline void Node::set_name(const char* value) {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
+
+// optional string meshName = 3;
+inline bool Node::has_meshname() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Node::set_has_meshname() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Node::clear_has_meshname() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Node::clear_meshname() {
+  if (meshname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    meshname_->clear();
   }
-  name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:modeldata.Node.name)
+  clear_has_meshname();
 }
-inline void Node::set_name(const char* value, size_t size) {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
+inline const ::std::string& Node::meshname() const {
+  // @@protoc_insertion_point(field_get:modeldata.Node.meshName)
+  return *meshname_;
+}
+inline void Node::set_meshname(const ::std::string& value) {
+  set_has_meshname();
+  if (meshname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    meshname_ = new ::std::string;
   }
-  name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:modeldata.Node.name)
+  meshname_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Node.meshName)
 }
-inline ::std::string* Node::mutable_name() {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
+inline void Node::set_meshname(const char* value) {
+  set_has_meshname();
+  if (meshname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    meshname_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:modeldata.Node.name)
-  return name_;
+  meshname_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Node.meshName)
 }
-inline ::std::string* Node::release_name() {
-  clear_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline void Node::set_meshname(const char* value, size_t size) {
+  set_has_meshname();
+  if (meshname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    meshname_ = new ::std::string;
+  }
+  meshname_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Node.meshName)
+}
+inline ::std::string* Node::mutable_meshname() {
+  set_has_meshname();
+  if (meshname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    meshname_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Node.meshName)
+  return meshname_;
+}
+inline ::std::string* Node::release_meshname() {
+  clear_has_meshname();
+  if (meshname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = name_;
-    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = meshname_;
+    meshname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void Node::set_allocated_name(::std::string* name) {
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
+inline void Node::set_allocated_meshname(::std::string* meshname) {
+  if (meshname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete meshname_;
   }
-  if (name) {
-    set_has_name();
-    name_ = name;
+  if (meshname) {
+    set_has_meshname();
+    meshname_ = meshname;
   } else {
-    clear_has_name();
-    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_meshname();
+    meshname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Node.name)
-}
-
-// optional .modeldata.Matrix4 transformation = 2;
-inline bool Node::has_transformation() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Node::set_has_transformation() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Node::clear_has_transformation() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Node::clear_transformation() {
-  if (transformation_ != NULL) transformation_->::modeldata::Matrix4::Clear();
-  clear_has_transformation();
-}
-inline const ::modeldata::Matrix4& Node::transformation() const {
-  // @@protoc_insertion_point(field_get:modeldata.Node.transformation)
-  return transformation_ != NULL ? *transformation_ : *default_instance_->transformation_;
-}
-inline ::modeldata::Matrix4* Node::mutable_transformation() {
-  set_has_transformation();
-  if (transformation_ == NULL) transformation_ = new ::modeldata::Matrix4;
-  // @@protoc_insertion_point(field_mutable:modeldata.Node.transformation)
-  return transformation_;
-}
-inline ::modeldata::Matrix4* Node::release_transformation() {
-  clear_has_transformation();
-  ::modeldata::Matrix4* temp = transformation_;
-  transformation_ = NULL;
-  return temp;
-}
-inline void Node::set_allocated_transformation(::modeldata::Matrix4* transformation) {
-  delete transformation_;
-  transformation_ = transformation;
-  if (transformation) {
-    set_has_transformation();
-  } else {
-    clear_has_transformation();
-  }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Node.transformation)
-}
-
-// optional uint32 subModel = 3;
-inline bool Node::has_submodel() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void Node::set_has_submodel() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void Node::clear_has_submodel() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void Node::clear_submodel() {
-  submodel_ = 0u;
-  clear_has_submodel();
-}
-inline ::google::protobuf::uint32 Node::submodel() const {
-  // @@protoc_insertion_point(field_get:modeldata.Node.subModel)
-  return submodel_;
-}
-inline void Node::set_submodel(::google::protobuf::uint32 value) {
-  set_has_submodel();
-  submodel_ = value;
-  // @@protoc_insertion_point(field_set:modeldata.Node.subModel)
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Node.meshName)
 }
 
 // repeated .modeldata.Node children = 4;
@@ -1539,316 +1540,6 @@ inline ::google::protobuf::RepeatedPtrField< ::modeldata::Node >*
 Node::mutable_children() {
   // @@protoc_insertion_point(field_mutable_list:modeldata.Node.children)
   return &children_;
-}
-
-// repeated uint32 meshIndex = 5;
-inline int Node::meshindex_size() const {
-  return meshindex_.size();
-}
-inline void Node::clear_meshindex() {
-  meshindex_.Clear();
-}
-inline ::google::protobuf::uint32 Node::meshindex(int index) const {
-  // @@protoc_insertion_point(field_get:modeldata.Node.meshIndex)
-  return meshindex_.Get(index);
-}
-inline void Node::set_meshindex(int index, ::google::protobuf::uint32 value) {
-  meshindex_.Set(index, value);
-  // @@protoc_insertion_point(field_set:modeldata.Node.meshIndex)
-}
-inline void Node::add_meshindex(::google::protobuf::uint32 value) {
-  meshindex_.Add(value);
-  // @@protoc_insertion_point(field_add:modeldata.Node.meshIndex)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-Node::meshindex() const {
-  // @@protoc_insertion_point(field_list:modeldata.Node.meshIndex)
-  return meshindex_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-Node::mutable_meshindex() {
-  // @@protoc_insertion_point(field_mutable_list:modeldata.Node.meshIndex)
-  return &meshindex_;
-}
-
-// -------------------------------------------------------------------
-
-// Mesh
-
-// optional string name = 1;
-inline bool Mesh::has_name() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void Mesh::set_has_name() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void Mesh::clear_has_name() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void Mesh::clear_name() {
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_->clear();
-  }
-  clear_has_name();
-}
-inline const ::std::string& Mesh::name() const {
-  // @@protoc_insertion_point(field_get:modeldata.Mesh.name)
-  return *name_;
-}
-inline void Mesh::set_name(const ::std::string& value) {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-  // @@protoc_insertion_point(field_set:modeldata.Mesh.name)
-}
-inline void Mesh::set_name(const char* value) {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.name)
-}
-inline void Mesh::set_name(const char* value, size_t size) {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
-  }
-  name_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.name)
-}
-inline ::std::string* Mesh::mutable_name() {
-  set_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    name_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.name)
-  return name_;
-}
-inline ::std::string* Mesh::release_name() {
-  clear_has_name();
-  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = name_;
-    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void Mesh::set_allocated_name(::std::string* name) {
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
-  }
-  if (name) {
-    set_has_name();
-    name_ = name;
-  } else {
-    clear_has_name();
-    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.name)
-}
-
-// required uint32 materialIndex = 2;
-inline bool Mesh::has_materialindex() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Mesh::set_has_materialindex() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Mesh::clear_has_materialindex() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Mesh::clear_materialindex() {
-  materialindex_ = 0u;
-  clear_has_materialindex();
-}
-inline ::google::protobuf::uint32 Mesh::materialindex() const {
-  // @@protoc_insertion_point(field_get:modeldata.Mesh.materialIndex)
-  return materialindex_;
-}
-inline void Mesh::set_materialindex(::google::protobuf::uint32 value) {
-  set_has_materialindex();
-  materialindex_ = value;
-  // @@protoc_insertion_point(field_set:modeldata.Mesh.materialIndex)
-}
-
-// optional bytes vertices = 3;
-inline bool Mesh::has_vertices() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void Mesh::set_has_vertices() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void Mesh::clear_has_vertices() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void Mesh::clear_vertices() {
-  if (vertices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    vertices_->clear();
-  }
-  clear_has_vertices();
-}
-inline const ::std::string& Mesh::vertices() const {
-  // @@protoc_insertion_point(field_get:modeldata.Mesh.vertices)
-  return *vertices_;
-}
-inline void Mesh::set_vertices(const ::std::string& value) {
-  set_has_vertices();
-  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    vertices_ = new ::std::string;
-  }
-  vertices_->assign(value);
-  // @@protoc_insertion_point(field_set:modeldata.Mesh.vertices)
-}
-inline void Mesh::set_vertices(const char* value) {
-  set_has_vertices();
-  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    vertices_ = new ::std::string;
-  }
-  vertices_->assign(value);
-  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.vertices)
-}
-inline void Mesh::set_vertices(const void* value, size_t size) {
-  set_has_vertices();
-  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    vertices_ = new ::std::string;
-  }
-  vertices_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.vertices)
-}
-inline ::std::string* Mesh::mutable_vertices() {
-  set_has_vertices();
-  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    vertices_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.vertices)
-  return vertices_;
-}
-inline ::std::string* Mesh::release_vertices() {
-  clear_has_vertices();
-  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = vertices_;
-    vertices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void Mesh::set_allocated_vertices(::std::string* vertices) {
-  if (vertices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete vertices_;
-  }
-  if (vertices) {
-    set_has_vertices();
-    vertices_ = vertices;
-  } else {
-    clear_has_vertices();
-    vertices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.vertices)
-}
-
-// optional bytes faces = 4;
-inline bool Mesh::has_faces() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void Mesh::set_has_faces() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void Mesh::clear_has_faces() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void Mesh::clear_faces() {
-  if (faces_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    faces_->clear();
-  }
-  clear_has_faces();
-}
-inline const ::std::string& Mesh::faces() const {
-  // @@protoc_insertion_point(field_get:modeldata.Mesh.faces)
-  return *faces_;
-}
-inline void Mesh::set_faces(const ::std::string& value) {
-  set_has_faces();
-  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    faces_ = new ::std::string;
-  }
-  faces_->assign(value);
-  // @@protoc_insertion_point(field_set:modeldata.Mesh.faces)
-}
-inline void Mesh::set_faces(const char* value) {
-  set_has_faces();
-  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    faces_ = new ::std::string;
-  }
-  faces_->assign(value);
-  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.faces)
-}
-inline void Mesh::set_faces(const void* value, size_t size) {
-  set_has_faces();
-  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    faces_ = new ::std::string;
-  }
-  faces_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.faces)
-}
-inline ::std::string* Mesh::mutable_faces() {
-  set_has_faces();
-  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    faces_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.faces)
-  return faces_;
-}
-inline ::std::string* Mesh::release_faces() {
-  clear_has_faces();
-  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = faces_;
-    faces_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void Mesh::set_allocated_faces(::std::string* faces) {
-  if (faces_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete faces_;
-  }
-  if (faces) {
-    set_has_faces();
-    faces_ = faces;
-  } else {
-    clear_has_faces();
-    faces_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.faces)
-}
-
-// optional bool externalRef = 5;
-inline bool Mesh::has_externalref() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void Mesh::set_has_externalref() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void Mesh::clear_has_externalref() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void Mesh::clear_externalref() {
-  externalref_ = false;
-  clear_has_externalref();
-}
-inline bool Mesh::externalref() const {
-  // @@protoc_insertion_point(field_get:modeldata.Mesh.externalRef)
-  return externalref_;
-}
-inline void Mesh::set_externalref(bool value) {
-  set_has_externalref();
-  externalref_ = value;
-  // @@protoc_insertion_point(field_set:modeldata.Mesh.externalRef)
 }
 
 // -------------------------------------------------------------------
@@ -1981,6 +1672,344 @@ inline void Material::set_surfaceflags(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// Mesh
+
+// optional string name = 1;
+inline bool Mesh::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Mesh::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Mesh::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Mesh::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& Mesh::name() const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.name)
+  return *name_;
+}
+inline void Mesh::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Mesh.name)
+}
+inline void Mesh::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.name)
+}
+inline void Mesh::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.name)
+}
+inline ::std::string* Mesh::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.name)
+  return name_;
+}
+inline ::std::string* Mesh::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Mesh::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.name)
+}
+
+// optional bytes vertices = 2;
+inline bool Mesh::has_vertices() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Mesh::set_has_vertices() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Mesh::clear_has_vertices() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Mesh::clear_vertices() {
+  if (vertices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertices_->clear();
+  }
+  clear_has_vertices();
+}
+inline const ::std::string& Mesh::vertices() const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.vertices)
+  return *vertices_;
+}
+inline void Mesh::set_vertices(const ::std::string& value) {
+  set_has_vertices();
+  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertices_ = new ::std::string;
+  }
+  vertices_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Mesh.vertices)
+}
+inline void Mesh::set_vertices(const char* value) {
+  set_has_vertices();
+  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertices_ = new ::std::string;
+  }
+  vertices_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.vertices)
+}
+inline void Mesh::set_vertices(const void* value, size_t size) {
+  set_has_vertices();
+  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertices_ = new ::std::string;
+  }
+  vertices_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.vertices)
+}
+inline ::std::string* Mesh::mutable_vertices() {
+  set_has_vertices();
+  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertices_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.vertices)
+  return vertices_;
+}
+inline ::std::string* Mesh::release_vertices() {
+  clear_has_vertices();
+  if (vertices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = vertices_;
+    vertices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Mesh::set_allocated_vertices(::std::string* vertices) {
+  if (vertices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete vertices_;
+  }
+  if (vertices) {
+    set_has_vertices();
+    vertices_ = vertices;
+  } else {
+    clear_has_vertices();
+    vertices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.vertices)
+}
+
+// optional bytes faces = 3;
+inline bool Mesh::has_faces() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Mesh::set_has_faces() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Mesh::clear_has_faces() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Mesh::clear_faces() {
+  if (faces_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    faces_->clear();
+  }
+  clear_has_faces();
+}
+inline const ::std::string& Mesh::faces() const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.faces)
+  return *faces_;
+}
+inline void Mesh::set_faces(const ::std::string& value) {
+  set_has_faces();
+  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    faces_ = new ::std::string;
+  }
+  faces_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Mesh.faces)
+}
+inline void Mesh::set_faces(const char* value) {
+  set_has_faces();
+  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    faces_ = new ::std::string;
+  }
+  faces_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.faces)
+}
+inline void Mesh::set_faces(const void* value, size_t size) {
+  set_has_faces();
+  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    faces_ = new ::std::string;
+  }
+  faces_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.faces)
+}
+inline ::std::string* Mesh::mutable_faces() {
+  set_has_faces();
+  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    faces_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.faces)
+  return faces_;
+}
+inline ::std::string* Mesh::release_faces() {
+  clear_has_faces();
+  if (faces_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = faces_;
+    faces_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Mesh::set_allocated_faces(::std::string* faces) {
+  if (faces_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete faces_;
+  }
+  if (faces) {
+    set_has_faces();
+    faces_ = faces;
+  } else {
+    clear_has_faces();
+    faces_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.faces)
+}
+
+// optional bytes materialIndices = 4;
+inline bool Mesh::has_materialindices() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void Mesh::set_has_materialindices() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void Mesh::clear_has_materialindices() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void Mesh::clear_materialindices() {
+  if (materialindices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    materialindices_->clear();
+  }
+  clear_has_materialindices();
+}
+inline const ::std::string& Mesh::materialindices() const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.materialIndices)
+  return *materialindices_;
+}
+inline void Mesh::set_materialindices(const ::std::string& value) {
+  set_has_materialindices();
+  if (materialindices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    materialindices_ = new ::std::string;
+  }
+  materialindices_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Mesh.materialIndices)
+}
+inline void Mesh::set_materialindices(const char* value) {
+  set_has_materialindices();
+  if (materialindices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    materialindices_ = new ::std::string;
+  }
+  materialindices_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.materialIndices)
+}
+inline void Mesh::set_materialindices(const void* value, size_t size) {
+  set_has_materialindices();
+  if (materialindices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    materialindices_ = new ::std::string;
+  }
+  materialindices_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.materialIndices)
+}
+inline ::std::string* Mesh::mutable_materialindices() {
+  set_has_materialindices();
+  if (materialindices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    materialindices_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.materialIndices)
+  return materialindices_;
+}
+inline ::std::string* Mesh::release_materialindices() {
+  clear_has_materialindices();
+  if (materialindices_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = materialindices_;
+    materialindices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Mesh::set_allocated_materialindices(::std::string* materialindices) {
+  if (materialindices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete materialindices_;
+  }
+  if (materialindices) {
+    set_has_materialindices();
+    materialindices_ = materialindices;
+  } else {
+    clear_has_materialindices();
+    materialindices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.materialIndices)
+}
+
+// repeated .modeldata.Material materials = 5;
+inline int Mesh::materials_size() const {
+  return materials_.size();
+}
+inline void Mesh::clear_materials() {
+  materials_.Clear();
+}
+inline const ::modeldata::Material& Mesh::materials(int index) const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.materials)
+  return materials_.Get(index);
+}
+inline ::modeldata::Material* Mesh::mutable_materials(int index) {
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.materials)
+  return materials_.Mutable(index);
+}
+inline ::modeldata::Material* Mesh::add_materials() {
+  // @@protoc_insertion_point(field_add:modeldata.Mesh.materials)
+  return materials_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
+Mesh::materials() const {
+  // @@protoc_insertion_point(field_list:modeldata.Mesh.materials)
+  return materials_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
+Mesh::mutable_materials() {
+  // @@protoc_insertion_point(field_mutable_list:modeldata.Mesh.materials)
+  return &materials_;
+}
+
+// -------------------------------------------------------------------
+
 // Scene
 
 // required .modeldata.Node rootNode = 1;
@@ -2052,36 +2081,6 @@ inline ::google::protobuf::RepeatedPtrField< ::modeldata::Mesh >*
 Scene::mutable_meshes() {
   // @@protoc_insertion_point(field_mutable_list:modeldata.Scene.meshes)
   return &meshes_;
-}
-
-// repeated .modeldata.Material materials = 3;
-inline int Scene::materials_size() const {
-  return materials_.size();
-}
-inline void Scene::clear_materials() {
-  materials_.Clear();
-}
-inline const ::modeldata::Material& Scene::materials(int index) const {
-  // @@protoc_insertion_point(field_get:modeldata.Scene.materials)
-  return materials_.Get(index);
-}
-inline ::modeldata::Material* Scene::mutable_materials(int index) {
-  // @@protoc_insertion_point(field_mutable:modeldata.Scene.materials)
-  return materials_.Mutable(index);
-}
-inline ::modeldata::Material* Scene::add_materials() {
-  // @@protoc_insertion_point(field_add:modeldata.Scene.materials)
-  return materials_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
-Scene::materials() const {
-  // @@protoc_insertion_point(field_list:modeldata.Scene.materials)
-  return materials_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
-Scene::mutable_materials() {
-  // @@protoc_insertion_point(field_mutable_list:modeldata.Scene.materials)
-  return &materials_;
 }
 
 

@@ -24,28 +24,18 @@ message Euler
 
 message Matrix4
 {
-	required Vec4				row0			= 1;
-	required Vec4				row1			= 2;
-	required Vec4				row2			= 3;
-	required Vec4				row3			= 4;
+	required Vec4				axisX			= 1;
+	required Vec4				axisY			= 2;
+	required Vec4				axisZ			= 3;
+	required Vec4				translation		= 4;
 }
 
 message Node
 {
-	optional string				name			= 1;
-	optional Matrix4			transformation	= 2;
-	optional uint32				subModel		= 3;
+	optional Vec3				eulerRotation	= 1;
+	optional Vec3				translation		= 2;
+	optional string				meshName		= 3;
 	repeated Node				children		= 4;
-	repeated uint32				meshIndex		= 5;
-}
-
-message Mesh
-{
-	optional string				name			= 1;	
-	required uint32				materialIndex	= 2;
-	optional bytes				vertices		= 3;
-	optional bytes				faces			= 4;
-	optional bool				externalRef		= 5;
 }
 
 message Material
@@ -55,9 +45,17 @@ message Material
 	optional uint32				surfaceFlags	= 3;
 }
 
+message Mesh
+{
+	optional string				name			= 1;
+	optional bytes				vertices		= 2;
+	optional bytes				faces			= 3;
+	optional bytes				materialIndices = 4;
+	repeated Material			materials		= 5;
+}
+
 message Scene
 {
 	required Node				rootNode		= 1;
 	repeated Mesh				meshes			= 2;
-	repeated Material			materials		= 3;
 }

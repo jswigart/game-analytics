@@ -4,56 +4,114 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <queue>
+#include <list>
 
 //#include "json\json.h"
 
 #include "analytics.pb.h"
 
-class GameAnalyticsLogger;
+class GameAnalytics;
 struct sqlite3;
 struct _ENetHost;
 
-//////////////////////////////////////////////////////////////////////////
-
-struct GameAnalyticsKeys
+namespace zmq
 {
-	std::string		mGameKey;
-	std::string		mSecretKey;
-	std::string		mDataApiKey;
-	std::string		mVersionKey;
+	class context_t;
+	class socket_t;
 };
 
 //////////////////////////////////////////////////////////////////////////
 
-class GameAnalyticsHeatmap
+class AnalyticsPublisher
 {
 public:
-	struct HeatEvent
-	{
-		float				mXYZ[3];
-		float				mValue;
-	};
+	AnalyticsPublisher();
+	virtual ~AnalyticsPublisher();
 
-	typedef std::vector<HeatEvent> HeatEvents;
+	virtual void Publish( const char * topic, const Analytics::MessageUnion & msg, const std::string & payload ) = 0;
 
-	HeatEvents	mEvents;
+	virtual bool Poll( Analytics::MessageUnion & msgOut ) = 0;
 };
+
+class AnalyticsSubscriber
+{
+public:
+	AnalyticsSubscriber();
+	virtual ~AnalyticsSubscriber();
+
+	virtual void Subscribe( const char * topic ) = 0;
+	virtual bool Poll( Analytics::MessageUnion & msgOut ) = 0;
+};
+
+//////////////////////////////////////////////////////////////////////////
+
+class zmqPublisher : public AnalyticsPublisher
+{
+public:
+	zmqPublisher( const char * ipAddr, unsigned short port );
+	zmqPublisher( zmq::context_t & context, const char * ipAddr, unsigned short port );
+	~zmqPublisher();
+
+	virtual void Publish( const char * topic, const Analytics::MessageUnion & msg, const std::string & payload );
+
+	virtual bool Poll( Analytics::MessageUnion & msgOut );
+private:
+	zmq::context_t *	mContext;
+	zmq::socket_t *		mSocketPub;
+	zmq::socket_t *		mSocketSub;
+};
+
+class zmqSubscriber : public AnalyticsSubscriber
+{
+public:
+	zmqSubscriber( zmq::context_t & context, const char * ipAddr, unsigned short port );
+	~zmqSubscriber();
+
+	virtual void Subscribe( const char * topic = "" );
+	virtual bool Poll( Analytics::MessageUnion & msgOut );
+private:
+	zmq::socket_t *		mSocketSub;
+};
+
+//////////////////////////////////////////////////////////////////////////
+
+#define SMART_FIELD_SET(m,fieldname,val) \
+	if ( m->fieldname() != val ) \
+		m->set_##fieldname(val);
 
 //////////////////////////////////////////////////////////////////////////
 
 // The main class for logging and sending events.
-class GameAnalyticsLogger
+class GameAnalytics
 {
 public:
-    GameAnalyticsLogger( const GameAnalyticsKeys & keys );
-
-	enum NetChannel
+	struct Keys
 	{
-		CHANNEL_EVENT_STREAM,
-		CHANNEL_DATA_STREAM,
-		CHANNEL_COUNT,
+		std::string		mGameKey;
+		std::string		mSecretKey;
+		std::string		mDataApiKey;
+		std::string		mVersionKey;
 	};
+
+	class Heatmap
+	{
+	public:
+		struct HeatEvent
+		{
+			float				mXYZ[ 3 ];
+			float				mValue;
+		};
+
+		typedef std::vector<HeatEvent> HeatEvents;
+
+		HeatEvents	mEvents;
+	};
+
+    GameAnalytics( const Keys & keys );
+	~GameAnalytics();
+	
+	void SetPublisher( AnalyticsPublisher * publisher );
+	AnalyticsPublisher * GetPublisher() const;
 
 	void AddEvent( const Analytics::MessageUnion & msg );
 
@@ -65,17 +123,16 @@ public:
 	void AddQualityEvent( const char * areaId, const char * eventId );
 	void AddQualityEvent( const char * areaId, const char * eventId, const char * messageId );
 
+	bool Poll( Analytics::MessageUnion & msgOut );
+
 	size_t SubmitDesignEvents();
 	size_t SubmitQualityEvents();
 
-	const GameAnalyticsHeatmap * GetHeatmap(const std::string & area, const std::string & eventIds, bool loadFromServer);
+	const Heatmap * GetHeatmap(const std::string & area, const std::string & eventIds, bool loadFromServer);
 
 	bool CreateDatabase( const char * filename );
 	void CloseDatabase();
-
-	void AddModel( const char * modelName, const std::string & data, int lod = 0 );
-	//void AddEntity( const int id, const Json::Value & properties );
-
+	
 	struct HeatmapDef
 	{
 		const char *	mAreaId;
@@ -88,40 +145,35 @@ public:
 	void WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents );
 
 	void GetUniqueEventNames( std::vector< std::string > & eventNames );
-
+	
 	bool GetError( std::string & errorOut );
-
-	// Network
-	void InitNetwork();
-	void ShutdownNetwork();
-
-	bool IsNetworkActive() const;
-	size_t NumClientsConnected() const;
-	bool StartHost( const char * ipAddress, unsigned short port );
-	bool Connect( const char * ipAddress, unsigned short port );
-	void ServiceNetwork( std::vector<Analytics::MessageUnion*> & recievedMessages );
 private:
     void SetUserID();
     void SetSessionID();
 	
-    const GameAnalyticsKeys		mKeys;
+    const Keys		mKeys;
     std::string					mUserId;
     std::string					mSessionId;
 
-	typedef std::map<std::string,GameAnalyticsHeatmap*> HeatMapsByName;
+	typedef std::map<std::string,Heatmap*> HeatMapsByName;
 
-	typedef std::queue<std::string> ErrorQueue;
+	typedef std::map<std::string, Analytics::MessageUnion> MsgCache;
 
-	ErrorQueue					mErrors;
+	typedef std::list<std::string> Errors;
+
+	Errors						mErrors;
 
 	HeatMapsByName				mHeatMaps;
 
 	sqlite3 *					mDatabase;
+	
+	AnalyticsPublisher *		mPublisher;
+	
+	MsgCache					mMessageCache;
 
-	// remote connections
-	_ENetHost *					mConnection;
+	const google::protobuf::OneofDescriptor* mMsgSubtypes;
 
-	GameAnalyticsLogger & operator=( const GameAnalyticsLogger & other );
+	GameAnalytics & operator=( const GameAnalytics & other );
 
 	std::string BuildUrl( const std::string & category );
 

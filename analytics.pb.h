@@ -25,7 +25,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
-#include "modeldata.pb.h"
+#include "google/protobuf/descriptor.pb.h"
 // @@protoc_insertion_point(includes)
 
 namespace Analytics {
@@ -35,7 +35,8 @@ void  protobuf_AddDesc_analytics_2eproto();
 void protobuf_AssignDesc_analytics_2eproto();
 void protobuf_ShutdownFile_analytics_2eproto();
 
-class SystemClientInfo;
+class TopicSubscribe;
+class TopicUnsubscribe;
 class SystemNavNotFound;
 class SystemNavAutoDownloaded;
 class SystemAssert;
@@ -70,14 +71,14 @@ inline bool Compression_Parse(
 }
 // ===================================================================
 
-class SystemClientInfo : public ::google::protobuf::Message {
+class TopicSubscribe : public ::google::protobuf::Message {
  public:
-  SystemClientInfo();
-  virtual ~SystemClientInfo();
+  TopicSubscribe();
+  virtual ~TopicSubscribe();
 
-  SystemClientInfo(const SystemClientInfo& from);
+  TopicSubscribe(const TopicSubscribe& from);
 
-  inline SystemClientInfo& operator=(const SystemClientInfo& from) {
+  inline TopicSubscribe& operator=(const TopicSubscribe& from) {
     CopyFrom(from);
     return *this;
   }
@@ -91,17 +92,17 @@ class SystemClientInfo : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const SystemClientInfo& default_instance();
+  static const TopicSubscribe& default_instance();
 
-  void Swap(SystemClientInfo* other);
+  void Swap(TopicSubscribe* other);
 
   // implements Message ----------------------------------------------
 
-  SystemClientInfo* New() const;
+  TopicSubscribe* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const SystemClientInfo& from);
-  void MergeFrom(const SystemClientInfo& from);
+  void CopyFrom(const TopicSubscribe& from);
+  void MergeFrom(const TopicSubscribe& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -123,79 +124,118 @@ class SystemClientInfo : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string userId = 1;
-  inline bool has_userid() const;
-  inline void clear_userid();
-  static const int kUserIdFieldNumber = 1;
-  inline const ::std::string& userid() const;
-  inline void set_userid(const ::std::string& value);
-  inline void set_userid(const char* value);
-  inline void set_userid(const char* value, size_t size);
-  inline ::std::string* mutable_userid();
-  inline ::std::string* release_userid();
-  inline void set_allocated_userid(::std::string* userid);
+  // required string topic = 1;
+  inline bool has_topic() const;
+  inline void clear_topic();
+  static const int kTopicFieldNumber = 1;
+  inline const ::std::string& topic() const;
+  inline void set_topic(const ::std::string& value);
+  inline void set_topic(const char* value);
+  inline void set_topic(const char* value, size_t size);
+  inline ::std::string* mutable_topic();
+  inline ::std::string* release_topic();
+  inline void set_allocated_topic(::std::string* topic);
 
-  // required string mapId = 2;
-  inline bool has_mapid() const;
-  inline void clear_mapid();
-  static const int kMapIdFieldNumber = 2;
-  inline const ::std::string& mapid() const;
-  inline void set_mapid(const ::std::string& value);
-  inline void set_mapid(const char* value);
-  inline void set_mapid(const char* value, size_t size);
-  inline ::std::string* mutable_mapid();
-  inline ::std::string* release_mapid();
-  inline void set_allocated_mapid(::std::string* mapid);
-
-  // required string enumClassId = 3;
-  inline bool has_enumclassid() const;
-  inline void clear_enumclassid();
-  static const int kEnumClassIdFieldNumber = 3;
-  inline const ::std::string& enumclassid() const;
-  inline void set_enumclassid(const ::std::string& value);
-  inline void set_enumclassid(const char* value);
-  inline void set_enumclassid(const char* value, size_t size);
-  inline ::std::string* mutable_enumclassid();
-  inline ::std::string* release_enumclassid();
-  inline void set_allocated_enumclassid(::std::string* enumclassid);
-
-  // required string enumWeaponId = 4;
-  inline bool has_enumweaponid() const;
-  inline void clear_enumweaponid();
-  static const int kEnumWeaponIdFieldNumber = 4;
-  inline const ::std::string& enumweaponid() const;
-  inline void set_enumweaponid(const ::std::string& value);
-  inline void set_enumweaponid(const char* value);
-  inline void set_enumweaponid(const char* value, size_t size);
-  inline ::std::string* mutable_enumweaponid();
-  inline ::std::string* release_enumweaponid();
-  inline void set_allocated_enumweaponid(::std::string* enumweaponid);
-
-  // @@protoc_insertion_point(class_scope:Analytics.SystemClientInfo)
+  // @@protoc_insertion_point(class_scope:Analytics.TopicSubscribe)
  private:
-  inline void set_has_userid();
-  inline void clear_has_userid();
-  inline void set_has_mapid();
-  inline void clear_has_mapid();
-  inline void set_has_enumclassid();
-  inline void clear_has_enumclassid();
-  inline void set_has_enumweaponid();
-  inline void clear_has_enumweaponid();
+  inline void set_has_topic();
+  inline void clear_has_topic();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* userid_;
-  ::std::string* mapid_;
-  ::std::string* enumclassid_;
-  ::std::string* enumweaponid_;
+  ::std::string* topic_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemClientInfo* default_instance_;
+  static TopicSubscribe* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class TopicUnsubscribe : public ::google::protobuf::Message {
+ public:
+  TopicUnsubscribe();
+  virtual ~TopicUnsubscribe();
+
+  TopicUnsubscribe(const TopicUnsubscribe& from);
+
+  inline TopicUnsubscribe& operator=(const TopicUnsubscribe& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const TopicUnsubscribe& default_instance();
+
+  void Swap(TopicUnsubscribe* other);
+
+  // implements Message ----------------------------------------------
+
+  TopicUnsubscribe* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const TopicUnsubscribe& from);
+  void MergeFrom(const TopicUnsubscribe& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string topic = 1;
+  inline bool has_topic() const;
+  inline void clear_topic();
+  static const int kTopicFieldNumber = 1;
+  inline const ::std::string& topic() const;
+  inline void set_topic(const ::std::string& value);
+  inline void set_topic(const char* value);
+  inline void set_topic(const char* value, size_t size);
+  inline ::std::string* mutable_topic();
+  inline ::std::string* release_topic();
+  inline void set_allocated_topic(::std::string* topic);
+
+  // @@protoc_insertion_point(class_scope:Analytics.TopicUnsubscribe)
+ private:
+  inline void set_has_topic();
+  inline void clear_has_topic();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* topic_;
+  friend void  protobuf_AddDesc_analytics_2eproto();
+  friend void protobuf_AssignDesc_analytics_2eproto();
+  friend void protobuf_ShutdownFile_analytics_2eproto();
+
+  void InitAsDefaultInstance();
+  static TopicUnsubscribe* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -743,65 +783,145 @@ class GameEntityInfo : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 classid() const;
   inline void set_classid(::google::protobuf::int32 value);
 
-  // required .modeldata.Vec3 position = 4;
-  inline bool has_position() const;
-  inline void clear_position();
-  static const int kPositionFieldNumber = 4;
-  inline const ::modeldata::Vec3& position() const;
-  inline ::modeldata::Vec3* mutable_position();
-  inline ::modeldata::Vec3* release_position();
-  inline void set_allocated_position(::modeldata::Vec3* position);
+  // required float positionX = 4;
+  inline bool has_positionx() const;
+  inline void clear_positionx();
+  static const int kPositionXFieldNumber = 4;
+  inline float positionx() const;
+  inline void set_positionx(float value);
 
-  // required .modeldata.Euler orient = 5;
-  inline bool has_orient() const;
-  inline void clear_orient();
-  static const int kOrientFieldNumber = 5;
-  inline const ::modeldata::Euler& orient() const;
-  inline ::modeldata::Euler* mutable_orient();
-  inline ::modeldata::Euler* release_orient();
-  inline void set_allocated_orient(::modeldata::Euler* orient);
+  // required float positionY = 5;
+  inline bool has_positiony() const;
+  inline void clear_positiony();
+  static const int kPositionYFieldNumber = 5;
+  inline float positiony() const;
+  inline void set_positiony(float value);
 
-  // optional int32 quantity = 6;
+  // required float positionZ = 6;
+  inline bool has_positionz() const;
+  inline void clear_positionz();
+  static const int kPositionZFieldNumber = 6;
+  inline float positionz() const;
+  inline void set_positionz(float value);
+
+  // required float heading = 7;
+  inline bool has_heading() const;
+  inline void clear_heading();
+  static const int kHeadingFieldNumber = 7;
+  inline float heading() const;
+  inline void set_heading(float value);
+
+  // required float pitch = 8;
+  inline bool has_pitch() const;
+  inline void clear_pitch();
+  static const int kPitchFieldNumber = 8;
+  inline float pitch() const;
+  inline void set_pitch(float value);
+
+  // required float roll = 9;
+  inline bool has_roll() const;
+  inline void clear_roll();
+  static const int kRollFieldNumber = 9;
+  inline float roll() const;
+  inline void set_roll(float value);
+
+  // optional uint32 quantity = 10;
   inline bool has_quantity() const;
   inline void clear_quantity();
-  static const int kQuantityFieldNumber = 6;
-  inline ::google::protobuf::int32 quantity() const;
-  inline void set_quantity(::google::protobuf::int32 value);
+  static const int kQuantityFieldNumber = 10;
+  inline ::google::protobuf::uint32 quantity() const;
+  inline void set_quantity(::google::protobuf::uint32 value);
 
-  // optional int32 quantityMax = 7;
+  // optional uint32 quantityMax = 11;
   inline bool has_quantitymax() const;
   inline void clear_quantitymax();
-  static const int kQuantityMaxFieldNumber = 7;
-  inline ::google::protobuf::int32 quantitymax() const;
-  inline void set_quantitymax(::google::protobuf::int32 value);
+  static const int kQuantityMaxFieldNumber = 11;
+  inline ::google::protobuf::uint32 quantitymax() const;
+  inline void set_quantitymax(::google::protobuf::uint32 value);
 
-  // optional int32 health = 8;
+  // optional uint32 health = 12;
   inline bool has_health() const;
   inline void clear_health();
-  static const int kHealthFieldNumber = 8;
-  inline ::google::protobuf::int32 health() const;
-  inline void set_health(::google::protobuf::int32 value);
+  static const int kHealthFieldNumber = 12;
+  inline ::google::protobuf::uint32 health() const;
+  inline void set_health(::google::protobuf::uint32 value);
 
-  // optional int32 healthMax = 9;
+  // optional uint32 healthMax = 13;
   inline bool has_healthmax() const;
   inline void clear_healthmax();
-  static const int kHealthMaxFieldNumber = 9;
-  inline ::google::protobuf::int32 healthmax() const;
-  inline void set_healthmax(::google::protobuf::int32 value);
+  static const int kHealthMaxFieldNumber = 13;
+  inline ::google::protobuf::uint32 healthmax() const;
+  inline void set_healthmax(::google::protobuf::uint32 value);
 
-  // optional int32 armor = 10;
+  // optional uint32 armor = 14;
   inline bool has_armor() const;
   inline void clear_armor();
-  static const int kArmorFieldNumber = 10;
-  inline ::google::protobuf::int32 armor() const;
-  inline void set_armor(::google::protobuf::int32 value);
+  static const int kArmorFieldNumber = 14;
+  inline ::google::protobuf::uint32 armor() const;
+  inline void set_armor(::google::protobuf::uint32 value);
 
-  // optional int32 armoryMax = 11;
-  inline bool has_armorymax() const;
-  inline void clear_armorymax();
-  static const int kArmoryMaxFieldNumber = 11;
-  inline ::google::protobuf::int32 armorymax() const;
-  inline void set_armorymax(::google::protobuf::int32 value);
+  // optional uint32 armorMax = 15;
+  inline bool has_armormax() const;
+  inline void clear_armormax();
+  static const int kArmorMaxFieldNumber = 15;
+  inline ::google::protobuf::uint32 armormax() const;
+  inline void set_armormax(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo1 = 16;
+  inline bool has_ammo1() const;
+  inline void clear_ammo1();
+  static const int kAmmo1FieldNumber = 16;
+  inline ::google::protobuf::uint32 ammo1() const;
+  inline void set_ammo1(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo1Max = 17;
+  inline bool has_ammo1max() const;
+  inline void clear_ammo1max();
+  static const int kAmmo1MaxFieldNumber = 17;
+  inline ::google::protobuf::uint32 ammo1max() const;
+  inline void set_ammo1max(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo2 = 18;
+  inline bool has_ammo2() const;
+  inline void clear_ammo2();
+  static const int kAmmo2FieldNumber = 18;
+  inline ::google::protobuf::uint32 ammo2() const;
+  inline void set_ammo2(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo2Max = 19;
+  inline bool has_ammo2max() const;
+  inline void clear_ammo2max();
+  static const int kAmmo2MaxFieldNumber = 19;
+  inline ::google::protobuf::uint32 ammo2max() const;
+  inline void set_ammo2max(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo3 = 20;
+  inline bool has_ammo3() const;
+  inline void clear_ammo3();
+  static const int kAmmo3FieldNumber = 20;
+  inline ::google::protobuf::uint32 ammo3() const;
+  inline void set_ammo3(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo3Max = 21;
+  inline bool has_ammo3max() const;
+  inline void clear_ammo3max();
+  static const int kAmmo3MaxFieldNumber = 21;
+  inline ::google::protobuf::uint32 ammo3max() const;
+  inline void set_ammo3max(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo4 = 22;
+  inline bool has_ammo4() const;
+  inline void clear_ammo4();
+  static const int kAmmo4FieldNumber = 22;
+  inline ::google::protobuf::uint32 ammo4() const;
+  inline void set_ammo4(::google::protobuf::uint32 value);
+
+  // optional uint32 ammo4Max = 23;
+  inline bool has_ammo4max() const;
+  inline void clear_ammo4max();
+  static const int kAmmo4MaxFieldNumber = 23;
+  inline ::google::protobuf::uint32 ammo4max() const;
+  inline void set_ammo4max(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:Analytics.GameEntityInfo)
  private:
@@ -811,10 +931,18 @@ class GameEntityInfo : public ::google::protobuf::Message {
   inline void clear_has_groupid();
   inline void set_has_classid();
   inline void clear_has_classid();
-  inline void set_has_position();
-  inline void clear_has_position();
-  inline void set_has_orient();
-  inline void clear_has_orient();
+  inline void set_has_positionx();
+  inline void clear_has_positionx();
+  inline void set_has_positiony();
+  inline void clear_has_positiony();
+  inline void set_has_positionz();
+  inline void clear_has_positionz();
+  inline void set_has_heading();
+  inline void clear_has_heading();
+  inline void set_has_pitch();
+  inline void clear_has_pitch();
+  inline void set_has_roll();
+  inline void clear_has_roll();
   inline void set_has_quantity();
   inline void clear_has_quantity();
   inline void set_has_quantitymax();
@@ -825,8 +953,24 @@ class GameEntityInfo : public ::google::protobuf::Message {
   inline void clear_has_healthmax();
   inline void set_has_armor();
   inline void clear_has_armor();
-  inline void set_has_armorymax();
-  inline void clear_has_armorymax();
+  inline void set_has_armormax();
+  inline void clear_has_armormax();
+  inline void set_has_ammo1();
+  inline void clear_has_ammo1();
+  inline void set_has_ammo1max();
+  inline void clear_has_ammo1max();
+  inline void set_has_ammo2();
+  inline void clear_has_ammo2();
+  inline void set_has_ammo2max();
+  inline void clear_has_ammo2max();
+  inline void set_has_ammo3();
+  inline void clear_has_ammo3();
+  inline void set_has_ammo3max();
+  inline void clear_has_ammo3max();
+  inline void set_has_ammo4();
+  inline void clear_has_ammo4();
+  inline void set_has_ammo4max();
+  inline void clear_has_ammo4max();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -834,15 +978,27 @@ class GameEntityInfo : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::int32 entityid_;
   ::google::protobuf::int32 groupid_;
-  ::modeldata::Vec3* position_;
   ::google::protobuf::int32 classid_;
-  ::google::protobuf::int32 quantity_;
-  ::modeldata::Euler* orient_;
-  ::google::protobuf::int32 quantitymax_;
-  ::google::protobuf::int32 health_;
-  ::google::protobuf::int32 healthmax_;
-  ::google::protobuf::int32 armor_;
-  ::google::protobuf::int32 armorymax_;
+  float positionx_;
+  float positiony_;
+  float positionz_;
+  float heading_;
+  float pitch_;
+  float roll_;
+  ::google::protobuf::uint32 quantity_;
+  ::google::protobuf::uint32 quantitymax_;
+  ::google::protobuf::uint32 health_;
+  ::google::protobuf::uint32 healthmax_;
+  ::google::protobuf::uint32 armor_;
+  ::google::protobuf::uint32 armormax_;
+  ::google::protobuf::uint32 ammo1_;
+  ::google::protobuf::uint32 ammo1max_;
+  ::google::protobuf::uint32 ammo2_;
+  ::google::protobuf::uint32 ammo2max_;
+  ::google::protobuf::uint32 ammo3_;
+  ::google::protobuf::uint32 ammo3max_;
+  ::google::protobuf::uint32 ammo4_;
+  ::google::protobuf::uint32 ammo4max_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
@@ -994,28 +1150,46 @@ class GameWeaponFired : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 weaponid() const;
   inline void set_weaponid(::google::protobuf::int32 value);
 
-  // required .modeldata.Vec3 position = 2;
-  inline bool has_position() const;
-  inline void clear_position();
-  static const int kPositionFieldNumber = 2;
-  inline const ::modeldata::Vec3& position() const;
-  inline ::modeldata::Vec3* mutable_position();
-  inline ::modeldata::Vec3* release_position();
-  inline void set_allocated_position(::modeldata::Vec3* position);
+  // required float positionX = 2;
+  inline bool has_positionx() const;
+  inline void clear_positionx();
+  static const int kPositionXFieldNumber = 2;
+  inline float positionx() const;
+  inline void set_positionx(float value);
+
+  // required float positionY = 3;
+  inline bool has_positiony() const;
+  inline void clear_positiony();
+  static const int kPositionYFieldNumber = 3;
+  inline float positiony() const;
+  inline void set_positiony(float value);
+
+  // required float positionZ = 4;
+  inline bool has_positionz() const;
+  inline void clear_positionz();
+  static const int kPositionZFieldNumber = 4;
+  inline float positionz() const;
+  inline void set_positionz(float value);
 
   // @@protoc_insertion_point(class_scope:Analytics.GameWeaponFired)
  private:
   inline void set_has_weaponid();
   inline void clear_has_weaponid();
-  inline void set_has_position();
-  inline void clear_has_position();
+  inline void set_has_positionx();
+  inline void clear_has_positionx();
+  inline void set_has_positiony();
+  inline void clear_has_positiony();
+  inline void set_has_positionz();
+  inline void clear_has_positionz();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::modeldata::Vec3* position_;
   ::google::protobuf::int32 weaponid_;
+  float positionx_;
+  float positiony_;
+  float positionz_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
@@ -1184,28 +1358,46 @@ class GameTookDamage : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 weaponid() const;
   inline void set_weaponid(::google::protobuf::int32 value);
 
-  // required .modeldata.Vec3 position = 2;
-  inline bool has_position() const;
-  inline void clear_position();
-  static const int kPositionFieldNumber = 2;
-  inline const ::modeldata::Vec3& position() const;
-  inline ::modeldata::Vec3* mutable_position();
-  inline ::modeldata::Vec3* release_position();
-  inline void set_allocated_position(::modeldata::Vec3* position);
+  // required float positionX = 2;
+  inline bool has_positionx() const;
+  inline void clear_positionx();
+  static const int kPositionXFieldNumber = 2;
+  inline float positionx() const;
+  inline void set_positionx(float value);
+
+  // required float positionY = 3;
+  inline bool has_positiony() const;
+  inline void clear_positiony();
+  static const int kPositionYFieldNumber = 3;
+  inline float positiony() const;
+  inline void set_positiony(float value);
+
+  // required float positionZ = 4;
+  inline bool has_positionz() const;
+  inline void clear_positionz();
+  static const int kPositionZFieldNumber = 4;
+  inline float positionz() const;
+  inline void set_positionz(float value);
 
   // @@protoc_insertion_point(class_scope:Analytics.GameTookDamage)
  private:
   inline void set_has_weaponid();
   inline void clear_has_weaponid();
-  inline void set_has_position();
-  inline void clear_has_position();
+  inline void set_has_positionx();
+  inline void clear_has_positionx();
+  inline void set_has_positiony();
+  inline void clear_has_positiony();
+  inline void set_has_positionz();
+  inline void clear_has_positionz();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::modeldata::Vec3* position_;
   ::google::protobuf::int32 weaponid_;
+  float positionx_;
+  float positiony_;
+  float positionz_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
@@ -1268,25 +1460,53 @@ class GameNavigationStuck : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .modeldata.Vec3 position = 1;
-  inline bool has_position() const;
-  inline void clear_position();
-  static const int kPositionFieldNumber = 1;
-  inline const ::modeldata::Vec3& position() const;
-  inline ::modeldata::Vec3* mutable_position();
-  inline ::modeldata::Vec3* release_position();
-  inline void set_allocated_position(::modeldata::Vec3* position);
+  // required int32 entityId = 1;
+  inline bool has_entityid() const;
+  inline void clear_entityid();
+  static const int kEntityIdFieldNumber = 1;
+  inline ::google::protobuf::int32 entityid() const;
+  inline void set_entityid(::google::protobuf::int32 value);
+
+  // required float positionX = 2;
+  inline bool has_positionx() const;
+  inline void clear_positionx();
+  static const int kPositionXFieldNumber = 2;
+  inline float positionx() const;
+  inline void set_positionx(float value);
+
+  // required float positionY = 3;
+  inline bool has_positiony() const;
+  inline void clear_positiony();
+  static const int kPositionYFieldNumber = 3;
+  inline float positiony() const;
+  inline void set_positiony(float value);
+
+  // required float positionZ = 4;
+  inline bool has_positionz() const;
+  inline void clear_positionz();
+  static const int kPositionZFieldNumber = 4;
+  inline float positionz() const;
+  inline void set_positionz(float value);
 
   // @@protoc_insertion_point(class_scope:Analytics.GameNavigationStuck)
  private:
-  inline void set_has_position();
-  inline void clear_has_position();
+  inline void set_has_entityid();
+  inline void clear_has_entityid();
+  inline void set_has_positionx();
+  inline void clear_has_positionx();
+  inline void set_has_positiony();
+  inline void clear_has_positiony();
+  inline void set_has_positionz();
+  inline void clear_has_positionz();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::modeldata::Vec3* position_;
+  ::google::protobuf::int32 entityid_;
+  float positionx_;
+  float positiony_;
+  float positionz_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
@@ -1330,6 +1550,8 @@ class MessageUnion : public ::google::protobuf::Message {
     kGameDeath = 102,
     kGameTookDamage = 103,
     kGameNavigationStuck = 104,
+    kTopicSubscribe = 1000,
+    kTopicUnsubscribe = 1001,
     MSG_NOT_SET = 0,
   };
 
@@ -1460,6 +1682,24 @@ class MessageUnion : public ::google::protobuf::Message {
   inline ::Analytics::GameNavigationStuck* release_gamenavigationstuck();
   inline void set_allocated_gamenavigationstuck(::Analytics::GameNavigationStuck* gamenavigationstuck);
 
+  // optional .Analytics.TopicSubscribe topicSubscribe = 1000;
+  inline bool has_topicsubscribe() const;
+  inline void clear_topicsubscribe();
+  static const int kTopicSubscribeFieldNumber = 1000;
+  inline const ::Analytics::TopicSubscribe& topicsubscribe() const;
+  inline ::Analytics::TopicSubscribe* mutable_topicsubscribe();
+  inline ::Analytics::TopicSubscribe* release_topicsubscribe();
+  inline void set_allocated_topicsubscribe(::Analytics::TopicSubscribe* topicsubscribe);
+
+  // optional .Analytics.TopicUnsubscribe topicUnsubscribe = 1001;
+  inline bool has_topicunsubscribe() const;
+  inline void clear_topicunsubscribe();
+  static const int kTopicUnsubscribeFieldNumber = 1001;
+  inline const ::Analytics::TopicUnsubscribe& topicunsubscribe() const;
+  inline ::Analytics::TopicUnsubscribe* mutable_topicunsubscribe();
+  inline ::Analytics::TopicUnsubscribe* release_topicunsubscribe();
+  inline void set_allocated_topicunsubscribe(::Analytics::TopicUnsubscribe* topicunsubscribe);
+
   inline MsgCase msg_case() const;
   // @@protoc_insertion_point(class_scope:Analytics.MessageUnion)
  private:
@@ -1475,6 +1715,8 @@ class MessageUnion : public ::google::protobuf::Message {
   inline void set_has_gamedeath();
   inline void set_has_gametookdamage();
   inline void set_has_gamenavigationstuck();
+  inline void set_has_topicsubscribe();
+  inline void set_has_topicunsubscribe();
 
   inline bool has_msg();
   void clear_msg();
@@ -1496,6 +1738,8 @@ class MessageUnion : public ::google::protobuf::Message {
     ::Analytics::GameDeath* gamedeath_;
     ::Analytics::GameTookDamage* gametookdamage_;
     ::Analytics::GameNavigationStuck* gamenavigationstuck_;
+    ::Analytics::TopicSubscribe* topicsubscribe_;
+    ::Analytics::TopicUnsubscribe* topicunsubscribe_;
   } msg_;
   ::google::protobuf::uint32 _oneof_case_[1];
 
@@ -1508,313 +1752,173 @@ class MessageUnion : public ::google::protobuf::Message {
 };
 // ===================================================================
 
+static const int kCachelastvalueFieldNumber = 5000;
+extern ::google::protobuf::internal::ExtensionIdentifier< ::google::protobuf::MessageOptions,
+    ::google::protobuf::internal::PrimitiveTypeTraits< bool >, 8, false >
+  cachelastvalue;
+static const int kCachekeysuffixFieldNumber = 5001;
+extern ::google::protobuf::internal::ExtensionIdentifier< ::google::protobuf::MessageOptions,
+    ::google::protobuf::internal::StringTypeTraits, 9, false >
+  cachekeysuffix;
 
 // ===================================================================
 
-// SystemClientInfo
+// TopicSubscribe
 
-// required string userId = 1;
-inline bool SystemClientInfo::has_userid() const {
+// required string topic = 1;
+inline bool TopicSubscribe::has_topic() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemClientInfo::set_has_userid() {
+inline void TopicSubscribe::set_has_topic() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemClientInfo::clear_has_userid() {
+inline void TopicSubscribe::clear_has_topic() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemClientInfo::clear_userid() {
-  if (userid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    userid_->clear();
+inline void TopicSubscribe::clear_topic() {
+  if (topic_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_->clear();
   }
-  clear_has_userid();
+  clear_has_topic();
 }
-inline const ::std::string& SystemClientInfo::userid() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemClientInfo.userId)
-  return *userid_;
+inline const ::std::string& TopicSubscribe::topic() const {
+  // @@protoc_insertion_point(field_get:Analytics.TopicSubscribe.topic)
+  return *topic_;
 }
-inline void SystemClientInfo::set_userid(const ::std::string& value) {
-  set_has_userid();
-  if (userid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    userid_ = new ::std::string;
+inline void TopicSubscribe::set_topic(const ::std::string& value) {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  userid_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemClientInfo.userId)
+  topic_->assign(value);
+  // @@protoc_insertion_point(field_set:Analytics.TopicSubscribe.topic)
 }
-inline void SystemClientInfo::set_userid(const char* value) {
-  set_has_userid();
-  if (userid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    userid_ = new ::std::string;
+inline void TopicSubscribe::set_topic(const char* value) {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  userid_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemClientInfo.userId)
+  topic_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Analytics.TopicSubscribe.topic)
 }
-inline void SystemClientInfo::set_userid(const char* value, size_t size) {
-  set_has_userid();
-  if (userid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    userid_ = new ::std::string;
+inline void TopicSubscribe::set_topic(const char* value, size_t size) {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  userid_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemClientInfo.userId)
+  topic_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Analytics.TopicSubscribe.topic)
 }
-inline ::std::string* SystemClientInfo::mutable_userid() {
-  set_has_userid();
-  if (userid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    userid_ = new ::std::string;
+inline ::std::string* TopicSubscribe::mutable_topic() {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemClientInfo.userId)
-  return userid_;
+  // @@protoc_insertion_point(field_mutable:Analytics.TopicSubscribe.topic)
+  return topic_;
 }
-inline ::std::string* SystemClientInfo::release_userid() {
-  clear_has_userid();
-  if (userid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* TopicSubscribe::release_topic() {
+  clear_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = userid_;
-    userid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = topic_;
+    topic_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void SystemClientInfo::set_allocated_userid(::std::string* userid) {
-  if (userid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete userid_;
+inline void TopicSubscribe::set_allocated_topic(::std::string* topic) {
+  if (topic_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete topic_;
   }
-  if (userid) {
-    set_has_userid();
-    userid_ = userid;
+  if (topic) {
+    set_has_topic();
+    topic_ = topic;
   } else {
-    clear_has_userid();
-    userid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_topic();
+    topic_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemClientInfo.userId)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.TopicSubscribe.topic)
 }
 
-// required string mapId = 2;
-inline bool SystemClientInfo::has_mapid() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void SystemClientInfo::set_has_mapid() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void SystemClientInfo::clear_has_mapid() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void SystemClientInfo::clear_mapid() {
-  if (mapid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    mapid_->clear();
-  }
-  clear_has_mapid();
-}
-inline const ::std::string& SystemClientInfo::mapid() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemClientInfo.mapId)
-  return *mapid_;
-}
-inline void SystemClientInfo::set_mapid(const ::std::string& value) {
-  set_has_mapid();
-  if (mapid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    mapid_ = new ::std::string;
-  }
-  mapid_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemClientInfo.mapId)
-}
-inline void SystemClientInfo::set_mapid(const char* value) {
-  set_has_mapid();
-  if (mapid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    mapid_ = new ::std::string;
-  }
-  mapid_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemClientInfo.mapId)
-}
-inline void SystemClientInfo::set_mapid(const char* value, size_t size) {
-  set_has_mapid();
-  if (mapid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    mapid_ = new ::std::string;
-  }
-  mapid_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemClientInfo.mapId)
-}
-inline ::std::string* SystemClientInfo::mutable_mapid() {
-  set_has_mapid();
-  if (mapid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    mapid_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemClientInfo.mapId)
-  return mapid_;
-}
-inline ::std::string* SystemClientInfo::release_mapid() {
-  clear_has_mapid();
-  if (mapid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = mapid_;
-    mapid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void SystemClientInfo::set_allocated_mapid(::std::string* mapid) {
-  if (mapid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete mapid_;
-  }
-  if (mapid) {
-    set_has_mapid();
-    mapid_ = mapid;
-  } else {
-    clear_has_mapid();
-    mapid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemClientInfo.mapId)
-}
+// -------------------------------------------------------------------
 
-// required string enumClassId = 3;
-inline bool SystemClientInfo::has_enumclassid() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void SystemClientInfo::set_has_enumclassid() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void SystemClientInfo::clear_has_enumclassid() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void SystemClientInfo::clear_enumclassid() {
-  if (enumclassid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumclassid_->clear();
-  }
-  clear_has_enumclassid();
-}
-inline const ::std::string& SystemClientInfo::enumclassid() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemClientInfo.enumClassId)
-  return *enumclassid_;
-}
-inline void SystemClientInfo::set_enumclassid(const ::std::string& value) {
-  set_has_enumclassid();
-  if (enumclassid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumclassid_ = new ::std::string;
-  }
-  enumclassid_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemClientInfo.enumClassId)
-}
-inline void SystemClientInfo::set_enumclassid(const char* value) {
-  set_has_enumclassid();
-  if (enumclassid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumclassid_ = new ::std::string;
-  }
-  enumclassid_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemClientInfo.enumClassId)
-}
-inline void SystemClientInfo::set_enumclassid(const char* value, size_t size) {
-  set_has_enumclassid();
-  if (enumclassid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumclassid_ = new ::std::string;
-  }
-  enumclassid_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemClientInfo.enumClassId)
-}
-inline ::std::string* SystemClientInfo::mutable_enumclassid() {
-  set_has_enumclassid();
-  if (enumclassid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumclassid_ = new ::std::string;
-  }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemClientInfo.enumClassId)
-  return enumclassid_;
-}
-inline ::std::string* SystemClientInfo::release_enumclassid() {
-  clear_has_enumclassid();
-  if (enumclassid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = enumclassid_;
-    enumclassid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-    return temp;
-  }
-}
-inline void SystemClientInfo::set_allocated_enumclassid(::std::string* enumclassid) {
-  if (enumclassid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete enumclassid_;
-  }
-  if (enumclassid) {
-    set_has_enumclassid();
-    enumclassid_ = enumclassid;
-  } else {
-    clear_has_enumclassid();
-    enumclassid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemClientInfo.enumClassId)
-}
+// TopicUnsubscribe
 
-// required string enumWeaponId = 4;
-inline bool SystemClientInfo::has_enumweaponid() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+// required string topic = 1;
+inline bool TopicUnsubscribe::has_topic() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemClientInfo::set_has_enumweaponid() {
-  _has_bits_[0] |= 0x00000008u;
+inline void TopicUnsubscribe::set_has_topic() {
+  _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemClientInfo::clear_has_enumweaponid() {
-  _has_bits_[0] &= ~0x00000008u;
+inline void TopicUnsubscribe::clear_has_topic() {
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemClientInfo::clear_enumweaponid() {
-  if (enumweaponid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumweaponid_->clear();
+inline void TopicUnsubscribe::clear_topic() {
+  if (topic_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_->clear();
   }
-  clear_has_enumweaponid();
+  clear_has_topic();
 }
-inline const ::std::string& SystemClientInfo::enumweaponid() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemClientInfo.enumWeaponId)
-  return *enumweaponid_;
+inline const ::std::string& TopicUnsubscribe::topic() const {
+  // @@protoc_insertion_point(field_get:Analytics.TopicUnsubscribe.topic)
+  return *topic_;
 }
-inline void SystemClientInfo::set_enumweaponid(const ::std::string& value) {
-  set_has_enumweaponid();
-  if (enumweaponid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumweaponid_ = new ::std::string;
+inline void TopicUnsubscribe::set_topic(const ::std::string& value) {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  enumweaponid_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemClientInfo.enumWeaponId)
+  topic_->assign(value);
+  // @@protoc_insertion_point(field_set:Analytics.TopicUnsubscribe.topic)
 }
-inline void SystemClientInfo::set_enumweaponid(const char* value) {
-  set_has_enumweaponid();
-  if (enumweaponid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumweaponid_ = new ::std::string;
+inline void TopicUnsubscribe::set_topic(const char* value) {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  enumweaponid_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemClientInfo.enumWeaponId)
+  topic_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Analytics.TopicUnsubscribe.topic)
 }
-inline void SystemClientInfo::set_enumweaponid(const char* value, size_t size) {
-  set_has_enumweaponid();
-  if (enumweaponid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumweaponid_ = new ::std::string;
+inline void TopicUnsubscribe::set_topic(const char* value, size_t size) {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  enumweaponid_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemClientInfo.enumWeaponId)
+  topic_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Analytics.TopicUnsubscribe.topic)
 }
-inline ::std::string* SystemClientInfo::mutable_enumweaponid() {
-  set_has_enumweaponid();
-  if (enumweaponid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    enumweaponid_ = new ::std::string;
+inline ::std::string* TopicUnsubscribe::mutable_topic() {
+  set_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    topic_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemClientInfo.enumWeaponId)
-  return enumweaponid_;
+  // @@protoc_insertion_point(field_mutable:Analytics.TopicUnsubscribe.topic)
+  return topic_;
 }
-inline ::std::string* SystemClientInfo::release_enumweaponid() {
-  clear_has_enumweaponid();
-  if (enumweaponid_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+inline ::std::string* TopicUnsubscribe::release_topic() {
+  clear_has_topic();
+  if (topic_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
-    ::std::string* temp = enumweaponid_;
-    enumweaponid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    ::std::string* temp = topic_;
+    topic_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
-inline void SystemClientInfo::set_allocated_enumweaponid(::std::string* enumweaponid) {
-  if (enumweaponid_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete enumweaponid_;
+inline void TopicUnsubscribe::set_allocated_topic(::std::string* topic) {
+  if (topic_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete topic_;
   }
-  if (enumweaponid) {
-    set_has_enumweaponid();
-    enumweaponid_ = enumweaponid;
+  if (topic) {
+    set_has_topic();
+    topic_ = topic;
   } else {
-    clear_has_enumweaponid();
-    enumweaponid_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    clear_has_topic();
+    topic_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemClientInfo.enumWeaponId)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.TopicUnsubscribe.topic)
 }
 
 // -------------------------------------------------------------------
@@ -2494,230 +2598,484 @@ inline void GameEntityInfo::set_classid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.classId)
 }
 
-// required .modeldata.Vec3 position = 4;
-inline bool GameEntityInfo::has_position() const {
+// required float positionX = 4;
+inline bool GameEntityInfo::has_positionx() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void GameEntityInfo::set_has_position() {
+inline void GameEntityInfo::set_has_positionx() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void GameEntityInfo::clear_has_position() {
+inline void GameEntityInfo::clear_has_positionx() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void GameEntityInfo::clear_position() {
-  if (position_ != NULL) position_->::modeldata::Vec3::Clear();
-  clear_has_position();
+inline void GameEntityInfo::clear_positionx() {
+  positionx_ = 0;
+  clear_has_positionx();
 }
-inline const ::modeldata::Vec3& GameEntityInfo::position() const {
-  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.position)
-  return position_ != NULL ? *position_ : *default_instance_->position_;
+inline float GameEntityInfo::positionx() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.positionX)
+  return positionx_;
 }
-inline ::modeldata::Vec3* GameEntityInfo::mutable_position() {
-  set_has_position();
-  if (position_ == NULL) position_ = new ::modeldata::Vec3;
-  // @@protoc_insertion_point(field_mutable:Analytics.GameEntityInfo.position)
-  return position_;
-}
-inline ::modeldata::Vec3* GameEntityInfo::release_position() {
-  clear_has_position();
-  ::modeldata::Vec3* temp = position_;
-  position_ = NULL;
-  return temp;
-}
-inline void GameEntityInfo::set_allocated_position(::modeldata::Vec3* position) {
-  delete position_;
-  position_ = position;
-  if (position) {
-    set_has_position();
-  } else {
-    clear_has_position();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.GameEntityInfo.position)
+inline void GameEntityInfo::set_positionx(float value) {
+  set_has_positionx();
+  positionx_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.positionX)
 }
 
-// required .modeldata.Euler orient = 5;
-inline bool GameEntityInfo::has_orient() const {
+// required float positionY = 5;
+inline bool GameEntityInfo::has_positiony() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void GameEntityInfo::set_has_orient() {
+inline void GameEntityInfo::set_has_positiony() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void GameEntityInfo::clear_has_orient() {
+inline void GameEntityInfo::clear_has_positiony() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void GameEntityInfo::clear_orient() {
-  if (orient_ != NULL) orient_->::modeldata::Euler::Clear();
-  clear_has_orient();
+inline void GameEntityInfo::clear_positiony() {
+  positiony_ = 0;
+  clear_has_positiony();
 }
-inline const ::modeldata::Euler& GameEntityInfo::orient() const {
-  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.orient)
-  return orient_ != NULL ? *orient_ : *default_instance_->orient_;
+inline float GameEntityInfo::positiony() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.positionY)
+  return positiony_;
 }
-inline ::modeldata::Euler* GameEntityInfo::mutable_orient() {
-  set_has_orient();
-  if (orient_ == NULL) orient_ = new ::modeldata::Euler;
-  // @@protoc_insertion_point(field_mutable:Analytics.GameEntityInfo.orient)
-  return orient_;
-}
-inline ::modeldata::Euler* GameEntityInfo::release_orient() {
-  clear_has_orient();
-  ::modeldata::Euler* temp = orient_;
-  orient_ = NULL;
-  return temp;
-}
-inline void GameEntityInfo::set_allocated_orient(::modeldata::Euler* orient) {
-  delete orient_;
-  orient_ = orient;
-  if (orient) {
-    set_has_orient();
-  } else {
-    clear_has_orient();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.GameEntityInfo.orient)
+inline void GameEntityInfo::set_positiony(float value) {
+  set_has_positiony();
+  positiony_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.positionY)
 }
 
-// optional int32 quantity = 6;
-inline bool GameEntityInfo::has_quantity() const {
+// required float positionZ = 6;
+inline bool GameEntityInfo::has_positionz() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void GameEntityInfo::set_has_quantity() {
+inline void GameEntityInfo::set_has_positionz() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void GameEntityInfo::clear_has_quantity() {
+inline void GameEntityInfo::clear_has_positionz() {
   _has_bits_[0] &= ~0x00000020u;
 }
+inline void GameEntityInfo::clear_positionz() {
+  positionz_ = 0;
+  clear_has_positionz();
+}
+inline float GameEntityInfo::positionz() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.positionZ)
+  return positionz_;
+}
+inline void GameEntityInfo::set_positionz(float value) {
+  set_has_positionz();
+  positionz_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.positionZ)
+}
+
+// required float heading = 7;
+inline bool GameEntityInfo::has_heading() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GameEntityInfo::set_has_heading() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GameEntityInfo::clear_has_heading() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void GameEntityInfo::clear_heading() {
+  heading_ = 0;
+  clear_has_heading();
+}
+inline float GameEntityInfo::heading() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.heading)
+  return heading_;
+}
+inline void GameEntityInfo::set_heading(float value) {
+  set_has_heading();
+  heading_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.heading)
+}
+
+// required float pitch = 8;
+inline bool GameEntityInfo::has_pitch() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void GameEntityInfo::set_has_pitch() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void GameEntityInfo::clear_has_pitch() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void GameEntityInfo::clear_pitch() {
+  pitch_ = 0;
+  clear_has_pitch();
+}
+inline float GameEntityInfo::pitch() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.pitch)
+  return pitch_;
+}
+inline void GameEntityInfo::set_pitch(float value) {
+  set_has_pitch();
+  pitch_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.pitch)
+}
+
+// required float roll = 9;
+inline bool GameEntityInfo::has_roll() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void GameEntityInfo::set_has_roll() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void GameEntityInfo::clear_has_roll() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void GameEntityInfo::clear_roll() {
+  roll_ = 0;
+  clear_has_roll();
+}
+inline float GameEntityInfo::roll() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.roll)
+  return roll_;
+}
+inline void GameEntityInfo::set_roll(float value) {
+  set_has_roll();
+  roll_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.roll)
+}
+
+// optional uint32 quantity = 10;
+inline bool GameEntityInfo::has_quantity() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void GameEntityInfo::set_has_quantity() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void GameEntityInfo::clear_has_quantity() {
+  _has_bits_[0] &= ~0x00000200u;
+}
 inline void GameEntityInfo::clear_quantity() {
-  quantity_ = 0;
+  quantity_ = 0u;
   clear_has_quantity();
 }
-inline ::google::protobuf::int32 GameEntityInfo::quantity() const {
+inline ::google::protobuf::uint32 GameEntityInfo::quantity() const {
   // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.quantity)
   return quantity_;
 }
-inline void GameEntityInfo::set_quantity(::google::protobuf::int32 value) {
+inline void GameEntityInfo::set_quantity(::google::protobuf::uint32 value) {
   set_has_quantity();
   quantity_ = value;
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.quantity)
 }
 
-// optional int32 quantityMax = 7;
+// optional uint32 quantityMax = 11;
 inline bool GameEntityInfo::has_quantitymax() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 inline void GameEntityInfo::set_has_quantitymax() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000400u;
 }
 inline void GameEntityInfo::clear_has_quantitymax() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline void GameEntityInfo::clear_quantitymax() {
-  quantitymax_ = 0;
+  quantitymax_ = 0u;
   clear_has_quantitymax();
 }
-inline ::google::protobuf::int32 GameEntityInfo::quantitymax() const {
+inline ::google::protobuf::uint32 GameEntityInfo::quantitymax() const {
   // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.quantityMax)
   return quantitymax_;
 }
-inline void GameEntityInfo::set_quantitymax(::google::protobuf::int32 value) {
+inline void GameEntityInfo::set_quantitymax(::google::protobuf::uint32 value) {
   set_has_quantitymax();
   quantitymax_ = value;
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.quantityMax)
 }
 
-// optional int32 health = 8;
+// optional uint32 health = 12;
 inline bool GameEntityInfo::has_health() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 inline void GameEntityInfo::set_has_health() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000800u;
 }
 inline void GameEntityInfo::clear_has_health() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void GameEntityInfo::clear_health() {
-  health_ = 0;
+  health_ = 0u;
   clear_has_health();
 }
-inline ::google::protobuf::int32 GameEntityInfo::health() const {
+inline ::google::protobuf::uint32 GameEntityInfo::health() const {
   // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.health)
   return health_;
 }
-inline void GameEntityInfo::set_health(::google::protobuf::int32 value) {
+inline void GameEntityInfo::set_health(::google::protobuf::uint32 value) {
   set_has_health();
   health_ = value;
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.health)
 }
 
-// optional int32 healthMax = 9;
+// optional uint32 healthMax = 13;
 inline bool GameEntityInfo::has_healthmax() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 inline void GameEntityInfo::set_has_healthmax() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00001000u;
 }
 inline void GameEntityInfo::clear_has_healthmax() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline void GameEntityInfo::clear_healthmax() {
-  healthmax_ = 0;
+  healthmax_ = 0u;
   clear_has_healthmax();
 }
-inline ::google::protobuf::int32 GameEntityInfo::healthmax() const {
+inline ::google::protobuf::uint32 GameEntityInfo::healthmax() const {
   // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.healthMax)
   return healthmax_;
 }
-inline void GameEntityInfo::set_healthmax(::google::protobuf::int32 value) {
+inline void GameEntityInfo::set_healthmax(::google::protobuf::uint32 value) {
   set_has_healthmax();
   healthmax_ = value;
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.healthMax)
 }
 
-// optional int32 armor = 10;
+// optional uint32 armor = 14;
 inline bool GameEntityInfo::has_armor() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 inline void GameEntityInfo::set_has_armor() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00002000u;
 }
 inline void GameEntityInfo::clear_has_armor() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline void GameEntityInfo::clear_armor() {
-  armor_ = 0;
+  armor_ = 0u;
   clear_has_armor();
 }
-inline ::google::protobuf::int32 GameEntityInfo::armor() const {
+inline ::google::protobuf::uint32 GameEntityInfo::armor() const {
   // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.armor)
   return armor_;
 }
-inline void GameEntityInfo::set_armor(::google::protobuf::int32 value) {
+inline void GameEntityInfo::set_armor(::google::protobuf::uint32 value) {
   set_has_armor();
   armor_ = value;
   // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.armor)
 }
 
-// optional int32 armoryMax = 11;
-inline bool GameEntityInfo::has_armorymax() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+// optional uint32 armorMax = 15;
+inline bool GameEntityInfo::has_armormax() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
 }
-inline void GameEntityInfo::set_has_armorymax() {
-  _has_bits_[0] |= 0x00000400u;
+inline void GameEntityInfo::set_has_armormax() {
+  _has_bits_[0] |= 0x00004000u;
 }
-inline void GameEntityInfo::clear_has_armorymax() {
-  _has_bits_[0] &= ~0x00000400u;
+inline void GameEntityInfo::clear_has_armormax() {
+  _has_bits_[0] &= ~0x00004000u;
 }
-inline void GameEntityInfo::clear_armorymax() {
-  armorymax_ = 0;
-  clear_has_armorymax();
+inline void GameEntityInfo::clear_armormax() {
+  armormax_ = 0u;
+  clear_has_armormax();
 }
-inline ::google::protobuf::int32 GameEntityInfo::armorymax() const {
-  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.armoryMax)
-  return armorymax_;
+inline ::google::protobuf::uint32 GameEntityInfo::armormax() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.armorMax)
+  return armormax_;
 }
-inline void GameEntityInfo::set_armorymax(::google::protobuf::int32 value) {
-  set_has_armorymax();
-  armorymax_ = value;
-  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.armoryMax)
+inline void GameEntityInfo::set_armormax(::google::protobuf::uint32 value) {
+  set_has_armormax();
+  armormax_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.armorMax)
+}
+
+// optional uint32 ammo1 = 16;
+inline bool GameEntityInfo::has_ammo1() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo1() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void GameEntityInfo::clear_has_ammo1() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void GameEntityInfo::clear_ammo1() {
+  ammo1_ = 0u;
+  clear_has_ammo1();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo1() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo1)
+  return ammo1_;
+}
+inline void GameEntityInfo::set_ammo1(::google::protobuf::uint32 value) {
+  set_has_ammo1();
+  ammo1_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo1)
+}
+
+// optional uint32 ammo1Max = 17;
+inline bool GameEntityInfo::has_ammo1max() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo1max() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void GameEntityInfo::clear_has_ammo1max() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void GameEntityInfo::clear_ammo1max() {
+  ammo1max_ = 0u;
+  clear_has_ammo1max();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo1max() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo1Max)
+  return ammo1max_;
+}
+inline void GameEntityInfo::set_ammo1max(::google::protobuf::uint32 value) {
+  set_has_ammo1max();
+  ammo1max_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo1Max)
+}
+
+// optional uint32 ammo2 = 18;
+inline bool GameEntityInfo::has_ammo2() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo2() {
+  _has_bits_[0] |= 0x00020000u;
+}
+inline void GameEntityInfo::clear_has_ammo2() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+inline void GameEntityInfo::clear_ammo2() {
+  ammo2_ = 0u;
+  clear_has_ammo2();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo2() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo2)
+  return ammo2_;
+}
+inline void GameEntityInfo::set_ammo2(::google::protobuf::uint32 value) {
+  set_has_ammo2();
+  ammo2_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo2)
+}
+
+// optional uint32 ammo2Max = 19;
+inline bool GameEntityInfo::has_ammo2max() const {
+  return (_has_bits_[0] & 0x00040000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo2max() {
+  _has_bits_[0] |= 0x00040000u;
+}
+inline void GameEntityInfo::clear_has_ammo2max() {
+  _has_bits_[0] &= ~0x00040000u;
+}
+inline void GameEntityInfo::clear_ammo2max() {
+  ammo2max_ = 0u;
+  clear_has_ammo2max();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo2max() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo2Max)
+  return ammo2max_;
+}
+inline void GameEntityInfo::set_ammo2max(::google::protobuf::uint32 value) {
+  set_has_ammo2max();
+  ammo2max_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo2Max)
+}
+
+// optional uint32 ammo3 = 20;
+inline bool GameEntityInfo::has_ammo3() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo3() {
+  _has_bits_[0] |= 0x00080000u;
+}
+inline void GameEntityInfo::clear_has_ammo3() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+inline void GameEntityInfo::clear_ammo3() {
+  ammo3_ = 0u;
+  clear_has_ammo3();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo3() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo3)
+  return ammo3_;
+}
+inline void GameEntityInfo::set_ammo3(::google::protobuf::uint32 value) {
+  set_has_ammo3();
+  ammo3_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo3)
+}
+
+// optional uint32 ammo3Max = 21;
+inline bool GameEntityInfo::has_ammo3max() const {
+  return (_has_bits_[0] & 0x00100000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo3max() {
+  _has_bits_[0] |= 0x00100000u;
+}
+inline void GameEntityInfo::clear_has_ammo3max() {
+  _has_bits_[0] &= ~0x00100000u;
+}
+inline void GameEntityInfo::clear_ammo3max() {
+  ammo3max_ = 0u;
+  clear_has_ammo3max();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo3max() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo3Max)
+  return ammo3max_;
+}
+inline void GameEntityInfo::set_ammo3max(::google::protobuf::uint32 value) {
+  set_has_ammo3max();
+  ammo3max_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo3Max)
+}
+
+// optional uint32 ammo4 = 22;
+inline bool GameEntityInfo::has_ammo4() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo4() {
+  _has_bits_[0] |= 0x00200000u;
+}
+inline void GameEntityInfo::clear_has_ammo4() {
+  _has_bits_[0] &= ~0x00200000u;
+}
+inline void GameEntityInfo::clear_ammo4() {
+  ammo4_ = 0u;
+  clear_has_ammo4();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo4() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo4)
+  return ammo4_;
+}
+inline void GameEntityInfo::set_ammo4(::google::protobuf::uint32 value) {
+  set_has_ammo4();
+  ammo4_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo4)
+}
+
+// optional uint32 ammo4Max = 23;
+inline bool GameEntityInfo::has_ammo4max() const {
+  return (_has_bits_[0] & 0x00400000u) != 0;
+}
+inline void GameEntityInfo::set_has_ammo4max() {
+  _has_bits_[0] |= 0x00400000u;
+}
+inline void GameEntityInfo::clear_has_ammo4max() {
+  _has_bits_[0] &= ~0x00400000u;
+}
+inline void GameEntityInfo::clear_ammo4max() {
+  ammo4max_ = 0u;
+  clear_has_ammo4max();
+}
+inline ::google::protobuf::uint32 GameEntityInfo::ammo4max() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameEntityInfo.ammo4Max)
+  return ammo4max_;
+}
+inline void GameEntityInfo::set_ammo4max(::google::protobuf::uint32 value) {
+  set_has_ammo4max();
+  ammo4max_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameEntityInfo.ammo4Max)
 }
 
 // -------------------------------------------------------------------
@@ -2782,45 +3140,76 @@ inline void GameWeaponFired::set_weaponid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.weaponId)
 }
 
-// required .modeldata.Vec3 position = 2;
-inline bool GameWeaponFired::has_position() const {
+// required float positionX = 2;
+inline bool GameWeaponFired::has_positionx() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GameWeaponFired::set_has_position() {
+inline void GameWeaponFired::set_has_positionx() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GameWeaponFired::clear_has_position() {
+inline void GameWeaponFired::clear_has_positionx() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void GameWeaponFired::clear_position() {
-  if (position_ != NULL) position_->::modeldata::Vec3::Clear();
-  clear_has_position();
+inline void GameWeaponFired::clear_positionx() {
+  positionx_ = 0;
+  clear_has_positionx();
 }
-inline const ::modeldata::Vec3& GameWeaponFired::position() const {
-  // @@protoc_insertion_point(field_get:Analytics.GameWeaponFired.position)
-  return position_ != NULL ? *position_ : *default_instance_->position_;
+inline float GameWeaponFired::positionx() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameWeaponFired.positionX)
+  return positionx_;
 }
-inline ::modeldata::Vec3* GameWeaponFired::mutable_position() {
-  set_has_position();
-  if (position_ == NULL) position_ = new ::modeldata::Vec3;
-  // @@protoc_insertion_point(field_mutable:Analytics.GameWeaponFired.position)
-  return position_;
+inline void GameWeaponFired::set_positionx(float value) {
+  set_has_positionx();
+  positionx_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.positionX)
 }
-inline ::modeldata::Vec3* GameWeaponFired::release_position() {
-  clear_has_position();
-  ::modeldata::Vec3* temp = position_;
-  position_ = NULL;
-  return temp;
+
+// required float positionY = 3;
+inline bool GameWeaponFired::has_positiony() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void GameWeaponFired::set_allocated_position(::modeldata::Vec3* position) {
-  delete position_;
-  position_ = position;
-  if (position) {
-    set_has_position();
-  } else {
-    clear_has_position();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.GameWeaponFired.position)
+inline void GameWeaponFired::set_has_positiony() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GameWeaponFired::clear_has_positiony() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GameWeaponFired::clear_positiony() {
+  positiony_ = 0;
+  clear_has_positiony();
+}
+inline float GameWeaponFired::positiony() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameWeaponFired.positionY)
+  return positiony_;
+}
+inline void GameWeaponFired::set_positiony(float value) {
+  set_has_positiony();
+  positiony_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.positionY)
+}
+
+// required float positionZ = 4;
+inline bool GameWeaponFired::has_positionz() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GameWeaponFired::set_has_positionz() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GameWeaponFired::clear_has_positionz() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GameWeaponFired::clear_positionz() {
+  positionz_ = 0;
+  clear_has_positionz();
+}
+inline float GameWeaponFired::positionz() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameWeaponFired.positionZ)
+  return positionz_;
+}
+inline void GameWeaponFired::set_positionz(float value) {
+  set_has_positionz();
+  positionz_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.positionZ)
 }
 
 // -------------------------------------------------------------------
@@ -2927,90 +3316,176 @@ inline void GameTookDamage::set_weaponid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Analytics.GameTookDamage.weaponId)
 }
 
-// required .modeldata.Vec3 position = 2;
-inline bool GameTookDamage::has_position() const {
+// required float positionX = 2;
+inline bool GameTookDamage::has_positionx() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GameTookDamage::set_has_position() {
+inline void GameTookDamage::set_has_positionx() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void GameTookDamage::clear_has_position() {
+inline void GameTookDamage::clear_has_positionx() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void GameTookDamage::clear_position() {
-  if (position_ != NULL) position_->::modeldata::Vec3::Clear();
-  clear_has_position();
+inline void GameTookDamage::clear_positionx() {
+  positionx_ = 0;
+  clear_has_positionx();
 }
-inline const ::modeldata::Vec3& GameTookDamage::position() const {
-  // @@protoc_insertion_point(field_get:Analytics.GameTookDamage.position)
-  return position_ != NULL ? *position_ : *default_instance_->position_;
+inline float GameTookDamage::positionx() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameTookDamage.positionX)
+  return positionx_;
 }
-inline ::modeldata::Vec3* GameTookDamage::mutable_position() {
-  set_has_position();
-  if (position_ == NULL) position_ = new ::modeldata::Vec3;
-  // @@protoc_insertion_point(field_mutable:Analytics.GameTookDamage.position)
-  return position_;
+inline void GameTookDamage::set_positionx(float value) {
+  set_has_positionx();
+  positionx_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameTookDamage.positionX)
 }
-inline ::modeldata::Vec3* GameTookDamage::release_position() {
-  clear_has_position();
-  ::modeldata::Vec3* temp = position_;
-  position_ = NULL;
-  return temp;
+
+// required float positionY = 3;
+inline bool GameTookDamage::has_positiony() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void GameTookDamage::set_allocated_position(::modeldata::Vec3* position) {
-  delete position_;
-  position_ = position;
-  if (position) {
-    set_has_position();
-  } else {
-    clear_has_position();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.GameTookDamage.position)
+inline void GameTookDamage::set_has_positiony() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GameTookDamage::clear_has_positiony() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GameTookDamage::clear_positiony() {
+  positiony_ = 0;
+  clear_has_positiony();
+}
+inline float GameTookDamage::positiony() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameTookDamage.positionY)
+  return positiony_;
+}
+inline void GameTookDamage::set_positiony(float value) {
+  set_has_positiony();
+  positiony_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameTookDamage.positionY)
+}
+
+// required float positionZ = 4;
+inline bool GameTookDamage::has_positionz() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GameTookDamage::set_has_positionz() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GameTookDamage::clear_has_positionz() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GameTookDamage::clear_positionz() {
+  positionz_ = 0;
+  clear_has_positionz();
+}
+inline float GameTookDamage::positionz() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameTookDamage.positionZ)
+  return positionz_;
+}
+inline void GameTookDamage::set_positionz(float value) {
+  set_has_positionz();
+  positionz_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameTookDamage.positionZ)
 }
 
 // -------------------------------------------------------------------
 
 // GameNavigationStuck
 
-// required .modeldata.Vec3 position = 1;
-inline bool GameNavigationStuck::has_position() const {
+// required int32 entityId = 1;
+inline bool GameNavigationStuck::has_entityid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void GameNavigationStuck::set_has_position() {
+inline void GameNavigationStuck::set_has_entityid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void GameNavigationStuck::clear_has_position() {
+inline void GameNavigationStuck::clear_has_entityid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void GameNavigationStuck::clear_position() {
-  if (position_ != NULL) position_->::modeldata::Vec3::Clear();
-  clear_has_position();
+inline void GameNavigationStuck::clear_entityid() {
+  entityid_ = 0;
+  clear_has_entityid();
 }
-inline const ::modeldata::Vec3& GameNavigationStuck::position() const {
-  // @@protoc_insertion_point(field_get:Analytics.GameNavigationStuck.position)
-  return position_ != NULL ? *position_ : *default_instance_->position_;
+inline ::google::protobuf::int32 GameNavigationStuck::entityid() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameNavigationStuck.entityId)
+  return entityid_;
 }
-inline ::modeldata::Vec3* GameNavigationStuck::mutable_position() {
-  set_has_position();
-  if (position_ == NULL) position_ = new ::modeldata::Vec3;
-  // @@protoc_insertion_point(field_mutable:Analytics.GameNavigationStuck.position)
-  return position_;
+inline void GameNavigationStuck::set_entityid(::google::protobuf::int32 value) {
+  set_has_entityid();
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameNavigationStuck.entityId)
 }
-inline ::modeldata::Vec3* GameNavigationStuck::release_position() {
-  clear_has_position();
-  ::modeldata::Vec3* temp = position_;
-  position_ = NULL;
-  return temp;
+
+// required float positionX = 2;
+inline bool GameNavigationStuck::has_positionx() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void GameNavigationStuck::set_allocated_position(::modeldata::Vec3* position) {
-  delete position_;
-  position_ = position;
-  if (position) {
-    set_has_position();
-  } else {
-    clear_has_position();
-  }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.GameNavigationStuck.position)
+inline void GameNavigationStuck::set_has_positionx() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void GameNavigationStuck::clear_has_positionx() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void GameNavigationStuck::clear_positionx() {
+  positionx_ = 0;
+  clear_has_positionx();
+}
+inline float GameNavigationStuck::positionx() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameNavigationStuck.positionX)
+  return positionx_;
+}
+inline void GameNavigationStuck::set_positionx(float value) {
+  set_has_positionx();
+  positionx_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameNavigationStuck.positionX)
+}
+
+// required float positionY = 3;
+inline bool GameNavigationStuck::has_positiony() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void GameNavigationStuck::set_has_positiony() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void GameNavigationStuck::clear_has_positiony() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void GameNavigationStuck::clear_positiony() {
+  positiony_ = 0;
+  clear_has_positiony();
+}
+inline float GameNavigationStuck::positiony() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameNavigationStuck.positionY)
+  return positiony_;
+}
+inline void GameNavigationStuck::set_positiony(float value) {
+  set_has_positiony();
+  positiony_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameNavigationStuck.positionY)
+}
+
+// required float positionZ = 4;
+inline bool GameNavigationStuck::has_positionz() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GameNavigationStuck::set_has_positionz() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GameNavigationStuck::clear_has_positionz() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GameNavigationStuck::clear_positionz() {
+  positionz_ = 0;
+  clear_has_positionz();
+}
+inline float GameNavigationStuck::positionz() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameNavigationStuck.positionZ)
+  return positionz_;
+}
+inline void GameNavigationStuck::set_positionz(float value) {
+  set_has_positionz();
+  positionz_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameNavigationStuck.positionZ)
 }
 
 // -------------------------------------------------------------------
@@ -3468,6 +3943,92 @@ inline void MessageUnion::set_allocated_gamenavigationstuck(::Analytics::GameNav
   if (gamenavigationstuck) {
     set_has_gamenavigationstuck();
     msg_.gamenavigationstuck_ = gamenavigationstuck;
+  }
+}
+
+// optional .Analytics.TopicSubscribe topicSubscribe = 1000;
+inline bool MessageUnion::has_topicsubscribe() const {
+  return msg_case() == kTopicSubscribe;
+}
+inline void MessageUnion::set_has_topicsubscribe() {
+  _oneof_case_[0] = kTopicSubscribe;
+}
+inline void MessageUnion::clear_topicsubscribe() {
+  if (has_topicsubscribe()) {
+    delete msg_.topicsubscribe_;
+    clear_has_msg();
+  }
+}
+inline const ::Analytics::TopicSubscribe& MessageUnion::topicsubscribe() const {
+  return has_topicsubscribe() ? *msg_.topicsubscribe_
+                      : ::Analytics::TopicSubscribe::default_instance();
+}
+inline ::Analytics::TopicSubscribe* MessageUnion::mutable_topicsubscribe() {
+  if (!has_topicsubscribe()) {
+    clear_msg();
+    set_has_topicsubscribe();
+    msg_.topicsubscribe_ = new ::Analytics::TopicSubscribe;
+  }
+  return msg_.topicsubscribe_;
+}
+inline ::Analytics::TopicSubscribe* MessageUnion::release_topicsubscribe() {
+  if (has_topicsubscribe()) {
+    clear_has_msg();
+    ::Analytics::TopicSubscribe* temp = msg_.topicsubscribe_;
+    msg_.topicsubscribe_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline void MessageUnion::set_allocated_topicsubscribe(::Analytics::TopicSubscribe* topicsubscribe) {
+  clear_msg();
+  if (topicsubscribe) {
+    set_has_topicsubscribe();
+    msg_.topicsubscribe_ = topicsubscribe;
+  }
+}
+
+// optional .Analytics.TopicUnsubscribe topicUnsubscribe = 1001;
+inline bool MessageUnion::has_topicunsubscribe() const {
+  return msg_case() == kTopicUnsubscribe;
+}
+inline void MessageUnion::set_has_topicunsubscribe() {
+  _oneof_case_[0] = kTopicUnsubscribe;
+}
+inline void MessageUnion::clear_topicunsubscribe() {
+  if (has_topicunsubscribe()) {
+    delete msg_.topicunsubscribe_;
+    clear_has_msg();
+  }
+}
+inline const ::Analytics::TopicUnsubscribe& MessageUnion::topicunsubscribe() const {
+  return has_topicunsubscribe() ? *msg_.topicunsubscribe_
+                      : ::Analytics::TopicUnsubscribe::default_instance();
+}
+inline ::Analytics::TopicUnsubscribe* MessageUnion::mutable_topicunsubscribe() {
+  if (!has_topicunsubscribe()) {
+    clear_msg();
+    set_has_topicunsubscribe();
+    msg_.topicunsubscribe_ = new ::Analytics::TopicUnsubscribe;
+  }
+  return msg_.topicunsubscribe_;
+}
+inline ::Analytics::TopicUnsubscribe* MessageUnion::release_topicunsubscribe() {
+  if (has_topicunsubscribe()) {
+    clear_has_msg();
+    ::Analytics::TopicUnsubscribe* temp = msg_.topicunsubscribe_;
+    msg_.topicunsubscribe_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline void MessageUnion::set_allocated_topicunsubscribe(::Analytics::TopicUnsubscribe* topicunsubscribe) {
+  clear_msg();
+  if (topicunsubscribe) {
+    set_has_topicunsubscribe();
+    msg_.topicunsubscribe_ = topicunsubscribe;
   }
 }
 

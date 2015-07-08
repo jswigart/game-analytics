@@ -1,3 +1,5 @@
+#include "zmq.hpp"
+
 #include <iostream>
 #include <windows.h>
 #include <fstream>
@@ -11,18 +13,83 @@ static int RandInRange( int minValue, int maxValue )
 
 int main(int argc, char *argv[])
 {
-	GameAnalyticsKeys keys;
+	GameAnalytics::Keys keys;
 	keys.mGameKey		= "3d1b7bb3b2ad8c7d4d784f26505abf44";
 	keys.mSecretKey		= "821f4c5a4690ea2460124f474a65ab582163040d";
 	keys.mDataApiKey	= "a1af2abdb11ef2257f9e8941b072984731c349e0";
 	keys.mVersionKey	= "GameAnalyticsTest";
 	
-	GameAnalyticsLogger logger( keys );
+	GameAnalytics logger( keys );
+
+	
+	zmq::context_t zmqcontext( 2 );
+	
+	zmqPublisher pub( zmqcontext, "127.0.0.1", 40000 );
+	zmqSubscriber sub( zmqcontext, "127.0.0.1", 40000 );
+	sub.Subscribe( "game" );
 
 	logger.CreateDatabase( "analytics.db" );
+	logger.SetPublisher( &pub );
 
-	logger.AddModel( "testmodel", "Some string data with model information", 0 );
-	
+	int frameNum = 0;
+	while ( true )
+	{
+		try
+		{
+			Analytics::MessageUnion msg;
+
+			while ( sub.Poll( msg ) )
+			{
+				std::vector<const google::protobuf::FieldDescriptor*> fields;
+				msg.GetReflection()->ListFields( msg, &fields );
+
+				std::cout << "Subscriber recieved message: ";
+				for ( size_t i = 0; i < fields.size(); ++i )
+					std::cout << fields[ i ]->camelcase_name() << " ";
+				std::cout << std::endl;
+			}
+
+			while ( pub.Poll( msg ) )
+			{
+				std::vector<const google::protobuf::FieldDescriptor*> fields;
+				msg.GetReflection()->ListFields( msg, &fields );
+
+				std::cout << "Publisher recieved message: ";
+				for ( size_t i = 0; i < fields.size(); ++i )
+					std::cout << fields[ i ]->camelcase_name() << " ";
+				std::cout << std::endl;
+			}
+
+			if ( ( frameNum % 100 ) == 0 )
+			{
+				Analytics::MessageUnion msg;
+				msg.set_timestamp( 100 );
+				msg.mutable_gamedeath()->set_killedbyclass( 5 );
+				msg.mutable_gamedeath()->set_killedbyhealth( 10 );
+				msg.mutable_gamedeath()->set_killedbyweapon( 15 );
+
+				logger.AddEvent( msg );
+			}
+
+			if ( ( frameNum % 100 ) == 0 )
+			{
+				Analytics::MessageUnion msg;
+				msg.set_timestamp( 100 );
+				msg.mutable_systemassert()->set_condition( "test string" );
+				logger.AddEvent( msg );
+			}
+		}
+		catch ( const std::exception& ex )
+		{
+			std::cout << "Network error: " << ex.what() << std::endl;
+			break;
+		}
+
+		Sleep( 100 );
+
+		++frameNum;
+	}
+
 	/*for ( size_t i = 0; i < 10; ++i )
 	{
 		Json::Value ent( Json::objectValue );
@@ -60,13 +127,12 @@ int main(int argc, char *argv[])
 	if ( const GameAnalyticsHeatmap * heatmap = logger.GetHeatmap( areaName, eventName, true ) )
 	{
 		std::cout << "Got heatmap with " << heatmap->mEvents.size() << " events." << std::endl;
-
 	}
 	else
 	{
 		std::cout << "No heatmap 'Test Area'" << std::endl;
 	}*/
-	GameAnalyticsLogger::HeatmapDef def;
+	GameAnalytics::HeatmapDef def;
 	def.mAreaId = areaName;
 	def.mEventId = eventName;
 	def.mEventRadius = 256.0f;

@@ -24,6 +24,7 @@ public:
 
 	void run();
 
+	bool	mRunning;
 signals:
 	void info( const QString &info, const QString &details );
 	void warn( const QString &info, const QString &details );
@@ -31,5 +32,25 @@ signals:
 	void debug( const QString &info, const QString &details );
 	// message handling functions
 	void onmsg( MessageUnionPtr msg );
+	void status( const QString & msg );
+};
+
+class HostThread0MQ : public QThread
+{
+	Q_OBJECT
+public:
+	HostThread0MQ( QObject *parent = 0 );
+
+	void run();
+
+	bool	mRunning;
+signals:
+	void info( const QString &info, const QString &details );
+	void warn( const QString &info, const QString &details );
+	void error( const QString &info, const QString &details );
+	void debug( const QString &info, const QString &details );
+	// message handling functions
+	void onmsg( MessageUnionPtr msg );
+	void status( const QString & msg );
 };
 

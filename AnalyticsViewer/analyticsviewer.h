@@ -6,6 +6,9 @@
 
 #include "Messaging.h"
 
+class ModelProcessor;
+class HostThreadENET;
+
 class AnalyticsViewer : public QMainWindow
 {
 	Q_OBJECT
@@ -47,11 +50,17 @@ public:
 	void LogWarn( const QString & msg, const QString & details );
 	void LogError( const QString & msg, const QString & details );
 	void LogDebug( const QString & msg, const QString & details );
+	void StatusInfo( const QString & msg );
+
 	// message handling
 	void processMessage( MessageUnionPtr msg );
 
 private:
 	Ui::AnalyticsViewerClass ui;
+
+	ModelProcessor*		mModelProcessorThread;
+	HostThread0MQ*		mMessageThread;
+	QLabel*				mNetworkLabel;
 
 	void FileLoad( const QString & filePath );
 	void FileSave( const QString & filePath );

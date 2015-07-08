@@ -29,6 +29,9 @@
     <Filter Include="proto\autogen">
       <UniqueIdentifier>{19c2e679-a716-45a5-90fa-d8089af57c91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dependencies\fastlz">
+      <UniqueIdentifier>{e3e95dd5-aa07-4141-bf9b-ac089d1efc22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameAnalytics.h">
@@ -81,6 +84,9 @@
     </ClInclude>
     <ClInclude Include="dependencies\sqlite\sqlite3ext.h">
       <Filter>dependencies\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\fastlz\fastlz.h">
+      <Filter>dependencies\fastlz</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="dependencies\sqlite\sqlite3.c">
       <Filter>dependencies\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\fastlz\fastlz.c">
+      <Filter>dependencies\fastlz</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

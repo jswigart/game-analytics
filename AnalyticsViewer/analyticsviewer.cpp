@@ -94,34 +94,39 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 		networkPort->setFixedWidth( 50 );
 		networkPort->setText( "5050" );
 		
+		mNetworkLabel = new QLabel( this );
+
 		statusBar()->addWidget( networkIp );
 		statusBar()->addWidget( networkPort );
+		statusBar()->addWidget( mNetworkLabel );
 	}
 	
 	qRegisterMetaType<MessageUnionPtr>( "MessageUnionPtr" );
-
+	
 	{
-		HostThreadENET* msgThread = new HostThreadENET( this );
-		connect( msgThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
-		connect( msgThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
-		connect( msgThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
-		connect( msgThread, SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
+		mMessageThread = new HostThread0MQ( this );
 
-		// message processing functions
-		connect( msgThread, SIGNAL( onmsg( MessageUnionPtr ) ), this, SLOT( processMessage( MessageUnionPtr ) ) );
+		connect( mMessageThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
+		connect( mMessageThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
+		connect( mMessageThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
+		connect( mMessageThread, SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
+		connect( mMessageThread, SIGNAL( status( QString ) ), this, SLOT( StatusInfo( QString ) ) );
 		
-		ModelProcessor* mdlThread = new ModelProcessor( this );
-		connect( mdlThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
-		connect( mdlThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
-		connect( mdlThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
-		connect( mdlThread, SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
-		connect( mdlThread, SIGNAL( allocModel( std::string ) ), ui.renderBg, SLOT( allocProxyNode( std::string ) ) );
+		// message processing functions
+		connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), this, SLOT( processMessage( MessageUnionPtr ) ) );
+		
+		mModelProcessorThread = new ModelProcessor( this );
+		connect( mModelProcessorThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
+		connect( mModelProcessorThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
+		connect( mModelProcessorThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
+		connect( mModelProcessorThread, SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
+		connect( mModelProcessorThread, SIGNAL( allocModel( QString ) ), ui.renderBg, SLOT( allocProxyNode( QString ) ) );
 
 		// message processing functions
-		connect( msgThread, SIGNAL( onmsg( MessageUnionPtr ) ), mdlThread, SLOT( processMessage( MessageUnionPtr ) ) );
+		connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), mModelProcessorThread, SLOT( processMessage( MessageUnionPtr ) ) );
 
-		msgThread->start();
-		mdlThread->start();
+		mMessageThread->start();
+		mModelProcessorThread->start();
 	}
 	
 	installEventFilter( ui.renderBg );
@@ -137,7 +142,11 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 
 AnalyticsViewer::~AnalyticsViewer()
 {
-
+	mMessageThread->mRunning = false;
+	mModelProcessorThread->mRunning = false;
+	
+	mMessageThread->wait( 5000 );
+	mModelProcessorThread->wait( 5000 );
 }
 
 void AnalyticsViewer::AppendToLog( const LogCategory category, const QString & message, const QString & details )
@@ -1016,7 +1025,10 @@ void AnalyticsViewer::LogDebug( const QString & msg, const QString & details )
 {
 	AppendToLog( LOG_DEBUG, msg, details );
 }
-
+void AnalyticsViewer::StatusInfo( const QString & msg )
+{
+	mNetworkLabel->setText( msg );
+}
 osg::Vec3d Convert( const modeldata::Vec3 & vec )
 {
 	return osg::Vec3d( vec.x(), vec.y(), vec.z() );
@@ -1024,6 +1036,8 @@ osg::Vec3d Convert( const modeldata::Vec3 & vec )
 
 void AnalyticsViewer::processMessage( const Analytics::GameEntityInfo & msg )
 {
+	return;
+
 	osg::MatrixTransform * xform = ui.renderBg->findOrCreateEntityNode( msg.entityid() );
 
 	// if it's just been created, make a representation for it
@@ -1031,6 +1045,8 @@ void AnalyticsViewer::processMessage( const Analytics::GameEntityInfo & msg )
 	{
 		// cylinder for the body
 		osg::ref_ptr<osgDB::Options> options = new osgDB::Options( "generateFacetNormals noTriStripPolygons mergeMeshes noRotation" );
+		options->setObjectCacheHint( osgDB::Options::CACHE_NODES );
+
 		osg::ProxyNode * entityProxy = new osg::ProxyNode();
 		entityProxy->setFileName( 0, "monito.obj" );
 		entityProxy->setDatabaseOptions( options );
@@ -1046,24 +1062,21 @@ void AnalyticsViewer::processMessage( const Analytics::GameEntityInfo & msg )
 		xform->addChild( geode );*/
 	}
 
-	if ( msg.has_position() )
-	{
-		osg::Matrix mat = xform->getMatrix();
-		mat.makeScale( osg::Vec3d( 64.0, 64.0, 64.0 ) );
-		mat.setTrans( Convert( msg.position() ) );
-		xform->setMatrix( mat );
-	}
+	osg::Matrix mat = xform->getMatrix();
+	mat.makeScale( osg::Vec3d( 64.0, 64.0, 64.0 ) );
+	mat.setTrans( osg::Vec3d( msg.positionx(), msg.positiony(), msg.positionz() ) );
+	xform->setMatrix( mat );
 
-	if ( msg.has_orient() )
+	/*if ( msg.has_orient() )
 	{
-		/*osg::Quat q;
+		osg::Quat q;
 		q.makeRotate( msg->orient().heading(), msg->orient().pitch(), msg->orient().roll() );
 
 		osg::Matrix mat( q );
 		mat.setTrans( xform->getMatrix().getTrans() );
 
-		xform->setMatrix( mat );*/
-	}
+		xform->setMatrix( mat );
+	}*/
 }
 
 void AnalyticsViewer::processMessage( MessageUnionPtr msg )

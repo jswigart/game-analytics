@@ -107,6 +107,8 @@ OSGWidget::OSGWidget( QWidget* parent, const QGLWidget* shareWidget, Qt::WindowF
 	, selectionFinished_( true )
 #endif
 {
+	osgDB::Registry::instance()->setFileCache( new osgDB::FileCache( "cache" ) );
+
 	mRoot = new osg::Group();
 	mRoot->setName( "SceneRoot" );
 
@@ -497,6 +499,8 @@ bool OSGWidget::importModelToScene( const QString & filePath, bool clearExisting
 
 	// load the scene async
 	osg::ref_ptr<osgDB::Options> options = new osgDB::Options( "generateFacetNormals noTriStripPolygons mergeMeshes noRotation" );
+	options->setObjectCacheHint( osgDB::Options::CACHE_NODES );
+
 	osg::ProxyNode * pn = new osg::ProxyNode();
 	pn->setName( filePath.toStdString().c_str() );
 	pn->setFileName( 0, filePath.toStdString() );
@@ -536,12 +540,17 @@ osg::MatrixTransform * OSGWidget::findOrCreateEntityNode( int entityId )
 	return xform;
 }
 
-void OSGWidget::allocProxyNode( const std::string& filename )
+void OSGWidget::allocProxyNode( const QString& filename )
 {
-	osg::ref_ptr<osgDB::Options> options = new osgDB::Options( "generateFacetNormals noTriStripPolygons mergeMeshes noRotation" );
+	/*osg::ref_ptr<osgDB::Options> options = new osgDB::Options( "generateFacetNormals noTriStripPolygons mergeMeshes noRotation" );
+	options->setObjectCacheHint( osgDB::Options::CACHE_NODES );
+
 	osg::ProxyNode * proxy = new osg::ProxyNode();
-	proxy->setFileName( 0, filename );
+	proxy->setFileName( 0, filename.toStdString() );
 	proxy->setDatabaseOptions( options );
-	createSimpleMaterial( proxy->getOrCreateStateSet(), osg::Vec4( 0.9f, 0.9f, 0.9f, 1.0f ) );
-	mMapGroup->addChild( proxy );
+	createSimpleMaterial( proxy->getOrCreateStateSet(), osg::Vec4( 0.9f, 0.9f, 0.9f, 1.0f ) );*/
+	
+	osg::Node * node = dynamic_cast<osg::Node*>( osgDB::Registry::instance()->getObjectCache()->getFromObjectCache( filename.toStdString() ) );
+	if ( node != NULL )
+		mMapGroup->addChild( node );
 }

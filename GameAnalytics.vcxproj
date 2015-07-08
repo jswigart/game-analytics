@@ -103,6 +103,7 @@
     <ClCompile Include="dependencies\enet-1.3.12\protocol.c" />
     <ClCompile Include="dependencies\enet-1.3.12\unix.c" />
     <ClCompile Include="dependencies\enet-1.3.12\win32.c" />
+    <ClCompile Include="dependencies\fastlz\fastlz.c" />
     <ClCompile Include="dependencies\json-cpp\json\json_reader.cpp" />
     <ClCompile Include="dependencies\json-cpp\json\json_value.cpp" />
     <ClCompile Include="dependencies\json-cpp\json\json_writer.cpp" />
@@ -115,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="analytics.pb.h" />
+    <ClInclude Include="dependencies\fastlz\fastlz.h" />
     <ClInclude Include="dependencies\json-cpp\json\autolink.h" />
     <ClInclude Include="dependencies\json-cpp\json\config.h" />
     <ClInclude Include="dependencies\json-cpp\json\features.h" />
@@ -134,11 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameAnalytics.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="dependencies\libcurl\vs\vc11\lib\vc11libcurl.vcxproj">
-      <Project>{87ee9da4-de1e-4448-8324-183c98dca588}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="analytics.proto">
@@ -166,6 +163,19 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)/%(FileName).pb.h;%(RootDir)%(Directory)/%(FileName).pb.cc;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)/%(FileName).pb.h;%(RootDir)%(Directory)/%(FileName).pb.cc;%(Outputs)</Outputs>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\protobuf\vsprojects\libprotobuf.vcxproj">
+      <Project>{3e283f37-a4ed-41b7-a3e6-a2d89d131a30}</Project>
+    </ProjectReference>
+    <ProjectReference Include="dependencies\libcurl\vs\vc11\lib\vc11libcurl.vcxproj">
+      <Project>{87ee9da4-de1e-4448-8324-183c98dca588}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

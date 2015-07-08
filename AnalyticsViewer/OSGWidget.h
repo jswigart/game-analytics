@@ -25,7 +25,7 @@ public:
 
 	osg::MatrixTransform * findOrCreateEntityNode( int entityId );	
 public slots:
-	void allocProxyNode( const std::string& filename );
+	void allocProxyNode( const QString& filename );
 	bool importModelToScene( const QString & filePath, bool clearExisting );
 protected:
 	virtual void paintGL();

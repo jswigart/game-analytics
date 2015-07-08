@@ -9,26 +9,31 @@
     <MD5>$(DEPENDENCIES)\md5</MD5>
     <SQLITE>$(DEPENDENCIES)\sqlite</SQLITE>
     <ENET>$(DEPENDENCIES)\enet-1.3.12</ENET>
-    <PROTOBUF>D:\git\protobuf\</PROTOBUF>
+    <fastlz>$(DEPENDENCIES)\fastlz</fastlz>
+    <PROTOBUF>D:\git\protobuf</PROTOBUF>
     <BOOST>D:\Sourcecode\boost_1_57_0</BOOST>
+    <ZEROMQ>D:\Sourcecode\zmq\zeromq-4.1.2</ZEROMQ>
+    <LIBSODIUM>D:\Sourcecode\zmq\libsodium</LIBSODIUM>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)build/$(Configuration)/</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>SQLITE_ENABLE_RTREE;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(GAMEANALYTICS);$(LIBCURL);$(MD5);$(JSONCPP);$(SHA1);$(SQLITE);$(ENET)/include;$(BOOST);$(PROTOBUF);$(PROTOBUF)/src</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SQLITE_ENABLE_RTREE;SQLITE_ENABLE_UPDATE_DELETE_LIMIT;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;ZMQ_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(GAMEANALYTICS);$(LIBCURL);$(MD5);$(JSONCPP);$(SHA1);$(SQLITE);$(ENET)/include;$(BOOST);$(PROTOBUF);$(PROTOBUF)/src;$(FASTLZ);$(ZEROMQ)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libzmq.lib;libsodium.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ZEROMQ)\bin\$(PlatformName)\$(ConfigurationName)\v120\static;$(LIBSODIUM)\bin\$(PlatformName)\$(ConfigurationName)\v120\static</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
+    <ProjectReference />
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="DEPENDENCIES">
@@ -59,12 +64,24 @@
       <Value>$(ENET)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
+    <BuildMacro Include="fastlz">
+      <Value>$(fastlz)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
     <BuildMacro Include="PROTOBUF">
       <Value>$(PROTOBUF)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="BOOST">
       <Value>$(BOOST)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="ZEROMQ">
+      <Value>$(ZEROMQ)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="LIBSODIUM">
+      <Value>$(LIBSODIUM)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

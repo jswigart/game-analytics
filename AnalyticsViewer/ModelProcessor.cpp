@@ -5,13 +5,16 @@
 
 ModelProcessor::ModelProcessor( QObject *parent )
 	: QThread( parent )
+	, mRunning( false )
 {
 	// connect message handling to the parent
 }
 
 void ModelProcessor::run()
 {
-	while ( true )
+	mRunning = true;
+
+	while ( mRunning )
 	{
 		sleep( 0 );
 
@@ -24,7 +27,7 @@ void ModelProcessor::run()
 			mMessageQueue.pop_front();
 		}
 		mMutex.unlock();
-		
+
 		if ( msg.isNull() )
 			continue;
 
@@ -51,17 +54,17 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 		modeldata::Scene scene;
 		if ( scene.ParseFromString( msg.modelbytes() ) && scene.IsInitialized() )
 		{
-			osg::Group* grp = new osg::Group();
-
-			GeomList meshGeoms( scene.meshes_size() );
-
+			osg::MatrixTransform* grp = new osg::MatrixTransform();
+			
 			size_t totalVertices = 0;
 			size_t totalFaces = 0;
 
 			for ( int m = 0; m < scene.meshes_size(); ++m )
 			{
 				const modeldata::Mesh& mesh = scene.meshes( m );
-				const modeldata::Material& mtrl = scene.materials( mesh.materialindex() );
+				GeometryPtr & cachedGeom = mGeomCache[ mesh.name() ];
+				
+				//const modeldata::Material& mtrl = scene.materials( mesh.materialindex() );
 
 				const osg::Vec3 * vertices = reinterpret_cast<const osg::Vec3*>( &mesh.vertices()[ 0 ] );
 				const size_t numVertices = mesh.vertices().size() / sizeof( osg::Vec3 );
@@ -73,7 +76,7 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 				meshNormals->resizeArray( numVertices );
 
 				const unsigned int * indices = reinterpret_cast<const unsigned int*>( &mesh.faces()[ 0 ] );
-				const size_t numFaces = mesh.faces().size() / sizeof( unsigned int );
+				const size_t numFaces = mesh.faces().size() / ( sizeof( unsigned int ) * 3 );
 				osg::DrawElementsUInt* drawElements = new osg::DrawElementsUInt( osg::PrimitiveSet::TRIANGLES, 0 );
 				drawElements->resizeElements( numVertices );
 
@@ -97,28 +100,36 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 					( *meshNormals )[ v + 2 ] = normal;
 				}
 
-				for ( size_t f = 0; f < numFaces; ++f )
+				for ( size_t f = 0; f < numVertices; f += 3 )
 				{
-					( *drawElements )[ f ] = indices[ f ];
+					( *drawElements )[ f + 0 ] = indices[ f + 0 ];
+					( *drawElements )[ f + 1 ] = indices[ f + 1 ];
+					( *drawElements )[ f + 2 ] = indices[ f + 2 ];
 				}
 
-				meshGeoms[ m ] = new osg::Geometry();
-				meshGeoms[ m ]->setName( mesh.name() );
-				meshGeoms[ m ]->setVertexArray( meshVertices );
-				meshGeoms[ m ]->setNormalArray( meshNormals, osg::Array::BIND_PER_VERTEX );
-				meshGeoms[ m ]->addPrimitiveSet( drawElements );
+				if ( cachedGeom == NULL )
+				{
+					cachedGeom = new osg::Geometry();
+					cachedGeom->setName( mesh.name() );
+				}
+
+				cachedGeom->setVertexArray( meshVertices );
+				cachedGeom->setNormalArray( meshNormals, osg::Array::BIND_PER_VERTEX );
+				cachedGeom->addPrimitiveSet( drawElements );
 			}
 
-			processNode( scene, meshGeoms, scene.rootnode(), grp );
+			processNode( scene, scene.rootnode(), grp );
 
-			std::string cacheFileName = msg.modelname() + ".osgb";
+			std::string cacheFileName = msg.modelname();
 			std::replace( cacheFileName.begin(), cacheFileName.end(), '/', '_' );
 			std::replace( cacheFileName.begin(), cacheFileName.end(), '\\', '_' );
 			cacheFileName.insert( 0, "cache/" );
+			cacheFileName += ".osgb";
 			//osgDB::writeNodeFile( *grp, cacheFileName );
-
-			osgDB::Registry::instance()->getObjectCache()->addEntryToObjectCache( cacheFileName, grp );;
 			
+			//osgDB::Registry::instance()->getFileCache()->writeNode( *grp, cacheFileName, NULL );
+			osgDB::Registry::instance()->getObjectCache()->addEntryToObjectCache( cacheFileName, grp );
+
 			emit info( tr( "Cached model %1" ).arg( cacheFileName.c_str() ), tr( "Vertices %1, Faces %2" ).arg( totalVertices ).arg( totalFaces ) );
 
 			emit allocModel( cacheFileName.c_str() );
@@ -129,39 +140,36 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 	}
 }
 
-void ModelProcessor::processNode( const modeldata::Scene& scene, const GeomList& geoms, const modeldata::Node& node, osg::Group* grp )
+void ModelProcessor::processNode( const modeldata::Scene& scene, const modeldata::Node& node, osg::MatrixTransform* grp )
 {
-	osg::Group* addGrp = grp;
-
-	if ( node.has_transformation() )
+	osg::Matrix mat;
+	mat.makeIdentity();
+	
+	if ( node.has_eulerrotation() )
 	{
-		const modeldata::Matrix4& trans = node.transformation();
-
-		osg::Matrix mat;
-		mat.makeIdentity();
-		/*mat.set(
-		trans.row0().x(), trans.row0().y(), trans.row0().z(), trans.row0().w(),
-		trans.row1().x(), trans.row1().y(), trans.row1().z(), trans.row1().w(),
-		trans.row2().x(), trans.row2().y(), trans.row2().z(), trans.row2().w(),
-		trans.row3().x(), trans.row3().y(), trans.row3().z(), trans.row3().w() );*/
-
-		osg::MatrixTransform* xform = new osg::MatrixTransform;
-		xform->setMatrix( mat );
-		addGrp = xform;
-
-		addGrp->setName( node.name() );
+		const modeldata::Vec3& euler = node.eulerrotation();
+		mat.rotate( euler.x(), osg::Vec3( 1.0f, 0.0f, 0.0f ) );
+		mat.rotate( euler.y(), osg::Vec3( 0.0f, 1.0f, 0.0f ) );
+		mat.rotate( euler.z(), osg::Vec3( 0.0f, 0.0f, 1.0f ) );
 	}
 
-	if ( node.meshindex_size() > 0 )
+	if ( node.has_translation() )
 	{
-		for ( int m = 0; m < node.meshindex_size(); ++m )
-		{
-			addGrp->addChild( geoms[ node.meshindex( m ) ] );
-		}
+		const modeldata::Vec3& vec = node.translation();
+		mat.setTrans( vec.x(), vec.y(), vec.z() );
+	}
+
+	grp->setMatrix( mat );
+
+	if ( node.has_meshname() )
+	{
+		GeomMap::iterator it = mGeomCache.find( node.meshname() );
+		if ( it != mGeomCache.end() )
+			grp->addChild( it->second );
 	}
 
 	for ( int c = 0; c < node.children_size(); ++c )
 	{
-		processNode( scene, geoms, node.children( c ), addGrp );
+		processNode( scene, node.children( c ), grp );
 	}
 }

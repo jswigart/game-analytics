@@ -6,12 +6,15 @@
 
 #include "sqlite3.h"
 
-#include "enet/enet.h"
 #include "curl\curl.h" // libcurl, for sending http requests
 #include "MD5.h"  // MD5 hashing algorithm
 
+#include <zmq.hpp>
+
 #include "google/protobuf/io/zero_copy_stream_impl.h"
 #include "google/protobuf/io/coded_stream.h"
+
+#undef GetMessage
 
 #ifdef CODE_ANALYSIS
 #include <CodeAnalysis\SourceAnnotations.h>
@@ -87,16 +90,58 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-GameAnalyticsLogger::GameAnalyticsLogger( const GameAnalyticsKeys & keys )
+AnalyticsPublisher::AnalyticsPublisher()
+{
+}
+
+AnalyticsPublisher::~AnalyticsPublisher()
+{
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+AnalyticsSubscriber::AnalyticsSubscriber()
+{
+}
+
+AnalyticsSubscriber::~AnalyticsSubscriber()
+{
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+GameAnalytics::GameAnalytics( const Keys & keys )
 	: mKeys( keys )
 	, mDatabase( NULL )
-	, mConnection( NULL )
+	, mPublisher( NULL )
 {
     // Initialize libcurl.
     curl_global_init(CURL_GLOBAL_ALL);
 
 	SetUserID();
 	SetSessionID();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+
+GameAnalytics::~GameAnalytics()
+{
+	delete mPublisher;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void GameAnalytics::SetPublisher( AnalyticsPublisher * publisher )
+{
+	mPublisher = publisher;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+AnalyticsPublisher * GameAnalytics::GetPublisher() const
+{
+	return mPublisher;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -125,7 +170,7 @@ GameAnalyticsLogger::GameAnalyticsLogger( const GameAnalyticsKeys & keys )
 // More info here: http://support.gameanalytics.com/entries/23054568-Generating-unique-user-identifiers
 
 // This hashes the user's MAC address to create an ID unique to that machine.
-void GameAnalyticsLogger::SetUserID()
+void GameAnalytics::SetUserID()
 {
 	mUserId = "DREVIL";
 
@@ -175,7 +220,7 @@ void GameAnalyticsLogger::SetUserID()
 }
 
 // Sets the session ID with a GUID (Globally Unique Identifier).
-void GameAnalyticsLogger::SetSessionID()
+void GameAnalytics::SetSessionID()
 {
     // Get the GUID.
     //GUID guid;
@@ -206,7 +251,7 @@ void GameAnalyticsLogger::SetSessionID()
 	mSessionId = ss.str();
 }
 
-/*void GameAnalyticsLogger::BuildDesignEventsJsonTree( Json::Value & tree )
+/*void GameAnalytics::BuildDesignEventsJsonTree( Json::Value & tree )
 {
 	tree = Json::Value(Json::arrayValue);
 	tree.resize( mEventsDesign.size() );
@@ -225,7 +270,7 @@ void GameAnalyticsLogger::SetSessionID()
 	}
 }*/
 
-/*void GameAnalyticsLogger::BuildQualityEventsJsonTree( Json::Value & tree )
+/*void GameAnalytics::BuildQualityEventsJsonTree( Json::Value & tree )
 {
 	tree = Json::Value(Json::arrayValue);
 	tree.resize( mEventsQuality.size() );
@@ -244,7 +289,7 @@ void GameAnalyticsLogger::SetSessionID()
 	}
 }*/
 
-size_t GameAnalyticsLogger::SubmitDesignEvents()
+size_t GameAnalytics::SubmitDesignEvents()
 {
 	std::stringstream query;
 	query << "SELECT * in events WHERE ()";
@@ -304,7 +349,7 @@ size_t GameAnalyticsLogger::SubmitDesignEvents()
 		{
 			std::string err = "Error Submitting Design Events ";
 			err += curl_easy_strerror(res);
-			mErrors.push( err );
+			mErrors.push_back( err );
 			return 0;
 		}
 	}
@@ -315,7 +360,7 @@ size_t GameAnalyticsLogger::SubmitDesignEvents()
 	return eventsSubmitted;
 }
 
-size_t GameAnalyticsLogger::SubmitQualityEvents()
+size_t GameAnalytics::SubmitQualityEvents()
 {
 	/*if ( mEventsQuality.size() == 0 )
 		return 0;*/
@@ -372,7 +417,7 @@ size_t GameAnalyticsLogger::SubmitQualityEvents()
 		{
 			std::string err = "Error Submitting Quality Events ";
 			err += curl_easy_strerror(res);
-			mErrors.push( err );
+			mErrors.push_back( err );
 			return 0;
 		}
 	}
@@ -383,7 +428,7 @@ size_t GameAnalyticsLogger::SubmitQualityEvents()
 	return eventsSubmitted;
 }
 
-std::string GameAnalyticsLogger::BuildUrl( const std::string & category )
+std::string GameAnalytics::BuildUrl( const std::string & category )
 {
 	// Currently the API's version is 1. Leave it like this for now.
 	const std::string apiVersion_ = "1";
@@ -396,7 +441,7 @@ std::string GameAnalyticsLogger::BuildUrl( const std::string & category )
 	return std::string("http://api.gameanalytics.com/") + apiVersion_ + "/" + mKeys.mGameKey + "/" + category;
 }
 
-const GameAnalyticsHeatmap * GameAnalyticsLogger::GetHeatmap(const std::string & area, const std::string & eventIds, bool loadFromServer)
+const GameAnalytics::Heatmap * GameAnalytics::GetHeatmap( const std::string & area, const std::string & eventIds, bool loadFromServer )
 {
 	HeatMapsByName::iterator it = mHeatMaps.find( area );
 	if ( it != mHeatMaps.end() )
@@ -455,7 +500,7 @@ const GameAnalyticsHeatmap * GameAnalyticsLogger::GetHeatmap(const std::string &
 		{
 			std::string err = "Error Getting Heat Map ";
 			err += curl_easy_strerror(res);
-			mErrors.push( err );
+			mErrors.push_back( err );
 			return NULL;
 		}
 
@@ -499,18 +544,18 @@ const GameAnalyticsHeatmap * GameAnalyticsLogger::GetHeatmap(const std::string &
 	return NULL;
 }
 
-bool GameAnalyticsLogger::GetError( std::string & errorOut )
+bool GameAnalytics::GetError( std::string & errorOut )
 {
 	if ( !mErrors.empty() )
 	{
-		errorOut = mErrors.front();
-		mErrors.pop();
+		errorOut.swap( mErrors.front() );
+		mErrors.pop_front();
 		return true;
 	}
 	return false;
 }
 
-bool GameAnalyticsLogger::CreateDatabase( const char * filename )
+bool GameAnalytics::CreateDatabase( const char * filename )
 {
 	std::string filepath = "file:";
 	filepath += filename;
@@ -522,22 +567,16 @@ bool GameAnalyticsLogger::CreateDatabase( const char * filename )
 	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA journal_mode=MEMORY", NULL, NULL, NULL ) );
 	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA temp_store=MEMORY", NULL, NULL, NULL ) );
 
-	enum { NumDefaultTables = 5 };
+	enum { NumDefaultTables = 2 };
 	const char * defaultTableName[NumDefaultTables] =
 	{
-		"models",
-		"entities",
 		"eventsGame",
 		"eventsQuality",
-		"eventStream",
 	};
 	const char * defaultTableDef[NumDefaultTables] =
 	{
-		"( name TEXT PRIMARY KEY, modeldata BLOB, lod INTEGER )",
-		"( id INTEGER PRIMARY KEY, properties BLOB )",
 		"( id INTEGER PRIMARY KEY, time TIMESTAMP DEFAULT (strftime('%Y-%m-%d %H:%M:%S.%f', 'now')), areaId TEXT, eventId TEXT, x REAL, y REAL, z REAL, value REAL, eventData BLOB )",
 		"( id INTEGER PRIMARY KEY, time TIMESTAMP DEFAULT (strftime('%Y-%m-%d %H:%M:%S.%f', 'now')), areaId TEXT, eventId TEXT, message TEXT, eventData BLOB )",
-		"( id INTEGER PRIMARY KEY, channel INTEGER, data BLOB )",
 	};
 	
 	for ( int i = 0; i < NumDefaultTables; ++i )
@@ -556,12 +595,33 @@ bool GameAnalyticsLogger::CreateDatabase( const char * filename )
 		}
 	}
 
+	// make a unique table for each event type
+	mMsgSubtypes = Analytics::MessageUnion::descriptor()->FindOneofByName( "msg" );
+
+	for ( int i = 0; i < mMsgSubtypes->field_count(); ++i )
+	{
+		const google::protobuf::FieldDescriptor* fdesc = mMsgSubtypes->field( i );
+
+		sqlite3_stmt * statement = NULL;
+		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "DROP TABLE %s", fdesc->camelcase_name().c_str() ), -1, &statement, NULL ) ) )
+		{
+			CheckSqliteError( sqlite3_step( statement ) );
+			CheckSqliteError( sqlite3_finalize( statement ) );
+		}
+
+		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "CREATE TABLE %s( id INTEGER PRIMARY KEY, key TEXT, data BLOB )", fdesc->camelcase_name().c_str() ), -1, &statement, NULL ) ) )
+		{
+			CheckSqliteError( sqlite3_step( statement ) );
+			CheckSqliteError( sqlite3_finalize( statement ) );
+		}
+	}
+
 	// todo: http://www.sqlite.org/rtree.html
 
 	return true;
 }
 
-int GameAnalyticsLogger::CheckSqliteError( int errcode )
+int GameAnalytics::CheckSqliteError( int errcode )
 {
 	switch( errcode )
 	{
@@ -579,18 +639,18 @@ int GameAnalyticsLogger::CheckSqliteError( int errcode )
 				exerr ? "\n" : "",
 				sqlite3_errmsg( mDatabase ) );
 			
-			mErrors.push( str.c_str() );
+			mErrors.push_back( str.c_str() );
 		}
 	}
 	return errcode;
 }
 
-void GameAnalyticsLogger::CloseDatabase()
+void GameAnalytics::CloseDatabase()
 {
 	sqlite3_close_v2( mDatabase );
 }
 
-void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventId )
+void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId )
 {
 	if ( mDatabase != NULL && areaId != NULL && eventId != NULL )
 	{
@@ -609,7 +669,7 @@ void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventI
 	}
 }
 
-void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventId, float value )
+void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId, float value )
 {
 	if ( mDatabase != NULL && areaId != NULL && eventId != NULL )
 	{
@@ -629,7 +689,7 @@ void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventI
 	}
 }
 
-void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventId, const float * xyz )
+void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId, const float * xyz )
 {
 	if ( mDatabase != NULL && areaId != NULL && eventId != NULL && xyz != NULL )
 	{
@@ -651,7 +711,7 @@ void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventI
 	}
 }
 
-void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventId, const float * xyz, float value )
+void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId, const float * xyz, float value )
 {
 	if ( mDatabase != NULL && areaId != NULL && eventId != NULL && xyz != NULL )
 	{
@@ -675,7 +735,7 @@ void GameAnalyticsLogger::AddGameEvent( const char * areaId, const char * eventI
 }
 
 
-void GameAnalyticsLogger::AddQualityEvent( const char * areaId, const char * eventId )
+void GameAnalytics::AddQualityEvent( const char * areaId, const char * eventId )
 {
 	if ( mDatabase != NULL && areaId != NULL && eventId != NULL )
 	{
@@ -694,7 +754,7 @@ void GameAnalyticsLogger::AddQualityEvent( const char * areaId, const char * eve
 	}
 }
 
-void GameAnalyticsLogger::AddQualityEvent( const char * areaId, const char * eventId, const char * messageId )
+void GameAnalytics::AddQualityEvent( const char * areaId, const char * eventId, const char * messageId )
 {
 	if ( mDatabase != NULL && areaId != NULL && eventId != NULL && messageId != NULL )
 	{
@@ -714,48 +774,7 @@ void GameAnalyticsLogger::AddQualityEvent( const char * areaId, const char * eve
 	}
 }
 
-void GameAnalyticsLogger::AddModel( const char * modelName, const std::string & data, int lod )
-{
-	if ( mDatabase != NULL && modelName != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into models ( name, modeldata, lod ) VALUES( ?, ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, modelName, strlen( modelName ), NULL );
-			sqlite3_bind_blob( statement, 2, data.c_str(), data.length(), NULL );
-			sqlite3_bind_int( statement, 3, lod );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
-//void GameAnalyticsLogger::AddEntity( const int id, const Json::Value & properties )
-//{
-//	const std::string propString = properties.toStyledString();
-//
-//	if ( mDatabase != NULL )
-//	{
-//		sqlite3_stmt * statement = NULL;
-//		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into entities ( id, properties ) VALUES( ?, ? )", -1, &statement, NULL ) ) )
-//		{
-//			sqlite3_bind_int( statement, 1, id );
-//			sqlite3_bind_text( statement, 2, propString.c_str(), propString.length(), NULL );
-//
-//			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-//			{
-//
-//			}
-//		}
-//		CheckSqliteError( sqlite3_finalize( statement ) );
-//	}
-//}
-
-void GameAnalyticsLogger::WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents )
+void GameAnalytics::WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents )
 {
 	scriptContents.clear();
 
@@ -859,7 +878,7 @@ void GameAnalyticsLogger::WriteHeatmapScript( const HeatmapDef & def, std::strin
 	}
 }
 
-void GameAnalyticsLogger::GetUniqueEventNames( std::vector< std::string > & eventNames )
+void GameAnalytics::GetUniqueEventNames( std::vector< std::string > & eventNames )
 {
 	if ( mDatabase )
 	{
@@ -880,196 +899,316 @@ void GameAnalyticsLogger::GetUniqueEventNames( std::vector< std::string > & even
 	}
 }
 
-void GameAnalyticsLogger::AddEvent( const Analytics::MessageUnion & msg )
+bool StringFromField( std::string & strOut, const google::protobuf::Message & msg, const google::protobuf::FieldDescriptor* fdesc )
 {
-	using namespace google::protobuf;
+	if ( fdesc->is_repeated() )
+		return false;
 
+	switch ( fdesc->type() )
+	{
+		case google::protobuf::FieldDescriptor::TYPE_DOUBLE:
+		{
+			const double val = msg.GetReflection()->GetBool( msg, fdesc );
+			strOut = vaAnalytics( "%f", val );
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_FLOAT:
+		{
+			const float val = msg.GetReflection()->GetFloat( msg, fdesc );
+			strOut = vaAnalytics( "%f", val );
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_INT64:
+		case google::protobuf::FieldDescriptor::TYPE_FIXED64:
+		case google::protobuf::FieldDescriptor::TYPE_SINT64:
+		case google::protobuf::FieldDescriptor::TYPE_SFIXED64:
+		{
+			const google::protobuf::int64 val = msg.GetReflection()->GetInt64( msg, fdesc );
+			strOut = vaAnalytics( "%ll", val );
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_UINT64:
+		{
+			const google::protobuf::uint64 val = msg.GetReflection()->GetUInt64( msg, fdesc );
+			strOut = vaAnalytics( "%ull", val );
+			break;
+		}		
+		case google::protobuf::FieldDescriptor::TYPE_SINT32:
+		case google::protobuf::FieldDescriptor::TYPE_FIXED32:
+		case google::protobuf::FieldDescriptor::TYPE_SFIXED32:
+		{
+			const google::protobuf::int32 val = msg.GetReflection()->GetInt32( msg, fdesc );
+			strOut = vaAnalytics( "%d", val );
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_INT32:
+		case google::protobuf::FieldDescriptor::TYPE_UINT32:
+		{
+			const google::protobuf::uint32 val = msg.GetReflection()->GetUInt32( msg, fdesc );
+			strOut = vaAnalytics( "%d", val );
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_BOOL:
+		{
+			const bool val = msg.GetReflection()->GetBool( msg, fdesc );
+			strOut = val ? "1" : "0";
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_STRING:
+		{
+			strOut = msg.GetReflection()->GetString( msg, fdesc );
+			break;
+		}
+		case google::protobuf::FieldDescriptor::TYPE_ENUM:
+		{
+			const google::protobuf::EnumValueDescriptor* eval = msg.GetReflection()->GetEnum( msg, fdesc );
+			if ( eval == NULL )
+				return false;
+
+			strOut = eval->name();
+			break;
+		}
+		default:
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
+{
 	const int messageSize = msg.ByteSize();
 	
 	// construct a network friendly buffer
-	if ( mConnection != NULL )
+	const google::protobuf::FieldDescriptor* oneofField = msg.GetReflection()->GetOneofFieldDescriptor( msg, mMsgSubtypes );
+
+	if ( oneofField == NULL || oneofField->message_type() == NULL )
+		return;
+
+	const char * msgtype = oneofField->camelcase_name().c_str();
+
+	bool cacheLast = false;
+	if ( oneofField->message_type()->options().HasExtension( Analytics::cachelastvalue ) )
+		cacheLast = oneofField->message_type()->options().GetExtension( Analytics::cachelastvalue );
+		
+	if ( cacheLast )
 	{
-		ENetPacket * packet = enet_packet_create( NULL, messageSize, ENET_PACKET_FLAG_RELIABLE );
-
-		io::ArrayOutputStream arraystr( packet->data, packet->dataLength );
-		io::CodedOutputStream outputstr( &arraystr );
-
-		// todo: compression info?
-		msg.SerializeToCodedStream( &outputstr );
-
+		// figure out the key with which to cache this message, to allow us to cache more than one of the same type message
+		std::string cacheKey = oneofField->camelcase_name();
+		if ( oneofField->message_type()->options().HasExtension( Analytics::cachekeysuffix ) )
 		{
-			// Save it to the output stream
-			sqlite3_stmt * statement = NULL;
-			if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventStream ( channel, data ) VALUES( ?, ? )", -1, &statement, NULL ) ) )
+			cacheKey = oneofField->message_type()->options().GetExtension( Analytics::cachekeysuffix );
+
+			const google::protobuf::FieldDescriptor* fdesc = oneofField->message_type()->FindFieldByCamelcaseName( cacheKey );
+			if ( fdesc != NULL && !fdesc->is_repeated() )
 			{
-				sqlite3_bind_int( statement, 1, CHANNEL_EVENT_STREAM );
-				sqlite3_bind_blob( statement, 2, packet->data, packet->dataLength, NULL );
-
-				if ( CheckSqliteError( sqlite3_step( statement ) ) == SQLITE_DONE )
-				{
-
-				}
+				const google::protobuf::Message & oneofMsg = msg.GetReflection()->GetMessage( msg, oneofField );
+				
+				std::string fieldString;
+				StringFromField( fieldString, oneofMsg, fdesc );				
+				cacheKey += "_";
+				cacheKey += fieldString;
 			}
-			CheckSqliteError( sqlite3_finalize( statement ) );
 		}
 
-		// if its padded a bit with the message id header and the variable length message, resize it down after everything is written
-		enet_packet_resize( packet, outputstr.ByteCount() );
-
-		enet_host_broadcast( mConnection, CHANNEL_EVENT_STREAM, packet );
+		mMessageCache[ cacheKey ].CopyFrom( msg );
 	}
-}
+	
+	std::string messagePayload;
+	messagePayload.reserve( messageSize );
 
-void GameAnalyticsLogger::InitNetwork()
-{
-	enet_initialize();
-}
+	google::protobuf::io::StringOutputStream str( &messagePayload );
+	google::protobuf::io::CodedOutputStream outputstr( &str );
 
-void GameAnalyticsLogger::ShutdownNetwork()
-{
-	enet_deinitialize();
-}
+	// todo: compression info?
+	msg.SerializeToCodedStream( &outputstr );
 
-bool GameAnalyticsLogger::IsNetworkActive() const
-{
-	return mConnection != NULL;
-}
-
-size_t GameAnalyticsLogger::NumClientsConnected() const
-{
-	int numConnected = 0;
-	if ( mConnection != NULL )
 	{
-		for ( size_t i = 0; i < mConnection->peerCount; ++i )
+		// Save it to the output stream
+		sqlite3_stmt * statement = NULL;
+		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "INSERT into %s ( key, data ) VALUES( ?, ? )", msgtype ), -1, &statement, NULL ) ) )
 		{
-			if ( mConnection->peers[ i ].state == ENET_PEER_STATE_CONNECTED )
-				++numConnected;
+			sqlite3_bind_text( statement, 1, msgtype, strlen( msgtype ), NULL );
+			sqlite3_bind_blob( statement, 2, messagePayload.c_str(), messagePayload.size(), NULL );
+
+			if ( CheckSqliteError( sqlite3_step( statement ) ) == SQLITE_DONE )
+			{
+			}
+		}
+		CheckSqliteError( sqlite3_finalize( statement ) );
+	}
+	
+	if ( mPublisher != NULL )
+	{
+		mPublisher->Publish( oneofField->camelcase_name().c_str(), msg, messagePayload );
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+bool GameAnalytics::Poll( Analytics::MessageUnion & msgOut )
+{
+	if ( mPublisher != NULL )
+	{
+		while ( mPublisher->Poll( msgOut ) )
+		{
+			if ( msgOut.has_topicsubscribe() )
+			{
+				for ( MsgCache::iterator it = mMessageCache.begin(); it != mMessageCache.end(); ++it )
+				{
+					if ( msgOut.topicsubscribe().topic().empty() || it->first.find( msgOut.topicsubscribe().topic() ) == 0 )
+					{
+						const int messageSize = it->second.ByteSize();
+
+						const google::protobuf::FieldDescriptor* oneofField = it->second.GetReflection()->GetOneofFieldDescriptor( it->second, mMsgSubtypes );
+
+						std::string messagePayload;
+						messagePayload.reserve( messageSize );
+
+						google::protobuf::io::StringOutputStream str( &messagePayload );
+						google::protobuf::io::CodedOutputStream outputstr( &str );
+
+						// todo: compression info?
+						it->second.SerializeToCodedStream( &outputstr );
+
+						mPublisher->Publish( oneofField->camelcase_name().c_str(), it->second, messagePayload );
+					}
+				}
+				continue;
+			}
+			else if ( msgOut.has_topicunsubscribe() )
+			{
+				continue;
+			}
+			else
+			{
+				return true;
+			}
 		}
 	}
-	return numConnected;
+	return false;
 }
 
-bool GameAnalyticsLogger::StartHost( const char * ipAddress, unsigned short port )
+//////////////////////////////////////////////////////////////////////////
+
+zmqPublisher::zmqPublisher( const char * ipAddr, unsigned short port )
+	: mContext( new zmq::context_t( 1 ) )
+	, mSocketPub( NULL )
+	, mSocketSub( NULL )
 {
-	ENetAddress address;
-	address.host = ENET_HOST_ANY;
-	address.port = port;
-	
-	const size_t maxClients = 1;
-	mConnection = enet_host_create( &address, maxClients, CHANNEL_COUNT, 0, 0 );
-	if ( mConnection == NULL )
-		return false;
-	
-	return true;
+	/*mSocketSub = new zmq::socket_t( *mCtx, ZMQ_SUB );
+	mSocketSub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
+	mSocketSub->setsockopt( ZMQ_SUBSCRIBE, "", 0 );*/
+
+	mSocketPub = new zmq::socket_t( *mContext, ZMQ_XPUB );
+	mSocketPub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
 }
 
-bool GameAnalyticsLogger::Connect( const char * ipAddress, unsigned short port )
+//////////////////////////////////////////////////////////////////////////
+
+zmqPublisher::zmqPublisher( zmq::context_t & context, const char * ipAddr, unsigned short port )
+	: mContext( NULL )
+	, mSocketPub( NULL )
+	, mSocketSub( NULL )
 {
-	ENetAddress address;
-	address.port = port;
-	if ( enet_address_set_host( &address, ipAddress ) < 0 )
-		return false;
+	/*mSocketSub = new zmq::socket_t( *mCtx, ZMQ_SUB );
+	mSocketSub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
+	mSocketSub->setsockopt( ZMQ_SUBSCRIBE, "", 0 );*/
 
-	mConnection = enet_host_create( NULL, 1, CHANNEL_COUNT, 0, 0 );
-	if ( mConnection == NULL )
-		return false;
-
-	if ( enet_host_connect( mConnection, &address, CHANNEL_COUNT, 0 ) == NULL )
-	{
-		enet_host_destroy( mConnection );
-		mConnection = NULL;
-		return false;
-	}
-	
-	return true;
+	mSocketPub = new zmq::socket_t( context, ZMQ_XPUB );
+	mSocketPub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
 }
 
-void GameAnalyticsLogger::ServiceNetwork( std::vector<Analytics::MessageUnion*> & recievedMessages )
+zmqPublisher::~zmqPublisher()
+{
+	zmq_close( mSocketPub );
+}
+
+void zmqPublisher::Publish( const char * topic, const Analytics::MessageUnion & msg, const std::string & payload )
+{
+	zmq::message_t ztopic( strlen( topic ) );
+	strncpy( (char*)ztopic.data(), topic, ztopic.size() );
+
+	zmq::message_t zmsg( payload.size() );
+	memcpy( zmsg.data(), payload.c_str(), payload.size() );
+	mSocketPub->send( ztopic, ZMQ_SNDMORE );
+	mSocketPub->send( zmsg );
+}
+
+bool zmqPublisher::Poll( Analytics::MessageUnion & msgOut )
 {
 	using namespace google::protobuf;
 
-	struct ScopedPacketDestroy
-	{
-		ScopedPacketDestroy( ENetPacket * packet )
-			: mPacket( packet )
+	zmq::message_t zmsg;
+	if ( mSocketPub->recv( &zmsg, ZMQ_DONTWAIT ) )
+	{	
+		enum Command
 		{
-		}
-		~ScopedPacketDestroy()
+			CMD_UNSUBSCRIBE = 0,
+			CMD_SUBSCRIBE = 1,
+		};
+		
+		const size_t sz = zmsg.size();
+		// these messages are subscription messages
+		const Command sub = (Command)( *(char*)zmsg.data() );
+
+		if ( sub == CMD_SUBSCRIBE )
 		{
-			enet_packet_destroy( mPacket );
+			msgOut.mutable_topicsubscribe()->mutable_topic()->assign( (char*)zmsg.data() + 1, zmsg.size() - 1 );
 		}
-	private:
-		ENetPacket * mPacket;
-	};
-
-	/* Wait up to 1000 milliseconds for an event. */
-	ENetEvent event;
-	while ( enet_host_service( mConnection, &event, 0 ) > 0 )
-	{
-		char srcAddr[ 256 ] = {};
-		strcpy( srcAddr, "<unknown>" );
-
-		if ( event.peer != NULL )
+		else
 		{
-			char buffer[ 32 ] = {};
-			enet_address_get_host_ip( &event.peer->address, buffer, 32 );
-			sprintf( srcAddr, "%s:%d", buffer, event.peer->address.port );
+			msgOut.mutable_topicunsubscribe()->mutable_topic()->assign( (char*)zmsg.data() + 1, zmsg.size() - 1 );
 		}
-
-		switch ( event.type )
-		{
-			case ENET_EVENT_TYPE_CONNECT:
-			{
-				// send the entire history of data
-				sqlite3_stmt * statement = NULL;
-				if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "SELECT channel, data FROM eventStream", -1, &statement, NULL ) ) )
-				{
-					while ( SQLITE_ROW == CheckSqliteError( sqlite3_step( statement ) ) )
-					{
-						const int channel = sqlite3_column_int( statement, 0 );
-						const void * dataBytes = sqlite3_column_blob( statement, 1 );
-						const int numBytes = sqlite3_column_bytes( statement, 1 );
-
-						ENetPacket * packet = enet_packet_create( NULL, numBytes, ENET_PACKET_FLAG_RELIABLE );
-						memcpy( packet->data, dataBytes, numBytes );
-						enet_host_broadcast( mConnection, CHANNEL_EVENT_STREAM, packet );
-					}
-				}
-				break;
-			}
-			case ENET_EVENT_TYPE_RECEIVE:
-			{
-				try 
-				{
-					ScopedPacketDestroy spd( event.packet );
-
-					io::ArrayInputStream arraystr( event.packet->data, event.packet->dataLength );
-					io::CodedInputStream inputstream( &arraystr );
-					
-					Analytics::MessageUnion * msg = new Analytics::MessageUnion();
-
-					if ( !msg->ParseFromCodedStream( &inputstream ) )
-					{
-						delete msg;
-						break;
-					}
-
-					recievedMessages.push_back( msg );
-				}
-				catch ( const std::exception & e )
-				{
-					e;
-				}
-				break;
-			}
-			case ENET_EVENT_TYPE_DISCONNECT:
-			{
-				/* Reset the peer's client information. */
-				enet_peer_reset( event.peer );
-				//event.peer->data = NULL;
-				break;
-			}
-		}
+		return true;
 	}
+	return false;
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+zmqSubscriber::zmqSubscriber( zmq::context_t & context, const char * ipAddr, unsigned short port )
+{
+	mSocketSub = new zmq::socket_t( context, ZMQ_SUB );
+	mSocketSub->connect( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
+}
+
+zmqSubscriber::~zmqSubscriber()
+{
+	zmq_close( mSocketSub );
+}
+
+void zmqSubscriber::Subscribe( const char * topic )
+{
+	mSocketSub->setsockopt( ZMQ_SUBSCRIBE, topic, strlen( topic ) );
+}
+
+bool zmqSubscriber::Poll( Analytics::MessageUnion & msgOut )
+{
+	using namespace google::protobuf;
+
+	zmq::message_t zmsg;
+	if ( mSocketSub->recv( &zmsg, ZMQ_DONTWAIT ) )
+	{
+		const std::string topic( (char*)zmsg.data(), zmsg.size() );
+		
+		if ( zmsg.more() )
+		{
+			if ( mSocketSub->recv( &zmsg, ZMQ_DONTWAIT ) )
+			{
+				io::ArrayInputStream arraystr( zmsg.data(), zmsg.size() );
+				io::CodedInputStream inputstream( &arraystr );
+
+				msgOut.Clear();
+				if ( msgOut.ParseFromCodedStream( &inputstream ) )
+				{
+
+				}
+			}
+		}
+
+		return true;
+	}
+	return false;
+}

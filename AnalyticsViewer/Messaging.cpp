@@ -23,6 +23,7 @@ private:
 
 HostThreadENET::HostThreadENET( QObject *parent )
 	: QThread( parent )
+	, mRunning( false )
 {
 	// connect message handling to the parent
 }
@@ -30,7 +31,7 @@ HostThreadENET::HostThreadENET( QObject *parent )
 void HostThreadENET::run()
 {
 	enet_initialize();
-
+	
 	// todo: read these in
 	const char * hostIp = "127.0.0.1";
 	unsigned short hostPort = 5050;
@@ -53,6 +54,8 @@ void HostThreadENET::run()
 		return;
 	}
 	
+	//enet_host_compress( enetHost );
+
 	{
 		enetHost->peers[ 0 ].address.port = hostPort;
 		if ( enet_address_set_host( &enetHost->peers[ 0 ].address, hostIp ) < 0 )
@@ -64,7 +67,9 @@ void HostThreadENET::run()
 	
 	using namespace google::protobuf;
 
-	while ( true )
+	mRunning = true; 
+
+	while ( mRunning )
 	{
 		for ( int p = 0; p < enetHost->peerCount; ++p )
 		{
@@ -88,6 +93,13 @@ void HostThreadENET::run()
 				char buffer[ 32 ] = {};
 				enet_address_get_host_ip( &event.peer->address, buffer, 32 );
 				srcAddr = QString( "%1:%2" ).arg( buffer ).arg( event.peer->address.port );
+			}
+			
+			if ( event.peer != NULL )
+			{
+				emit status( QString( "Sent: %1, Recvd: %2" )
+					.arg( event.peer->outgoingDataTotal )
+					.arg( event.peer->incomingDataTotal ) );
 			}
 
 			switch ( event.type )
@@ -143,4 +155,38 @@ void HostThreadENET::run()
 	}
 	
 	enet_deinitialize();
+}
+
+#include <zmq.hpp>
+
+HostThread0MQ::HostThread0MQ( QObject *parent )
+	: QThread( parent )
+	, mRunning( false )
+{
+
+}
+
+void HostThread0MQ::run()
+{
+	using namespace google::protobuf;
+	
+	zmq::context_t zmqcontext( 1 );
+
+	zmqSubscriber sub( zmqcontext, "127.0.0.1", 40000 );
+	sub.Subscribe( "" );
+	
+	while ( true )
+	{
+		Analytics::MessageUnion msg;
+		if ( sub.Poll( msg ) )
+		{
+			MessageUnionPtr msgInstance( new Analytics::MessageUnion() );
+			msgInstance->CopyFrom( msg );
+			emit onmsg( msgInstance );
+		}
+		else
+		{
+			Sleep( 10 );
+		}
+	}
 }
