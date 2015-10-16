@@ -1,13 +1,22 @@
 #ifndef ANALYTICSVIEWER_H
 #define ANALYTICSVIEWER_H
 
+#include <QMainWindow>
+#include <QMdiArea>
+#include <Qt3DQuick/QQmlAspectEngine>
+
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QLabel>
+
 #include "ui_analyticsviewer.h"
 
 #include "Messaging.h"
 
 class ModelProcessor;
 class HostThreadENET;
+
+class QtVariantEditorFactory;
+class QtVariantPropertyManager;
 
 class AnalyticsViewer : public QMainWindow
 {
@@ -40,27 +49,32 @@ public:
 	//	void logEntryAppended( const LogEntry & entry );
 	//	void logFiltersChanged( const LogEntry & entry );
 	//
-	protected Q_SLOTS:
+protected Q_SLOTS:
 	void FileOpen();
 	void FileSave();
 	void RebuildLogTable();
-	void UpdateHierarchy();
+	
 	void SelectionChanged();
 	void LogInfo( const QString & msg, const QString & details );
 	void LogWarn( const QString & msg, const QString & details );
 	void LogError( const QString & msg, const QString & details );
 	void LogDebug( const QString & msg, const QString & details );
 	void StatusInfo( const QString & msg );
+	void UpdateHierarchy();
 
 	// message handling
 	void processMessage( MessageUnionPtr msg );
 
 private:
-	Ui::AnalyticsViewerClass ui;
+	Ui::AnalyticsViewerClass		ui;
+	Qt3D::Quick::QQmlAspectEngine	mEngine;
+	
+	ModelProcessor*					mModelProcessorThread;
+	HostThread0MQ*					mMessageThread;
+	QLabel*							mNetworkLabel;
 
-	ModelProcessor*		mModelProcessorThread;
-	HostThread0MQ*		mMessageThread;
-	QLabel*				mNetworkLabel;
+	QtVariantEditorFactory*		mVariantEditor;
+	QtVariantPropertyManager*	mVariantPropMgr;
 
 	void FileLoad( const QString & filePath );
 	void FileSave( const QString & filePath );
@@ -68,6 +82,12 @@ private:
 	void AddToTable( const LogEntry & log );
 
 	void processMessage( const Analytics::GameEntityInfo& msg );
+	
+	void WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem );
+	void ShowProperties( QTreeWidgetItem * treeItem, const QObject * obj );
+
+	QTreeWidgetItem * FindChildItem( QTreeWidgetItem * searchUnder, qulonglong itemId );
+	QTreeWidgetItem * FindOrAdd( QTreeWidgetItem * parent, const QString& str, qulonglong id, const QVariant & info = QVariant() );
 };
 
 #endif

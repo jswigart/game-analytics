@@ -179,7 +179,8 @@ void protobuf_AssignDesc_modeldata_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Mesh));
   Scene_descriptor_ = file->message_type(7);
-  static const int Scene_offsets_[2] = {
+  static const int Scene_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Scene, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Scene, rootnode_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Scene, meshes_),
   };
@@ -268,9 +269,10 @@ void protobuf_AddDesc_modeldata_2eproto() {
     "\n\010contents\030\002 \001(\r\022\024\n\014surfaceFlags\030\003 \001(\r\"v"
     "\n\004Mesh\022\014\n\004name\030\001 \001(\t\022\020\n\010vertices\030\002 \001(\014\022\r"
     "\n\005faces\030\003 \001(\014\022\027\n\017materialIndices\030\004 \001(\014\022&"
-    "\n\tmaterials\030\005 \003(\0132\023.modeldata.Material\"K"
-    "\n\005Scene\022!\n\010rootNode\030\001 \002(\0132\017.modeldata.No"
-    "de\022\037\n\006meshes\030\002 \003(\0132\017.modeldata.Mesh", 755);
+    "\n\tmaterials\030\005 \003(\0132\023.modeldata.Material\"Y"
+    "\n\005Scene\022\014\n\004name\030\001 \002(\t\022!\n\010rootNode\030\002 \002(\0132"
+    "\017.modeldata.Node\022\037\n\006meshes\030\003 \003(\0132\017.model"
+    "data.Mesh", 769);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "modeldata.proto", &protobuf_RegisterTypes);
   Vec3::default_instance_ = new Vec3();
@@ -2753,6 +2755,7 @@ void Mesh::Swap(Mesh* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int Scene::kNameFieldNumber;
 const int Scene::kRootNodeFieldNumber;
 const int Scene::kMeshesFieldNumber;
 #endif  // !_MSC_VER
@@ -2775,7 +2778,9 @@ Scene::Scene(const Scene& from)
 }
 
 void Scene::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   rootnode_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2786,6 +2791,9 @@ Scene::~Scene() {
 }
 
 void Scene::SharedDtor() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
   if (this != default_instance_) {
     delete rootnode_;
   }
@@ -2813,8 +2821,15 @@ Scene* Scene::New() const {
 }
 
 void Scene::Clear() {
-  if (has_rootnode()) {
-    if (rootnode_ != NULL) rootnode_->::modeldata::Node::Clear();
+  if (_has_bits_[0 / 32] & 3) {
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        name_->clear();
+      }
+    }
+    if (has_rootnode()) {
+      if (rootnode_ != NULL) rootnode_->::modeldata::Node::Clear();
+    }
   }
   meshes_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2831,28 +2846,45 @@ bool Scene::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .modeldata.Node rootNode = 1;
+      // required string name = 1;
       case 1: {
         if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name().data(), this->name().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "name");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_rootNode;
+        break;
+      }
+
+      // required .modeldata.Node rootNode = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_rootNode:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_rootnode()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_meshes;
+        if (input->ExpectTag(26)) goto parse_meshes;
         break;
       }
 
-      // repeated .modeldata.Mesh meshes = 2;
-      case 2: {
-        if (tag == 18) {
+      // repeated .modeldata.Mesh meshes = 3;
+      case 3: {
+        if (tag == 26) {
          parse_meshes:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_meshes()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_meshes;
+        if (input->ExpectTag(26)) goto parse_meshes;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2882,16 +2914,26 @@ failure:
 void Scene::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:modeldata.Scene)
-  // required .modeldata.Node rootNode = 1;
-  if (has_rootnode()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->rootnode(), output);
+  // required string name = 1;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
   }
 
-  // repeated .modeldata.Mesh meshes = 2;
+  // required .modeldata.Node rootNode = 2;
+  if (has_rootnode()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->rootnode(), output);
+  }
+
+  // repeated .modeldata.Mesh meshes = 3;
   for (int i = 0; i < this->meshes_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->meshes(i), output);
+      3, this->meshes(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2904,18 +2946,29 @@ void Scene::SerializeWithCachedSizes(
 ::google::protobuf::uint8* Scene::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:modeldata.Scene)
-  // required .modeldata.Node rootNode = 1;
+  // required string name = 1;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // required .modeldata.Node rootNode = 2;
   if (has_rootnode()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->rootnode(), target);
+        2, this->rootnode(), target);
   }
 
-  // repeated .modeldata.Mesh meshes = 2;
+  // repeated .modeldata.Mesh meshes = 3;
   for (int i = 0; i < this->meshes_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->meshes(i), target);
+        3, this->meshes(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2930,7 +2983,14 @@ int Scene::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .modeldata.Node rootNode = 1;
+    // required string name = 1;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+
+    // required .modeldata.Node rootNode = 2;
     if (has_rootnode()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -2938,7 +2998,7 @@ int Scene::ByteSize() const {
     }
 
   }
-  // repeated .modeldata.Mesh meshes = 2;
+  // repeated .modeldata.Mesh meshes = 3;
   total_size += 1 * this->meshes_size();
   for (int i = 0; i < this->meshes_size(); i++) {
     total_size +=
@@ -2973,6 +3033,9 @@ void Scene::MergeFrom(const Scene& from) {
   GOOGLE_CHECK_NE(&from, this);
   meshes_.MergeFrom(from.meshes_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_name()) {
+      set_name(from.name());
+    }
     if (from.has_rootnode()) {
       mutable_rootnode()->::modeldata::Node::MergeFrom(from.rootnode());
     }
@@ -2993,7 +3056,7 @@ void Scene::CopyFrom(const Scene& from) {
 }
 
 bool Scene::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   if (!::google::protobuf::internal::AllAreInitialized(this->meshes())) return false;
   return true;
@@ -3001,6 +3064,7 @@ bool Scene::IsInitialized() const {
 
 void Scene::Swap(Scene* other) {
   if (other != this) {
+    std::swap(name_, other->name_);
     std::swap(rootnode_, other->rootnode_);
     meshes_.Swap(&other->meshes_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

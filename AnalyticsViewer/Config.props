@@ -3,7 +3,6 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <DEPENDENCIES>$(ProjectDir)..\dependencies\</DEPENDENCIES>
-    <OPENSCENEGRAPH>D:\Sourcecode\OpenSceneGraph-3.3.3\</OPENSCENEGRAPH>
     <GAMEANALYTICS>$(ProjectDir)..\</GAMEANALYTICS>
     <PROTOBUF>D:\git\protobuf\</PROTOBUF>
     <LIBCURL>$(DEPENDENCIES)\libcurl\include</LIBCURL>
@@ -13,21 +12,17 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(OPENSCENEGRAPH)\include;$(GAMEANALYTICS);$(PROTOBUF);$(PROTOBUF)\src;$(LIBCURL)\include;$(ZEROMQ)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(GAMEANALYTICS);$(PROTOBUF);$(PROTOBUF)\src;$(LIBCURL)\include;$(ZEROMQ)\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ZMQ_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(OPENSCENEGRAPH)\lib;$(ZEROMQ)\bin\$(PlatformName)\$(ConfigurationName)\v120\static;$(LIBSODIUM)\bin\$(PlatformName)\$(ConfigurationName)\v120\static</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ZEROMQ)\bin\$(PlatformName)\$(ConfigurationName)\v120\static;$(LIBSODIUM)\bin\$(PlatformName)\$(ConfigurationName)\v120\static</AdditionalLibraryDirectories>
       <AdditionalDependencies>ws2_32.lib;winmm.lib;Wldap32.lib;libzmq.lib;libsodium.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="DEPENDENCIES">
       <Value>$(DEPENDENCIES)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
-    <BuildMacro Include="OPENSCENEGRAPH">
-      <Value>$(OPENSCENEGRAPH)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="GAMEANALYTICS">

@@ -1,7 +1,64 @@
+#include <QtWidgets/QApplication>
+#include <Qt3DRenderer/QMesh>
+#include <Qt3DRenderer/QMeshData>
+#include <Qt3DRenderer/BufferPtr>
+#include <Qt3DRenderer/AttributePtr>
+#include <Qt3DCore/QTransform>
+#include <Qt3DCore/QMatrixTransform>
+#include <Qt3DRenderer/QCylinderMesh>
+#include <Qt3DRenderer/QPhongMaterial>
+#include <QDebug>
+
 #include "ModelProcessor.h"
 #include "GameAnalytics.h"
 
 #include "analytics.pb.h"
+
+//////////////////////////////////////////////////////////////////////////
+
+class QAnalyticMeshFunctor : public Qt3D::QAbstractMeshFunctor
+{
+public:
+	QAnalyticMeshFunctor( Qt3D::QMeshDataPtr data );
+	Qt3D::QMeshDataPtr operator()() Q_DECL_OVERRIDE;
+	bool operator ==( const Qt3D::QAbstractMeshFunctor &other ) const Q_DECL_OVERRIDE;
+private:
+	Qt3D::QMeshDataPtr m_data;
+};
+
+//////////////////////////////////////////////////////////////////////////
+
+QAnalyticModel::QAnalyticModel( QNode *parent, Qt3D::QMeshDataPtr data )
+	: Qt3D::QAbstractMesh( parent )
+	, m_data( data )
+{
+}
+
+Qt3D::QAbstractMeshFunctorPtr QAnalyticModel::meshFunctor() const
+{
+	return Qt3D::QAbstractMeshFunctorPtr( new QAnalyticMeshFunctor( m_data ) );
+}
+
+QAnalyticMeshFunctor::QAnalyticMeshFunctor( Qt3D::QMeshDataPtr data )
+	: QAbstractMeshFunctor()
+	, m_data( data )
+{
+}
+
+Qt3D::QMeshDataPtr QAnalyticMeshFunctor::operator()()
+{
+	return m_data;
+}
+
+bool QAnalyticMeshFunctor::operator ==( const QAbstractMeshFunctor &other ) const
+{
+	const QAnalyticMeshFunctor *otherFunctor = dynamic_cast<const QAnalyticMeshFunctor *>( &other );
+	if ( otherFunctor != Q_NULLPTR )
+		return ( otherFunctor->m_data == m_data );
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 ModelProcessor::ModelProcessor( QObject *parent )
 	: QThread( parent )
@@ -20,13 +77,14 @@ void ModelProcessor::run()
 
 		MessageUnionPtr msg;
 
-		mMutex.lock();
-		if ( !mMessageQueue.isEmpty() )
 		{
-			msg = mMessageQueue.front();
-			mMessageQueue.pop_front();
+			QMutexLocker lock( &mMutex );
+			if ( !mMessageQueue.isEmpty() )
+			{
+				msg = mMessageQueue.front();
+				mMessageQueue.pop_front();
+			}
 		}
-		mMutex.unlock();
 
 		if ( msg.isNull() )
 			continue;
@@ -40,13 +98,14 @@ void ModelProcessor::processMessage( MessageUnionPtr msg )
 {
 	if ( msg->has_systemmodeldata() )
 	{
-		mMutex.lock();
+		QMutexLocker lock( &mMutex );
+
 		mMessageQueue.push_back( msg );
-		mMutex.unlock();
 
 		processMessage( msg->systemmodeldata() );
 	}
 }
+
 void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 {
 	try
@@ -54,85 +113,36 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 		modeldata::Scene scene;
 		if ( scene.ParseFromString( msg.modelbytes() ) && scene.IsInitialized() )
 		{
-			osg::MatrixTransform* grp = new osg::MatrixTransform();
-			
-			size_t totalVertices = 0;
-			size_t totalFaces = 0;
-
 			for ( int m = 0; m < scene.meshes_size(); ++m )
 			{
 				const modeldata::Mesh& mesh = scene.meshes( m );
-				GeometryPtr & cachedGeom = mGeomCache[ mesh.name() ];
-				
-				//const modeldata::Material& mtrl = scene.materials( mesh.materialindex() );
-
-				const osg::Vec3 * vertices = reinterpret_cast<const osg::Vec3*>( &mesh.vertices()[ 0 ] );
-				const size_t numVertices = mesh.vertices().size() / sizeof( osg::Vec3 );
-
-				osg::Vec3Array* meshVertices = new osg::Vec3Array;
-				meshVertices->resizeArray( numVertices );
-
-				osg::Vec3Array* meshNormals = new osg::Vec3Array;
-				meshNormals->resizeArray( numVertices );
-
-				const unsigned int * indices = reinterpret_cast<const unsigned int*>( &mesh.faces()[ 0 ] );
-				const size_t numFaces = mesh.faces().size() / ( sizeof( unsigned int ) * 3 );
-				osg::DrawElementsUInt* drawElements = new osg::DrawElementsUInt( osg::PrimitiveSet::TRIANGLES, 0 );
-				drawElements->resizeElements( numVertices );
-
-				totalVertices += numVertices;
-				totalFaces += numFaces;
-
-				// copy the vertices and create normals
-				for ( size_t v = 0; v < numVertices; v += 3 )
-				{
-					( *meshVertices )[ v + 0 ] = vertices[ v + 0 ];
-					( *meshVertices )[ v + 1 ] = vertices[ v + 1 ];
-					( *meshVertices )[ v + 2 ] = vertices[ v + 2 ];
-
-					const osg::Vec3 ab = ( *meshVertices )[ v + 1 ] - ( *meshVertices )[ v + 0 ];
-					const osg::Vec3 ac = ( *meshVertices )[ v + 2 ] - ( *meshVertices )[ v + 0 ];
-					osg::Vec3 normal( ab ^ ac );
-					normal.normalize();
-
-					( *meshNormals )[ v + 0 ] = normal;
-					( *meshNormals )[ v + 1 ] = normal;
-					( *meshNormals )[ v + 2 ] = normal;
-				}
-
-				for ( size_t f = 0; f < numVertices; f += 3 )
-				{
-					( *drawElements )[ f + 0 ] = indices[ f + 0 ];
-					( *drawElements )[ f + 1 ] = indices[ f + 1 ];
-					( *drawElements )[ f + 2 ] = indices[ f + 2 ];
-				}
-
+				Qt3D::QMeshDataPtr& cachedGeom = mGeomCache[ mesh.name() ];
 				if ( cachedGeom == NULL )
-				{
-					cachedGeom = new osg::Geometry();
-					cachedGeom->setName( mesh.name() );
-				}
+					cachedGeom.reset( new Qt3D::QMeshData( Qt3D::QMeshData::Triangles ) );
 
-				cachedGeom->setVertexArray( meshVertices );
-				cachedGeom->setNormalArray( meshNormals, osg::Array::BIND_PER_VERTEX );
-				cachedGeom->addPrimitiveSet( drawElements );
+				const QVector3D * vertices = reinterpret_cast<const QVector3D*>( &mesh.vertices()[ 0 ] );
+				const size_t numVertices = mesh.vertices().size() / sizeof( QVector3D );
+
+				// Vertex Buffer
+				QByteArray posBytes;
+				posBytes.resize( mesh.vertices().size() );
+				memcpy( posBytes.data(), mesh.vertices().c_str(), mesh.vertices().size() );
+				
+				Qt3D::BufferPtr vertexBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
+				vertexBuffer->setUsage( QOpenGLBuffer::StaticDraw );
+				vertexBuffer->setData( posBytes );
+				
+				cachedGeom->addAttribute( Qt3D::QMeshData::defaultPositionAttributeName(), 
+					Qt3D::AttributePtr( new Qt3D::Attribute( vertexBuffer, GL_FLOAT_VEC3, numVertices ) ) );
 			}
-
-			processNode( scene, scene.rootnode(), grp );
-
-			std::string cacheFileName = msg.modelname();
-			std::replace( cacheFileName.begin(), cacheFileName.end(), '/', '_' );
-			std::replace( cacheFileName.begin(), cacheFileName.end(), '\\', '_' );
-			cacheFileName.insert( 0, "cache/" );
-			cacheFileName += ".osgb";
-			//osgDB::writeNodeFile( *grp, cacheFileName );
 			
-			//osgDB::Registry::instance()->getFileCache()->writeNode( *grp, cacheFileName, NULL );
-			osgDB::Registry::instance()->getObjectCache()->addEntryToObjectCache( cacheFileName, grp );
+			Qt3D::QEntity * entity = new Qt3D::QEntity();
+			entity->setObjectName( scene.name().c_str() );
+			processNode( scene, scene.rootnode(), entity );
+			entity->moveToThread( QApplication::instance()->thread() );
 
-			emit info( tr( "Cached model %1" ).arg( cacheFileName.c_str() ), tr( "Vertices %1, Faces %2" ).arg( totalVertices ).arg( totalFaces ) );
-
-			emit allocModel( cacheFileName.c_str() );
+			emit info( QString( "Created Group %1" ).arg( entity->objectName() ), QString() );
+			emit allocModel( entity );
 		}
 	}
 	catch ( const std::exception & ex )
@@ -140,36 +150,60 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 	}
 }
 
-void ModelProcessor::processNode( const modeldata::Scene& scene, const modeldata::Node& node, osg::MatrixTransform* grp )
+void ModelProcessor::processNode( const modeldata::Scene& scene, const modeldata::Node& node, Qt3D::QEntity* entity )
 {
-	osg::Matrix mat;
-	mat.makeIdentity();
-	
+	QMatrix4x4 xform;
+	xform.setToIdentity();
+
 	if ( node.has_eulerrotation() )
 	{
 		const modeldata::Vec3& euler = node.eulerrotation();
-		mat.rotate( euler.x(), osg::Vec3( 1.0f, 0.0f, 0.0f ) );
-		mat.rotate( euler.y(), osg::Vec3( 0.0f, 1.0f, 0.0f ) );
-		mat.rotate( euler.z(), osg::Vec3( 0.0f, 0.0f, 1.0f ) );
+
+		xform.rotate( euler.x(), QVector3D( 1.0f, 0.0f, 0.0f ) );
+		xform.rotate( euler.y(), QVector3D( 0.0f, 1.0f, 0.0f ) );
+		xform.rotate( euler.z(), QVector3D( 0.0f, 0.0f, 1.0f ) );
 	}
 
 	if ( node.has_translation() )
 	{
 		const modeldata::Vec3& vec = node.translation();
-		mat.setTrans( vec.x(), vec.y(), vec.z() );
+		xform.translate( vec.x(), vec.y(), vec.z() );
 	}
 
-	grp->setMatrix( mat );
+	Qt3D::QPhongMaterial * mtrl = new Qt3D::QPhongMaterial();
+	mtrl->setDiffuse( QColor( "green" ) );
+
+	Qt3D::QMatrixTransform * matrixXform = new Qt3D::QMatrixTransform();
+	matrixXform->setMatrix( xform );
+
+	Qt3D::QTransform * cmpXform = new Qt3D::QTransform();
+	cmpXform->addTransform( matrixXform );
+
+	entity->addComponent( mtrl );
+	entity->addComponent( cmpXform );
 
 	if ( node.has_meshname() )
 	{
 		GeomMap::iterator it = mGeomCache.find( node.meshname() );
 		if ( it != mGeomCache.end() )
-			grp->addChild( it->second );
+		{
+			QAnalyticModel* cmp = new QAnalyticModel( NULL, it->second );
+			cmp->setObjectName( node.meshname().c_str() );
+			cmp->update();
+			
+			entity->addComponent( cmp );
+		}
 	}
+	
+	/*Qt3D::QCylinderMesh * cmpCylinder = new Qt3D::QCylinderMesh();
+	cmpCylinder->setLength( 640.0f );
+	cmpCylinder->setRadius( 320.0f );
+	cmpCylinder->setRings( 3.0f );
+	cmpCylinder->setSlices( 12.0f );
+	entity->addComponent( cmpCylinder );*/
 
-	for ( int c = 0; c < node.children_size(); ++c )
+	/*for ( int c = 0; c < node.children_size(); ++c )
 	{
-		processNode( scene, node.children( c ), grp );
-	}
+	processNode( scene, node.children( c ), entity );
+	}*/
 }

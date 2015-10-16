@@ -888,19 +888,31 @@ class Scene : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .modeldata.Node rootNode = 1;
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  static const int kNameFieldNumber = 1;
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline void set_name(const char* value, size_t size);
+  inline ::std::string* mutable_name();
+  inline ::std::string* release_name();
+  inline void set_allocated_name(::std::string* name);
+
+  // required .modeldata.Node rootNode = 2;
   inline bool has_rootnode() const;
   inline void clear_rootnode();
-  static const int kRootNodeFieldNumber = 1;
+  static const int kRootNodeFieldNumber = 2;
   inline const ::modeldata::Node& rootnode() const;
   inline ::modeldata::Node* mutable_rootnode();
   inline ::modeldata::Node* release_rootnode();
   inline void set_allocated_rootnode(::modeldata::Node* rootnode);
 
-  // repeated .modeldata.Mesh meshes = 2;
+  // repeated .modeldata.Mesh meshes = 3;
   inline int meshes_size() const;
   inline void clear_meshes();
-  static const int kMeshesFieldNumber = 2;
+  static const int kMeshesFieldNumber = 3;
   inline const ::modeldata::Mesh& meshes(int index) const;
   inline ::modeldata::Mesh* mutable_meshes(int index);
   inline ::modeldata::Mesh* add_meshes();
@@ -911,6 +923,8 @@ class Scene : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:modeldata.Scene)
  private:
+  inline void set_has_name();
+  inline void clear_has_name();
   inline void set_has_rootnode();
   inline void clear_has_rootnode();
 
@@ -918,6 +932,7 @@ class Scene : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  ::std::string* name_;
   ::modeldata::Node* rootnode_;
   ::google::protobuf::RepeatedPtrField< ::modeldata::Mesh > meshes_;
   friend void  protobuf_AddDesc_modeldata_2eproto();
@@ -2012,15 +2027,91 @@ Mesh::mutable_materials() {
 
 // Scene
 
-// required .modeldata.Node rootNode = 1;
-inline bool Scene::has_rootnode() const {
+// required string name = 1;
+inline bool Scene::has_name() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Scene::set_has_rootnode() {
+inline void Scene::set_has_name() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Scene::clear_has_rootnode() {
+inline void Scene::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
+}
+inline void Scene::clear_name() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_->clear();
+  }
+  clear_has_name();
+}
+inline const ::std::string& Scene::name() const {
+  // @@protoc_insertion_point(field_get:modeldata.Scene.name)
+  return *name_;
+}
+inline void Scene::set_name(const ::std::string& value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Scene.name)
+}
+inline void Scene::set_name(const char* value) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Scene.name)
+}
+inline void Scene::set_name(const char* value, size_t size) {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Scene.name)
+}
+inline ::std::string* Scene::mutable_name() {
+  set_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Scene.name)
+  return name_;
+}
+inline ::std::string* Scene::release_name() {
+  clear_has_name();
+  if (name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = name_;
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Scene::set_allocated_name(::std::string* name) {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
+  if (name) {
+    set_has_name();
+    name_ = name;
+  } else {
+    clear_has_name();
+    name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Scene.name)
+}
+
+// required .modeldata.Node rootNode = 2;
+inline bool Scene::has_rootnode() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Scene::set_has_rootnode() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Scene::clear_has_rootnode() {
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void Scene::clear_rootnode() {
   if (rootnode_ != NULL) rootnode_->::modeldata::Node::Clear();
@@ -2053,7 +2144,7 @@ inline void Scene::set_allocated_rootnode(::modeldata::Node* rootnode) {
   // @@protoc_insertion_point(field_set_allocated:modeldata.Scene.rootNode)
 }
 
-// repeated .modeldata.Mesh meshes = 2;
+// repeated .modeldata.Mesh meshes = 3;
 inline int Scene::meshes_size() const {
   return meshes_.size();
 }

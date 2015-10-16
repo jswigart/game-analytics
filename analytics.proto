@@ -59,29 +59,26 @@ message SystemModelData
 
 message GameEntityInfo
 {
+	message Ammo
+	{
+		required uint32				ammoType					= 1;
+		optional uint32				ammoCount					= 2;
+	}
+
 	required int32					entityId					= 1;
-	required int32					groupId						= 2;
-	required int32					classId						= 3;
-	required float					positionX					= 4;
-	required float					positionY					= 5;
-	required float					positionZ					= 6;
-	required float					heading						= 7;
-	required float					pitch						= 8;
-	required float					roll						= 9;
-	optional uint32					quantity					= 10;
-	optional uint32					quantityMax					= 11;	
+	optional int32					groupId						= 2;
+	optional int32					classId						= 3;
+	optional float					positionX					= 4;
+	optional float					positionY					= 5;
+	optional float					positionZ					= 6;
+	optional float					heading						= 7;
+	optional float					pitch						= 8;
+	optional float					roll						= 9;
 	optional uint32					health						= 12;
 	optional uint32					healthMax					= 13;
 	optional uint32					armor						= 14;
 	optional uint32					armorMax					= 15;
-	optional uint32					ammo1						= 16;
-	optional uint32					ammo1Max					= 17;
-	optional uint32					ammo2						= 18;
-	optional uint32					ammo2Max					= 19;
-	optional uint32					ammo3						= 20;
-	optional uint32					ammo3Max					= 21;
-	optional uint32					ammo4						= 22;
-	optional uint32					ammo4Max					= 23;
+	repeated Ammo					ammo						= 16;
 }
 
 message GameEntityList

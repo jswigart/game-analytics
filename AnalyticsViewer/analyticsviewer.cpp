@@ -1,27 +1,100 @@
-#include <osgDB/OutputStream>
-#include <osg/MatrixTransform>
-#include <osg/ShapeDrawable>
-#include <osg/ProxyNode>
-#include <osgDB/Registry>
-#include <osgDB/WriteFile>
-#include <osgDB/ClassInterface>
+#include <QtQml/QQmlContext>
+#include <Qt3DInput/QInputAspect>
+#include <Qt3DRenderer/QRenderAspect>
+#include <QtQml>
 
+#include <QMetaProperty>
 #include <QCheckBox>
 #include <QTextEdit>
 #include <QFileDialog>
+#include <QTimer>
 #include <strstream>
+#include <QVector3D>
 
 #include "analyticsviewer.h"
+#include "window.h"
+
 #include "Messaging.h"
 #include "ModelProcessor.h"
 
+#include "AnalyticsScene.h"
+
+#include "qtvariantproperty.h"
 #include "analytics.pb.h"
 
 AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	: QMainWindow( parent )
 {
+	qmlRegisterType<QAnalyticModel>( "Analytics", 1, 0, "Mesh" );
+	qmlRegisterType<AnalyticsScene>( "Analytics", 1, 0, "Scene" );
+	
 	ui.setupUi( this );
 	
+	// Initialize Qt3d QML
+	Window* view = new Window();
+
+	QWidget *container = QWidget::createWindowContainer( view );
+
+	container->setMinimumSize( QSize( 100, 100 ) );
+
+	mEngine.aspectEngine()->registerAspect( new Qt3D::QRenderAspect() );
+	mEngine.aspectEngine()->registerAspect( new Qt3D::QInputAspect() );
+
+	QVariantMap data;
+	data.insert( QStringLiteral( "surface" ), QVariant::fromValue( static_cast<QSurface *>( view ) ) );
+	data.insert( QStringLiteral( "eventSource" ), QVariant::fromValue( view ) );
+	mEngine.aspectEngine()->setData( data );
+	mEngine.aspectEngine()->initialize();
+	mEngine.qmlEngine()->rootContext()->setContextProperty( "_window", view );
+	mEngine.setSource( QUrl( "main.qml" ) );
+	
+	ui.renderLayout->addWidget( container );
+	view->show();
+	
+	mVariantPropMgr = new QtVariantPropertyManager( this );
+	mVariantEditor = new QtVariantEditorFactory( this );
+
+	ui.props->setFactoryForManager( mVariantPropMgr, mVariantEditor );
+
+	/*QtVariantProperty * prop;
+	prop = mVariantPropMgr->addProperty( QVariant::Int, "Some Int" );
+	prop->setValue( QVariant( 10 ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Double, "Some Dbl" );
+	prop->setValue( QVariant( 0.5 ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Color, "Some Color" );
+	prop->setValue( QVariant( QColor( "red" ) ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::SizeF, "Some Size" );
+	prop->setValue( QVariant( QSize( 10, 20 ) ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Int, "Some Int" );
+	prop->setValue( QVariant( 10 ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Int, "Some Int" );
+	prop->setValue( QVariant( 10 ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Int, "Some Int" );
+	prop->setValue( QVariant( 10 ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Int, "Some Int" );
+	prop->setValue( QVariant( 10 ) );
+	ui.props->addProperty( prop );
+
+	prop = mVariantPropMgr->addProperty( QVariant::Int, "Some Int" );
+	prop->setValue( QVariant( 10 ) );
+	ui.props->addProperty( prop );*/
+
+	ui.treeHierarchy->invisibleRootItem()->setExpanded( true );
+
 	// Hook up signals
 	connect( ui.actionOpen, SIGNAL( triggered( bool ) ), this, SLOT( FileOpen() ) );
 	connect( ui.actionSaveScene, SIGNAL( triggered( bool ) ), this, SLOT( FileSave() ) );
@@ -53,17 +126,17 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 		ui.treeHierarchy->setColumnWidth( 2, 300 );
 	}
 
-	{
-		QStringList labels;
-		labels.push_back( "Property" );
-		labels.push_back( "Value" );
+	//{
+	//	QStringList labels;
+	//	labels.push_back( "Property" );
+	//	labels.push_back( "Value" );
 
-		// Configure the selection tree
-		ui.treeSelection->setColumnCount( 2 );
-		ui.treeSelection->setHeaderLabels( labels );
-		ui.treeSelection->setColumnWidth( 0, 300 );
-		ui.treeSelection->setColumnWidth( 1, 100 );
-	}
+	//	// Configure the selection tree
+	//	ui.treeSelection->setColumnCount( 2 );
+	//	ui.treeSelection->setHeaderLabels( labels );
+	//	ui.treeSelection->setColumnWidth( 0, 300 );
+	//	ui.treeSelection->setColumnWidth( 1, 100 );
+	//}
 
 	{
 		QTableWidgetItem * typeItem = new QTableWidgetItem( "Type" );
@@ -105,7 +178,6 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	
 	{
 		mMessageThread = new HostThread0MQ( this );
-
 		connect( mMessageThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
 		connect( mMessageThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
 		connect( mMessageThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
@@ -120,8 +192,8 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 		connect( mModelProcessorThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
 		connect( mModelProcessorThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
 		connect( mModelProcessorThread, SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
-		connect( mModelProcessorThread, SIGNAL( allocModel( QString ) ), ui.renderBg, SLOT( allocProxyNode( QString ) ) );
-
+		connect( mModelProcessorThread, SIGNAL( allocModel( Qt3D::QEntity* ) ), mEngine.aspectEngine()->rootEntity().data(), SLOT( AddToScene( Qt3D::QEntity* ) ) );
+		
 		// message processing functions
 		connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), mModelProcessorThread, SLOT( processMessage( MessageUnionPtr ) ) );
 
@@ -240,18 +312,18 @@ void AnalyticsViewer::RebuildLogTable()
 
 void AnalyticsViewer::FileLoad( const QString & filePath )
 {
-	if ( ui.renderBg->importModelToScene( filePath, false ) )
+	/*if ( ui.renderBg->importModelToScene( filePath, false ) )
 		AppendToLog( LOG_INFO, tr( "Loading %1" ).arg( filePath ), QString() );
 	else
-		AppendToLog( LOG_INFO, tr( "Problem Loading %1" ).arg( filePath ), QString() );
+		AppendToLog( LOG_INFO, tr( "Problem Loading %1" ).arg( filePath ), QString() );*/
 }
 
 void AnalyticsViewer::FileSave( const QString & filePath )
 {
-	if ( ui.renderBg->exportSceneToFile( filePath ) )
+	/*if ( ui.renderBg->exportSceneToFile( filePath ) )
 		AppendToLog( LOG_INFO, tr( "Saved %1" ).arg( filePath ), QString() );
 	else
-		AppendToLog( LOG_INFO, tr( "Problem Saving %1" ).arg( filePath ), QString() );
+		AppendToLog( LOG_INFO, tr( "Problem Saving %1" ).arg( filePath ), QString() );*/
 }
 
 void AnalyticsViewer::FileOpen()
@@ -276,739 +348,118 @@ void AnalyticsViewer::FileSave()
 
 void AnalyticsViewer::SelectionChanged()
 {
-	ui.treeSelection->clear();
+	ui.props->clear();
 }
 
-static void CheckSelection_r( QTreeWidgetItem * treeItem, const osg::Shape* shape )
+//QString getNodeIcon( const osg::Node * node )
+//{
+//	QString nodeIcon = QStringLiteral( "Resources/svg/help19.svg" );
+//
+//	if ( node->asCamera() )
+//	{
+//		nodeIcon = QStringLiteral( "Resources/svg/camera8.svg" );
+//	}
+//	else if ( node->asTransform() )
+//	{
+//		nodeIcon = QStringLiteral( "Resources/svg/3d76.svg" );
+//	}
+//	else if ( node->asGeode() )
+//	{
+//		nodeIcon = QStringLiteral( "Resources/svg/geometry2.svg" );
+//	}
+//	else if ( node->asSwitch() )
+//	{
+//		nodeIcon = QStringLiteral( "Resources/svg/circuit.svg" );
+//	}
+//	else if ( node->asTerrain() )
+//	{
+//		nodeIcon = QStringLiteral( "Resources/svg/mountain13.svg" );
+//	}
+//	else if ( node->asGroup() )
+//	{
+//		nodeIcon = QStringLiteral( "Resources/svg/family3.svg" );
+//	}
+//	return nodeIcon;
+//}
+
+QTreeWidgetItem * AnalyticsViewer::FindChildItem( QTreeWidgetItem * searchUnder, qulonglong itemId )
 {
-	QTreeWidgetItem * shp = new QTreeWidgetItem();
-	treeItem->addChild( shp );
+	QTreeWidgetItem * nodeItem = NULL;
 
-	shp->setData( 0, Qt::DisplayRole, shape->className() );
-	shp->setData( 1, Qt::DisplayRole, shape->getName().c_str() );
-
-	if ( const osg::Sphere * shapeSphere = dynamic_cast<const osg::Sphere*>( shape ) )
+	for ( int c = 0; c < searchUnder->childCount(); ++c )
 	{
-		shp->addChild( new QTreeWidgetItem( QStringList( { "Radius", QString( "%1" )
-			.arg( shapeSphere->getRadius() ) } ) ) );
-
-		shp->addChild( new QTreeWidgetItem( QStringList( { "Center", QString( "%1 %2 %3" )
-			.arg( shapeSphere->getCenter()[ 0 ] )
-			.arg( shapeSphere->getCenter()[ 1 ] )
-			.arg( shapeSphere->getCenter()[ 2 ] ) } ) ) );
-	}
-	else
-	{
-		shp->setData( 1, Qt::DisplayRole, "Unhandled" );
-	}
-}
-
-static void CheckSelection_r( QTreeWidgetItem * treeItem, const osg::PrimitiveSet* primset )
-{
-	QTreeWidgetItem * ps = new QTreeWidgetItem();
-	treeItem->addChild( ps );
-
-	ps->setData( 0, Qt::DisplayRole, primset->className() );
-	ps->setData( 1, Qt::DisplayRole, primset->getName().c_str() );
-
-	ps->addChild( new QTreeWidgetItem( QStringList( { "# Primitives", QString( "%1" )
-		.arg( primset->getNumPrimitives() ) } ) ) );
-
-	ps->addChild( new QTreeWidgetItem( QStringList( { "# Indices", QString( "%1" )
-		.arg( primset->getNumIndices() ) } ) ) );
-
-	ps->addChild( new QTreeWidgetItem( QStringList( { "# Instances", QString( "%1" )
-		.arg( primset->getNumInstances() ) } ) ) );
-	
-	switch ( primset->getMode() )
-	{
-		case osg::PrimitiveSet::POINTS:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "POINTS" } ) ) );
-			break;
-		case osg::PrimitiveSet::LINES:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "LINES" } ) ) );
-			break;
-		case osg::PrimitiveSet::LINE_STRIP:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "LINE_STRIP" } ) ) );
-			break;
-		case osg::PrimitiveSet::LINE_LOOP:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "LINE_LOOP" } ) ) );
-			break;
-		case osg::PrimitiveSet::TRIANGLES:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "TRIANGLES" } ) ) );
-			break;
-		case osg::PrimitiveSet::TRIANGLE_STRIP:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "TRIANGLE_STRIP" } ) ) );
-			break;
-		case osg::PrimitiveSet::TRIANGLE_FAN:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "TRIANGLE_FAN" } ) ) );
-			break;
-		case osg::PrimitiveSet::QUADS:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "QUADS" } ) ) );
-			break;
-		case osg::PrimitiveSet::QUAD_STRIP:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "QUAD_STRIP" } ) ) );
-			break;
-		case osg::PrimitiveSet::POLYGON:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "POLYGON" } ) ) );
-			break;
-		case osg::PrimitiveSet::LINES_ADJACENCY:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "LINES_ADJACENCY" } ) ) );
-			break;
-		case osg::PrimitiveSet::LINE_STRIP_ADJACENCY:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "LINE_STRIP_ADJACENCY" } ) ) );
-			break;
-		case osg::PrimitiveSet::TRIANGLES_ADJACENCY:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "TRIANGLES_ADJACENCY" } ) ) );
-			break;
-		case osg::PrimitiveSet::TRIANGLE_STRIP_ADJACENCY:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "TRIANGLE_STRIP_ADJACENCY" } ) ) );
-			break;
-		case osg::PrimitiveSet::PATCHES:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "PATCHES" } ) ) );
-			break;
-		default:
-			ps->addChild( new QTreeWidgetItem( QStringList( { "Mode", "*UNKNOWN*" } ) ) );
-			break;
-	}
-}
-
-static void CheckSelection_r( QTreeWidgetItem * treeItem, const osg::Drawable* drawable )
-{
-	const osg::Geometry * geometry = drawable->asGeometry();
-	if ( geometry )
-	{
-		QTreeWidgetItem * children = new QTreeWidgetItem();
-		children->setData( 0, Qt::DisplayRole, "Primitive Sets" );
-		children->setData( 1, Qt::DisplayRole, QVariant( geometry->getNumPrimitiveSets() ) );
-		treeItem->addChild( children );
-
-		for ( unsigned int i = 0; i < geometry->getNumPrimitiveSets(); ++i )
+		QTreeWidgetItem * child = searchUnder->child( c );
+		if ( child->data( 0, Qt::UserRole ).toULongLong() == itemId )
 		{
-			QTreeWidgetItem * child = new QTreeWidgetItem();
-			child->setData( 0, Qt::DisplayRole, geometry->getPrimitiveSet( i )->className() );
-			//child->setData( 1, Qt::DisplayRole, QVariant(  ) );
-			children->addChild( child );
-
-			CheckSelection_r( child, geometry->getPrimitiveSet( i ) );
+			nodeItem = child;
+			break;
 		}
 	}
-	else
-	{
-		CheckSelection_r( treeItem, drawable->getShape() );
-	}
+
+	return nodeItem;
 }
 
-static void CheckSelection_r( QTreeWidgetItem * treeItem, const osg::Node* node )
+QTreeWidgetItem * AnalyticsViewer::FindOrAdd( QTreeWidgetItem * parent, const QString& str, qulonglong id, const QVariant & info )
 {
-	if ( node->asGroup() )
+	QTreeWidgetItem * item = FindChildItem( parent, id );
+	if ( item == NULL )
 	{
-		const osg::Group * group = node->asGroup();
-
-		QTreeWidgetItem * children = new QTreeWidgetItem();
-		children->setData( 0, Qt::DisplayRole, "Children" );
-		children->setData( 1, Qt::DisplayRole, QVariant( group->getNumChildren() ) );
-		treeItem->addChild( children );
-
-		for ( unsigned int i = 0; i < group->getNumChildren(); ++i )
-		{
-			QTreeWidgetItem * child = new QTreeWidgetItem();
-			child->setData( 0, Qt::DisplayRole, group->getChild( i )->className() );
-			child->setData( 1, Qt::DisplayRole, group->getChild( i )->getName().c_str() );
-			children->addChild( child );
-
-			CheckSelection_r( child, group->getChild( i ) );
-		}
+		item = new QTreeWidgetItem( parent );
+		item->setIcon( 0, QIcon( QStringLiteral( "Resources/svg/family3.svg" ) ) );
+		item->setData( 0, Qt::UserRole, id );
+		item->setData( 0, Qt::DisplayRole, str );
+		item->setData( 1, Qt::DisplayRole, info );
+		item->setExpanded( false );
+		parent->addChild( item );
 	}
-	else if ( node->asGeode() )
-	{
-		const osg::Geode * geode = node->asGeode();
-
-		QTreeWidgetItem * children = new QTreeWidgetItem();
-		children->setData( 0, Qt::DisplayRole, "Drawables" );
-		children->setData( 1, Qt::DisplayRole, QVariant( geode->getNumDrawables() ) );
-		treeItem->addChild( children );
-
-		for ( unsigned int i = 0; i < geode->getNumDrawables(); ++i )
-		{
-			/*QTreeWidgetItem * child = new QTreeWidgetItem();
-			child->setData( 0, Qt::DisplayRole, geode->getDrawable( i )->className() );
-			child->setData( 1, Qt::DisplayRole, geode->getDrawable( i )->getName().c_str() );
-			children->addChild( child );*/
-
-			CheckSelection_r( children, geode->getDrawable( i ) );
-		}
-	}
+	return item;
 }
 
-
-static std::string lookUpGLenumString( GLenum value )
+void AnalyticsViewer::ShowProperties( QTreeWidgetItem * treeItem, const QObject * obj )
 {
-	osgDB::ObjectWrapperManager* ow = osgDB::Registry::instance()->getObjectWrapperManager();
-
+	QHash<QString, QVariant> list;
+	for ( int i = 0; i < obj->metaObject()->propertyCount(); i++ )
 	{
-		const osgDB::IntLookup& lookup = ow->getLookupMap()[ "GL" ];
-		const osgDB::IntLookup::ValueToString& vts = lookup.getValueToString();
-		osgDB::IntLookup::ValueToString::const_iterator itr = vts.find( value );
-		if ( itr != vts.end() ) return itr->second;
-	}
-
-	{
-		const osgDB::IntLookup& lookup = ow->getLookupMap()[ "PrimitiveType" ];
-		const osgDB::IntLookup::ValueToString& vts = lookup.getValueToString();
-		osgDB::IntLookup::ValueToString::const_iterator itr = vts.find( value );
-		if ( itr != vts.end() ) return itr->second;
-	}
-
-	OSG_NOTICE << "Warning: LuaScriptEngine did not find valid GL enum value for GLenum value: " << value << std::endl;
-
-	return std::string();
-}
-
-
-template<typename T>
-static void CheckSelection( QTreeWidget * tree, QTreeWidgetItem * item, const T* obj )
-{
-	return;
-
-	if ( item->isSelected() )
-	{
-		osgDB::ClassInterface::PropertyMap props;
-		osgDB::ClassInterface ci;
-		ci.getSupportedProperties( obj, props );
-
-		tree->clear();
+		QMetaProperty property = obj->metaObject()->property( i );
+		const char* name = property.name();
+		QVariant value = obj->property( name );
 		
-		for ( osgDB::ClassInterface::PropertyMap::iterator it = props.begin();
-			it != props.end();
-			++it )
-		{			
-			QTreeWidgetItem * item = new QTreeWidgetItem();
-			item->setData( 0, Qt::DisplayRole, it->first.c_str() );
-			item->setData( 1, Qt::DisplayRole, ci.getTypeName( it->second ).c_str() );
-			tree->invisibleRootItem()->addChild( item );
-
-			switch ( it->second )
-			{
-				case osgDB::BaseSerializer::RW_UNDEFINED:
-				{
-					break;
-				}
-				case osgDB::BaseSerializer::RW_USER:
-				{
-					break;
-				}
-				case osgDB::BaseSerializer::RW_OBJECT:
-				case osgDB::BaseSerializer::RW_IMAGE:
-				{
-					osg::Object * objRef = NULL;
-					if ( ci.getProperty( obj, it->first, objRef ) )
-						item->setData( 1, Qt::DisplayRole, objRef ? objRef->getName().c_str() : "<NONE>" );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_LIST:
-					break;
-				case osgDB::BaseSerializer::RW_BOOL:
-				{
-					bool value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						tree->setItemWidget( item, 1, new QCheckBox( tree ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_CHAR:
-				{
-					char value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_UCHAR:
-				{
-					unsigned char value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_SHORT:
-				{
-					short value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_USHORT:
-				{
-					unsigned short value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_INT:
-				{
-					int value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_UINT:
-				{
-					unsigned int value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_FLOAT:
-				{
-					float value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_DOUBLE:
-				{
-					double value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QVariant( value ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2F:
-				{
-					osg::Vec2f value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%1 %2" ).arg( value.x() ).arg( value.y() ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2D:
-				{
-					osg::Vec2d value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%1 %2" ).arg( value.x() ).arg( value.y() ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3F:
-				{
-					osg::Vec3f value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%1 %2 %3" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3D:
-				{
-					osg::Vec3d value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%1 %2 %3" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4F:
-				{
-					osg::Vec4f value;
-					if ( ci.getProperty( obj, it->first, value ) )
-					{
-						QString str = QString::fromUtf8( "%1 %2 %3 %4" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() );
-						item->setData( 1, Qt::DisplayRole, str );
-					}
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4D:
-				{
-					osg::Vec4d value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%1 %2 %3 %4" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_QUAT:
-				{
-					osg::Quat value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%1 %2 %3 %4" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_PLANE:
-				{
-					/*osg::Plane value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_MATRIXF:
-				{
-					break;
-				}
-				case osgDB::BaseSerializer::RW_MATRIXD:
-				{
-					break;
-				}
-				case osgDB::BaseSerializer::RW_MATRIX:
-				{
-					break;
-				}
-				case osgDB::BaseSerializer::RW_GLENUM:
-				{
-					GLenum value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, lookUpGLenumString( value ).c_str() );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_STRING:
-				{
-					std::string value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						tree->setItemWidget( item, 1, new QTextEdit( tree ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_ENUM:
-					break;
-				case osgDB::BaseSerializer::RW_VEC2B:
-				{
-					/*osg::Vec2b value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f" ).arg( value.x() ).arg( value.y() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2UB:
-				{
-					/*osg::Vec2ub value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f" ).arg( value.x() ).arg( value.y() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2S:
-				{
-					/*osg::Vec2s value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f" ).arg( value.x() ).arg( value.y() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2US:
-				{
-					/*osg::Vec2us value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f" ).arg( value.x() ).arg( value.y() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2I:
-				{
-					/*osg::Vec2i value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f" ).arg( value.x() ).arg( value.y() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC2UI:
-				{
-					/*osg::Vec2ui value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f" ).arg( value.x() ).arg( value.y() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3B:
-				{
-					/*osg::Vec3b value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3UB:
-				{
-					/*osg::Vec3ub value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3S:
-				{
-					/*osg::Vec3s value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3US:
-				{
-					/*osg::Vec3us value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3I:
-				{
-					/*osg::Vec3i value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC3UI:
-				{
-					/*osg::Vec3ui value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4B:
-				{
-					/*osg::Vec4b value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4UB:
-				{
-					/*osg::Vec4ub value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.r() ).arg( value.g() ).arg( value.b() ).arg( value.a() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4S:
-				{
-					/*osg::Vec4s value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4US:
-				{
-					/*osg::Vec4us value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4I:
-				{
-					/*osg::Vec4i value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VEC4UI:
-				{
-					/*osg::Vec4ui value;
-					if ( ci.getProperty( obj, it->first, value ) )
-					item->setData( 1, Qt::DisplayRole, QString( "%f %f %f %f" ).arg( value.x() ).arg( value.y() ).arg( value.z() ).arg( value.w() ) );*/
-					break;
-				}
-				case osgDB::BaseSerializer::RW_BOUNDINGBOXF:
-				{
-					osg::BoundingBox value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "BBOX" ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_BOUNDINGBOXD:
-				{
-					osg::BoundingBoxd value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "BBOXD" ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_BOUNDINGSPHEREF:
-				{
-					osg::BoundingSphere value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "BSPHERE" ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_BOUNDINGSPHERED:
-				{
-					osg::BoundingSphered value;
-					if ( ci.getProperty( obj, it->first, value ) )
-						item->setData( 1, Qt::DisplayRole, QString( "BSPHERED" ) );
-					break;
-				}
-				case osgDB::BaseSerializer::RW_VECTOR:
-				{
-					break;
-				}
-				case osgDB::BaseSerializer::RW_MAP:
-				{
-					break;
-				}
-			}
-		}
-		tree->expandAll();
-		/*tree->clear();
-		CheckSelection_r( tree->invisibleRootItem(), obj );
-		tree->expandAll();*/
+		FindOrAdd( treeItem, name, (qulonglong)i, value );
 	}
 }
 
-QString getNodeIcon( const osg::Node * node )
+void AnalyticsViewer::WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem )
 {
-	QString nodeIcon = QStringLiteral( "Resources/svg/help19.svg" );
+	QTreeWidgetItem * entityItem = FindOrAdd( treeItem, entity->metaObject()->className(), (qulonglong)entity );
+	
+	ShowProperties( entityItem, entity );
 
-	if ( node->asCamera() )
+	Qt3D::QComponentList components = entity->components();
+	for ( int i = 0; i < components.size(); ++i )
 	{
-		nodeIcon = QStringLiteral( "Resources/svg/camera8.svg" );
+		Qt3D::QComponent* comp = components[ i ];
+		
+		QTreeWidgetItem * compItem = FindOrAdd( entityItem, comp->metaObject()->className(), (qulonglong)comp );
+		
+		ShowProperties( compItem, comp );
 	}
-	else if ( node->asTransform() )
+
+	const QObjectList & ch = entity->children();
+	for ( int i = 0; i < ch.size(); ++i )
 	{
-		nodeIcon = QStringLiteral( "Resources/svg/3d76.svg" );
+		Qt3D::QEntity* ent = qobject_cast<Qt3D::QEntity*>( ch[ i ] );
+		if ( ent != NULL )
+		{
+			WalkHierarchy( ent, entityItem );
+		}
 	}
-	else if ( node->asGeode() )
-	{
-		nodeIcon = QStringLiteral( "Resources/svg/geometry2.svg" );
-	}
-	else if ( node->asSwitch() )
-	{
-		nodeIcon = QStringLiteral( "Resources/svg/circuit.svg" );
-	}
-	else if ( node->asTerrain() )
-	{
-		nodeIcon = QStringLiteral( "Resources/svg/mountain13.svg" );
-	}
-	else if ( node->asGroup() )
-	{
-		nodeIcon = QStringLiteral( "Resources/svg/family3.svg" );
-	}
-	return nodeIcon;
 }
 
 void AnalyticsViewer::UpdateHierarchy()
 {
-	class UpdateTree : public osg::NodeVisitor
-	{
-	public:
-		UpdateTree( QTreeWidgetItem * item, QTreeWidget * sel )
-			: osg::NodeVisitor( NodeVisitor::NODE_VISITOR )
-			, mTreeItem( item )
-			, mSelectionTree( sel )
-		{
-			setTraversalMode( NodeVisitor::TRAVERSE_ALL_CHILDREN );
-		}
-
-		QTreeWidgetItem * findChildItem( QTreeWidgetItem * searchUnder, qulonglong itemId )
-		{
-			QTreeWidgetItem * nodeItem = NULL;
-
-			for ( int c = 0; c < searchUnder->childCount(); ++c )
-			{
-				QTreeWidgetItem * child = searchUnder->child( c );
-				if ( child->data( 0, Qt::UserRole ).toULongLong() == itemId )
-				{
-					nodeItem = child;
-					break;
-				}
-			}
-
-			return nodeItem;
-		}
-		
-		virtual void apply( osg::Node & node )
-		{			
-			QTreeWidgetItem * treeLevel = mTreeItem;
-			for ( size_t i = 0; i < _nodePath.size(); ++i )
-			{
-				const qulonglong nodePathUID = (qulonglong)_nodePath[ i ];
-
-				QTreeWidgetItem * nodeItem = findChildItem( treeLevel, nodePathUID );
-				
-				if ( nodeItem == NULL )
-				{
-					// create a readable name for it. it may not be unique
-					QString nodeName =  _nodePath[ i ]->getName().c_str();
-					QString nodeIcon = getNodeIcon( _nodePath[ i ] );
-					QString nodeType = _nodePath[ i ]->className();
-					
-					if ( nodeName.isEmpty() )
-						nodeName = "Unnamed";
-					
-					// doesn't exist yet, create it
-					nodeItem = new QTreeWidgetItem( treeLevel );
-					nodeItem->setIcon( 0, QIcon( nodeIcon ) );
-					nodeItem->setData( 0, Qt::UserRole, nodePathUID );
-					nodeItem->setData( 0, Qt::DisplayRole, nodeName );
-					nodeItem->setData( 1, Qt::DisplayRole, nodeType );
-					nodeItem->setExpanded( true );
-					treeLevel->addChild( nodeItem );
-				}
-
-				CheckSelection( mSelectionTree, nodeItem, _nodePath[ i ] );
-
-				// Some node types have different types of child items
-				if ( _nodePath[ i ]->asGeode() )
-				{
-					osg::Geode * geode = _nodePath[ i ]->asGeode();
-
-					for ( int d = 0; d < geode->getNumDrawables(); ++d )
-					{
-						const osg::Drawable * drawable = geode->getDrawable( d );
-
-						const qulonglong drawableUID = (qulonglong)drawable;
-
-						QTreeWidgetItem * drawableItem = findChildItem( nodeItem, drawableUID );
-
-						if ( drawableItem == NULL )
-						{
-							drawableItem = new QTreeWidgetItem( nodeItem );
-							drawableItem->setIcon( 0, QIcon( QStringLiteral( "Resources/svg/geometry2.svg" ) ) );
-							drawableItem->setData( 0, Qt::UserRole, drawableUID );
-							drawableItem->setData( 0, Qt::DisplayRole, "Shape" );
-							drawableItem->setData( 1, Qt::DisplayRole, drawable->className() );
-							drawableItem->setExpanded( true );
-							nodeItem->addChild( drawableItem );
-						}
-
-						CheckSelection( mSelectionTree, drawableItem, drawable );
-
-						const osg::Geometry * geometry = drawable->asGeometry();
-						if ( geometry )
-						{
-							for ( int p = 0; p < geometry->getNumPrimitiveSets(); ++p )
-							{
-								const osg::PrimitiveSet * pset = geometry->getPrimitiveSet( p );
-
-								const qulonglong psetUID = (qulonglong)pset;
-
-								QTreeWidgetItem * primSetItem = findChildItem( drawableItem, psetUID );
-
-								if ( primSetItem == NULL )
-								{
-									primSetItem = new QTreeWidgetItem( drawableItem );
-									primSetItem->setIcon( 0, QIcon( getNodeIcon( _nodePath[ i ] ) ) );
-									primSetItem->setData( 0, Qt::UserRole, psetUID );
-									primSetItem->setData( 0, Qt::DisplayRole, "PrimitiveSet" );
-									primSetItem->setData( 1, Qt::DisplayRole, pset->className() );
-									primSetItem->setExpanded( true );
-									drawableItem->addChild( primSetItem );
-								}
-
-								CheckSelection( mSelectionTree, primSetItem, pset );
-							}
-						}
-						else
-						{
-							const osg::Shape * shape = drawable->getShape();
-
-							const qulonglong shapeUID = (qulonglong)shape;
-							QTreeWidgetItem * shapeItem = findChildItem( drawableItem, shapeUID );
-
-							if ( shapeItem == NULL )
-							{
-								shapeItem = new QTreeWidgetItem( drawableItem );
-								shapeItem->setIcon( 0, QIcon( getNodeIcon( _nodePath[ i ] ) ) );
-								shapeItem->setData( 0, Qt::UserRole, shapeUID );
-								shapeItem->setData( 0, Qt::DisplayRole, "Shape" );
-								shapeItem->setData( 1, Qt::DisplayRole, shape->className() );
-								shapeItem->setExpanded( true );
-								drawableItem->addChild( shapeItem );
-							}
-
-							CheckSelection( mSelectionTree, shapeItem, shape );
-						}
-					}
-				}
-
-
-				treeLevel = nodeItem;
-			}
-
-			traverse( node );
-		}
-	protected:
-		QTreeWidgetItem *	mTreeItem;
-		QTreeWidget *		mSelectionTree;
-	};
-
-	UpdateTree upd( ui.treeHierarchy->invisibleRootItem(), ui.treeSelection );
-	ui.renderBg->visitSceneNodes( upd );
+	WalkHierarchy( mEngine.aspectEngine()->rootEntity().data(), ui.treeHierarchy->invisibleRootItem() );
 }
+
 void AnalyticsViewer::LogInfo( const QString & msg, const QString & details )
 {
 	AppendToLog( LOG_INFO, msg, details );
@@ -1029,54 +480,15 @@ void AnalyticsViewer::StatusInfo( const QString & msg )
 {
 	mNetworkLabel->setText( msg );
 }
-osg::Vec3d Convert( const modeldata::Vec3 & vec )
+
+QVector3D Convert( const modeldata::Vec3 & vec )
 {
-	return osg::Vec3d( vec.x(), vec.y(), vec.z() );
+	return QVector3D( vec.x(), vec.y(), vec.z() );
 }
 
 void AnalyticsViewer::processMessage( const Analytics::GameEntityInfo & msg )
 {
 	return;
-
-	osg::MatrixTransform * xform = ui.renderBg->findOrCreateEntityNode( msg.entityid() );
-
-	// if it's just been created, make a representation for it
-	if ( xform->getNumChildren() == 0 )
-	{
-		// cylinder for the body
-		osg::ref_ptr<osgDB::Options> options = new osgDB::Options( "generateFacetNormals noTriStripPolygons mergeMeshes noRotation" );
-		options->setObjectCacheHint( osgDB::Options::CACHE_NODES );
-
-		osg::ProxyNode * entityProxy = new osg::ProxyNode();
-		entityProxy->setFileName( 0, "monito.obj" );
-		entityProxy->setDatabaseOptions( options );
-
-		xform->addChild( entityProxy );
-
-		/*osg::ShapeDrawable* lightmarker = new osg::ShapeDrawable( new osg::Sphere( osg::Vec3( 0.f, 0.f, 0.f ), 10.f ) );
-		lightmarker->setName( "Sphere" );
-
-		osg::Geode* geode = new osg::Geode;
-		geode->setName( "LightMarker" );
-		geode->addDrawable( lightmarker );
-		xform->addChild( geode );*/
-	}
-
-	osg::Matrix mat = xform->getMatrix();
-	mat.makeScale( osg::Vec3d( 64.0, 64.0, 64.0 ) );
-	mat.setTrans( osg::Vec3d( msg.positionx(), msg.positiony(), msg.positionz() ) );
-	xform->setMatrix( mat );
-
-	/*if ( msg.has_orient() )
-	{
-		osg::Quat q;
-		q.makeRotate( msg->orient().heading(), msg->orient().pitch(), msg->orient().roll() );
-
-		osg::Matrix mat( q );
-		mat.setTrans( xform->getMatrix().getTrans() );
-
-		xform->setMatrix( mat );
-	}*/
 }
 
 void AnalyticsViewer::processMessage( MessageUnionPtr msg )

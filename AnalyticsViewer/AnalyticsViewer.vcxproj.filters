@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{fccd2d48-ae6d-4ca9-8c68-3a3b26940162}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{76e9b0a1-d05c-4fcb-8d33-81a13fbef1d6}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{1d875898-7442-4c9e-a042-5b59efc13d92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messaging">
+      <UniqueIdentifier>{a465eb03-e755-4485-bf5e-3234ff53ab41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PropertyBrowser">
+      <UniqueIdentifier>{a8f4eed5-4c2b-4d9a-ad1f-6a67c76f2b4d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles\Debug\moc_analyticsviewer.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_analyticsviewer.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_analyticsviewer.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="analyticsviewer.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Messaging.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Messaging.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Messaging.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ModelProcessor.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ModelProcessor.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelProcessor.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qtbuttonpropertybrowser.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtbuttonpropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtbuttonpropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qteditorfactory.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qteditorfactory.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qtgroupboxpropertybrowser.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtgroupboxpropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtgroupboxpropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qtpropertybrowser.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtpropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtpropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_qtpropertybrowser.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qtpropertybrowserutils.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtpropertybrowserutils_p.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtpropertybrowserutils_p.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtpropertymanager.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtpropertymanager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qttreepropertybrowser.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qttreepropertybrowser.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qtvariantproperty.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qtvariantproperty.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qtvariantproperty.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qtpropertymanager.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qteditorfactory.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\QtPropertyBrowser\qttreepropertybrowser.cpp">
+      <Filter>PropertyBrowser</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_window.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_window.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="AnalyticsScene.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_AnalyticsScene.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_AnalyticsScene.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="analyticsviewer.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="analyticsviewer.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="analyticsviewer.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Messaging.h">
+      <Filter>Messaging</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ModelProcessor.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtbuttonpropertybrowser.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qteditorfactory.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtgroupboxpropertybrowser.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtpropertybrowser.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtpropertybrowser.qrc">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtpropertybrowserutils_p.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtpropertymanager.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qttreepropertybrowser.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtvariantproperty.h">
+      <Filter>PropertyBrowser</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Release\qtpropertymanager.moc">
+      <Filter>Generated Files\Release</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Release\qttreepropertybrowser.moc">
+      <Filter>Generated Files\Release</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\Release\qteditorfactory.moc">
+      <Filter>Generated Files\Release</Filter>
+    </CustomBuild>
+    <CustomBuild Include="window.h">
+      <Filter>Generated Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="AnalyticsScene.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_analyticsviewer.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AnalyticsViewer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-arrow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-busy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-closedhand.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-cross.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-forbidden.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-hand.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-hsplit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-ibeam.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-openhand.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-sizeall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-sizeb.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-sizef.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-sizeh.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-sizev.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-uparrow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-vsplit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-wait.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ThirdParty\QtPropertyBrowser\images\cursor-whatsthis.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

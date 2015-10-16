@@ -595,6 +595,8 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 		}
 	}
 
+	sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 );
+
 	// make a unique table for each event type
 	mMsgSubtypes = Analytics::MessageUnion::descriptor()->FindOneofByName( "msg" );
 

@@ -14,7 +14,7 @@
    <string>AnalyticsViewer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_3">
+   <layout class="QGridLayout" name="centralLayout">
     <property name="leftMargin">
      <number>2</number>
     </property>
@@ -31,13 +31,14 @@
      <number>2</number>
     </property>
     <item row="0" column="0">
-     <widget class="OSGWidget" name="renderBg" native="true">
+     <widget class="QWidget" name="renderBg" native="true">
       <property name="focusPolicy">
        <enum>Qt::StrongFocus</enum>
       </property>
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
+      <layout class="QVBoxLayout" name="renderLayout"/>
      </widget>
     </item>
    </layout>
@@ -101,6 +102,9 @@
      </property>
      <item row="0" column="0">
       <widget class="QTreeWidget" name="treeHierarchy">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectItems</enum>
        </property>
@@ -151,27 +155,8 @@
      <property name="verticalSpacing">
       <number>2</number>
      </property>
-     <item row="1" column="0">
-      <widget class="QTextEdit" name="fieldDescription">
-       <property name="autoFormatting">
-        <set>QTextEdit::AutoBulletList</set>
-       </property>
-       <property name="documentTitle">
-        <string/>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
-      <widget class="QTreeWidget" name="treeSelection">
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
-      </widget>
+      <widget class="QtTreePropertyBrowser" name="props" native="true"/>
      </item>
     </layout>
    </widget>
@@ -363,9 +348,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>OSGWidget</class>
+   <class>QtTreePropertyBrowser</class>
    <extends>QWidget</extends>
-   <header>osgwidget.h</header>
+   <header>qttreepropertybrowser.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -172,7 +172,7 @@ void HostThread0MQ::run()
 	
 	zmq::context_t zmqcontext( 1 );
 
-	zmqSubscriber sub( zmqcontext, "127.0.0.1", 40000 );
+	zmqSubscriber sub( zmqcontext, "127.0.0.1", 5050 );
 	sub.Subscribe( "" );
 	
 	while ( true )
