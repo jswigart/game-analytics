@@ -59,6 +59,8 @@ public:
     bool m_enabled;
     bool m_modified;
 
+	QMap<QString, QVariant>	m_userData;
+
     QtAbstractPropertyManager * const m_manager;
 };
 
@@ -370,6 +372,24 @@ void QtProperty::setWhatsThis(const QString &text)
 
     d_ptr->m_whatsThis = text;
     propertyChanged();
+}
+
+/*!
+Sets a named user data field on the object
+
+\sa setUserData()
+*/
+void QtProperty::setUserData( const char * name, const QVariant &data )
+{
+	d_ptr->m_userData.insert( name, data );
+}
+
+QVariant QtProperty::getUserData( const char * name )
+{
+	QMap<QString, QVariant>::iterator it = d_ptr->m_userData.find( name );
+	if ( it != d_ptr->m_userData.end() )
+		return *it;
+	return QVariant();
 }
 
 /*!
@@ -1782,12 +1802,20 @@ void QtAbstractPropertyBrowser::clear()
 
     \sa insertProperty(), QtProperty::addSubProperty(), properties()
 */
-QtBrowserItem *QtAbstractPropertyBrowser::addProperty(QtProperty *property)
+QtBrowserItem *QtAbstractPropertyBrowser::addProperty( QtProperty *property, QtProperty *parent )
 {
-    QtProperty *afterProperty = 0;
-    if (d_ptr->m_subItems.count() > 0)
-        afterProperty = d_ptr->m_subItems.last();
-    return insertProperty(property, afterProperty);
+	if ( parent != NULL )
+	{
+		parent->addSubProperty( property );
+		return topLevelItem( property );
+	}
+	else
+	{
+		QtProperty *afterProperty = 0;
+		if ( d_ptr->m_subItems.count() > 0 )
+			afterProperty = d_ptr->m_subItems.last();
+		return insertProperty( property, afterProperty );
+	}
 }
 
 /*!

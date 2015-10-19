@@ -17,10 +17,13 @@ class QAnalyticModel : public Qt3D::QAbstractMesh
 {
 Q_OBJECT
 public:
-	explicit QAnalyticModel( QNode *parent = 0, Qt3D::QMeshDataPtr data = Qt3D::QMeshDataPtr() );
+	explicit QAnalyticModel( QNode *parent = 0 );
 	
-	Qt3D::QAbstractMeshFunctorPtr meshFunctor() const Q_DECL_OVERRIDE;
+	void SetMesh( Qt3D::QMeshDataPtr ptr );
 
+	Qt3D::QAbstractMeshFunctorPtr meshFunctor() const Q_DECL_OVERRIDE;
+protected:
+	void copy( const Qt3D::QNode *ref );
 private:
 	Qt3D::QMeshDataPtr		m_data;
 private:

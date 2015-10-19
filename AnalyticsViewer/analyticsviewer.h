@@ -16,6 +16,7 @@ class ModelProcessor;
 class HostThreadENET;
 
 class QtVariantEditorFactory;
+class QtVariantProperty;
 class QtVariantPropertyManager;
 
 class AnalyticsViewer : public QMainWindow
@@ -42,19 +43,20 @@ public:
 	};
 
 	QVector<LogEntry>	mLogEntries;
-	
+
 	void AppendToLog( const LogCategory category, const QString & message, const QString & details );
 
 	//	Q_SIGNALS:
 	//	void logEntryAppended( const LogEntry & entry );
 	//	void logFiltersChanged( const LogEntry & entry );
 	//
-protected Q_SLOTS:
+	protected Q_SLOTS:
 	void FileOpen();
 	void FileSave();
 	void RebuildLogTable();
-	
+
 	void SelectionChanged();
+	void PropertyChanged( QtProperty *property, const QVariant & propertyValue );
 	void LogInfo( const QString & msg, const QString & details );
 	void LogWarn( const QString & msg, const QString & details );
 	void LogError( const QString & msg, const QString & details );
@@ -68,7 +70,7 @@ protected Q_SLOTS:
 private:
 	Ui::AnalyticsViewerClass		ui;
 	Qt3D::Quick::QQmlAspectEngine	mEngine;
-	
+
 	ModelProcessor*					mModelProcessorThread;
 	HostThread0MQ*					mMessageThread;
 	QLabel*							mNetworkLabel;
@@ -82,12 +84,13 @@ private:
 	void AddToTable( const LogEntry & log );
 
 	void processMessage( const Analytics::GameEntityInfo& msg );
-	
-	void WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem );
-	void ShowProperties( QTreeWidgetItem * treeItem, const QObject * obj );
 
-	QTreeWidgetItem * FindChildItem( QTreeWidgetItem * searchUnder, qulonglong itemId );
-	QTreeWidgetItem * FindOrAdd( QTreeWidgetItem * parent, const QString& str, qulonglong id, const QVariant & info = QVariant() );
+	void WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem );
+
+	void AddObjectProperties_r( QObject * obj, QtVariantProperty * parent );
+
+	QTreeWidgetItem * FindChildItem( QTreeWidgetItem * searchUnder, QObject * obj );
+	QTreeWidgetItem * FindOrAdd( QTreeWidgetItem * parent, const QString& name, QObject * obj );
 };
 
 #endif

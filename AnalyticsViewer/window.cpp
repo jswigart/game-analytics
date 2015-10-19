@@ -46,7 +46,7 @@ Window::Window( QScreen *screen )
 {
 	setSurfaceType( QSurface::OpenGLSurface );
 
-	resize( 800, 600 );
+	resize( width(), height() );
 
 	QSurfaceFormat format;
 	if ( QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL )
