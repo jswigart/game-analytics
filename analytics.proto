@@ -5,10 +5,17 @@ import "google/protobuf/descriptor.proto";
 
 extend google.protobuf.MessageOptions 
 {
+	// if this option is defined the library will cache the last message of this type into memory so that even if the
+	// visualization application connects to the host application 'late', the cached values of all events may be sent
+	// to seed the visualizer with up to date information with regards to whatever messages utilize this option
 	optional bool cachelastvalue	= 5000;
+
+	// this suffix may be optionally used when generating the key value for caching the contents of a message, 
+	// so that multiple types of a given message may be cached, using this suffix prepended to the message type name
 	optional string cachekeysuffix	= 5001;
 }
 
+// compression schemes may be utilized to reduce the size of certain message types
 enum Compression
 {
 	Compression_None	= 0;
@@ -119,6 +126,9 @@ message GameNavigationStuck
 	required float					positionZ					= 4;
 }
 
+// This message type represents the root message type of the data sent between the application and the library
+// Since the contents of this message form a union between one of an extendable number and types of message payloads,
+// the data is very easily extendable or modifiable without the need to worry about versioning or breaking the format
 message MessageUnion
 {
 	required int64					timestamp						= 1;
