@@ -59,7 +59,13 @@
 <h3>
 <a id="technologies-used" class="anchor" href="#technologies-used" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technologies Used</h3>
 
-<p>The Game Analytics library communicates to the visualization application via a zeromq messaging layer. This libraries was chosen to simplify the communication between the application and hide from the user and the library itself any implementation details of handling packet size limits of disassembling and reassembling large messages.</p>
+<ul>
+<li>Qt 5.5/Qt3d 2.0 - for the visualization application</li>
+<li>zeromq - for messaging between the game analytics library and the visualization app</li>
+<li>protobuf - for defining the messaging schema in a flexible and extendable way for users to add/edit event types</li>
+<li>sqlite3 - so the host application can optionally save all events to a database for later playback in the app</li>
+<li>curl/md5 - for legacy code to submit game event data to the free service <a href="http://www.gameanalytics.com/">http://www.gameanalytics.com/</a> (unaffiliated with this project)</li>
+</ul>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
