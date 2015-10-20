@@ -173,6 +173,8 @@ void HostThread0MQ::run()
 	zmq::context_t zmqcontext( 1 );
 
 	zmqSubscriber sub( zmqcontext, "127.0.0.1", 5050 );
+	
+	// subscribe to all topics
 	sub.Subscribe( "" );
 	
 	while ( true )
@@ -181,7 +183,9 @@ void HostThread0MQ::run()
 		if ( sub.Poll( msg ) )
 		{
 			MessageUnionPtr msgInstance( new Analytics::MessageUnion() );
-			msgInstance->CopyFrom( msg );
+
+			msg.Swap( msgInstance.data() );
+			
 			emit onmsg( msgInstance );
 		}
 		else

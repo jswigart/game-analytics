@@ -160,12 +160,13 @@ void protobuf_AssignDesc_modeldata_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Material));
   Mesh_descriptor_ = file->message_type(6);
-  static const int Mesh_offsets_[5] = {
+  static const int Mesh_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, materials_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, vertices_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, faces_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, materialindices_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, materials_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Mesh, vertexcolors_),
   };
   Mesh_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -266,13 +267,13 @@ void protobuf_AddDesc_modeldata_2eproto() {
     "3\022$\n\013translation\030\002 \001(\0132\017.modeldata.Vec3\022"
     "\020\n\010meshName\030\003 \001(\t\022!\n\010children\030\004 \003(\0132\017.mo"
     "deldata.Node\"@\n\010Material\022\014\n\004name\030\001 \002(\t\022\020"
-    "\n\010contents\030\002 \001(\r\022\024\n\014surfaceFlags\030\003 \001(\r\"v"
-    "\n\004Mesh\022\014\n\004name\030\001 \001(\t\022\020\n\010vertices\030\002 \001(\014\022\r"
-    "\n\005faces\030\003 \001(\014\022\027\n\017materialIndices\030\004 \001(\014\022&"
-    "\n\tmaterials\030\005 \003(\0132\023.modeldata.Material\"Y"
-    "\n\005Scene\022\014\n\004name\030\001 \002(\t\022!\n\010rootNode\030\002 \002(\0132"
-    "\017.modeldata.Node\022\037\n\006meshes\030\003 \003(\0132\017.model"
-    "data.Mesh", 769);
+    "\n\010contents\030\002 \001(\r\022\024\n\014surfaceFlags\030\003 \001(\r\"\214"
+    "\001\n\004Mesh\022\014\n\004name\030\001 \001(\t\022&\n\tmaterials\030\002 \003(\013"
+    "2\023.modeldata.Material\022\020\n\010vertices\030\003 \001(\014\022"
+    "\r\n\005faces\030\004 \001(\014\022\027\n\017materialIndices\030\005 \001(\014\022"
+    "\024\n\014vertexColors\030\006 \001(\014\"Y\n\005Scene\022\014\n\004name\030\001"
+    " \002(\t\022!\n\010rootNode\030\002 \002(\0132\017.modeldata.Node\022"
+    "\037\n\006meshes\030\003 \003(\0132\017.modeldata.Mesh", 792);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "modeldata.proto", &protobuf_RegisterTypes);
   Vec3::default_instance_ = new Vec3();
@@ -2330,10 +2331,11 @@ void Material::Swap(Material* other) {
 
 #ifndef _MSC_VER
 const int Mesh::kNameFieldNumber;
+const int Mesh::kMaterialsFieldNumber;
 const int Mesh::kVerticesFieldNumber;
 const int Mesh::kFacesFieldNumber;
 const int Mesh::kMaterialIndicesFieldNumber;
-const int Mesh::kMaterialsFieldNumber;
+const int Mesh::kVertexColorsFieldNumber;
 #endif  // !_MSC_VER
 
 Mesh::Mesh()
@@ -2359,6 +2361,7 @@ void Mesh::SharedCtor() {
   vertices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   faces_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   materialindices_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  vertexcolors_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2379,6 +2382,9 @@ void Mesh::SharedDtor() {
   }
   if (materialindices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete materialindices_;
+  }
+  if (vertexcolors_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete vertexcolors_;
   }
   if (this != default_instance_) {
   }
@@ -2406,7 +2412,7 @@ Mesh* Mesh::New() const {
 }
 
 void Mesh::Clear() {
-  if (_has_bits_[0 / 32] & 15) {
+  if (_has_bits_[0 / 32] & 61) {
     if (has_name()) {
       if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
@@ -2425,6 +2431,11 @@ void Mesh::Clear() {
     if (has_materialindices()) {
       if (materialindices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         materialindices_->clear();
+      }
+    }
+    if (has_vertexcolors()) {
+      if (vertexcolors_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        vertexcolors_->clear();
       }
     }
   }
@@ -2455,59 +2466,72 @@ bool Mesh::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_vertices;
+        if (input->ExpectTag(18)) goto parse_materials;
         break;
       }
 
-      // optional bytes vertices = 2;
+      // repeated .modeldata.Material materials = 2;
       case 2: {
         if (tag == 18) {
-         parse_vertices:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_vertices()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_faces;
-        break;
-      }
-
-      // optional bytes faces = 3;
-      case 3: {
-        if (tag == 26) {
-         parse_faces:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_faces()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(34)) goto parse_materialIndices;
-        break;
-      }
-
-      // optional bytes materialIndices = 4;
-      case 4: {
-        if (tag == 34) {
-         parse_materialIndices:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_materialindices()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(42)) goto parse_materials;
-        break;
-      }
-
-      // repeated .modeldata.Material materials = 5;
-      case 5: {
-        if (tag == 42) {
          parse_materials:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_materials()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_materials;
+        if (input->ExpectTag(18)) goto parse_materials;
+        if (input->ExpectTag(26)) goto parse_vertices;
+        break;
+      }
+
+      // optional bytes vertices = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_vertices:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_vertices()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_faces;
+        break;
+      }
+
+      // optional bytes faces = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_faces:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_faces()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_materialIndices;
+        break;
+      }
+
+      // optional bytes materialIndices = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_materialIndices:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_materialindices()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(50)) goto parse_vertexColors;
+        break;
+      }
+
+      // optional bytes vertexColors = 6;
+      case 6: {
+        if (tag == 50) {
+         parse_vertexColors:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_vertexcolors()));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2547,28 +2571,34 @@ void Mesh::SerializeWithCachedSizes(
       1, this->name(), output);
   }
 
-  // optional bytes vertices = 2;
-  if (has_vertices()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      2, this->vertices(), output);
-  }
-
-  // optional bytes faces = 3;
-  if (has_faces()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      3, this->faces(), output);
-  }
-
-  // optional bytes materialIndices = 4;
-  if (has_materialindices()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      4, this->materialindices(), output);
-  }
-
-  // repeated .modeldata.Material materials = 5;
+  // repeated .modeldata.Material materials = 2;
   for (int i = 0; i < this->materials_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->materials(i), output);
+      2, this->materials(i), output);
+  }
+
+  // optional bytes vertices = 3;
+  if (has_vertices()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      3, this->vertices(), output);
+  }
+
+  // optional bytes faces = 4;
+  if (has_faces()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      4, this->faces(), output);
+  }
+
+  // optional bytes materialIndices = 5;
+  if (has_materialindices()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      5, this->materialindices(), output);
+  }
+
+  // optional bytes vertexColors = 6;
+  if (has_vertexcolors()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      6, this->vertexcolors(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -2592,32 +2622,39 @@ void Mesh::SerializeWithCachedSizes(
         1, this->name(), target);
   }
 
-  // optional bytes vertices = 2;
-  if (has_vertices()) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        2, this->vertices(), target);
-  }
-
-  // optional bytes faces = 3;
-  if (has_faces()) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        3, this->faces(), target);
-  }
-
-  // optional bytes materialIndices = 4;
-  if (has_materialindices()) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        4, this->materialindices(), target);
-  }
-
-  // repeated .modeldata.Material materials = 5;
+  // repeated .modeldata.Material materials = 2;
   for (int i = 0; i < this->materials_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->materials(i), target);
+        2, this->materials(i), target);
+  }
+
+  // optional bytes vertices = 3;
+  if (has_vertices()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        3, this->vertices(), target);
+  }
+
+  // optional bytes faces = 4;
+  if (has_faces()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        4, this->faces(), target);
+  }
+
+  // optional bytes materialIndices = 5;
+  if (has_materialindices()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        5, this->materialindices(), target);
+  }
+
+  // optional bytes vertexColors = 6;
+  if (has_vertexcolors()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        6, this->vertexcolors(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2639,29 +2676,36 @@ int Mesh::ByteSize() const {
           this->name());
     }
 
-    // optional bytes vertices = 2;
+    // optional bytes vertices = 3;
     if (has_vertices()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->vertices());
     }
 
-    // optional bytes faces = 3;
+    // optional bytes faces = 4;
     if (has_faces()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->faces());
     }
 
-    // optional bytes materialIndices = 4;
+    // optional bytes materialIndices = 5;
     if (has_materialindices()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->materialindices());
     }
 
+    // optional bytes vertexColors = 6;
+    if (has_vertexcolors()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->vertexcolors());
+    }
+
   }
-  // repeated .modeldata.Material materials = 5;
+  // repeated .modeldata.Material materials = 2;
   total_size += 1 * this->materials_size();
   for (int i = 0; i < this->materials_size(); i++) {
     total_size +=
@@ -2708,6 +2752,9 @@ void Mesh::MergeFrom(const Mesh& from) {
     if (from.has_materialindices()) {
       set_materialindices(from.materialindices());
     }
+    if (from.has_vertexcolors()) {
+      set_vertexcolors(from.vertexcolors());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -2733,10 +2780,11 @@ bool Mesh::IsInitialized() const {
 void Mesh::Swap(Mesh* other) {
   if (other != this) {
     std::swap(name_, other->name_);
+    materials_.Swap(&other->materials_);
     std::swap(vertices_, other->vertices_);
     std::swap(faces_, other->faces_);
     std::swap(materialindices_, other->materialindices_);
-    materials_.Swap(&other->materials_);
+    std::swap(vertexcolors_, other->vertexcolors_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

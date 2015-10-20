@@ -11,6 +11,15 @@ static int RandInRange( int minValue, int maxValue )
 	return minValue + rand() % (maxValue-minValue);
 }
 
+class Errors : public ErrorCallbacks
+{
+public:
+	void Error( const char * str )
+	{
+		std::cout << str << std::endl;
+	}
+};
+
 int main(int argc, char *argv[])
 {
 	GameAnalytics::Keys keys;
@@ -19,8 +28,7 @@ int main(int argc, char *argv[])
 	keys.mDataApiKey	= "a1af2abdb11ef2257f9e8941b072984731c349e0";
 	keys.mVersionKey	= "GameAnalyticsTest";
 	
-	GameAnalytics logger( keys );
-
+	GameAnalytics logger( keys, new Errors );
 	
 	zmq::context_t zmqcontext( 2 );
 	
@@ -63,7 +71,7 @@ int main(int argc, char *argv[])
 			if ( ( frameNum % 100 ) == 0 )
 			{
 				Analytics::MessageUnion msg;
-				msg.set_timestamp( 100 );
+				msg.set_timestamp( logger.GetTimeStamp() );
 				msg.mutable_gamedeath()->set_killedbyclass( 5 );
 				msg.mutable_gamedeath()->set_killedbyhealth( 10 );
 				msg.mutable_gamedeath()->set_killedbyweapon( 15 );
@@ -74,7 +82,7 @@ int main(int argc, char *argv[])
 			if ( ( frameNum % 100 ) == 0 )
 			{
 				Analytics::MessageUnion msg;
-				msg.set_timestamp( 100 );
+				msg.set_timestamp( logger.GetTimeStamp() );
 				msg.mutable_systemassert()->set_condition( "test string" );
 				logger.AddEvent( msg );
 			}
@@ -149,13 +157,7 @@ int main(int argc, char *argv[])
 	scriptOut.open( std::string(areaName) + ".mgk", std::ios_base::out | std::ios_base::trunc );
 	scriptOut << script << std::endl;
 	scriptOut.close();
-
-	std::string error;
-	while ( logger.GetError( error ) )
-	{
-		std::cout << error << std::endl;
-	}
-
+	
 	logger.CloseDatabase();
 
 	return 0;

@@ -50,7 +50,7 @@ public:
 	//	void logEntryAppended( const LogEntry & entry );
 	//	void logFiltersChanged( const LogEntry & entry );
 	//
-	protected Q_SLOTS:
+protected Q_SLOTS:
 	void FileOpen();
 	void FileSave();
 	void RebuildLogTable();
@@ -91,6 +91,9 @@ private:
 
 	QTreeWidgetItem * FindChildItem( QTreeWidgetItem * searchUnder, QObject * obj );
 	QTreeWidgetItem * FindOrAdd( QTreeWidgetItem * parent, const QString& name, QObject * obj );
+
+	void SetButtonTitleCount( QPushButton * button, int value );
+	void ModifyButtonTitleCount( QPushButton * button, int value );
 };
 
 #endif

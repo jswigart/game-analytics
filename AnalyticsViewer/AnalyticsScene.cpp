@@ -19,6 +19,26 @@ AnalyticsScene::~AnalyticsScene()
 
 void AnalyticsScene::AddToScene( Qt3D::QEntity* entity )
 {
+	Qt3D::QEntity* oldChild = findChild<Qt3D::QEntity*>( entity->objectName() );
+	if ( oldChild != NULL )
+	{
+		oldChild->setParent( NULL );
+		oldChild->deleteLater();
+
+		// put the new components on the old entity
+		//oldChild->removeAllComponents();
+
+		//Qt3D::QComponentList components = entity->components();
+		//foreach( Qt3D::QComponent* cmp, components )
+		//{
+		//	cmp->setParent( NULL );
+		//	oldChild->addComponent( cmp );
+		//}
+
+		//// delete the ne
+		//entity->deleteLater();
+	}
+
 	entity->moveToThread( thread() );
 	entity->setParent( this );
 }

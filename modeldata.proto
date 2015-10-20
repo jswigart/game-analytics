@@ -48,10 +48,11 @@ message Material
 message Mesh
 {
 	optional string				name			= 1;
-	optional bytes				vertices		= 2;
-	optional bytes				faces			= 3;
-	optional bytes				materialIndices = 4;
-	repeated Material			materials		= 5;
+	repeated Material			materials		= 2;
+	optional bytes				vertices		= 3;
+	optional bytes				faces			= 4;
+	optional bytes				materialIndices = 5;
+	optional bytes				vertexColors	= 6;
 }
 
 message Scene

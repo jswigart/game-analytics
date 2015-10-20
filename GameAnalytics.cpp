@@ -110,10 +110,11 @@ AnalyticsSubscriber::~AnalyticsSubscriber()
 
 //////////////////////////////////////////////////////////////////////////
 
-GameAnalytics::GameAnalytics( const Keys & keys )
+GameAnalytics::GameAnalytics( const Keys & keys, ErrorCallbacks* errorCbs )
 	: mKeys( keys )
 	, mDatabase( NULL )
 	, mPublisher( NULL )
+	, mErrorCallbacks( errorCbs )
 {
     // Initialize libcurl.
     curl_global_init(CURL_GLOBAL_ALL);
@@ -349,7 +350,9 @@ size_t GameAnalytics::SubmitDesignEvents()
 		{
 			std::string err = "Error Submitting Design Events ";
 			err += curl_easy_strerror(res);
-			mErrors.push_back( err );
+
+			if ( mErrorCallbacks )
+				mErrorCallbacks->Error( err.c_str() );
 			return 0;
 		}
 	}
@@ -417,7 +420,9 @@ size_t GameAnalytics::SubmitQualityEvents()
 		{
 			std::string err = "Error Submitting Quality Events ";
 			err += curl_easy_strerror(res);
-			mErrors.push_back( err );
+			
+			if ( mErrorCallbacks )
+				mErrorCallbacks->Error( err.c_str() );
 			return 0;
 		}
 	}
@@ -500,7 +505,9 @@ const GameAnalytics::Heatmap * GameAnalytics::GetHeatmap( const std::string & ar
 		{
 			std::string err = "Error Getting Heat Map ";
 			err += curl_easy_strerror(res);
-			mErrors.push_back( err );
+			
+			if ( mErrorCallbacks )
+				mErrorCallbacks->Error( err.c_str() );
 			return NULL;
 		}
 
@@ -544,15 +551,17 @@ const GameAnalytics::Heatmap * GameAnalytics::GetHeatmap( const std::string & ar
 	return NULL;
 }
 
-bool GameAnalytics::GetError( std::string & errorOut )
+bool GameAnalytics::OpenDatabase( const char * filename )
 {
-	if ( !mErrors.empty() )
-	{
-		errorOut.swap( mErrors.front() );
-		mErrors.pop_front();
-		return true;
-	}
-	return false;
+	std::string filepath = "file:";
+	filepath += filename;
+
+	if ( CheckSqliteError( sqlite3_open_v2( filepath.c_str(), &mDatabase, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL ) ) != SQLITE_OK )
+		return false;
+
+	CheckSqliteError( sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 ) );
+
+	return true;
 }
 
 bool GameAnalytics::CreateDatabase( const char * filename )
@@ -567,7 +576,7 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA journal_mode=MEMORY", NULL, NULL, NULL ) );
 	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA temp_store=MEMORY", NULL, NULL, NULL ) );
 
-	enum { NumDefaultTables = 2 };
+	/*enum { NumDefaultTables = 2 };
 	const char * defaultTableName[NumDefaultTables] =
 	{
 		"eventsGame",
@@ -593,9 +602,9 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 			CheckSqliteError( sqlite3_step( statement ) );
 			CheckSqliteError( sqlite3_finalize( statement ) );
 		}
-	}
+	}*/
 
-	sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 );
+	CheckSqliteError( sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 ) );
 
 	// make a unique table for each event type
 	mMsgSubtypes = Analytics::MessageUnion::descriptor()->FindOneofByName( "msg" );
@@ -611,7 +620,7 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 			CheckSqliteError( sqlite3_finalize( statement ) );
 		}
 
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "CREATE TABLE %s( id INTEGER PRIMARY KEY, key TEXT, data BLOB )", fdesc->camelcase_name().c_str() ), -1, &statement, NULL ) ) )
+		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "CREATE TABLE %s( id INTEGER PRIMARY KEY, timestamp INTEGER KEY, key TEXT, data BLOB )", fdesc->camelcase_name().c_str() ), -1, &statement, NULL ) ) )
 		{
 			CheckSqliteError( sqlite3_step( statement ) );
 			CheckSqliteError( sqlite3_finalize( statement ) );
@@ -641,7 +650,8 @@ int GameAnalytics::CheckSqliteError( int errcode )
 				exerr ? "\n" : "",
 				sqlite3_errmsg( mDatabase ) );
 			
-			mErrors.push_back( str.c_str() );
+			if ( mErrorCallbacks )
+				mErrorCallbacks->Error( str.c_str() );
 		}
 	}
 	return errcode;
@@ -978,6 +988,11 @@ bool StringFromField( std::string & strOut, const google::protobuf::Message & ms
 	return true;
 }
 
+google::protobuf::int64 GameAnalytics::GetTimeStamp() const
+{
+	return 10;
+}
+
 void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 {
 	const int messageSize = msg.ByteSize();
@@ -993,7 +1008,7 @@ void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 	bool cacheLast = false;
 	if ( oneofField->message_type()->options().HasExtension( Analytics::cachelastvalue ) )
 		cacheLast = oneofField->message_type()->options().GetExtension( Analytics::cachelastvalue );
-		
+	
 	if ( cacheLast )
 	{
 		// figure out the key with which to cache this message, to allow us to cache more than one of the same type message
@@ -1029,10 +1044,11 @@ void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 	{
 		// Save it to the output stream
 		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "INSERT into %s ( key, data ) VALUES( ?, ? )", msgtype ), -1, &statement, NULL ) ) )
+		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "INSERT into %s ( timestamp, key, data ) VALUES( ?, ?, ? )", msgtype ), -1, &statement, NULL ) ) )
 		{
-			sqlite3_bind_text( statement, 1, msgtype, strlen( msgtype ), NULL );
-			sqlite3_bind_blob( statement, 2, messagePayload.c_str(), messagePayload.size(), NULL );
+			sqlite3_bind_int64( statement, 1, msg.timestamp() );
+			sqlite3_bind_text( statement, 2, msgtype, strlen( msgtype ), NULL );
+			sqlite3_bind_blob( statement, 3, messagePayload.c_str(), messagePayload.size(), NULL );
 
 			if ( CheckSqliteError( sqlite3_step( statement ) ) == SQLITE_DONE )
 			{
@@ -1053,6 +1069,8 @@ bool GameAnalytics::Poll( Analytics::MessageUnion & msgOut )
 {
 	if ( mPublisher != NULL )
 	{
+		// process queued messages?
+
 		while ( mPublisher->Poll( msgOut ) )
 		{
 			if ( msgOut.has_topicsubscribe() )
@@ -1144,7 +1162,7 @@ bool zmqPublisher::Poll( Analytics::MessageUnion & msgOut )
 
 	zmq::message_t zmsg;
 	if ( mSocketPub->recv( &zmsg, ZMQ_DONTWAIT ) )
-	{	
+	{
 		enum Command
 		{
 			CMD_UNSUBSCRIBE = 0,
@@ -1205,12 +1223,10 @@ bool zmqSubscriber::Poll( Analytics::MessageUnion & msgOut )
 				msgOut.Clear();
 				if ( msgOut.ParseFromCodedStream( &inputstream ) )
 				{
-
+					return true;
 				}
 			}
 		}
-
-		return true;
 	}
 	return false;
 }

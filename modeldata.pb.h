@@ -758,10 +758,22 @@ class Mesh : public ::google::protobuf::Message {
   inline ::std::string* release_name();
   inline void set_allocated_name(::std::string* name);
 
-  // optional bytes vertices = 2;
+  // repeated .modeldata.Material materials = 2;
+  inline int materials_size() const;
+  inline void clear_materials();
+  static const int kMaterialsFieldNumber = 2;
+  inline const ::modeldata::Material& materials(int index) const;
+  inline ::modeldata::Material* mutable_materials(int index);
+  inline ::modeldata::Material* add_materials();
+  inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
+      materials() const;
+  inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
+      mutable_materials();
+
+  // optional bytes vertices = 3;
   inline bool has_vertices() const;
   inline void clear_vertices();
-  static const int kVerticesFieldNumber = 2;
+  static const int kVerticesFieldNumber = 3;
   inline const ::std::string& vertices() const;
   inline void set_vertices(const ::std::string& value);
   inline void set_vertices(const char* value);
@@ -770,10 +782,10 @@ class Mesh : public ::google::protobuf::Message {
   inline ::std::string* release_vertices();
   inline void set_allocated_vertices(::std::string* vertices);
 
-  // optional bytes faces = 3;
+  // optional bytes faces = 4;
   inline bool has_faces() const;
   inline void clear_faces();
-  static const int kFacesFieldNumber = 3;
+  static const int kFacesFieldNumber = 4;
   inline const ::std::string& faces() const;
   inline void set_faces(const ::std::string& value);
   inline void set_faces(const char* value);
@@ -782,10 +794,10 @@ class Mesh : public ::google::protobuf::Message {
   inline ::std::string* release_faces();
   inline void set_allocated_faces(::std::string* faces);
 
-  // optional bytes materialIndices = 4;
+  // optional bytes materialIndices = 5;
   inline bool has_materialindices() const;
   inline void clear_materialindices();
-  static const int kMaterialIndicesFieldNumber = 4;
+  static const int kMaterialIndicesFieldNumber = 5;
   inline const ::std::string& materialindices() const;
   inline void set_materialindices(const ::std::string& value);
   inline void set_materialindices(const char* value);
@@ -794,17 +806,17 @@ class Mesh : public ::google::protobuf::Message {
   inline ::std::string* release_materialindices();
   inline void set_allocated_materialindices(::std::string* materialindices);
 
-  // repeated .modeldata.Material materials = 5;
-  inline int materials_size() const;
-  inline void clear_materials();
-  static const int kMaterialsFieldNumber = 5;
-  inline const ::modeldata::Material& materials(int index) const;
-  inline ::modeldata::Material* mutable_materials(int index);
-  inline ::modeldata::Material* add_materials();
-  inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
-      materials() const;
-  inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
-      mutable_materials();
+  // optional bytes vertexColors = 6;
+  inline bool has_vertexcolors() const;
+  inline void clear_vertexcolors();
+  static const int kVertexColorsFieldNumber = 6;
+  inline const ::std::string& vertexcolors() const;
+  inline void set_vertexcolors(const ::std::string& value);
+  inline void set_vertexcolors(const char* value);
+  inline void set_vertexcolors(const void* value, size_t size);
+  inline ::std::string* mutable_vertexcolors();
+  inline ::std::string* release_vertexcolors();
+  inline void set_allocated_vertexcolors(::std::string* vertexcolors);
 
   // @@protoc_insertion_point(class_scope:modeldata.Mesh)
  private:
@@ -816,16 +828,19 @@ class Mesh : public ::google::protobuf::Message {
   inline void clear_has_faces();
   inline void set_has_materialindices();
   inline void clear_has_materialindices();
+  inline void set_has_vertexcolors();
+  inline void clear_has_vertexcolors();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* name_;
+  ::google::protobuf::RepeatedPtrField< ::modeldata::Material > materials_;
   ::std::string* vertices_;
   ::std::string* faces_;
   ::std::string* materialindices_;
-  ::google::protobuf::RepeatedPtrField< ::modeldata::Material > materials_;
+  ::std::string* vertexcolors_;
   friend void  protobuf_AddDesc_modeldata_2eproto();
   friend void protobuf_AssignDesc_modeldata_2eproto();
   friend void protobuf_ShutdownFile_modeldata_2eproto();
@@ -1765,15 +1780,45 @@ inline void Mesh::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.name)
 }
 
-// optional bytes vertices = 2;
+// repeated .modeldata.Material materials = 2;
+inline int Mesh::materials_size() const {
+  return materials_.size();
+}
+inline void Mesh::clear_materials() {
+  materials_.Clear();
+}
+inline const ::modeldata::Material& Mesh::materials(int index) const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.materials)
+  return materials_.Get(index);
+}
+inline ::modeldata::Material* Mesh::mutable_materials(int index) {
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.materials)
+  return materials_.Mutable(index);
+}
+inline ::modeldata::Material* Mesh::add_materials() {
+  // @@protoc_insertion_point(field_add:modeldata.Mesh.materials)
+  return materials_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
+Mesh::materials() const {
+  // @@protoc_insertion_point(field_list:modeldata.Mesh.materials)
+  return materials_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
+Mesh::mutable_materials() {
+  // @@protoc_insertion_point(field_mutable_list:modeldata.Mesh.materials)
+  return &materials_;
+}
+
+// optional bytes vertices = 3;
 inline bool Mesh::has_vertices() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void Mesh::set_has_vertices() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void Mesh::clear_has_vertices() {
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void Mesh::clear_vertices() {
   if (vertices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -1841,15 +1886,15 @@ inline void Mesh::set_allocated_vertices(::std::string* vertices) {
   // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.vertices)
 }
 
-// optional bytes faces = 3;
+// optional bytes faces = 4;
 inline bool Mesh::has_faces() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void Mesh::set_has_faces() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void Mesh::clear_has_faces() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void Mesh::clear_faces() {
   if (faces_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -1917,15 +1962,15 @@ inline void Mesh::set_allocated_faces(::std::string* faces) {
   // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.faces)
 }
 
-// optional bytes materialIndices = 4;
+// optional bytes materialIndices = 5;
 inline bool Mesh::has_materialindices() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void Mesh::set_has_materialindices() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void Mesh::clear_has_materialindices() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void Mesh::clear_materialindices() {
   if (materialindices_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -1993,34 +2038,80 @@ inline void Mesh::set_allocated_materialindices(::std::string* materialindices) 
   // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.materialIndices)
 }
 
-// repeated .modeldata.Material materials = 5;
-inline int Mesh::materials_size() const {
-  return materials_.size();
+// optional bytes vertexColors = 6;
+inline bool Mesh::has_vertexcolors() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void Mesh::clear_materials() {
-  materials_.Clear();
+inline void Mesh::set_has_vertexcolors() {
+  _has_bits_[0] |= 0x00000020u;
 }
-inline const ::modeldata::Material& Mesh::materials(int index) const {
-  // @@protoc_insertion_point(field_get:modeldata.Mesh.materials)
-  return materials_.Get(index);
+inline void Mesh::clear_has_vertexcolors() {
+  _has_bits_[0] &= ~0x00000020u;
 }
-inline ::modeldata::Material* Mesh::mutable_materials(int index) {
-  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.materials)
-  return materials_.Mutable(index);
+inline void Mesh::clear_vertexcolors() {
+  if (vertexcolors_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertexcolors_->clear();
+  }
+  clear_has_vertexcolors();
 }
-inline ::modeldata::Material* Mesh::add_materials() {
-  // @@protoc_insertion_point(field_add:modeldata.Mesh.materials)
-  return materials_.Add();
+inline const ::std::string& Mesh::vertexcolors() const {
+  // @@protoc_insertion_point(field_get:modeldata.Mesh.vertexColors)
+  return *vertexcolors_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::modeldata::Material >&
-Mesh::materials() const {
-  // @@protoc_insertion_point(field_list:modeldata.Mesh.materials)
-  return materials_;
+inline void Mesh::set_vertexcolors(const ::std::string& value) {
+  set_has_vertexcolors();
+  if (vertexcolors_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertexcolors_ = new ::std::string;
+  }
+  vertexcolors_->assign(value);
+  // @@protoc_insertion_point(field_set:modeldata.Mesh.vertexColors)
 }
-inline ::google::protobuf::RepeatedPtrField< ::modeldata::Material >*
-Mesh::mutable_materials() {
-  // @@protoc_insertion_point(field_mutable_list:modeldata.Mesh.materials)
-  return &materials_;
+inline void Mesh::set_vertexcolors(const char* value) {
+  set_has_vertexcolors();
+  if (vertexcolors_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertexcolors_ = new ::std::string;
+  }
+  vertexcolors_->assign(value);
+  // @@protoc_insertion_point(field_set_char:modeldata.Mesh.vertexColors)
+}
+inline void Mesh::set_vertexcolors(const void* value, size_t size) {
+  set_has_vertexcolors();
+  if (vertexcolors_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertexcolors_ = new ::std::string;
+  }
+  vertexcolors_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:modeldata.Mesh.vertexColors)
+}
+inline ::std::string* Mesh::mutable_vertexcolors() {
+  set_has_vertexcolors();
+  if (vertexcolors_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    vertexcolors_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:modeldata.Mesh.vertexColors)
+  return vertexcolors_;
+}
+inline ::std::string* Mesh::release_vertexcolors() {
+  clear_has_vertexcolors();
+  if (vertexcolors_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = vertexcolors_;
+    vertexcolors_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void Mesh::set_allocated_vertexcolors(::std::string* vertexcolors) {
+  if (vertexcolors_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete vertexcolors_;
+  }
+  if (vertexcolors) {
+    set_has_vertexcolors();
+    vertexcolors_ = vertexcolors;
+  } else {
+    clear_has_vertexcolors();
+    vertexcolors_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:modeldata.Mesh.vertexColors)
 }
 
 // -------------------------------------------------------------------

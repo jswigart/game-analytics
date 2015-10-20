@@ -129,6 +129,10 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 			for ( int m = 0; m < scene.meshes_size(); ++m )
 			{
 				const modeldata::Mesh& mesh = scene.meshes( m );
+
+				/*if ( !mesh.has_vertexcolors() )
+					continue;*/
+
 				Qt3D::QMeshDataPtr& cachedGeom = mGeomCache[ mesh.name() ];
 				if ( cachedGeom == NULL )
 					cachedGeom.reset( new Qt3D::QMeshData( Qt3D::QMeshData::Triangles ) );
@@ -144,9 +148,8 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 				Qt3D::BufferPtr vertexBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
 				vertexBuffer->setUsage( QOpenGLBuffer::StaticDraw );
 				vertexBuffer->setData( posBytes );
-
-				cachedGeom->addAttribute( Qt3D::QMeshData::defaultPositionAttributeName(),
-					Qt3D::AttributePtr( new Qt3D::Attribute( vertexBuffer, GL_FLOAT_VEC3, numVertices ) ) );
+				
+				cachedGeom->addAttribute( Qt3D::QMeshData::defaultPositionAttributeName(), Qt3D::AttributePtr( new Qt3D::Attribute( vertexBuffer, GL_FLOAT_VEC3, numVertices ) ) );
 
 				// Normal Buffer
 				QByteArray normalBytes;
@@ -161,9 +164,7 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 				Qt3D::BufferPtr normalBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
 				normalBuffer->setUsage( QOpenGLBuffer::StaticDraw );
 				normalBuffer->setData( normalBytes );
-
-				cachedGeom->addAttribute( Qt3D::QMeshData::defaultNormalAttributeName(),
-					Qt3D::AttributePtr( new Qt3D::Attribute( normalBuffer, GL_FLOAT_VEC3, numVertices ) ) );
+				cachedGeom->addAttribute( Qt3D::QMeshData::defaultNormalAttributeName(), Qt3D::AttributePtr( new Qt3D::Attribute( normalBuffer, GL_FLOAT_VEC3, numVertices ) ) );
 
 				// Index List
 				/*QByteArray indexBytes;
@@ -177,19 +178,41 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 				indexBuffer->setData( indexBytes );
 
 				cachedGeom->setIndexAttribute( Qt3D::AttributePtr( new Qt3D::Attribute( indexBuffer, GL_UNSIGNED_INT_VEC3, numVertices ) ) );*/
-
-				/*
+								
 				// Color Buffer
+				
+				const QColor dColor( "#606060" );
+
 				QByteArray clrBytes;
-				clrBytes.resize( numVertices * sizeof(QVector4D) );
+				clrBytes.resize( numVertices * sizeof( QVector4D ) );
 				//memcpy( clrBytes.data(), mesh.vertices().c_str(), mesh.vertices().size() );
+				QVector4D * clrPtr = (QVector4D *)clrBytes.data();
+
+				// initialize to default color
+				for ( int i = 0; i < numVertices; ++i )
+					clrPtr[ i ] = QVector4D( dColor.redF(), dColor.greenF(), dColor.blueF(), dColor.alphaF() );
+
+				// optionally use the input color data
+				if ( mesh.has_vertexcolors() )
+				{
+					// incoming colors are packed smaller than floats, so we need to expand them
+					const QRgb * vertexColors = reinterpret_cast<const QRgb*>( &mesh.vertexcolors()[ 0 ] );
+					const size_t numColors = mesh.vertexcolors().size() / sizeof( QRgb );
+					if ( numColors == numVertices )
+					{
+						for ( int i = 0; i < numColors; ++i )
+						{
+							QColor color = QColor::fromRgba( vertexColors[ i ] );
+							clrPtr[ i ] = QVector4D( color.redF(), color.greenF(), color.blueF(), color.alphaF() );
+						}
+					}
+				}
 
 				Qt3D::BufferPtr colorBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
 				colorBuffer->setUsage( QOpenGLBuffer::StaticDraw );
 				colorBuffer->setData( clrBytes );
 
-				cachedGeom->addAttribute( Qt3D::QMeshData::defaultColorAttributeName(),
-				Qt3D::AttributePtr( new Qt3D::Attribute( colorBuffer, GL_FLOAT_VEC4, numVertices ) ) );*/
+				cachedGeom->addAttribute( Qt3D::QMeshData::defaultColorAttributeName(), Qt3D::AttributePtr( new Qt3D::Attribute( colorBuffer, GL_FLOAT_VEC4, numVertices ) ) );
 			}
 
 			Qt3D::QEntity * entity = new Qt3D::QEntity();
@@ -226,10 +249,10 @@ void ModelProcessor::processNode( const modeldata::Scene& scene, const modeldata
 		xform.translate( vec.x(), vec.y(), vec.z() );
 	}
 
-	Qt3D::QPhongMaterial * mtrl = new Qt3D::QPhongMaterial();
-	mtrl->setDiffuse( QColor( "grey" ) );
+	/*Qt3D::QPhongMaterial * mtrl = new Qt3D::QPhongMaterial();
+	mtrl->setDiffuse( QColor( "grey" ) );*/
 
-	//Qt3D::QPerVertexColorMaterial * mtrl = new Qt3D::QPerVertexColorMaterial();
+	Qt3D::QPerVertexColorMaterial * mtrl = new Qt3D::QPerVertexColorMaterial();
 
 	Qt3D::QMatrixTransform * matrixXform = new Qt3D::QMatrixTransform();
 	matrixXform->setMatrix( xform );

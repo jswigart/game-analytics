@@ -22,6 +22,18 @@ namespace zmq
 
 //////////////////////////////////////////////////////////////////////////
 
+class ErrorCallbacks
+{
+public:
+	virtual ~ErrorCallbacks()
+	{
+	}
+
+	virtual void Error( const char * str ) = 0;
+};
+
+//////////////////////////////////////////////////////////////////////////
+
 class AnalyticsPublisher
 {
 public:
@@ -107,11 +119,13 @@ public:
 		HeatEvents	mEvents;
 	};
 
-    GameAnalytics( const Keys & keys );
+	GameAnalytics( const Keys & keys, ErrorCallbacks* errorCbs );
 	~GameAnalytics();
-	
+
 	void SetPublisher( AnalyticsPublisher * publisher );
 	AnalyticsPublisher * GetPublisher() const;
+
+	google::protobuf::int64 GetTimeStamp() const;
 
 	void AddEvent( const Analytics::MessageUnion & msg );
 
@@ -119,7 +133,7 @@ public:
 	void AddGameEvent( const char * areaId, const char * eventId, float value );
 	void AddGameEvent( const char * areaId, const char * eventId, const float * xyz );
 	void AddGameEvent( const char * areaId, const char * eventId, const float * xyz, float value );
-	
+
 	void AddQualityEvent( const char * areaId, const char * eventId );
 	void AddQualityEvent( const char * areaId, const char * eventId, const char * messageId );
 
@@ -128,47 +142,44 @@ public:
 	size_t SubmitDesignEvents();
 	size_t SubmitQualityEvents();
 
-	const Heatmap * GetHeatmap(const std::string & area, const std::string & eventIds, bool loadFromServer);
+	const Heatmap * GetHeatmap( const std::string & area, const std::string & eventIds, bool loadFromServer );
 
+	bool OpenDatabase( const char * filename );
 	bool CreateDatabase( const char * filename );
 	void CloseDatabase();
-	
+
 	struct HeatmapDef
 	{
 		const char *	mAreaId;
 		const char *	mEventId;
 		float			mEventRadius;
 		int				mImageSize;
-		float			mWorldMins[2];
-		float			mWorldMaxs[2];
+		float			mWorldMins[ 2 ];
+		float			mWorldMaxs[ 2 ];
 	};
 	void WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents );
 
 	void GetUniqueEventNames( std::vector< std::string > & eventNames );
-	
-	bool GetError( std::string & errorOut );
 private:
-    void SetUserID();
-    void SetSessionID();
-	
-    const Keys		mKeys;
-    std::string					mUserId;
-    std::string					mSessionId;
+	void SetUserID();
+	void SetSessionID();
 
-	typedef std::map<std::string,Heatmap*> HeatMapsByName;
+	const Keys					mKeys;
+	std::string					mUserId;
+	std::string					mSessionId;
+
+	typedef std::map<std::string, Heatmap*> HeatMapsByName;
 
 	typedef std::map<std::string, Analytics::MessageUnion> MsgCache;
 
-	typedef std::list<std::string> Errors;
-
-	Errors						mErrors;
+	ErrorCallbacks*				mErrorCallbacks;
 
 	HeatMapsByName				mHeatMaps;
 
 	sqlite3 *					mDatabase;
-	
+
 	AnalyticsPublisher *		mPublisher;
-	
+
 	MsgCache					mMessageCache;
 
 	const google::protobuf::OneofDescriptor* mMsgSubtypes;

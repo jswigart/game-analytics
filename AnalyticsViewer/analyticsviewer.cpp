@@ -37,6 +37,11 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 
 	ui.setupUi( this );
 
+	ui.toggleMessages->setProperty( "Title", QString("Info (%1)") );
+	ui.toggleWarnings->setProperty( "Title", QString( "Warning (%1)" ) );
+	ui.toggleErrors->setProperty( "Title", QString( "Errors (%1)" ) );
+	ui.toggleDebug->setProperty( "Title", QString( "Debug (%1)" ) );
+
 	// Initialize Qt3d QML
 	Window* view = new Window();
 
@@ -180,6 +185,24 @@ void AnalyticsViewer::AppendToLog( const LogCategory category, const QString & m
 	AddToTable( log );
 }
 
+void AnalyticsViewer::SetButtonTitleCount( QPushButton * button, int value )
+{
+	button->setProperty( "numEntries", value );
+
+	// update the label with the new count
+	QString title = button->property( "Title" ).toString();
+	button->setText( title.arg( value ) );
+}
+
+void AnalyticsViewer::ModifyButtonTitleCount( QPushButton * button, int value )
+{
+	const int newCount = button->property( "numEntries" ).toInt() + value;
+	button->setProperty( "numEntries", newCount );
+
+	QString title = button->property( "Title" ).toString();
+	button->setText( title.arg( newCount ) );
+}
+
 void AnalyticsViewer::AddToTable( const LogEntry & log )
 {
 	QRegExp expression( ui.editOutputFilter->text(), Qt::CaseInsensitive, QRegExp::Wildcard );
@@ -196,7 +219,7 @@ void AnalyticsViewer::AddToTable( const LogEntry & log )
 		case LOG_INFO:
 			if ( !ui.toggleMessages->isChecked() )
 				return;
-
+			ModifyButtonTitleCount( ui.toggleMessages, 1 );
 			categoryItem = new QTableWidgetItem();
 			categoryItem->setText( "INFO" );
 			categoryItem->setForeground( QColor::fromRgb( 127, 127, 127 ) );
@@ -205,6 +228,7 @@ void AnalyticsViewer::AddToTable( const LogEntry & log )
 			if ( !ui.toggleWarnings->isChecked() )
 				return;
 
+			ModifyButtonTitleCount( ui.toggleWarnings, 1 );
 			categoryItem = new QTableWidgetItem();
 			categoryItem->setText( "WARN" );
 			categoryItem->setForeground( QColor::fromRgb( 255, 127, 0 ) );
@@ -213,6 +237,7 @@ void AnalyticsViewer::AddToTable( const LogEntry & log )
 			if ( !ui.toggleErrors->isChecked() )
 				return;
 
+			ModifyButtonTitleCount( ui.toggleErrors, 1 );
 			categoryItem = new QTableWidgetItem();
 			categoryItem->setText( "ERROR" );
 			categoryItem->setForeground( QColor::fromRgb( 255, 0, 0 ) );
@@ -221,15 +246,14 @@ void AnalyticsViewer::AddToTable( const LogEntry & log )
 			if ( !ui.toggleDebug->isChecked() )
 				return;
 
+			ModifyButtonTitleCount( ui.toggleDebug, 1 );
 			categoryItem = new QTableWidgetItem();
 			categoryItem->setText( "DEBUG" );
 			categoryItem->setForeground( QColor::fromRgb( 0, 0, 255 ) );
 			break;
 		default:
-			categoryItem = new QTableWidgetItem();
-			categoryItem->setText( "?" );
-			categoryItem->setForeground( QColor::fromRgb( 255, 0, 255 ) );
-			break;
+			qDebug() << "Unknown Log Type";
+			return;
 	}
 
 	QTableWidgetItem * messageItem = new QTableWidgetItem( log.mMessage );
@@ -256,6 +280,12 @@ void AnalyticsViewer::RebuildLogTable()
 	ui.tableOutput->setUpdatesEnabled( false );
 	while ( ui.tableOutput->rowCount() > 0 )
 		ui.tableOutput->removeRow( 0 );
+	
+	SetButtonTitleCount( ui.toggleMessages, 0 );
+	SetButtonTitleCount( ui.toggleWarnings, 0 );
+	SetButtonTitleCount( ui.toggleErrors, 0 );
+	SetButtonTitleCount( ui.toggleDebug, 0 );
+	
 	for ( int i = 0; i < mLogEntries.size(); ++i )
 		AddToTable( mLogEntries[ i ] );
 	ui.tableOutput->setUpdatesEnabled( true );

@@ -25,7 +25,7 @@ Analytics.Scene {
         aspectRatio: _window.width / _window.height
         nearPlane : 0.5
         farPlane : 10000.0
-        position: Qt.vector3d( 1000.0, 1000.0, 1000.0 )
+        position: Qt.vector3d( 2500.0, 2500.0, 1000.0 )
         upVector: Qt.vector3d( 1.0, 0.0, 1.0 )
         viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )
     }
