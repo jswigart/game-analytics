@@ -12,6 +12,7 @@
 
 #include "Messaging.h"
 
+class Window;
 class ModelProcessor;
 class HostThreadENET;
 
@@ -66,11 +67,10 @@ protected Q_SLOTS:
 
 	// message handling
 	void processMessage( MessageUnionPtr msg );
-
 private:
 	Ui::AnalyticsViewerClass		ui;
 	Qt3D::Quick::QQmlAspectEngine	mEngine;
-
+	Window*							mView;
 	ModelProcessor*					mModelProcessorThread;
 	HostThread0MQ*					mMessageThread;
 	QLabel*							mNetworkLabel;
@@ -82,9 +82,7 @@ private:
 	void FileSave( const QString & filePath );
 
 	void AddToTable( const LogEntry & log );
-
-	void processMessage( const Analytics::GameEntityInfo& msg );
-
+	
 	void WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem );
 
 	void AddObjectProperties_r( QObject * obj, QtVariantProperty * parent );

@@ -1,7 +1,9 @@
 #include <QtQml/QQmlContext>
 #include <Qt3DInput/QInputAspect>
+#include <Qt3DCore/QComponent>
 #include <Qt3DRenderer/QRenderAspect>
 #include <QtCore/QMetaType>
+#include <Qt3DQuick/Quick3DNode>
 #include <QtQml>
 #include <QtQml/QQmlListProperty>
 
@@ -32,7 +34,8 @@
 AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	: QMainWindow( parent )
 {
-	qmlRegisterType<QAnalyticModel>( "Analytics", 1, 0, "Mesh" );
+	qRegisterMetaType<MessageUnionPtr>( "MessageUnionPtr" );
+
 	qmlRegisterType<AnalyticsScene>( "Analytics", 1, 0, "Scene" );
 
 	ui.setupUi( this );
@@ -43,9 +46,9 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	ui.toggleDebug->setProperty( "Title", QString( "Debug (%1)" ) );
 
 	// Initialize Qt3d QML
-	Window* view = new Window();
+	mView = new Window();
 
-	QWidget *container = QWidget::createWindowContainer( view );
+	QWidget *container = QWidget::createWindowContainer( mView );
 
 	container->setMinimumSize( QSize( 100, 100 ) );
 
@@ -53,17 +56,17 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	mEngine.aspectEngine()->registerAspect( new Qt3D::QInputAspect() );
 
 	QVariantMap data;
-	data.insert( QStringLiteral( "surface" ), QVariant::fromValue( static_cast<QSurface *>( view ) ) );
-	data.insert( QStringLiteral( "eventSource" ), QVariant::fromValue( view ) );
+	data.insert( QStringLiteral( "surface" ), QVariant::fromValue( static_cast<QSurface *>( mView ) ) );
+	data.insert( QStringLiteral( "eventSource" ), QVariant::fromValue( mView ) );
 	mEngine.aspectEngine()->setData( data );
 	mEngine.aspectEngine()->initialize();
-	mEngine.qmlEngine()->rootContext()->setContextProperty( "_window", view );
-	mEngine.qmlEngine()->rootContext()->setContextProperty( "_engine", view );
+	mEngine.qmlEngine()->rootContext()->setContextProperty( "_window", mView );
+	mEngine.qmlEngine()->rootContext()->setContextProperty( "_engine", mView );
 
 	mEngine.setSource( QUrl( "main.qml" ) );
 
 	ui.renderLayout->addWidget( container );
-	view->show();
+	mView->show();
 
 	mVariantPropMgr = new QtVariantPropertyManager( this );
 	mVariantEditor = new QtVariantEditorFactory( this );
@@ -125,9 +128,7 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 		statusBar()->addWidget( networkPort );
 		statusBar()->addWidget( mNetworkLabel );
 	}
-
-	qRegisterMetaType<MessageUnionPtr>( "MessageUnionPtr" );
-
+	
 	{
 		mMessageThread = new HostThread0MQ( this );
 		connect( mMessageThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
@@ -154,7 +155,7 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 		mModelProcessorThread->start();
 	}
 
-	installEventFilter( ui.renderBg );
+	//installEventFilter( ui.renderBg );
 
 	// temp
 	//FileLoad( "D:/Sourcecode/AnalyticsViewer/AnalyticsViewer/etf_duel.obj" );
@@ -172,6 +173,9 @@ AnalyticsViewer::~AnalyticsViewer()
 
 	mMessageThread->wait( 5000 );
 	mModelProcessorThread->wait( 5000 );
+
+	delete mView;
+	mView = NULL;
 }
 
 void AnalyticsViewer::AppendToLog( const LogCategory category, const QString & message, const QString & details )
@@ -340,6 +344,10 @@ void AnalyticsViewer::AddObjectProperties_r( QObject * obj, QtVariantProperty * 
 		const char* metaPropName = metaProperty.name();
 		const char* metaTypeName = metaProperty.typeName();
 
+		// prevent a crash due to uninitialized vars
+		if ( QString( metaPropName ) == "activeInput" )
+			continue;
+
 		QVariant value = obj->property( metaPropName );
 
 		// Special handling for certain types
@@ -347,6 +355,9 @@ void AnalyticsViewer::AddObjectProperties_r( QObject * obj, QtVariantProperty * 
 		{
 			QtVariantProperty * childProp = mVariantPropMgr->addMetaProperty( QtVariantPropertyManager::groupTypeId(), obj, metaProperty );
 			ui.props->addProperty( childProp, parent );
+			
+			if ( QString( "parent" ) == metaPropName )
+				continue;
 
 			QObject* childObj = qvariant_cast<QObject*>( value );
 			if ( childObj != NULL )
@@ -363,8 +374,9 @@ void AnalyticsViewer::AddObjectProperties_r( QObject * obj, QtVariantProperty * 
 
 			QtVariantProperty * childProp = mVariantPropMgr->addMetaProperty( QtVariantPropertyManager::enumTypeId(), obj, metaProperty );
 			ui.props->addProperty( childProp, parent );
-
+			
 			mVariantPropMgr->setAttribute( childProp, "enumNames", QVariant::fromValue( enumNames ) );
+			childProp->setValue( value.toInt() );
 			continue;
 		}
 		else if ( value.canConvert( QMetaType::QVariantList ) )
@@ -395,29 +407,29 @@ void AnalyticsViewer::AddObjectProperties_r( QObject * obj, QtVariantProperty * 
 		}
 		else if ( QString( metaTypeName ).startsWith( "QQmlListProperty" ) )
 		{
-			/*QtVariantProperty * childProp = mVariantPropMgr->addProperty( QVariant::String, metaPropName );
-			ui.props->addProperty( childProp, parent );
-			childProp->setEnabled( metaProperty.isWritable() );
-			childProp->setValue( value );
-			childProp->setToolTip( metaProperty.typeName() );
+			//QtVariantProperty * childProp = mVariantPropMgr->addProperty( QVariant::String, metaPropName );
+			//ui.props->addProperty( childProp, parent );
+			//childProp->setEnabled( metaProperty.isWritable() );
+			//childProp->setValue( value );
+			//childProp->setToolTip( metaProperty.typeName() );
 
-			ui.props->addProperty( childProp, parent );*/
+			//ui.props->addProperty( childProp, parent );
+			//
+			//// this works but recurses infinitely
+			//QQmlListProperty<QObject> qmlList = qvariant_cast<QQmlListProperty<QObject>>( value );
+			//
+			//if ( qmlList.count != NULL && qmlList.at != NULL )
+			//{
+			//	for ( int i = 0; i < qmlList.count( &qmlList ); ++i )
+			//	{
+			//		QObject* childObj = qmlList.at( &qmlList, i );
+			//		if ( childObj != NULL )
+			//			AddObjectProperties_r( childObj, childProp, false );
+			//	}
+			//}
 			continue;
-
-			// this works but recurses infinitely
-			/*QQmlListProperty<QObject> qmlList = qvariant_cast< QQmlListProperty<QObject> >( value );
-
-			if ( qmlList.count != NULL && qmlList.at != NULL )
-			{
-			for ( int i = 0; i < qmlList.count( &qmlList ); ++i )
-			{
-			QObject* childObj = qmlList.at( &qmlList, i );
-			if ( childObj != NULL )
-			AddObjectProperties_r( childObj, childProp );
-			}
-			}*/
 		}
-
+		
 		// convert to usable types
 		if ( metaProperty.type() == QMetaType::Float )
 			value = value.toDouble();
@@ -558,6 +570,9 @@ QTreeWidgetItem * AnalyticsViewer::FindOrAdd( QTreeWidgetItem * parent, const QS
 
 void AnalyticsViewer::WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem )
 {
+	if ( entity == NULL )
+		return;
+
 	QString itemName = entity->objectName();
 	if ( itemName.isEmpty() )
 		itemName = "Entity";
@@ -618,19 +633,14 @@ QVector3D Convert( const modeldata::Vec3 & vec )
 	return QVector3D( vec.x(), vec.y(), vec.z() );
 }
 
-void AnalyticsViewer::processMessage( const Analytics::GameEntityInfo & msg )
-{
-	mEngine.aspectEngine()->rootEntity();
-}
-
 void AnalyticsViewer::processMessage( MessageUnionPtr msg )
 {
-	if ( msg->has_gameentitylist() )
+	/*if ( msg->has_gameentitylist() )
 	{
-		const Analytics::GameEntityList& elist = msg->gameentitylist();
-		for ( int i = 0; i < elist.entities_size(); ++i )
-		{
-			processMessage( elist.entities( i ) );
-		}
+	const Analytics::GameEntityList& elist = msg->gameentitylist();
+	for ( int i = 0; i < elist.entities_size(); ++i )
+	{
+	processMessage( elist.entities( i ) );
 	}
+	}*/
 }

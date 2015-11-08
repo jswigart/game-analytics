@@ -40,24 +40,24 @@
 #include <QGuiApplication>
 #include <QOpenGLContext>
 
-Window::Window( QScreen *screen )
-	: QWindow( screen )
+Window::Window(QScreen *screen)
+    : QWindow(screen)
 
 {
-	setSurfaceType( QSurface::OpenGLSurface );
+    setSurfaceType(QSurface::OpenGLSurface);
 
-	resize( width(), height() );
+    resize(1024, 768);
 
-	QSurfaceFormat format;
-	if ( QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL )
-	{
-		format.setVersion( 4, 3 );
-		format.setProfile( QSurfaceFormat::CoreProfile );
-	}
-	format.setDepthBufferSize( 24 );
-	format.setSamples( 4 );
-	setFormat( format );
-	create();
+    QSurfaceFormat format;
+    if (QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL) {
+        format.setVersion(4, 3);
+        format.setProfile(QSurfaceFormat::CoreProfile);
+    }
+    format.setDepthBufferSize( 24 );
+    format.setSamples( 4 );
+    format.setStencilBufferSize(8);
+    setFormat(format);
+    create();
 }
 
 Window::~Window()
@@ -66,13 +66,13 @@ Window::~Window()
 
 void Window::keyPressEvent( QKeyEvent* e )
 {
-	switch ( e->key() )
-	{
-		/*case Qt::Key_Escape:
-			QGuiApplication::quit();
-			break;*/
+    switch ( e->key() )
+    {
+        case Qt::Key_Escape:
+            QGuiApplication::quit();
+            break;
 
-		default:
-			QWindow::keyPressEvent( e );
-	}
+        default:
+            QWindow::keyPressEvent( e );
+    }
 }

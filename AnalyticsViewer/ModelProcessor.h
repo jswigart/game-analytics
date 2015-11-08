@@ -5,30 +5,11 @@
 #include <QMutexLocker>
 #include <QSharedPointer>
 #include <Qt3DCore/QEntity>
-#include <Qt3DRenderer/QMeshDataPtr>
-#include <Qt3DRenderer/QAbstractMesh>
-#include <Qt3DRenderer/QAbstractMeshFunctor>
+#include <Qt3DRenderer/QGeometry>
 #include "Messaging.h"
 
 #include "analytics.pb.h"
 #include "modeldata.pb.h"
-
-class QAnalyticModel : public Qt3D::QAbstractMesh
-{
-Q_OBJECT
-public:
-	explicit QAnalyticModel( QNode *parent = 0 );
-	
-	void SetMesh( Qt3D::QMeshDataPtr ptr );
-
-	Qt3D::QAbstractMeshFunctorPtr meshFunctor() const Q_DECL_OVERRIDE;
-protected:
-	void copy( const Qt3D::QNode *ref );
-private:
-	Qt3D::QMeshDataPtr		m_data;
-private:
-	QT3D_CLONEABLE( QAnalyticModel )
-};
 
 class ModelProcessor : public QThread
 {
@@ -38,7 +19,7 @@ public:
 
 	typedef QList<MessageUnionPtr> MessageQueue;
 
-	typedef std::map<std::string, Qt3D::QMeshDataPtr> GeomMap;
+	typedef std::map<std::string, Qt3D::QGeometry*> GeomMap;
 
 	void run();
 

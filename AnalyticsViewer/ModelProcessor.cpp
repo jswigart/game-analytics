@@ -1,10 +1,9 @@
 #include <QtWidgets/QApplication>
 #include <Qt3DRenderer/QMesh>
-#include <Qt3DRenderer/QMeshData>
-#include <Qt3DRenderer/BufferPtr>
-#include <Qt3DRenderer/AttributePtr>
 #include <Qt3DCore/QTransform>
 #include <Qt3DCore/QMatrixTransform>
+#include <Qt3DRenderer/QAttribute>
+#include <Qt3DRenderer/QBuffer>
 #include <Qt3DRenderer/QCylinderMesh>
 #include <Qt3DRenderer/QPhongMaterial>
 #include <Qt3DRenderer/QPerVertexColorMaterial>
@@ -14,62 +13,6 @@
 #include "GameAnalytics.h"
 
 #include "analytics.pb.h"
-
-//////////////////////////////////////////////////////////////////////////
-
-class QAnalyticMeshFunctor : public Qt3D::QAbstractMeshFunctor
-{
-public:
-	QAnalyticMeshFunctor( Qt3D::QMeshDataPtr data );
-	Qt3D::QMeshDataPtr operator()() Q_DECL_OVERRIDE;
-	bool operator ==( const Qt3D::QAbstractMeshFunctor &other ) const Q_DECL_OVERRIDE;
-private:
-	Qt3D::QMeshDataPtr m_data;
-};
-
-//////////////////////////////////////////////////////////////////////////
-
-QAnalyticModel::QAnalyticModel( QNode *parent )
-	: Qt3D::QAbstractMesh( parent )
-{
-}
-
-void QAnalyticModel::copy( const Qt3D::QNode *ref )
-{
-	Qt3D::QAbstractMesh::copy( ref );
-
-	const QAnalyticModel * other = qobject_cast<const QAnalyticModel*>( ref );
-	m_data = other->m_data;
-}
-
-void QAnalyticModel::SetMesh( Qt3D::QMeshDataPtr ptr )
-{
-	m_data = ptr;
-}
-
-Qt3D::QAbstractMeshFunctorPtr QAnalyticModel::meshFunctor() const
-{
-	return Qt3D::QAbstractMeshFunctorPtr( new QAnalyticMeshFunctor( m_data ) );
-}
-
-QAnalyticMeshFunctor::QAnalyticMeshFunctor( Qt3D::QMeshDataPtr data )
-	: QAbstractMeshFunctor()
-	, m_data( data )
-{
-}
-
-Qt3D::QMeshDataPtr QAnalyticMeshFunctor::operator()()
-{
-	return m_data;
-}
-
-bool QAnalyticMeshFunctor::operator ==( const QAbstractMeshFunctor &other ) const
-{
-	const QAnalyticMeshFunctor *otherFunctor = dynamic_cast<const QAnalyticMeshFunctor *>( &other );
-	if ( otherFunctor != Q_NULLPTR )
-		return ( otherFunctor->m_data == m_data );
-	return false;
-}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -133,24 +76,17 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 				/*if ( !mesh.has_vertexcolors() )
 					continue;*/
 
-				Qt3D::QMeshDataPtr& cachedGeom = mGeomCache[ mesh.name() ];
+				Qt3D::QGeometry*& cachedGeom = mGeomCache[ mesh.name() ];
 				if ( cachedGeom == NULL )
-					cachedGeom.reset( new Qt3D::QMeshData( Qt3D::QMeshData::Triangles ) );
+					cachedGeom = new Qt3D::QGeometry();
 
 				const QVector3D * vertices = reinterpret_cast<const QVector3D*>( &mesh.vertices()[ 0 ] );
 				const size_t numVertices = mesh.vertices().size() / sizeof( QVector3D );
 
-				// Vertex Buffer
 				QByteArray posBytes;
 				posBytes.resize( numVertices * sizeof( QVector3D ) );
 				memcpy( posBytes.data(), vertices, mesh.vertices().size() );
-
-				Qt3D::BufferPtr vertexBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
-				vertexBuffer->setUsage( QOpenGLBuffer::StaticDraw );
-				vertexBuffer->setData( posBytes );
 				
-				cachedGeom->addAttribute( Qt3D::QMeshData::defaultPositionAttributeName(), Qt3D::AttributePtr( new Qt3D::Attribute( vertexBuffer, GL_FLOAT_VEC3, numVertices ) ) );
-
 				// Normal Buffer
 				QByteArray normalBytes;
 				normalBytes.resize( numVertices * sizeof( QVector3D ) );
@@ -161,26 +97,7 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 					normalPtr[ v ] = QVector3D::normal( baseVert[ 0 ], baseVert[ 1 ], baseVert[ 2 ] );
 				}
 
-				Qt3D::BufferPtr normalBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
-				normalBuffer->setUsage( QOpenGLBuffer::StaticDraw );
-				normalBuffer->setData( normalBytes );
-				cachedGeom->addAttribute( Qt3D::QMeshData::defaultNormalAttributeName(), Qt3D::AttributePtr( new Qt3D::Attribute( normalBuffer, GL_FLOAT_VEC3, numVertices ) ) );
-
-				// Index List
-				/*QByteArray indexBytes;
-				indexBytes.resize( numVertices * sizeof( unsigned int ) * 3 );
-				unsigned int* indexPtr = (unsigned int*)indexBytes.data();
-				for ( size_t v = 0; v < numVertices; ++v )
-				indexPtr[v] = (unsigned int)v;
-
-				Qt3D::BufferPtr indexBuffer( new Qt3D::Buffer( QOpenGLBuffer::IndexBuffer ) );
-				indexBuffer->setUsage( QOpenGLBuffer::StaticDraw );
-				indexBuffer->setData( indexBytes );
-
-				cachedGeom->setIndexAttribute( Qt3D::AttributePtr( new Qt3D::Attribute( indexBuffer, GL_UNSIGNED_INT_VEC3, numVertices ) ) );*/
-								
-				// Color Buffer
-				
+				// Color Buffer				
 				const QColor dColor( "#606060" );
 
 				QByteArray clrBytes;
@@ -207,19 +124,70 @@ void ModelProcessor::processMessage( const Analytics::SystemModelData& msg )
 						}
 					}
 				}
+				
+				// Qt 5.6
+				Qt3D::QBuffer *vertexDataBuffer = new Qt3D::QBuffer( Qt3D::QBuffer::VertexBuffer, cachedGeom );
+				Qt3D::QBuffer *normalDataBuffer = new Qt3D::QBuffer( Qt3D::QBuffer::VertexBuffer, cachedGeom );
+				Qt3D::QBuffer *colorDataBuffer = new Qt3D::QBuffer( Qt3D::QBuffer::VertexBuffer, cachedGeom );
+				//Qt3D::QBuffer *indexDataBuffer = new Qt3D::QBuffer( Qt3D::QBuffer::IndexBuffer, cachedGeom );
 
-				Qt3D::BufferPtr colorBuffer( new Qt3D::Buffer( QOpenGLBuffer::VertexBuffer ) );
-				colorBuffer->setUsage( QOpenGLBuffer::StaticDraw );
-				colorBuffer->setData( clrBytes );
+				vertexDataBuffer->setData( posBytes );
+				normalDataBuffer->setData( normalBytes );
+				colorDataBuffer->setData( clrBytes );
 
-				cachedGeom->addAttribute( Qt3D::QMeshData::defaultColorAttributeName(), Qt3D::AttributePtr( new Qt3D::Attribute( colorBuffer, GL_FLOAT_VEC4, numVertices ) ) );
+				// Attributes
+				Qt3D::QAttribute *positionAttribute = new Qt3D::QAttribute();
+				positionAttribute->setAttributeType( Qt3D::QAttribute::VertexAttribute );
+				positionAttribute->setBuffer( vertexDataBuffer );
+				positionAttribute->setDataType( Qt3D::QAttribute::Float );
+				positionAttribute->setDataSize( 3 );
+				positionAttribute->setByteOffset( 0 );
+				positionAttribute->setByteStride( 3 * sizeof( float ) );
+				positionAttribute->setCount( numVertices );
+				positionAttribute->setName( Qt3D::QAttribute::defaultPositionAttributeName() );
+
+				Qt3D::QAttribute *normalAttribute = new Qt3D::QAttribute();
+				normalAttribute->setAttributeType( Qt3D::QAttribute::VertexAttribute );
+				normalAttribute->setBuffer( normalDataBuffer );
+				normalAttribute->setDataType( Qt3D::QAttribute::Float );
+				normalAttribute->setDataSize( 3 );
+				normalAttribute->setByteOffset( 0 );
+				normalAttribute->setByteStride( 3 * sizeof( float ) );
+				normalAttribute->setCount( numVertices );
+				normalAttribute->setName( Qt3D::QAttribute::defaultNormalAttributeName() );
+
+				Qt3D::QAttribute *colorAttribute = new Qt3D::QAttribute();
+				colorAttribute->setAttributeType( Qt3D::QAttribute::VertexAttribute );
+				colorAttribute->setBuffer( colorDataBuffer );
+				colorAttribute->setDataType( Qt3D::QAttribute::Float );
+				colorAttribute->setDataSize( 4 );
+				colorAttribute->setByteOffset( 0 );
+				colorAttribute->setByteStride( 4 * sizeof( float ) );
+				colorAttribute->setCount( numVertices );
+				colorAttribute->setName( Qt3D::QAttribute::defaultColorAttributeName() );
+
+				/*Qt3D::QAttribute *indexAttribute = new Qt3D::QAttribute();
+				indexAttribute->setAttributeType( Qt3D::QAttribute::IndexAttribute );
+				indexAttribute->setBuffer( indexDataBuffer );
+				indexAttribute->setDataType( Qt3D::QAttribute::UnsignedShort );
+				indexAttribute->setDataSize( 1 );
+				indexAttribute->setByteOffset( 0 );
+				indexAttribute->setByteStride( 0 );
+				indexAttribute->setCount( 12 );*/
+
+				cachedGeom->addAttribute( positionAttribute );
+				cachedGeom->addAttribute( normalAttribute );
+				cachedGeom->addAttribute( colorAttribute );
+				//cachedGeom->addAttribute( indexAttribute );
+				cachedGeom->setVerticesPerPatch( numVertices );
+				//cachedGeom->setProperty( "numPrimitives", numVertices );
 			}
 
 			Qt3D::QEntity * entity = new Qt3D::QEntity();
 			entity->setObjectName( scene.name().c_str() );
 			processNode( scene, scene.rootnode(), entity );
 			entity->moveToThread( QApplication::instance()->thread() );
-
+			
 			emit info( QString( "Created Group %1 from data size %2" ).arg( entity->objectName() ).arg( msg.modelbytes().size() ), QString() );
 			emit allocModel( entity );
 		}
@@ -268,11 +236,13 @@ void ModelProcessor::processNode( const modeldata::Scene& scene, const modeldata
 		GeomMap::iterator it = mGeomCache.find( node.meshname() );
 		if ( it != mGeomCache.end() )
 		{
-			QAnalyticModel* cmp = new QAnalyticModel( NULL );
-			cmp->SetMesh( it->second );
-			cmp->setObjectName( node.meshname().c_str() );
-			cmp->update();
-
+			Qt3D::QGeometryRenderer *cmp = new Qt3D::QGeometryRenderer();
+			cmp->setInstanceCount( 1 );
+			cmp->setBaseVertex( 0 );
+			cmp->setBaseInstance( 0 );
+			cmp->setPrimitiveType( Qt3D::QGeometryRenderer::Triangles );
+			cmp->setGeometry( it->second );
+			cmp->setPrimitiveCount( it->second->verticesPerPatch() );
 			entity->addComponent( cmp );
 		}
 	}

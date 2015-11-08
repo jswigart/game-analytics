@@ -5077,7 +5077,7 @@ void QtEnumPropertyManager::setEnumNames( QtProperty *property, const QStringLis
 	emit enumNamesChanged( property, data.enumNames );
 
 	emit propertyChanged( property );
-	emit valueChanged( property, data.val );
+	//emit valueChanged( property, data.val );
 }
 
 /*!

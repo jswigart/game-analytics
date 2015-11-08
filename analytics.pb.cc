@@ -200,7 +200,8 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(SystemModelData));
   GameEntityInfo_descriptor_ = file->message_type(7);
-  static const int GameEntityInfo_offsets_[14] = {
+  static const int GameEntityInfo_offsets_[16] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, entityid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, groupid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, classid_),
@@ -214,6 +215,7 @@ void protobuf_AssignDesc_analytics_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, healthmax_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, armor_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, armormax_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, team_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, ammo_),
   };
   GameEntityInfo_reflection_ =
@@ -259,11 +261,12 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameEntityList));
   GameWeaponFired_descriptor_ = file->message_type(9);
-  static const int GameWeaponFired_offsets_[4] = {
+  static const int GameWeaponFired_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, weaponid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, positionx_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, positiony_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, positionz_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, team_),
   };
   GameWeaponFired_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -277,10 +280,11 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameWeaponFired));
   GameDeath_descriptor_ = file->message_type(10);
-  static const int GameDeath_offsets_[3] = {
+  static const int GameDeath_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameDeath, killedbyclass_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameDeath, killedbyweapon_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameDeath, killedbyhealth_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameDeath, team_),
   };
   GameDeath_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -294,11 +298,12 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameDeath));
   GameTookDamage_descriptor_ = file->message_type(11);
-  static const int GameTookDamage_offsets_[4] = {
+  static const int GameTookDamage_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, weaponid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, positionx_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, positiony_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, positionz_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, team_),
   };
   GameTookDamage_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -459,48 +464,50 @@ void protobuf_AddDesc_analytics_2eproto() {
     "Data\022A\n\017compressionType\030\001 \001(\0162\026.Analytic"
     "s.Compression:\020Compression_None\022\021\n\tmodel"
     "Name\030\002 \002(\t\022\022\n\nmodelBytes\030\003 \002(\014:\021\300\270\002\001\312\270\002\t"
-    "modelName\"\312\002\n\016GameEntityInfo\022\020\n\010entityId"
-    "\030\001 \002(\005\022\017\n\007groupId\030\002 \001(\005\022\017\n\007classId\030\003 \001(\005"
-    "\022\021\n\tpositionX\030\004 \001(\002\022\021\n\tpositionY\030\005 \001(\002\022\021"
-    "\n\tpositionZ\030\006 \001(\002\022\017\n\007heading\030\007 \001(\002\022\r\n\005pi"
-    "tch\030\010 \001(\002\022\014\n\004roll\030\t \001(\002\022\016\n\006health\030\014 \001(\r\022"
-    "\021\n\thealthMax\030\r \001(\r\022\r\n\005armor\030\016 \001(\r\022\020\n\010arm"
-    "orMax\030\017 \001(\r\022,\n\004ammo\030\020 \003(\0132\036.Analytics.Ga"
-    "meEntityInfo.Ammo\032+\n\004Ammo\022\020\n\010ammoType\030\001 "
-    "\002(\r\022\021\n\tammoCount\030\002 \001(\r\"C\n\016GameEntityList"
-    "\022+\n\010entities\030\001 \003(\0132\031.Analytics.GameEntit"
-    "yInfo:\004\300\270\002\001\"\\\n\017GameWeaponFired\022\020\n\010weapon"
-    "Id\030\001 \002(\005\022\021\n\tpositionX\030\002 \002(\002\022\021\n\tpositionY"
-    "\030\003 \002(\002\022\021\n\tpositionZ\030\004 \002(\002\"R\n\tGameDeath\022\025"
-    "\n\rkilledByClass\030\001 \002(\005\022\026\n\016killedByWeapon\030"
-    "\002 \002(\005\022\026\n\016killedByHealth\030\003 \002(\005\"[\n\016GameToo"
-    "kDamage\022\020\n\010weaponId\030\001 \002(\005\022\021\n\tpositionX\030\002"
-    " \002(\002\022\021\n\tpositionY\030\003 \002(\002\022\021\n\tpositionZ\030\004 \002"
-    "(\002\"`\n\023GameNavigationStuck\022\020\n\010entityId\030\001 "
-    "\002(\005\022\021\n\tpositionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002("
-    "\002\022\021\n\tpositionZ\030\004 \002(\002\"\270\005\n\014MessageUnion\022\021\n"
-    "\ttimestamp\030\001 \002(\003\0229\n\021systemNavNotFound\030\002 "
-    "\001(\0132\034.Analytics.SystemNavNotFoundH\000\022A\n\023s"
-    "ystemNavDownloaded\030\003 \001(\0132\".Analytics.Sys"
-    "temNavAutoDownloadedH\000\022/\n\014systemAssert\030\004"
-    " \001(\0132\027.Analytics.SystemAssertH\000\022-\n\013syste"
-    "mCrash\030\005 \001(\0132\026.Analytics.SystemCrashH\000\0225"
-    "\n\017systemModelData\030\006 \001(\0132\032.Analytics.Syst"
-    "emModelDataH\000\0223\n\016gameEntityList\030d \001(\0132\031."
-    "Analytics.GameEntityListH\000\0225\n\017gameWeapon"
-    "Fired\030e \001(\0132\032.Analytics.GameWeaponFiredH"
-    "\000\022)\n\tgameDeath\030f \001(\0132\024.Analytics.GameDea"
-    "thH\000\0223\n\016gameTookDamage\030g \001(\0132\031.Analytics"
-    ".GameTookDamageH\000\022=\n\023gameNavigationStuck"
-    "\030h \001(\0132\036.Analytics.GameNavigationStuckH\000"
-    "\0224\n\016topicSubscribe\030\350\007 \001(\0132\031.Analytics.To"
-    "picSubscribeH\000\0228\n\020topicUnsubscribe\030\351\007 \001("
-    "\0132\033.Analytics.TopicUnsubscribeH\000B\005\n\003msg*"
-    ";\n\013Compression\022\024\n\020Compression_None\020\000\022\026\n\022"
-    "Compression_FastLZ\020\001:8\n\016cachelastvalue\022\037"
-    ".google.protobuf.MessageOptions\030\210\' \001(\010:8"
-    "\n\016cachekeysuffix\022\037.google.protobuf.Messa"
-    "geOptions\030\211\' \001(\t", 2096);
+    "modelName\"\346\002\n\016GameEntityInfo\022\014\n\004name\030\001 \001"
+    "(\t\022\020\n\010entityId\030\002 \002(\005\022\017\n\007groupId\030\003 \001(\005\022\017\n"
+    "\007classId\030\004 \001(\005\022\021\n\tpositionX\030\005 \001(\002\022\021\n\tpos"
+    "itionY\030\006 \001(\002\022\021\n\tpositionZ\030\007 \001(\002\022\017\n\007headi"
+    "ng\030\010 \001(\002\022\r\n\005pitch\030\t \001(\002\022\014\n\004roll\030\n \001(\002\022\016\n"
+    "\006health\030\014 \001(\r\022\021\n\thealthMax\030\r \001(\r\022\r\n\005armo"
+    "r\030\016 \001(\r\022\020\n\010armorMax\030\017 \001(\r\022\014\n\004team\030\020 \001(\r\022"
+    ",\n\004ammo\030\024 \003(\0132\036.Analytics.GameEntityInfo"
+    ".Ammo\032+\n\004Ammo\022\020\n\010ammoType\030\001 \002(\r\022\021\n\tammoC"
+    "ount\030\002 \001(\r\"C\n\016GameEntityList\022+\n\010entities"
+    "\030\001 \003(\0132\031.Analytics.GameEntityInfo:\004\300\270\002\001\""
+    "j\n\017GameWeaponFired\022\020\n\010weaponId\030\001 \002(\005\022\021\n\t"
+    "positionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022\021\n\tpo"
+    "sitionZ\030\004 \002(\002\022\014\n\004team\030\005 \001(\r\"`\n\tGameDeath"
+    "\022\025\n\rkilledByClass\030\001 \002(\005\022\026\n\016killedByWeapo"
+    "n\030\002 \002(\005\022\026\n\016killedByHealth\030\003 \002(\005\022\014\n\004team\030"
+    "\004 \001(\r\"i\n\016GameTookDamage\022\020\n\010weaponId\030\001 \002("
+    "\005\022\021\n\tpositionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022"
+    "\021\n\tpositionZ\030\004 \002(\002\022\014\n\004team\030\005 \001(\r\"`\n\023Game"
+    "NavigationStuck\022\020\n\010entityId\030\001 \002(\005\022\021\n\tpos"
+    "itionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022\021\n\tposit"
+    "ionZ\030\004 \002(\002\"\270\005\n\014MessageUnion\022\021\n\ttimestamp"
+    "\030\001 \002(\003\0229\n\021systemNavNotFound\030\002 \001(\0132\034.Anal"
+    "ytics.SystemNavNotFoundH\000\022A\n\023systemNavDo"
+    "wnloaded\030\003 \001(\0132\".Analytics.SystemNavAuto"
+    "DownloadedH\000\022/\n\014systemAssert\030\004 \001(\0132\027.Ana"
+    "lytics.SystemAssertH\000\022-\n\013systemCrash\030\005 \001"
+    "(\0132\026.Analytics.SystemCrashH\000\0225\n\017systemMo"
+    "delData\030\006 \001(\0132\032.Analytics.SystemModelDat"
+    "aH\000\0223\n\016gameEntityList\030d \001(\0132\031.Analytics."
+    "GameEntityListH\000\0225\n\017gameWeaponFired\030e \001("
+    "\0132\032.Analytics.GameWeaponFiredH\000\022)\n\tgameD"
+    "eath\030f \001(\0132\024.Analytics.GameDeathH\000\0223\n\016ga"
+    "meTookDamage\030g \001(\0132\031.Analytics.GameTookD"
+    "amageH\000\022=\n\023gameNavigationStuck\030h \001(\0132\036.A"
+    "nalytics.GameNavigationStuckH\000\0224\n\016topicS"
+    "ubscribe\030\350\007 \001(\0132\031.Analytics.TopicSubscri"
+    "beH\000\0228\n\020topicUnsubscribe\030\351\007 \001(\0132\033.Analyt"
+    "ics.TopicUnsubscribeH\000B\005\n\003msg*;\n\013Compres"
+    "sion\022\024\n\020Compression_None\020\000\022\026\n\022Compressio"
+    "n_FastLZ\020\001:8\n\016cachelastvalue\022\037.google.pr"
+    "otobuf.MessageOptions\030\210\' \001(\010:8\n\016cachekey"
+    "suffix\022\037.google.protobuf.MessageOptions\030"
+    "\211\' \001(\t", 2166);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "analytics.proto", &protobuf_RegisterTypes);
   TopicSubscribe::default_instance_ = new TopicSubscribe();
@@ -2744,6 +2751,7 @@ void GameEntityInfo_Ammo::Swap(GameEntityInfo_Ammo* other) {
 // -------------------------------------------------------------------
 
 #ifndef _MSC_VER
+const int GameEntityInfo::kNameFieldNumber;
 const int GameEntityInfo::kEntityIdFieldNumber;
 const int GameEntityInfo::kGroupIdFieldNumber;
 const int GameEntityInfo::kClassIdFieldNumber;
@@ -2757,6 +2765,7 @@ const int GameEntityInfo::kHealthFieldNumber;
 const int GameEntityInfo::kHealthMaxFieldNumber;
 const int GameEntityInfo::kArmorFieldNumber;
 const int GameEntityInfo::kArmorMaxFieldNumber;
+const int GameEntityInfo::kTeamFieldNumber;
 const int GameEntityInfo::kAmmoFieldNumber;
 #endif  // !_MSC_VER
 
@@ -2777,7 +2786,9 @@ GameEntityInfo::GameEntityInfo(const GameEntityInfo& from)
 }
 
 void GameEntityInfo::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   entityid_ = 0;
   groupid_ = 0;
   classid_ = 0;
@@ -2791,6 +2802,7 @@ void GameEntityInfo::SharedCtor() {
   healthmax_ = 0u;
   armor_ = 0u;
   armormax_ = 0u;
+  team_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2800,6 +2812,9 @@ GameEntityInfo::~GameEntityInfo() {
 }
 
 void GameEntityInfo::SharedDtor() {
+  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete name_;
+  }
   if (this != default_instance_) {
   }
 }
@@ -2837,11 +2852,15 @@ void GameEntityInfo::Clear() {
   } while (0)
 
   if (_has_bits_[0 / 32] & 255) {
-    ZR_(entityid_, pitch_);
+    ZR_(entityid_, heading_);
+    if (has_name()) {
+      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+        name_->clear();
+      }
+    }
   }
-  if (_has_bits_[8 / 32] & 7936) {
-    ZR_(roll_, armor_);
-    armormax_ = 0u;
+  if (_has_bits_[8 / 32] & 32512) {
+    ZR_(pitch_, team_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -2862,9 +2881,26 @@ bool GameEntityInfo::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 entityId = 1;
+      // optional string name = 1;
       case 1: {
-        if (tag == 8) {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name().data(), this->name().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "name");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_entityId;
+        break;
+      }
+
+      // required int32 entityId = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_entityId:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &entityid_)));
@@ -2872,13 +2908,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_groupId;
+        if (input->ExpectTag(24)) goto parse_groupId;
         break;
       }
 
-      // optional int32 groupId = 2;
-      case 2: {
-        if (tag == 16) {
+      // optional int32 groupId = 3;
+      case 3: {
+        if (tag == 24) {
          parse_groupId:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2887,13 +2923,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_classId;
+        if (input->ExpectTag(32)) goto parse_classId;
         break;
       }
 
-      // optional int32 classId = 3;
-      case 3: {
-        if (tag == 24) {
+      // optional int32 classId = 4;
+      case 4: {
+        if (tag == 32) {
          parse_classId:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2902,13 +2938,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(37)) goto parse_positionX;
+        if (input->ExpectTag(45)) goto parse_positionX;
         break;
       }
 
-      // optional float positionX = 4;
-      case 4: {
-        if (tag == 37) {
+      // optional float positionX = 5;
+      case 5: {
+        if (tag == 45) {
          parse_positionX:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2917,13 +2953,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(45)) goto parse_positionY;
+        if (input->ExpectTag(53)) goto parse_positionY;
         break;
       }
 
-      // optional float positionY = 5;
-      case 5: {
-        if (tag == 45) {
+      // optional float positionY = 6;
+      case 6: {
+        if (tag == 53) {
          parse_positionY:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2932,13 +2968,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(53)) goto parse_positionZ;
+        if (input->ExpectTag(61)) goto parse_positionZ;
         break;
       }
 
-      // optional float positionZ = 6;
-      case 6: {
-        if (tag == 53) {
+      // optional float positionZ = 7;
+      case 7: {
+        if (tag == 61) {
          parse_positionZ:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2947,13 +2983,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(61)) goto parse_heading;
+        if (input->ExpectTag(69)) goto parse_heading;
         break;
       }
 
-      // optional float heading = 7;
-      case 7: {
-        if (tag == 61) {
+      // optional float heading = 8;
+      case 8: {
+        if (tag == 69) {
          parse_heading:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2962,13 +2998,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(69)) goto parse_pitch;
+        if (input->ExpectTag(77)) goto parse_pitch;
         break;
       }
 
-      // optional float pitch = 8;
-      case 8: {
-        if (tag == 69) {
+      // optional float pitch = 9;
+      case 9: {
+        if (tag == 77) {
          parse_pitch:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2977,13 +3013,13 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(77)) goto parse_roll;
+        if (input->ExpectTag(85)) goto parse_roll;
         break;
       }
 
-      // optional float roll = 9;
-      case 9: {
-        if (tag == 77) {
+      // optional float roll = 10;
+      case 10: {
+        if (tag == 85) {
          parse_roll:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -3052,20 +3088,35 @@ bool GameEntityInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(130)) goto parse_ammo;
+        if (input->ExpectTag(128)) goto parse_team;
         break;
       }
 
-      // repeated .Analytics.GameEntityInfo.Ammo ammo = 16;
+      // optional uint32 team = 16;
       case 16: {
-        if (tag == 130) {
+        if (tag == 128) {
+         parse_team:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &team_)));
+          set_has_team();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(162)) goto parse_ammo;
+        break;
+      }
+
+      // repeated .Analytics.GameEntityInfo.Ammo ammo = 20;
+      case 20: {
+        if (tag == 162) {
          parse_ammo:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_ammo()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(130)) goto parse_ammo;
+        if (input->ExpectTag(162)) goto parse_ammo;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3095,49 +3146,59 @@ failure:
 void GameEntityInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:Analytics.GameEntityInfo)
-  // required int32 entityId = 1;
+  // optional string name = 1;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  // required int32 entityId = 2;
   if (has_entityid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->entityid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->entityid(), output);
   }
 
-  // optional int32 groupId = 2;
+  // optional int32 groupId = 3;
   if (has_groupid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->groupid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->groupid(), output);
   }
 
-  // optional int32 classId = 3;
+  // optional int32 classId = 4;
   if (has_classid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->classid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->classid(), output);
   }
 
-  // optional float positionX = 4;
+  // optional float positionX = 5;
   if (has_positionx()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->positionx(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(5, this->positionx(), output);
   }
 
-  // optional float positionY = 5;
+  // optional float positionY = 6;
   if (has_positiony()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(5, this->positiony(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->positiony(), output);
   }
 
-  // optional float positionZ = 6;
+  // optional float positionZ = 7;
   if (has_positionz()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->positionz(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(7, this->positionz(), output);
   }
 
-  // optional float heading = 7;
+  // optional float heading = 8;
   if (has_heading()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(7, this->heading(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->heading(), output);
   }
 
-  // optional float pitch = 8;
+  // optional float pitch = 9;
   if (has_pitch()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->pitch(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->pitch(), output);
   }
 
-  // optional float roll = 9;
+  // optional float roll = 10;
   if (has_roll()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->roll(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(10, this->roll(), output);
   }
 
   // optional uint32 health = 12;
@@ -3160,10 +3221,15 @@ void GameEntityInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(15, this->armormax(), output);
   }
 
-  // repeated .Analytics.GameEntityInfo.Ammo ammo = 16;
+  // optional uint32 team = 16;
+  if (has_team()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(16, this->team(), output);
+  }
+
+  // repeated .Analytics.GameEntityInfo.Ammo ammo = 20;
   for (int i = 0; i < this->ammo_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      16, this->ammo(i), output);
+      20, this->ammo(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3176,49 +3242,60 @@ void GameEntityInfo::SerializeWithCachedSizes(
 ::google::protobuf::uint8* GameEntityInfo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameEntityInfo)
-  // required int32 entityId = 1;
+  // optional string name = 1;
+  if (has_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // required int32 entityId = 2;
   if (has_entityid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->entityid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->entityid(), target);
   }
 
-  // optional int32 groupId = 2;
+  // optional int32 groupId = 3;
   if (has_groupid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->groupid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->groupid(), target);
   }
 
-  // optional int32 classId = 3;
+  // optional int32 classId = 4;
   if (has_classid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->classid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->classid(), target);
   }
 
-  // optional float positionX = 4;
+  // optional float positionX = 5;
   if (has_positionx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->positionx(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->positionx(), target);
   }
 
-  // optional float positionY = 5;
+  // optional float positionY = 6;
   if (has_positiony()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->positiony(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->positiony(), target);
   }
 
-  // optional float positionZ = 6;
+  // optional float positionZ = 7;
   if (has_positionz()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->positionz(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->positionz(), target);
   }
 
-  // optional float heading = 7;
+  // optional float heading = 8;
   if (has_heading()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(7, this->heading(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->heading(), target);
   }
 
-  // optional float pitch = 8;
+  // optional float pitch = 9;
   if (has_pitch()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->pitch(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->pitch(), target);
   }
 
-  // optional float roll = 9;
+  // optional float roll = 10;
   if (has_roll()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(9, this->roll(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(10, this->roll(), target);
   }
 
   // optional uint32 health = 12;
@@ -3241,11 +3318,16 @@ void GameEntityInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(15, this->armormax(), target);
   }
 
-  // repeated .Analytics.GameEntityInfo.Ammo ammo = 16;
+  // optional uint32 team = 16;
+  if (has_team()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(16, this->team(), target);
+  }
+
+  // repeated .Analytics.GameEntityInfo.Ammo ammo = 20;
   for (int i = 0; i < this->ammo_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        16, this->ammo(i), target);
+        20, this->ammo(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3260,55 +3342,62 @@ int GameEntityInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 entityId = 1;
+    // optional string name = 1;
+    if (has_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name());
+    }
+
+    // required int32 entityId = 2;
     if (has_entityid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->entityid());
     }
 
-    // optional int32 groupId = 2;
+    // optional int32 groupId = 3;
     if (has_groupid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->groupid());
     }
 
-    // optional int32 classId = 3;
+    // optional int32 classId = 4;
     if (has_classid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->classid());
     }
 
-    // optional float positionX = 4;
+    // optional float positionX = 5;
     if (has_positionx()) {
       total_size += 1 + 4;
     }
 
-    // optional float positionY = 5;
+    // optional float positionY = 6;
     if (has_positiony()) {
       total_size += 1 + 4;
     }
 
-    // optional float positionZ = 6;
+    // optional float positionZ = 7;
     if (has_positionz()) {
       total_size += 1 + 4;
     }
 
-    // optional float heading = 7;
+    // optional float heading = 8;
     if (has_heading()) {
-      total_size += 1 + 4;
-    }
-
-    // optional float pitch = 8;
-    if (has_pitch()) {
       total_size += 1 + 4;
     }
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional float roll = 9;
+    // optional float pitch = 9;
+    if (has_pitch()) {
+      total_size += 1 + 4;
+    }
+
+    // optional float roll = 10;
     if (has_roll()) {
       total_size += 1 + 4;
     }
@@ -3341,8 +3430,15 @@ int GameEntityInfo::ByteSize() const {
           this->armormax());
     }
 
+    // optional uint32 team = 16;
+    if (has_team()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->team());
+    }
+
   }
-  // repeated .Analytics.GameEntityInfo.Ammo ammo = 16;
+  // repeated .Analytics.GameEntityInfo.Ammo ammo = 20;
   total_size += 2 * this->ammo_size();
   for (int i = 0; i < this->ammo_size(); i++) {
     total_size +=
@@ -3377,6 +3473,9 @@ void GameEntityInfo::MergeFrom(const GameEntityInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   ammo_.MergeFrom(from.ammo_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_name()) {
+      set_name(from.name());
+    }
     if (from.has_entityid()) {
       set_entityid(from.entityid());
     }
@@ -3398,11 +3497,11 @@ void GameEntityInfo::MergeFrom(const GameEntityInfo& from) {
     if (from.has_heading()) {
       set_heading(from.heading());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_pitch()) {
       set_pitch(from.pitch());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_roll()) {
       set_roll(from.roll());
     }
@@ -3417,6 +3516,9 @@ void GameEntityInfo::MergeFrom(const GameEntityInfo& from) {
     }
     if (from.has_armormax()) {
       set_armormax(from.armormax());
+    }
+    if (from.has_team()) {
+      set_team(from.team());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -3435,7 +3537,7 @@ void GameEntityInfo::CopyFrom(const GameEntityInfo& from) {
 }
 
 bool GameEntityInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000002) != 0x00000002) return false;
 
   if (!::google::protobuf::internal::AllAreInitialized(this->ammo())) return false;
   return true;
@@ -3443,6 +3545,7 @@ bool GameEntityInfo::IsInitialized() const {
 
 void GameEntityInfo::Swap(GameEntityInfo* other) {
   if (other != this) {
+    std::swap(name_, other->name_);
     std::swap(entityid_, other->entityid_);
     std::swap(groupid_, other->groupid_);
     std::swap(classid_, other->classid_);
@@ -3456,6 +3559,7 @@ void GameEntityInfo::Swap(GameEntityInfo* other) {
     std::swap(healthmax_, other->healthmax_);
     std::swap(armor_, other->armor_);
     std::swap(armormax_, other->armormax_);
+    std::swap(team_, other->team_);
     ammo_.Swap(&other->ammo_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -3699,6 +3803,7 @@ const int GameWeaponFired::kWeaponIdFieldNumber;
 const int GameWeaponFired::kPositionXFieldNumber;
 const int GameWeaponFired::kPositionYFieldNumber;
 const int GameWeaponFired::kPositionZFieldNumber;
+const int GameWeaponFired::kTeamFieldNumber;
 #endif  // !_MSC_VER
 
 GameWeaponFired::GameWeaponFired()
@@ -3723,6 +3828,7 @@ void GameWeaponFired::SharedCtor() {
   positionx_ = 0;
   positiony_ = 0;
   positionz_ = 0;
+  team_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3768,7 +3874,9 @@ void GameWeaponFired::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(weaponid_, positionz_);
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(weaponid_, team_);
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -3842,6 +3950,21 @@ bool GameWeaponFired::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(40)) goto parse_team;
+        break;
+      }
+
+      // optional uint32 team = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_team:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &team_)));
+          set_has_team();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3891,6 +4014,11 @@ void GameWeaponFired::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->positionz(), output);
   }
 
+  // optional uint32 team = 5;
+  if (has_team()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->team(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -3919,6 +4047,11 @@ void GameWeaponFired::SerializeWithCachedSizes(
   // required float positionZ = 4;
   if (has_positionz()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->positionz(), target);
+  }
+
+  // optional uint32 team = 5;
+  if (has_team()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->team(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3953,6 +4086,13 @@ int GameWeaponFired::ByteSize() const {
     // required float positionZ = 4;
     if (has_positionz()) {
       total_size += 1 + 4;
+    }
+
+    // optional uint32 team = 5;
+    if (has_team()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->team());
     }
 
   }
@@ -3994,6 +4134,9 @@ void GameWeaponFired::MergeFrom(const GameWeaponFired& from) {
     if (from.has_positionz()) {
       set_positionz(from.positionz());
     }
+    if (from.has_team()) {
+      set_team(from.team());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4022,6 +4165,7 @@ void GameWeaponFired::Swap(GameWeaponFired* other) {
     std::swap(positionx_, other->positionx_);
     std::swap(positiony_, other->positiony_);
     std::swap(positionz_, other->positionz_);
+    std::swap(team_, other->team_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4043,6 +4187,7 @@ void GameWeaponFired::Swap(GameWeaponFired* other) {
 const int GameDeath::kKilledByClassFieldNumber;
 const int GameDeath::kKilledByWeaponFieldNumber;
 const int GameDeath::kKilledByHealthFieldNumber;
+const int GameDeath::kTeamFieldNumber;
 #endif  // !_MSC_VER
 
 GameDeath::GameDeath()
@@ -4066,6 +4211,7 @@ void GameDeath::SharedCtor() {
   killedbyclass_ = 0;
   killedbyweapon_ = 0;
   killedbyhealth_ = 0;
+  team_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4111,7 +4257,7 @@ void GameDeath::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(killedbyclass_, killedbyhealth_);
+  ZR_(killedbyclass_, team_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -4170,6 +4316,21 @@ bool GameDeath::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(32)) goto parse_team;
+        break;
+      }
+
+      // optional uint32 team = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_team:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &team_)));
+          set_has_team();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4214,6 +4375,11 @@ void GameDeath::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->killedbyhealth(), output);
   }
 
+  // optional uint32 team = 4;
+  if (has_team()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->team(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4237,6 +4403,11 @@ void GameDeath::SerializeWithCachedSizes(
   // required int32 killedByHealth = 3;
   if (has_killedbyhealth()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->killedbyhealth(), target);
+  }
+
+  // optional uint32 team = 4;
+  if (has_team()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->team(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4270,6 +4441,13 @@ int GameDeath::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->killedbyhealth());
+    }
+
+    // optional uint32 team = 4;
+    if (has_team()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->team());
     }
 
   }
@@ -4308,6 +4486,9 @@ void GameDeath::MergeFrom(const GameDeath& from) {
     if (from.has_killedbyhealth()) {
       set_killedbyhealth(from.killedbyhealth());
     }
+    if (from.has_team()) {
+      set_team(from.team());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4335,6 +4516,7 @@ void GameDeath::Swap(GameDeath* other) {
     std::swap(killedbyclass_, other->killedbyclass_);
     std::swap(killedbyweapon_, other->killedbyweapon_);
     std::swap(killedbyhealth_, other->killedbyhealth_);
+    std::swap(team_, other->team_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -4357,6 +4539,7 @@ const int GameTookDamage::kWeaponIdFieldNumber;
 const int GameTookDamage::kPositionXFieldNumber;
 const int GameTookDamage::kPositionYFieldNumber;
 const int GameTookDamage::kPositionZFieldNumber;
+const int GameTookDamage::kTeamFieldNumber;
 #endif  // !_MSC_VER
 
 GameTookDamage::GameTookDamage()
@@ -4381,6 +4564,7 @@ void GameTookDamage::SharedCtor() {
   positionx_ = 0;
   positiony_ = 0;
   positionz_ = 0;
+  team_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4426,7 +4610,9 @@ void GameTookDamage::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(weaponid_, positionz_);
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(weaponid_, team_);
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -4500,6 +4686,21 @@ bool GameTookDamage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(40)) goto parse_team;
+        break;
+      }
+
+      // optional uint32 team = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_team:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &team_)));
+          set_has_team();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4549,6 +4750,11 @@ void GameTookDamage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->positionz(), output);
   }
 
+  // optional uint32 team = 5;
+  if (has_team()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->team(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4577,6 +4783,11 @@ void GameTookDamage::SerializeWithCachedSizes(
   // required float positionZ = 4;
   if (has_positionz()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->positionz(), target);
+  }
+
+  // optional uint32 team = 5;
+  if (has_team()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->team(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4611,6 +4822,13 @@ int GameTookDamage::ByteSize() const {
     // required float positionZ = 4;
     if (has_positionz()) {
       total_size += 1 + 4;
+    }
+
+    // optional uint32 team = 5;
+    if (has_team()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->team());
     }
 
   }
@@ -4652,6 +4870,9 @@ void GameTookDamage::MergeFrom(const GameTookDamage& from) {
     if (from.has_positionz()) {
       set_positionz(from.positionz());
     }
+    if (from.has_team()) {
+      set_team(from.team());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4680,6 +4901,7 @@ void GameTookDamage::Swap(GameTookDamage* other) {
     std::swap(positionx_, other->positionx_);
     std::swap(positiony_, other->positiony_);
     std::swap(positionz_, other->positionz_);
+    std::swap(team_, other->team_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -19,10 +19,12 @@ AnalyticsScene::~AnalyticsScene()
 
 void AnalyticsScene::AddToScene( Qt3D::QEntity* entity )
 {
+	entity->moveToThread( thread() );
+
 	Qt3D::QEntity* oldChild = findChild<Qt3D::QEntity*>( entity->objectName() );
 	if ( oldChild != NULL )
 	{
-		oldChild->setParent( NULL );
+		oldChild->setParent( (Qt3D::QNode*)NULL );
 		oldChild->deleteLater();
 
 		// put the new components on the old entity
@@ -39,7 +41,6 @@ void AnalyticsScene::AddToScene( Qt3D::QEntity* entity )
 		//entity->deleteLater();
 	}
 
-	entity->moveToThread( thread() );
 	entity->setParent( this );
 }
 
@@ -76,34 +77,16 @@ void AnalyticsScene::processMessage( const Analytics::GameEntityInfo & msg )
 		foundEntity = qobject_cast<Qt3D::QEntity*>( qml->create( qml->creationContext() ) );
 		foundEntity->setProperty( "entityId", QVariant( msg.entityid() ) );
 		foundEntity->setParent( this );
-
-		//Qt3D::QComponentList cmps = foundEntity->components();
-		//for ( int i = 0; i < cmps.size(); ++i )
-		//{
-		//	Qt3D::QTransform* xform = qobject_cast<Qt3D::QTransform*>( cmps[ i ] );
-		//	if ( xform )
-		//	{
-		//		connect( xform, SIGNAL( matrixChanged() ), this, SLOT( EntityTransformChanged() ) );
-
-		//		QList<Qt3D::QAbstractTransform *> xforms = xform->transforms();
-		//		for ( int t = 0; t < xforms.size(); ++t )
-		//		{
-		//			//connect( xforms[ t ], SIGNAL( transformMatrixChanged() ), this, SLOT( EntityTransformChanged() ) );
-		//		}
-		//	}
-		//}
 	}
 
 	if ( foundEntity == NULL )
 		return;
 
-	QVector3D add( rand() % 100, rand() % 100, rand() % 100 );
-	
 	// propagate the message data into our entity
-	foundEntity->setProperty( "positionX", msg.positionx() + add.x() );
-	foundEntity->setProperty( "positionY", msg.positiony() + add.y() );
-	foundEntity->setProperty( "positionZ", msg.positionz() + add.z() );
-
+	foundEntity->setObjectName( msg.name().c_str() );
+	foundEntity->setProperty( "positionX", msg.positionx() );
+	foundEntity->setProperty( "positionY", msg.positiony() );
+	foundEntity->setProperty( "positionZ", msg.positionz() );
 	foundEntity->setProperty( "heading", msg.heading() );
 	foundEntity->setProperty( "pitch", msg.pitch() );
 	foundEntity->setProperty( "roll", msg.roll() );	
@@ -127,7 +110,7 @@ void AnalyticsScene::processMessage( MessageUnionPtr msg )
 	if ( msg->has_gameentitylist() )
 	{
 		const Analytics::GameEntityList& elist = msg->gameentitylist();
-		for ( int i = 0; i < 1; /*elist.entities_size();*/ ++i )
+		for ( int i = 0; i < elist.entities_size(); ++i )
 		{
 			processMessage( elist.entities( i ) );
 		}

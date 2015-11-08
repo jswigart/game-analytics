@@ -19,7 +19,7 @@ Entity {
 		id: mesh
 		radius: 32
 		length: 72
-		rings: 100
+		rings: 20
 		slices: 20
 	}
 
@@ -39,7 +39,7 @@ Entity {
 
         Rotate {
             axis : Qt.vector3d(1, 0, 0)
-            angle : pitch
+            angle : pitch+90
         }
 
         Rotate {

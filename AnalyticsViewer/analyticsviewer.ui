@@ -31,15 +31,11 @@
      <number>2</number>
     </property>
     <item row="0" column="0">
-     <widget class="QWidget" name="renderBg" native="true">
-      <property name="focusPolicy">
-       <enum>Qt::StrongFocus</enum>
+     <layout class="QVBoxLayout" name="renderLayout">
+      <property name="spacing">
+       <number>2</number>
       </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <layout class="QVBoxLayout" name="renderLayout"/>
-     </widget>
+     </layout>
     </item>
    </layout>
   </widget>

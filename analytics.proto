@@ -72,20 +72,22 @@ message GameEntityInfo
 		optional uint32				ammoCount					= 2;
 	}
 
-	required int32					entityId					= 1;
-	optional int32					groupId						= 2;
-	optional int32					classId						= 3;
-	optional float					positionX					= 4;
-	optional float					positionY					= 5;
-	optional float					positionZ					= 6;
-	optional float					heading						= 7;
-	optional float					pitch						= 8;
-	optional float					roll						= 9;
+	optional string					name						= 1;
+	required int32					entityId					= 2;
+	optional int32					groupId						= 3;
+	optional int32					classId						= 4;
+	optional float					positionX					= 5;
+	optional float					positionY					= 6;
+	optional float					positionZ					= 7;
+	optional float					heading						= 8;
+	optional float					pitch						= 9;
+	optional float					roll						= 10;
 	optional uint32					health						= 12;
 	optional uint32					healthMax					= 13;
 	optional uint32					armor						= 14;
 	optional uint32					armorMax					= 15;
-	repeated Ammo					ammo						= 16;
+	optional uint32					team						= 16;
+	repeated Ammo					ammo						= 20;
 }
 
 message GameEntityList
@@ -101,6 +103,7 @@ message GameWeaponFired
 	required float					positionX					= 2;
 	required float					positionY					= 3;
 	required float					positionZ					= 4;
+	optional uint32					team						= 5;
 }
 
 message GameDeath
@@ -108,6 +111,7 @@ message GameDeath
 	required int32					killedByClass				= 1; // this class Id maps to an enumeration defined by the client who is communicating this message
 	required int32					killedByWeapon				= 2; // this weapon Id maps to an enumeration defined by the client who is communicating this message
 	required int32					killedByHealth				= 3; // how much health did they have left when they killed me
+	optional uint32					team						= 4;
 }
 
 message GameTookDamage
@@ -116,6 +120,7 @@ message GameTookDamage
 	required float					positionX					= 2;
 	required float					positionY					= 3;
 	required float					positionZ					= 4;
+	optional uint32					team						= 5;
 }
 
 message GameNavigationStuck
