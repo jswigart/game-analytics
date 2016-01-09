@@ -35,6 +35,18 @@
       <property name="spacing">
        <number>2</number>
       </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
      </layout>
     </item>
    </layout>
@@ -79,22 +91,22 @@
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QGridLayout" name="gridLayout_4">
      <property name="leftMargin">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="topMargin">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="rightMargin">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="bottomMargin">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="horizontalSpacing">
       <number>0</number>
      </property>
      <property name="verticalSpacing">
-      <number>2</number>
+      <number>1</number>
      </property>
      <item row="0" column="0">
       <widget class="QTreeWidget" name="treeHierarchy">
@@ -167,7 +179,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget_7">
+  <widget class="QDockWidget" name="dockLogging">
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -175,161 +187,297 @@
     <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
-    <string>Output</string>
+    <string>Logging</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_7">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>1</number>
-       </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="toggleMessages">
-           <property name="text">
-            <string>0 Messages</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>Resources/svg/info27.svg</normaloff>Resources/svg/info27.svg</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="toggleWarnings">
-           <property name="text">
-            <string>0 Warnings</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>Resources/svg/warning42.svg</normaloff>Resources/svg/warning42.svg</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="toggleErrors">
-           <property name="text">
-            <string>0 Errors</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>Resources/svg/error6.svg</normaloff>Resources/svg/error6.svg</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="toggleDebug">
-           <property name="text">
-            <string>0 Debug</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>Resources/svg/debugging.svg</normaloff>Resources/svg/debugging.svg</iconset>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="editOutputFilter"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="buttonFilter">
-           <property name="text">
-            <string>Filter</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>Resources/svg/search99.svg</normaloff>Resources/svg/search99.svg</iconset>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="tableOutput">
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
+        <widget class="QPushButton" name="toggleMessages">
+         <property name="text">
+          <string>0 Messages</string>
          </property>
-         <property name="alternatingRowColors">
+         <property name="icon">
+          <iconset>
+           <normaloff>Resources/svg/info27.svg</normaloff>Resources/svg/info27.svg</iconset>
+         </property>
+         <property name="checkable">
           <bool>true</bool>
          </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
+         <property name="checked">
+          <bool>true</bool>
          </property>
-         <attribute name="horizontalHeaderCascadingSectionResizes">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>50</number>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderDefaultSectionSize">
-          <number>20</number>
-         </attribute>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="toggleWarnings">
+         <property name="text">
+          <string>0 Warnings</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>Resources/svg/warning42.svg</normaloff>Resources/svg/warning42.svg</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="toggleErrors">
+         <property name="text">
+          <string>0 Errors</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>Resources/svg/error6.svg</normaloff>Resources/svg/error6.svg</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="toggleDebug">
+         <property name="text">
+          <string>0 Debug</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>Resources/svg/debugging.svg</normaloff>Resources/svg/debugging.svg</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editOutputFilter"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonFilter">
+         <property name="text">
+          <string>Filter</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>Resources/svg/search99.svg</normaloff>Resources/svg/search99.svg</iconset>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableOutput">
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>50</number>
+       </attribute>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+    <zorder></zorder>
+    <zorder>tableOutput</zorder>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockTimeline">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="features">
+    <set>QDockWidget::AllDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Event Timeline</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="spacing">
+      <number>2</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QSlider" name="sliderTimeline">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="invertedControls">
+        <bool>false</bool>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableEvents">
+       <attribute name="horizontalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>60</number>
+       </attribute>
+       <attribute name="horizontalHeaderMinimumSectionSize">
+        <number>20</number>
+       </attribute>
+       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
+       <attribute name="verticalHeaderStretchLastSection">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Events</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>#</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Timeline</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <property name="windowTitle">
+    <string>Event Timeline</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="TimelineGraphicsView" name="viewTimeline">
+       <property name="backgroundBrush">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>189</red>
+          <green>189</green>
+          <blue>189</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="foregroundBrush">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>185</red>
+          <green>185</green>
+          <blue>185</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="dragMode">
+        <enum>QGraphicsView::RubberBandDrag</enum>
+       </property>
+       <property name="resizeAnchor">
+        <enum>QGraphicsView::AnchorUnderMouse</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -352,6 +500,11 @@
    <extends>QWidget</extends>
    <header>qttreepropertybrowser.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimelineGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>timelinegraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

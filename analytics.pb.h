@@ -37,11 +37,12 @@ void protobuf_ShutdownFile_analytics_2eproto();
 
 class TopicSubscribe;
 class TopicUnsubscribe;
-class SystemNavNotFound;
-class SystemNavAutoDownloaded;
-class SystemAssert;
-class SystemCrash;
-class SystemModelData;
+class GameInfo;
+class GameNavNotFound;
+class GameNavAutoDownloaded;
+class GameAssert;
+class GameCrash;
+class GameModelData;
 class GameEntityInfo;
 class GameEntityInfo_Ammo;
 class GameEntityList;
@@ -240,14 +241,14 @@ class TopicUnsubscribe : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class SystemNavNotFound : public ::google::protobuf::Message {
+class GameInfo : public ::google::protobuf::Message {
  public:
-  SystemNavNotFound();
-  virtual ~SystemNavNotFound();
+  GameInfo();
+  virtual ~GameInfo();
 
-  SystemNavNotFound(const SystemNavNotFound& from);
+  GameInfo(const GameInfo& from);
 
-  inline SystemNavNotFound& operator=(const SystemNavNotFound& from) {
+  inline GameInfo& operator=(const GameInfo& from) {
     CopyFrom(from);
     return *this;
   }
@@ -261,17 +262,17 @@ class SystemNavNotFound : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const SystemNavNotFound& default_instance();
+  static const GameInfo& default_instance();
 
-  void Swap(SystemNavNotFound* other);
+  void Swap(GameInfo* other);
 
   // implements Message ----------------------------------------------
 
-  SystemNavNotFound* New() const;
+  GameInfo* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const SystemNavNotFound& from);
-  void MergeFrom(const SystemNavNotFound& from);
+  void CopyFrom(const GameInfo& from);
+  void MergeFrom(const GameInfo& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -305,7 +306,7 @@ class SystemNavNotFound : public ::google::protobuf::Message {
   inline ::std::string* release_mapname();
   inline void set_allocated_mapname(::std::string* mapname);
 
-  // @@protoc_insertion_point(class_scope:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(class_scope:Analytics.GameInfo)
  private:
   inline void set_has_mapname();
   inline void clear_has_mapname();
@@ -320,18 +321,18 @@ class SystemNavNotFound : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_analytics_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemNavNotFound* default_instance_;
+  static GameInfo* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class SystemNavAutoDownloaded : public ::google::protobuf::Message {
+class GameNavNotFound : public ::google::protobuf::Message {
  public:
-  SystemNavAutoDownloaded();
-  virtual ~SystemNavAutoDownloaded();
+  GameNavNotFound();
+  virtual ~GameNavNotFound();
 
-  SystemNavAutoDownloaded(const SystemNavAutoDownloaded& from);
+  GameNavNotFound(const GameNavNotFound& from);
 
-  inline SystemNavAutoDownloaded& operator=(const SystemNavAutoDownloaded& from) {
+  inline GameNavNotFound& operator=(const GameNavNotFound& from) {
     CopyFrom(from);
     return *this;
   }
@@ -345,17 +346,17 @@ class SystemNavAutoDownloaded : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const SystemNavAutoDownloaded& default_instance();
+  static const GameNavNotFound& default_instance();
 
-  void Swap(SystemNavAutoDownloaded* other);
+  void Swap(GameNavNotFound* other);
 
   // implements Message ----------------------------------------------
 
-  SystemNavAutoDownloaded* New() const;
+  GameNavNotFound* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const SystemNavAutoDownloaded& from);
-  void MergeFrom(const SystemNavAutoDownloaded& from);
+  void CopyFrom(const GameNavNotFound& from);
+  void MergeFrom(const GameNavNotFound& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -389,7 +390,7 @@ class SystemNavAutoDownloaded : public ::google::protobuf::Message {
   inline ::std::string* release_mapname();
   inline void set_allocated_mapname(::std::string* mapname);
 
-  // @@protoc_insertion_point(class_scope:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(class_scope:Analytics.GameNavNotFound)
  private:
   inline void set_has_mapname();
   inline void clear_has_mapname();
@@ -404,18 +405,18 @@ class SystemNavAutoDownloaded : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_analytics_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemNavAutoDownloaded* default_instance_;
+  static GameNavNotFound* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class SystemAssert : public ::google::protobuf::Message {
+class GameNavAutoDownloaded : public ::google::protobuf::Message {
  public:
-  SystemAssert();
-  virtual ~SystemAssert();
+  GameNavAutoDownloaded();
+  virtual ~GameNavAutoDownloaded();
 
-  SystemAssert(const SystemAssert& from);
+  GameNavAutoDownloaded(const GameNavAutoDownloaded& from);
 
-  inline SystemAssert& operator=(const SystemAssert& from) {
+  inline GameNavAutoDownloaded& operator=(const GameNavAutoDownloaded& from) {
     CopyFrom(from);
     return *this;
   }
@@ -429,17 +430,101 @@ class SystemAssert : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const SystemAssert& default_instance();
+  static const GameNavAutoDownloaded& default_instance();
 
-  void Swap(SystemAssert* other);
+  void Swap(GameNavAutoDownloaded* other);
 
   // implements Message ----------------------------------------------
 
-  SystemAssert* New() const;
+  GameNavAutoDownloaded* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const SystemAssert& from);
-  void MergeFrom(const SystemAssert& from);
+  void CopyFrom(const GameNavAutoDownloaded& from);
+  void MergeFrom(const GameNavAutoDownloaded& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required string mapName = 1;
+  inline bool has_mapname() const;
+  inline void clear_mapname();
+  static const int kMapNameFieldNumber = 1;
+  inline const ::std::string& mapname() const;
+  inline void set_mapname(const ::std::string& value);
+  inline void set_mapname(const char* value);
+  inline void set_mapname(const char* value, size_t size);
+  inline ::std::string* mutable_mapname();
+  inline ::std::string* release_mapname();
+  inline void set_allocated_mapname(::std::string* mapname);
+
+  // @@protoc_insertion_point(class_scope:Analytics.GameNavAutoDownloaded)
+ private:
+  inline void set_has_mapname();
+  inline void clear_has_mapname();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::std::string* mapname_;
+  friend void  protobuf_AddDesc_analytics_2eproto();
+  friend void protobuf_AssignDesc_analytics_2eproto();
+  friend void protobuf_ShutdownFile_analytics_2eproto();
+
+  void InitAsDefaultInstance();
+  static GameNavAutoDownloaded* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GameAssert : public ::google::protobuf::Message {
+ public:
+  GameAssert();
+  virtual ~GameAssert();
+
+  GameAssert(const GameAssert& from);
+
+  inline GameAssert& operator=(const GameAssert& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GameAssert& default_instance();
+
+  void Swap(GameAssert* other);
+
+  // implements Message ----------------------------------------------
+
+  GameAssert* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GameAssert& from);
+  void MergeFrom(const GameAssert& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -492,7 +577,7 @@ class SystemAssert : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 line() const;
   inline void set_line(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:Analytics.SystemAssert)
+  // @@protoc_insertion_point(class_scope:Analytics.GameAssert)
  private:
   inline void set_has_condition();
   inline void clear_has_condition();
@@ -513,18 +598,18 @@ class SystemAssert : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_analytics_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemAssert* default_instance_;
+  static GameAssert* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class SystemCrash : public ::google::protobuf::Message {
+class GameCrash : public ::google::protobuf::Message {
  public:
-  SystemCrash();
-  virtual ~SystemCrash();
+  GameCrash();
+  virtual ~GameCrash();
 
-  SystemCrash(const SystemCrash& from);
+  GameCrash(const GameCrash& from);
 
-  inline SystemCrash& operator=(const SystemCrash& from) {
+  inline GameCrash& operator=(const GameCrash& from) {
     CopyFrom(from);
     return *this;
   }
@@ -538,17 +623,17 @@ class SystemCrash : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const SystemCrash& default_instance();
+  static const GameCrash& default_instance();
 
-  void Swap(SystemCrash* other);
+  void Swap(GameCrash* other);
 
   // implements Message ----------------------------------------------
 
-  SystemCrash* New() const;
+  GameCrash* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const SystemCrash& from);
-  void MergeFrom(const SystemCrash& from);
+  void CopyFrom(const GameCrash& from);
+  void MergeFrom(const GameCrash& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -582,7 +667,7 @@ class SystemCrash : public ::google::protobuf::Message {
   inline ::std::string* release_info();
   inline void set_allocated_info(::std::string* info);
 
-  // @@protoc_insertion_point(class_scope:Analytics.SystemCrash)
+  // @@protoc_insertion_point(class_scope:Analytics.GameCrash)
  private:
   inline void set_has_info();
   inline void clear_has_info();
@@ -597,18 +682,18 @@ class SystemCrash : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_analytics_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemCrash* default_instance_;
+  static GameCrash* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class SystemModelData : public ::google::protobuf::Message {
+class GameModelData : public ::google::protobuf::Message {
  public:
-  SystemModelData();
-  virtual ~SystemModelData();
+  GameModelData();
+  virtual ~GameModelData();
 
-  SystemModelData(const SystemModelData& from);
+  GameModelData(const GameModelData& from);
 
-  inline SystemModelData& operator=(const SystemModelData& from) {
+  inline GameModelData& operator=(const GameModelData& from) {
     CopyFrom(from);
     return *this;
   }
@@ -622,17 +707,17 @@ class SystemModelData : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const SystemModelData& default_instance();
+  static const GameModelData& default_instance();
 
-  void Swap(SystemModelData* other);
+  void Swap(GameModelData* other);
 
   // implements Message ----------------------------------------------
 
-  SystemModelData* New() const;
+  GameModelData* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const SystemModelData& from);
-  void MergeFrom(const SystemModelData& from);
+  void CopyFrom(const GameModelData& from);
+  void MergeFrom(const GameModelData& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -685,7 +770,14 @@ class SystemModelData : public ::google::protobuf::Message {
   inline ::std::string* release_modelbytes();
   inline void set_allocated_modelbytes(::std::string* modelbytes);
 
-  // @@protoc_insertion_point(class_scope:Analytics.SystemModelData)
+  // optional uint32 modelBytesUncompressed = 4;
+  inline bool has_modelbytesuncompressed() const;
+  inline void clear_modelbytesuncompressed();
+  static const int kModelBytesUncompressedFieldNumber = 4;
+  inline ::google::protobuf::uint32 modelbytesuncompressed() const;
+  inline void set_modelbytesuncompressed(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:Analytics.GameModelData)
  private:
   inline void set_has_compressiontype();
   inline void clear_has_compressiontype();
@@ -693,20 +785,23 @@ class SystemModelData : public ::google::protobuf::Message {
   inline void clear_has_modelname();
   inline void set_has_modelbytes();
   inline void clear_has_modelbytes();
+  inline void set_has_modelbytesuncompressed();
+  inline void clear_has_modelbytesuncompressed();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* modelname_;
-  ::std::string* modelbytes_;
   int compressiontype_;
+  ::google::protobuf::uint32 modelbytesuncompressed_;
+  ::std::string* modelbytes_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
 
   void InitAsDefaultInstance();
-  static SystemModelData* default_instance_;
+  static GameModelData* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1180,33 +1275,40 @@ class GameWeaponFired : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 weaponid() const;
   inline void set_weaponid(::google::protobuf::int32 value);
 
-  // required float positionX = 2;
+  // optional float positionX = 2;
   inline bool has_positionx() const;
   inline void clear_positionx();
   static const int kPositionXFieldNumber = 2;
   inline float positionx() const;
   inline void set_positionx(float value);
 
-  // required float positionY = 3;
+  // optional float positionY = 3;
   inline bool has_positiony() const;
   inline void clear_positiony();
   static const int kPositionYFieldNumber = 3;
   inline float positiony() const;
   inline void set_positiony(float value);
 
-  // required float positionZ = 4;
+  // optional float positionZ = 4;
   inline bool has_positionz() const;
   inline void clear_positionz();
   static const int kPositionZFieldNumber = 4;
   inline float positionz() const;
   inline void set_positionz(float value);
 
-  // optional uint32 team = 5;
+  // optional uint32 fireMode = 5;
+  inline bool has_firemode() const;
+  inline void clear_firemode();
+  static const int kFireModeFieldNumber = 5;
+  inline ::google::protobuf::uint32 firemode() const;
+  inline void set_firemode(::google::protobuf::uint32 value);
+
+  // optional int32 team = 6;
   inline bool has_team() const;
   inline void clear_team();
-  static const int kTeamFieldNumber = 5;
-  inline ::google::protobuf::uint32 team() const;
-  inline void set_team(::google::protobuf::uint32 value);
+  static const int kTeamFieldNumber = 6;
+  inline ::google::protobuf::int32 team() const;
+  inline void set_team(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:Analytics.GameWeaponFired)
  private:
@@ -1218,6 +1320,8 @@ class GameWeaponFired : public ::google::protobuf::Message {
   inline void clear_has_positiony();
   inline void set_has_positionz();
   inline void clear_has_positionz();
+  inline void set_has_firemode();
+  inline void clear_has_firemode();
   inline void set_has_team();
   inline void clear_has_team();
 
@@ -1229,7 +1333,8 @@ class GameWeaponFired : public ::google::protobuf::Message {
   float positionx_;
   float positiony_;
   float positionz_;
-  ::google::protobuf::uint32 team_;
+  ::google::protobuf::uint32 firemode_;
+  ::google::protobuf::int32 team_;
   friend void  protobuf_AddDesc_analytics_2eproto();
   friend void protobuf_AssignDesc_analytics_2eproto();
   friend void protobuf_ShutdownFile_analytics_2eproto();
@@ -1600,11 +1705,12 @@ class MessageUnion : public ::google::protobuf::Message {
   static const MessageUnion& default_instance();
 
   enum MsgCase {
-    kSystemNavNotFound = 2,
-    kSystemNavDownloaded = 3,
-    kSystemAssert = 4,
-    kSystemCrash = 5,
-    kSystemModelData = 6,
+    kGameInfo = 9,
+    kGameNavNotFound = 10,
+    kSystemNavDownloaded = 11,
+    kGameAssert = 12,
+    kGameCrash = 13,
+    kGameModelData = 14,
     kGameEntityList = 100,
     kGameWeaponFired = 101,
     kGameDeath = 102,
@@ -1652,50 +1758,59 @@ class MessageUnion : public ::google::protobuf::Message {
   inline ::google::protobuf::int64 timestamp() const;
   inline void set_timestamp(::google::protobuf::int64 value);
 
-  // optional .Analytics.SystemNavNotFound systemNavNotFound = 2;
-  inline bool has_systemnavnotfound() const;
-  inline void clear_systemnavnotfound();
-  static const int kSystemNavNotFoundFieldNumber = 2;
-  inline const ::Analytics::SystemNavNotFound& systemnavnotfound() const;
-  inline ::Analytics::SystemNavNotFound* mutable_systemnavnotfound();
-  inline ::Analytics::SystemNavNotFound* release_systemnavnotfound();
-  inline void set_allocated_systemnavnotfound(::Analytics::SystemNavNotFound* systemnavnotfound);
+  // optional .Analytics.GameInfo gameInfo = 9;
+  inline bool has_gameinfo() const;
+  inline void clear_gameinfo();
+  static const int kGameInfoFieldNumber = 9;
+  inline const ::Analytics::GameInfo& gameinfo() const;
+  inline ::Analytics::GameInfo* mutable_gameinfo();
+  inline ::Analytics::GameInfo* release_gameinfo();
+  inline void set_allocated_gameinfo(::Analytics::GameInfo* gameinfo);
 
-  // optional .Analytics.SystemNavAutoDownloaded systemNavDownloaded = 3;
+  // optional .Analytics.GameNavNotFound gameNavNotFound = 10;
+  inline bool has_gamenavnotfound() const;
+  inline void clear_gamenavnotfound();
+  static const int kGameNavNotFoundFieldNumber = 10;
+  inline const ::Analytics::GameNavNotFound& gamenavnotfound() const;
+  inline ::Analytics::GameNavNotFound* mutable_gamenavnotfound();
+  inline ::Analytics::GameNavNotFound* release_gamenavnotfound();
+  inline void set_allocated_gamenavnotfound(::Analytics::GameNavNotFound* gamenavnotfound);
+
+  // optional .Analytics.GameNavAutoDownloaded systemNavDownloaded = 11;
   inline bool has_systemnavdownloaded() const;
   inline void clear_systemnavdownloaded();
-  static const int kSystemNavDownloadedFieldNumber = 3;
-  inline const ::Analytics::SystemNavAutoDownloaded& systemnavdownloaded() const;
-  inline ::Analytics::SystemNavAutoDownloaded* mutable_systemnavdownloaded();
-  inline ::Analytics::SystemNavAutoDownloaded* release_systemnavdownloaded();
-  inline void set_allocated_systemnavdownloaded(::Analytics::SystemNavAutoDownloaded* systemnavdownloaded);
+  static const int kSystemNavDownloadedFieldNumber = 11;
+  inline const ::Analytics::GameNavAutoDownloaded& systemnavdownloaded() const;
+  inline ::Analytics::GameNavAutoDownloaded* mutable_systemnavdownloaded();
+  inline ::Analytics::GameNavAutoDownloaded* release_systemnavdownloaded();
+  inline void set_allocated_systemnavdownloaded(::Analytics::GameNavAutoDownloaded* systemnavdownloaded);
 
-  // optional .Analytics.SystemAssert systemAssert = 4;
-  inline bool has_systemassert() const;
-  inline void clear_systemassert();
-  static const int kSystemAssertFieldNumber = 4;
-  inline const ::Analytics::SystemAssert& systemassert() const;
-  inline ::Analytics::SystemAssert* mutable_systemassert();
-  inline ::Analytics::SystemAssert* release_systemassert();
-  inline void set_allocated_systemassert(::Analytics::SystemAssert* systemassert);
+  // optional .Analytics.GameAssert gameAssert = 12;
+  inline bool has_gameassert() const;
+  inline void clear_gameassert();
+  static const int kGameAssertFieldNumber = 12;
+  inline const ::Analytics::GameAssert& gameassert() const;
+  inline ::Analytics::GameAssert* mutable_gameassert();
+  inline ::Analytics::GameAssert* release_gameassert();
+  inline void set_allocated_gameassert(::Analytics::GameAssert* gameassert);
 
-  // optional .Analytics.SystemCrash systemCrash = 5;
-  inline bool has_systemcrash() const;
-  inline void clear_systemcrash();
-  static const int kSystemCrashFieldNumber = 5;
-  inline const ::Analytics::SystemCrash& systemcrash() const;
-  inline ::Analytics::SystemCrash* mutable_systemcrash();
-  inline ::Analytics::SystemCrash* release_systemcrash();
-  inline void set_allocated_systemcrash(::Analytics::SystemCrash* systemcrash);
+  // optional .Analytics.GameCrash gameCrash = 13;
+  inline bool has_gamecrash() const;
+  inline void clear_gamecrash();
+  static const int kGameCrashFieldNumber = 13;
+  inline const ::Analytics::GameCrash& gamecrash() const;
+  inline ::Analytics::GameCrash* mutable_gamecrash();
+  inline ::Analytics::GameCrash* release_gamecrash();
+  inline void set_allocated_gamecrash(::Analytics::GameCrash* gamecrash);
 
-  // optional .Analytics.SystemModelData systemModelData = 6;
-  inline bool has_systemmodeldata() const;
-  inline void clear_systemmodeldata();
-  static const int kSystemModelDataFieldNumber = 6;
-  inline const ::Analytics::SystemModelData& systemmodeldata() const;
-  inline ::Analytics::SystemModelData* mutable_systemmodeldata();
-  inline ::Analytics::SystemModelData* release_systemmodeldata();
-  inline void set_allocated_systemmodeldata(::Analytics::SystemModelData* systemmodeldata);
+  // optional .Analytics.GameModelData gameModelData = 14;
+  inline bool has_gamemodeldata() const;
+  inline void clear_gamemodeldata();
+  static const int kGameModelDataFieldNumber = 14;
+  inline const ::Analytics::GameModelData& gamemodeldata() const;
+  inline ::Analytics::GameModelData* mutable_gamemodeldata();
+  inline ::Analytics::GameModelData* release_gamemodeldata();
+  inline void set_allocated_gamemodeldata(::Analytics::GameModelData* gamemodeldata);
 
   // optional .Analytics.GameEntityList gameEntityList = 100;
   inline bool has_gameentitylist() const;
@@ -1765,11 +1880,12 @@ class MessageUnion : public ::google::protobuf::Message {
  private:
   inline void set_has_timestamp();
   inline void clear_has_timestamp();
-  inline void set_has_systemnavnotfound();
+  inline void set_has_gameinfo();
+  inline void set_has_gamenavnotfound();
   inline void set_has_systemnavdownloaded();
-  inline void set_has_systemassert();
-  inline void set_has_systemcrash();
-  inline void set_has_systemmodeldata();
+  inline void set_has_gameassert();
+  inline void set_has_gamecrash();
+  inline void set_has_gamemodeldata();
   inline void set_has_gameentitylist();
   inline void set_has_gameweaponfired();
   inline void set_has_gamedeath();
@@ -1788,11 +1904,12 @@ class MessageUnion : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::int64 timestamp_;
   union MsgUnion {
-    ::Analytics::SystemNavNotFound* systemnavnotfound_;
-    ::Analytics::SystemNavAutoDownloaded* systemnavdownloaded_;
-    ::Analytics::SystemAssert* systemassert_;
-    ::Analytics::SystemCrash* systemcrash_;
-    ::Analytics::SystemModelData* systemmodeldata_;
+    ::Analytics::GameInfo* gameinfo_;
+    ::Analytics::GameNavNotFound* gamenavnotfound_;
+    ::Analytics::GameNavAutoDownloaded* systemnavdownloaded_;
+    ::Analytics::GameAssert* gameassert_;
+    ::Analytics::GameCrash* gamecrash_;
+    ::Analytics::GameModelData* gamemodeldata_;
     ::Analytics::GameEntityList* gameentitylist_;
     ::Analytics::GameWeaponFired* gameweaponfired_;
     ::Analytics::GameDeath* gamedeath_;
@@ -1983,61 +2100,61 @@ inline void TopicUnsubscribe::set_allocated_topic(::std::string* topic) {
 
 // -------------------------------------------------------------------
 
-// SystemNavNotFound
+// GameInfo
 
 // required string mapName = 1;
-inline bool SystemNavNotFound::has_mapname() const {
+inline bool GameInfo::has_mapname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemNavNotFound::set_has_mapname() {
+inline void GameInfo::set_has_mapname() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemNavNotFound::clear_has_mapname() {
+inline void GameInfo::clear_has_mapname() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemNavNotFound::clear_mapname() {
+inline void GameInfo::clear_mapname() {
   if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_->clear();
   }
   clear_has_mapname();
 }
-inline const ::std::string& SystemNavNotFound::mapname() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemNavNotFound.mapName)
+inline const ::std::string& GameInfo::mapname() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameInfo.mapName)
   return *mapname_;
 }
-inline void SystemNavNotFound::set_mapname(const ::std::string& value) {
+inline void GameInfo::set_mapname(const ::std::string& value) {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
   mapname_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemNavNotFound.mapName)
+  // @@protoc_insertion_point(field_set:Analytics.GameInfo.mapName)
 }
-inline void SystemNavNotFound::set_mapname(const char* value) {
+inline void GameInfo::set_mapname(const char* value) {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
   mapname_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemNavNotFound.mapName)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameInfo.mapName)
 }
-inline void SystemNavNotFound::set_mapname(const char* value, size_t size) {
+inline void GameInfo::set_mapname(const char* value, size_t size) {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
   mapname_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemNavNotFound.mapName)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameInfo.mapName)
 }
-inline ::std::string* SystemNavNotFound::mutable_mapname() {
+inline ::std::string* GameInfo::mutable_mapname() {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemNavNotFound.mapName)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameInfo.mapName)
   return mapname_;
 }
-inline ::std::string* SystemNavNotFound::release_mapname() {
+inline ::std::string* GameInfo::release_mapname() {
   clear_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2047,7 +2164,7 @@ inline ::std::string* SystemNavNotFound::release_mapname() {
     return temp;
   }
 }
-inline void SystemNavNotFound::set_allocated_mapname(::std::string* mapname) {
+inline void GameInfo::set_allocated_mapname(::std::string* mapname) {
   if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete mapname_;
   }
@@ -2058,66 +2175,66 @@ inline void SystemNavNotFound::set_allocated_mapname(::std::string* mapname) {
     clear_has_mapname();
     mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemNavNotFound.mapName)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameInfo.mapName)
 }
 
 // -------------------------------------------------------------------
 
-// SystemNavAutoDownloaded
+// GameNavNotFound
 
 // required string mapName = 1;
-inline bool SystemNavAutoDownloaded::has_mapname() const {
+inline bool GameNavNotFound::has_mapname() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemNavAutoDownloaded::set_has_mapname() {
+inline void GameNavNotFound::set_has_mapname() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemNavAutoDownloaded::clear_has_mapname() {
+inline void GameNavNotFound::clear_has_mapname() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemNavAutoDownloaded::clear_mapname() {
+inline void GameNavNotFound::clear_mapname() {
   if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_->clear();
   }
   clear_has_mapname();
 }
-inline const ::std::string& SystemNavAutoDownloaded::mapname() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemNavAutoDownloaded.mapName)
+inline const ::std::string& GameNavNotFound::mapname() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameNavNotFound.mapName)
   return *mapname_;
 }
-inline void SystemNavAutoDownloaded::set_mapname(const ::std::string& value) {
+inline void GameNavNotFound::set_mapname(const ::std::string& value) {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
   mapname_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemNavAutoDownloaded.mapName)
+  // @@protoc_insertion_point(field_set:Analytics.GameNavNotFound.mapName)
 }
-inline void SystemNavAutoDownloaded::set_mapname(const char* value) {
+inline void GameNavNotFound::set_mapname(const char* value) {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
   mapname_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemNavAutoDownloaded.mapName)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameNavNotFound.mapName)
 }
-inline void SystemNavAutoDownloaded::set_mapname(const char* value, size_t size) {
+inline void GameNavNotFound::set_mapname(const char* value, size_t size) {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
   mapname_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemNavAutoDownloaded.mapName)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameNavNotFound.mapName)
 }
-inline ::std::string* SystemNavAutoDownloaded::mutable_mapname() {
+inline ::std::string* GameNavNotFound::mutable_mapname() {
   set_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     mapname_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemNavAutoDownloaded.mapName)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameNavNotFound.mapName)
   return mapname_;
 }
-inline ::std::string* SystemNavAutoDownloaded::release_mapname() {
+inline ::std::string* GameNavNotFound::release_mapname() {
   clear_has_mapname();
   if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2127,7 +2244,7 @@ inline ::std::string* SystemNavAutoDownloaded::release_mapname() {
     return temp;
   }
 }
-inline void SystemNavAutoDownloaded::set_allocated_mapname(::std::string* mapname) {
+inline void GameNavNotFound::set_allocated_mapname(::std::string* mapname) {
   if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete mapname_;
   }
@@ -2138,66 +2255,146 @@ inline void SystemNavAutoDownloaded::set_allocated_mapname(::std::string* mapnam
     clear_has_mapname();
     mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemNavAutoDownloaded.mapName)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameNavNotFound.mapName)
 }
 
 // -------------------------------------------------------------------
 
-// SystemAssert
+// GameNavAutoDownloaded
+
+// required string mapName = 1;
+inline bool GameNavAutoDownloaded::has_mapname() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void GameNavAutoDownloaded::set_has_mapname() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void GameNavAutoDownloaded::clear_has_mapname() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void GameNavAutoDownloaded::clear_mapname() {
+  if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    mapname_->clear();
+  }
+  clear_has_mapname();
+}
+inline const ::std::string& GameNavAutoDownloaded::mapname() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameNavAutoDownloaded.mapName)
+  return *mapname_;
+}
+inline void GameNavAutoDownloaded::set_mapname(const ::std::string& value) {
+  set_has_mapname();
+  if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    mapname_ = new ::std::string;
+  }
+  mapname_->assign(value);
+  // @@protoc_insertion_point(field_set:Analytics.GameNavAutoDownloaded.mapName)
+}
+inline void GameNavAutoDownloaded::set_mapname(const char* value) {
+  set_has_mapname();
+  if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    mapname_ = new ::std::string;
+  }
+  mapname_->assign(value);
+  // @@protoc_insertion_point(field_set_char:Analytics.GameNavAutoDownloaded.mapName)
+}
+inline void GameNavAutoDownloaded::set_mapname(const char* value, size_t size) {
+  set_has_mapname();
+  if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    mapname_ = new ::std::string;
+  }
+  mapname_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameNavAutoDownloaded.mapName)
+}
+inline ::std::string* GameNavAutoDownloaded::mutable_mapname() {
+  set_has_mapname();
+  if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    mapname_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:Analytics.GameNavAutoDownloaded.mapName)
+  return mapname_;
+}
+inline ::std::string* GameNavAutoDownloaded::release_mapname() {
+  clear_has_mapname();
+  if (mapname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = mapname_;
+    mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GameNavAutoDownloaded::set_allocated_mapname(::std::string* mapname) {
+  if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete mapname_;
+  }
+  if (mapname) {
+    set_has_mapname();
+    mapname_ = mapname;
+  } else {
+    clear_has_mapname();
+    mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameNavAutoDownloaded.mapName)
+}
+
+// -------------------------------------------------------------------
+
+// GameAssert
 
 // required string condition = 1;
-inline bool SystemAssert::has_condition() const {
+inline bool GameAssert::has_condition() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemAssert::set_has_condition() {
+inline void GameAssert::set_has_condition() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemAssert::clear_has_condition() {
+inline void GameAssert::clear_has_condition() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemAssert::clear_condition() {
+inline void GameAssert::clear_condition() {
   if (condition_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     condition_->clear();
   }
   clear_has_condition();
 }
-inline const ::std::string& SystemAssert::condition() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemAssert.condition)
+inline const ::std::string& GameAssert::condition() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameAssert.condition)
   return *condition_;
 }
-inline void SystemAssert::set_condition(const ::std::string& value) {
+inline void GameAssert::set_condition(const ::std::string& value) {
   set_has_condition();
   if (condition_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     condition_ = new ::std::string;
   }
   condition_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemAssert.condition)
+  // @@protoc_insertion_point(field_set:Analytics.GameAssert.condition)
 }
-inline void SystemAssert::set_condition(const char* value) {
+inline void GameAssert::set_condition(const char* value) {
   set_has_condition();
   if (condition_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     condition_ = new ::std::string;
   }
   condition_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemAssert.condition)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameAssert.condition)
 }
-inline void SystemAssert::set_condition(const char* value, size_t size) {
+inline void GameAssert::set_condition(const char* value, size_t size) {
   set_has_condition();
   if (condition_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     condition_ = new ::std::string;
   }
   condition_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemAssert.condition)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameAssert.condition)
 }
-inline ::std::string* SystemAssert::mutable_condition() {
+inline ::std::string* GameAssert::mutable_condition() {
   set_has_condition();
   if (condition_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     condition_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemAssert.condition)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameAssert.condition)
   return condition_;
 }
-inline ::std::string* SystemAssert::release_condition() {
+inline ::std::string* GameAssert::release_condition() {
   clear_has_condition();
   if (condition_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2207,7 +2404,7 @@ inline ::std::string* SystemAssert::release_condition() {
     return temp;
   }
 }
-inline void SystemAssert::set_allocated_condition(::std::string* condition) {
+inline void GameAssert::set_allocated_condition(::std::string* condition) {
   if (condition_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete condition_;
   }
@@ -2218,62 +2415,62 @@ inline void SystemAssert::set_allocated_condition(::std::string* condition) {
     clear_has_condition();
     condition_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemAssert.condition)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameAssert.condition)
 }
 
 // optional string file = 2;
-inline bool SystemAssert::has_file() const {
+inline bool GameAssert::has_file() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void SystemAssert::set_has_file() {
+inline void GameAssert::set_has_file() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void SystemAssert::clear_has_file() {
+inline void GameAssert::clear_has_file() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void SystemAssert::clear_file() {
+inline void GameAssert::clear_file() {
   if (file_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     file_->clear();
   }
   clear_has_file();
 }
-inline const ::std::string& SystemAssert::file() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemAssert.file)
+inline const ::std::string& GameAssert::file() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameAssert.file)
   return *file_;
 }
-inline void SystemAssert::set_file(const ::std::string& value) {
+inline void GameAssert::set_file(const ::std::string& value) {
   set_has_file();
   if (file_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     file_ = new ::std::string;
   }
   file_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemAssert.file)
+  // @@protoc_insertion_point(field_set:Analytics.GameAssert.file)
 }
-inline void SystemAssert::set_file(const char* value) {
+inline void GameAssert::set_file(const char* value) {
   set_has_file();
   if (file_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     file_ = new ::std::string;
   }
   file_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemAssert.file)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameAssert.file)
 }
-inline void SystemAssert::set_file(const char* value, size_t size) {
+inline void GameAssert::set_file(const char* value, size_t size) {
   set_has_file();
   if (file_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     file_ = new ::std::string;
   }
   file_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemAssert.file)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameAssert.file)
 }
-inline ::std::string* SystemAssert::mutable_file() {
+inline ::std::string* GameAssert::mutable_file() {
   set_has_file();
   if (file_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     file_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemAssert.file)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameAssert.file)
   return file_;
 }
-inline ::std::string* SystemAssert::release_file() {
+inline ::std::string* GameAssert::release_file() {
   clear_has_file();
   if (file_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2283,7 +2480,7 @@ inline ::std::string* SystemAssert::release_file() {
     return temp;
   }
 }
-inline void SystemAssert::set_allocated_file(::std::string* file) {
+inline void GameAssert::set_allocated_file(::std::string* file) {
   if (file_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete file_;
   }
@@ -2294,90 +2491,90 @@ inline void SystemAssert::set_allocated_file(::std::string* file) {
     clear_has_file();
     file_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemAssert.file)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameAssert.file)
 }
 
 // optional int32 line = 3;
-inline bool SystemAssert::has_line() const {
+inline bool GameAssert::has_line() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void SystemAssert::set_has_line() {
+inline void GameAssert::set_has_line() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void SystemAssert::clear_has_line() {
+inline void GameAssert::clear_has_line() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void SystemAssert::clear_line() {
+inline void GameAssert::clear_line() {
   line_ = 0;
   clear_has_line();
 }
-inline ::google::protobuf::int32 SystemAssert::line() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemAssert.line)
+inline ::google::protobuf::int32 GameAssert::line() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameAssert.line)
   return line_;
 }
-inline void SystemAssert::set_line(::google::protobuf::int32 value) {
+inline void GameAssert::set_line(::google::protobuf::int32 value) {
   set_has_line();
   line_ = value;
-  // @@protoc_insertion_point(field_set:Analytics.SystemAssert.line)
+  // @@protoc_insertion_point(field_set:Analytics.GameAssert.line)
 }
 
 // -------------------------------------------------------------------
 
-// SystemCrash
+// GameCrash
 
 // required string info = 1;
-inline bool SystemCrash::has_info() const {
+inline bool GameCrash::has_info() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemCrash::set_has_info() {
+inline void GameCrash::set_has_info() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemCrash::clear_has_info() {
+inline void GameCrash::clear_has_info() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemCrash::clear_info() {
+inline void GameCrash::clear_info() {
   if (info_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     info_->clear();
   }
   clear_has_info();
 }
-inline const ::std::string& SystemCrash::info() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemCrash.info)
+inline const ::std::string& GameCrash::info() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameCrash.info)
   return *info_;
 }
-inline void SystemCrash::set_info(const ::std::string& value) {
+inline void GameCrash::set_info(const ::std::string& value) {
   set_has_info();
   if (info_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     info_ = new ::std::string;
   }
   info_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemCrash.info)
+  // @@protoc_insertion_point(field_set:Analytics.GameCrash.info)
 }
-inline void SystemCrash::set_info(const char* value) {
+inline void GameCrash::set_info(const char* value) {
   set_has_info();
   if (info_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     info_ = new ::std::string;
   }
   info_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemCrash.info)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameCrash.info)
 }
-inline void SystemCrash::set_info(const char* value, size_t size) {
+inline void GameCrash::set_info(const char* value, size_t size) {
   set_has_info();
   if (info_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     info_ = new ::std::string;
   }
   info_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemCrash.info)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameCrash.info)
 }
-inline ::std::string* SystemCrash::mutable_info() {
+inline ::std::string* GameCrash::mutable_info() {
   set_has_info();
   if (info_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     info_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemCrash.info)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameCrash.info)
   return info_;
 }
-inline ::std::string* SystemCrash::release_info() {
+inline ::std::string* GameCrash::release_info() {
   clear_has_info();
   if (info_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2387,7 +2584,7 @@ inline ::std::string* SystemCrash::release_info() {
     return temp;
   }
 }
-inline void SystemCrash::set_allocated_info(::std::string* info) {
+inline void GameCrash::set_allocated_info(::std::string* info) {
   if (info_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete info_;
   }
@@ -2398,91 +2595,91 @@ inline void SystemCrash::set_allocated_info(::std::string* info) {
     clear_has_info();
     info_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemCrash.info)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameCrash.info)
 }
 
 // -------------------------------------------------------------------
 
-// SystemModelData
+// GameModelData
 
 // optional .Analytics.Compression compressionType = 1 [default = Compression_None];
-inline bool SystemModelData::has_compressiontype() const {
+inline bool GameModelData::has_compressiontype() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void SystemModelData::set_has_compressiontype() {
+inline void GameModelData::set_has_compressiontype() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void SystemModelData::clear_has_compressiontype() {
+inline void GameModelData::clear_has_compressiontype() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void SystemModelData::clear_compressiontype() {
+inline void GameModelData::clear_compressiontype() {
   compressiontype_ = 0;
   clear_has_compressiontype();
 }
-inline ::Analytics::Compression SystemModelData::compressiontype() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemModelData.compressionType)
+inline ::Analytics::Compression GameModelData::compressiontype() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameModelData.compressionType)
   return static_cast< ::Analytics::Compression >(compressiontype_);
 }
-inline void SystemModelData::set_compressiontype(::Analytics::Compression value) {
+inline void GameModelData::set_compressiontype(::Analytics::Compression value) {
   assert(::Analytics::Compression_IsValid(value));
   set_has_compressiontype();
   compressiontype_ = value;
-  // @@protoc_insertion_point(field_set:Analytics.SystemModelData.compressionType)
+  // @@protoc_insertion_point(field_set:Analytics.GameModelData.compressionType)
 }
 
 // required string modelName = 2;
-inline bool SystemModelData::has_modelname() const {
+inline bool GameModelData::has_modelname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void SystemModelData::set_has_modelname() {
+inline void GameModelData::set_has_modelname() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void SystemModelData::clear_has_modelname() {
+inline void GameModelData::clear_has_modelname() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void SystemModelData::clear_modelname() {
+inline void GameModelData::clear_modelname() {
   if (modelname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelname_->clear();
   }
   clear_has_modelname();
 }
-inline const ::std::string& SystemModelData::modelname() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemModelData.modelName)
+inline const ::std::string& GameModelData::modelname() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameModelData.modelName)
   return *modelname_;
 }
-inline void SystemModelData::set_modelname(const ::std::string& value) {
+inline void GameModelData::set_modelname(const ::std::string& value) {
   set_has_modelname();
   if (modelname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelname_ = new ::std::string;
   }
   modelname_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemModelData.modelName)
+  // @@protoc_insertion_point(field_set:Analytics.GameModelData.modelName)
 }
-inline void SystemModelData::set_modelname(const char* value) {
+inline void GameModelData::set_modelname(const char* value) {
   set_has_modelname();
   if (modelname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelname_ = new ::std::string;
   }
   modelname_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemModelData.modelName)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameModelData.modelName)
 }
-inline void SystemModelData::set_modelname(const char* value, size_t size) {
+inline void GameModelData::set_modelname(const char* value, size_t size) {
   set_has_modelname();
   if (modelname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelname_ = new ::std::string;
   }
   modelname_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemModelData.modelName)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameModelData.modelName)
 }
-inline ::std::string* SystemModelData::mutable_modelname() {
+inline ::std::string* GameModelData::mutable_modelname() {
   set_has_modelname();
   if (modelname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelname_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemModelData.modelName)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameModelData.modelName)
   return modelname_;
 }
-inline ::std::string* SystemModelData::release_modelname() {
+inline ::std::string* GameModelData::release_modelname() {
   clear_has_modelname();
   if (modelname_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2492,7 +2689,7 @@ inline ::std::string* SystemModelData::release_modelname() {
     return temp;
   }
 }
-inline void SystemModelData::set_allocated_modelname(::std::string* modelname) {
+inline void GameModelData::set_allocated_modelname(::std::string* modelname) {
   if (modelname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete modelname_;
   }
@@ -2503,62 +2700,62 @@ inline void SystemModelData::set_allocated_modelname(::std::string* modelname) {
     clear_has_modelname();
     modelname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemModelData.modelName)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameModelData.modelName)
 }
 
 // required bytes modelBytes = 3;
-inline bool SystemModelData::has_modelbytes() const {
+inline bool GameModelData::has_modelbytes() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void SystemModelData::set_has_modelbytes() {
+inline void GameModelData::set_has_modelbytes() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void SystemModelData::clear_has_modelbytes() {
+inline void GameModelData::clear_has_modelbytes() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void SystemModelData::clear_modelbytes() {
+inline void GameModelData::clear_modelbytes() {
   if (modelbytes_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelbytes_->clear();
   }
   clear_has_modelbytes();
 }
-inline const ::std::string& SystemModelData::modelbytes() const {
-  // @@protoc_insertion_point(field_get:Analytics.SystemModelData.modelBytes)
+inline const ::std::string& GameModelData::modelbytes() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameModelData.modelBytes)
   return *modelbytes_;
 }
-inline void SystemModelData::set_modelbytes(const ::std::string& value) {
+inline void GameModelData::set_modelbytes(const ::std::string& value) {
   set_has_modelbytes();
   if (modelbytes_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelbytes_ = new ::std::string;
   }
   modelbytes_->assign(value);
-  // @@protoc_insertion_point(field_set:Analytics.SystemModelData.modelBytes)
+  // @@protoc_insertion_point(field_set:Analytics.GameModelData.modelBytes)
 }
-inline void SystemModelData::set_modelbytes(const char* value) {
+inline void GameModelData::set_modelbytes(const char* value) {
   set_has_modelbytes();
   if (modelbytes_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelbytes_ = new ::std::string;
   }
   modelbytes_->assign(value);
-  // @@protoc_insertion_point(field_set_char:Analytics.SystemModelData.modelBytes)
+  // @@protoc_insertion_point(field_set_char:Analytics.GameModelData.modelBytes)
 }
-inline void SystemModelData::set_modelbytes(const void* value, size_t size) {
+inline void GameModelData::set_modelbytes(const void* value, size_t size) {
   set_has_modelbytes();
   if (modelbytes_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelbytes_ = new ::std::string;
   }
   modelbytes_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Analytics.SystemModelData.modelBytes)
+  // @@protoc_insertion_point(field_set_pointer:Analytics.GameModelData.modelBytes)
 }
-inline ::std::string* SystemModelData::mutable_modelbytes() {
+inline ::std::string* GameModelData::mutable_modelbytes() {
   set_has_modelbytes();
   if (modelbytes_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     modelbytes_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:Analytics.SystemModelData.modelBytes)
+  // @@protoc_insertion_point(field_mutable:Analytics.GameModelData.modelBytes)
   return modelbytes_;
 }
-inline ::std::string* SystemModelData::release_modelbytes() {
+inline ::std::string* GameModelData::release_modelbytes() {
   clear_has_modelbytes();
   if (modelbytes_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
@@ -2568,7 +2765,7 @@ inline ::std::string* SystemModelData::release_modelbytes() {
     return temp;
   }
 }
-inline void SystemModelData::set_allocated_modelbytes(::std::string* modelbytes) {
+inline void GameModelData::set_allocated_modelbytes(::std::string* modelbytes) {
   if (modelbytes_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete modelbytes_;
   }
@@ -2579,7 +2776,31 @@ inline void SystemModelData::set_allocated_modelbytes(::std::string* modelbytes)
     clear_has_modelbytes();
     modelbytes_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
-  // @@protoc_insertion_point(field_set_allocated:Analytics.SystemModelData.modelBytes)
+  // @@protoc_insertion_point(field_set_allocated:Analytics.GameModelData.modelBytes)
+}
+
+// optional uint32 modelBytesUncompressed = 4;
+inline bool GameModelData::has_modelbytesuncompressed() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GameModelData::set_has_modelbytesuncompressed() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GameModelData::clear_has_modelbytesuncompressed() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GameModelData::clear_modelbytesuncompressed() {
+  modelbytesuncompressed_ = 0u;
+  clear_has_modelbytesuncompressed();
+}
+inline ::google::protobuf::uint32 GameModelData::modelbytesuncompressed() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameModelData.modelBytesUncompressed)
+  return modelbytesuncompressed_;
+}
+inline void GameModelData::set_modelbytesuncompressed(::google::protobuf::uint32 value) {
+  set_has_modelbytesuncompressed();
+  modelbytesuncompressed_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameModelData.modelBytesUncompressed)
 }
 
 // -------------------------------------------------------------------
@@ -3142,7 +3363,7 @@ inline void GameWeaponFired::set_weaponid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.weaponId)
 }
 
-// required float positionX = 2;
+// optional float positionX = 2;
 inline bool GameWeaponFired::has_positionx() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -3166,7 +3387,7 @@ inline void GameWeaponFired::set_positionx(float value) {
   // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.positionX)
 }
 
-// required float positionY = 3;
+// optional float positionY = 3;
 inline bool GameWeaponFired::has_positiony() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -3190,7 +3411,7 @@ inline void GameWeaponFired::set_positiony(float value) {
   // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.positionY)
 }
 
-// required float positionZ = 4;
+// optional float positionZ = 4;
 inline bool GameWeaponFired::has_positionz() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -3214,25 +3435,49 @@ inline void GameWeaponFired::set_positionz(float value) {
   // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.positionZ)
 }
 
-// optional uint32 team = 5;
-inline bool GameWeaponFired::has_team() const {
+// optional uint32 fireMode = 5;
+inline bool GameWeaponFired::has_firemode() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void GameWeaponFired::set_has_team() {
+inline void GameWeaponFired::set_has_firemode() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void GameWeaponFired::clear_has_team() {
+inline void GameWeaponFired::clear_has_firemode() {
   _has_bits_[0] &= ~0x00000010u;
 }
+inline void GameWeaponFired::clear_firemode() {
+  firemode_ = 0u;
+  clear_has_firemode();
+}
+inline ::google::protobuf::uint32 GameWeaponFired::firemode() const {
+  // @@protoc_insertion_point(field_get:Analytics.GameWeaponFired.fireMode)
+  return firemode_;
+}
+inline void GameWeaponFired::set_firemode(::google::protobuf::uint32 value) {
+  set_has_firemode();
+  firemode_ = value;
+  // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.fireMode)
+}
+
+// optional int32 team = 6;
+inline bool GameWeaponFired::has_team() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void GameWeaponFired::set_has_team() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void GameWeaponFired::clear_has_team() {
+  _has_bits_[0] &= ~0x00000020u;
+}
 inline void GameWeaponFired::clear_team() {
-  team_ = 0u;
+  team_ = 0;
   clear_has_team();
 }
-inline ::google::protobuf::uint32 GameWeaponFired::team() const {
+inline ::google::protobuf::int32 GameWeaponFired::team() const {
   // @@protoc_insertion_point(field_get:Analytics.GameWeaponFired.team)
   return team_;
 }
-inline void GameWeaponFired::set_team(::google::protobuf::uint32 value) {
+inline void GameWeaponFired::set_team(::google::protobuf::int32 value) {
   set_has_team();
   team_ = value;
   // @@protoc_insertion_point(field_set:Analytics.GameWeaponFired.team)
@@ -3590,50 +3835,93 @@ inline void MessageUnion::set_timestamp(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:Analytics.MessageUnion.timestamp)
 }
 
-// optional .Analytics.SystemNavNotFound systemNavNotFound = 2;
-inline bool MessageUnion::has_systemnavnotfound() const {
-  return msg_case() == kSystemNavNotFound;
+// optional .Analytics.GameInfo gameInfo = 9;
+inline bool MessageUnion::has_gameinfo() const {
+  return msg_case() == kGameInfo;
 }
-inline void MessageUnion::set_has_systemnavnotfound() {
-  _oneof_case_[0] = kSystemNavNotFound;
+inline void MessageUnion::set_has_gameinfo() {
+  _oneof_case_[0] = kGameInfo;
 }
-inline void MessageUnion::clear_systemnavnotfound() {
-  if (has_systemnavnotfound()) {
-    delete msg_.systemnavnotfound_;
+inline void MessageUnion::clear_gameinfo() {
+  if (has_gameinfo()) {
+    delete msg_.gameinfo_;
     clear_has_msg();
   }
 }
-inline const ::Analytics::SystemNavNotFound& MessageUnion::systemnavnotfound() const {
-  return has_systemnavnotfound() ? *msg_.systemnavnotfound_
-                      : ::Analytics::SystemNavNotFound::default_instance();
+inline const ::Analytics::GameInfo& MessageUnion::gameinfo() const {
+  return has_gameinfo() ? *msg_.gameinfo_
+                      : ::Analytics::GameInfo::default_instance();
 }
-inline ::Analytics::SystemNavNotFound* MessageUnion::mutable_systemnavnotfound() {
-  if (!has_systemnavnotfound()) {
+inline ::Analytics::GameInfo* MessageUnion::mutable_gameinfo() {
+  if (!has_gameinfo()) {
     clear_msg();
-    set_has_systemnavnotfound();
-    msg_.systemnavnotfound_ = new ::Analytics::SystemNavNotFound;
+    set_has_gameinfo();
+    msg_.gameinfo_ = new ::Analytics::GameInfo;
   }
-  return msg_.systemnavnotfound_;
+  return msg_.gameinfo_;
 }
-inline ::Analytics::SystemNavNotFound* MessageUnion::release_systemnavnotfound() {
-  if (has_systemnavnotfound()) {
+inline ::Analytics::GameInfo* MessageUnion::release_gameinfo() {
+  if (has_gameinfo()) {
     clear_has_msg();
-    ::Analytics::SystemNavNotFound* temp = msg_.systemnavnotfound_;
-    msg_.systemnavnotfound_ = NULL;
+    ::Analytics::GameInfo* temp = msg_.gameinfo_;
+    msg_.gameinfo_ = NULL;
     return temp;
   } else {
     return NULL;
   }
 }
-inline void MessageUnion::set_allocated_systemnavnotfound(::Analytics::SystemNavNotFound* systemnavnotfound) {
+inline void MessageUnion::set_allocated_gameinfo(::Analytics::GameInfo* gameinfo) {
   clear_msg();
-  if (systemnavnotfound) {
-    set_has_systemnavnotfound();
-    msg_.systemnavnotfound_ = systemnavnotfound;
+  if (gameinfo) {
+    set_has_gameinfo();
+    msg_.gameinfo_ = gameinfo;
   }
 }
 
-// optional .Analytics.SystemNavAutoDownloaded systemNavDownloaded = 3;
+// optional .Analytics.GameNavNotFound gameNavNotFound = 10;
+inline bool MessageUnion::has_gamenavnotfound() const {
+  return msg_case() == kGameNavNotFound;
+}
+inline void MessageUnion::set_has_gamenavnotfound() {
+  _oneof_case_[0] = kGameNavNotFound;
+}
+inline void MessageUnion::clear_gamenavnotfound() {
+  if (has_gamenavnotfound()) {
+    delete msg_.gamenavnotfound_;
+    clear_has_msg();
+  }
+}
+inline const ::Analytics::GameNavNotFound& MessageUnion::gamenavnotfound() const {
+  return has_gamenavnotfound() ? *msg_.gamenavnotfound_
+                      : ::Analytics::GameNavNotFound::default_instance();
+}
+inline ::Analytics::GameNavNotFound* MessageUnion::mutable_gamenavnotfound() {
+  if (!has_gamenavnotfound()) {
+    clear_msg();
+    set_has_gamenavnotfound();
+    msg_.gamenavnotfound_ = new ::Analytics::GameNavNotFound;
+  }
+  return msg_.gamenavnotfound_;
+}
+inline ::Analytics::GameNavNotFound* MessageUnion::release_gamenavnotfound() {
+  if (has_gamenavnotfound()) {
+    clear_has_msg();
+    ::Analytics::GameNavNotFound* temp = msg_.gamenavnotfound_;
+    msg_.gamenavnotfound_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline void MessageUnion::set_allocated_gamenavnotfound(::Analytics::GameNavNotFound* gamenavnotfound) {
+  clear_msg();
+  if (gamenavnotfound) {
+    set_has_gamenavnotfound();
+    msg_.gamenavnotfound_ = gamenavnotfound;
+  }
+}
+
+// optional .Analytics.GameNavAutoDownloaded systemNavDownloaded = 11;
 inline bool MessageUnion::has_systemnavdownloaded() const {
   return msg_case() == kSystemNavDownloaded;
 }
@@ -3646,29 +3934,29 @@ inline void MessageUnion::clear_systemnavdownloaded() {
     clear_has_msg();
   }
 }
-inline const ::Analytics::SystemNavAutoDownloaded& MessageUnion::systemnavdownloaded() const {
+inline const ::Analytics::GameNavAutoDownloaded& MessageUnion::systemnavdownloaded() const {
   return has_systemnavdownloaded() ? *msg_.systemnavdownloaded_
-                      : ::Analytics::SystemNavAutoDownloaded::default_instance();
+                      : ::Analytics::GameNavAutoDownloaded::default_instance();
 }
-inline ::Analytics::SystemNavAutoDownloaded* MessageUnion::mutable_systemnavdownloaded() {
+inline ::Analytics::GameNavAutoDownloaded* MessageUnion::mutable_systemnavdownloaded() {
   if (!has_systemnavdownloaded()) {
     clear_msg();
     set_has_systemnavdownloaded();
-    msg_.systemnavdownloaded_ = new ::Analytics::SystemNavAutoDownloaded;
+    msg_.systemnavdownloaded_ = new ::Analytics::GameNavAutoDownloaded;
   }
   return msg_.systemnavdownloaded_;
 }
-inline ::Analytics::SystemNavAutoDownloaded* MessageUnion::release_systemnavdownloaded() {
+inline ::Analytics::GameNavAutoDownloaded* MessageUnion::release_systemnavdownloaded() {
   if (has_systemnavdownloaded()) {
     clear_has_msg();
-    ::Analytics::SystemNavAutoDownloaded* temp = msg_.systemnavdownloaded_;
+    ::Analytics::GameNavAutoDownloaded* temp = msg_.systemnavdownloaded_;
     msg_.systemnavdownloaded_ = NULL;
     return temp;
   } else {
     return NULL;
   }
 }
-inline void MessageUnion::set_allocated_systemnavdownloaded(::Analytics::SystemNavAutoDownloaded* systemnavdownloaded) {
+inline void MessageUnion::set_allocated_systemnavdownloaded(::Analytics::GameNavAutoDownloaded* systemnavdownloaded) {
   clear_msg();
   if (systemnavdownloaded) {
     set_has_systemnavdownloaded();
@@ -3676,132 +3964,132 @@ inline void MessageUnion::set_allocated_systemnavdownloaded(::Analytics::SystemN
   }
 }
 
-// optional .Analytics.SystemAssert systemAssert = 4;
-inline bool MessageUnion::has_systemassert() const {
-  return msg_case() == kSystemAssert;
+// optional .Analytics.GameAssert gameAssert = 12;
+inline bool MessageUnion::has_gameassert() const {
+  return msg_case() == kGameAssert;
 }
-inline void MessageUnion::set_has_systemassert() {
-  _oneof_case_[0] = kSystemAssert;
+inline void MessageUnion::set_has_gameassert() {
+  _oneof_case_[0] = kGameAssert;
 }
-inline void MessageUnion::clear_systemassert() {
-  if (has_systemassert()) {
-    delete msg_.systemassert_;
+inline void MessageUnion::clear_gameassert() {
+  if (has_gameassert()) {
+    delete msg_.gameassert_;
     clear_has_msg();
   }
 }
-inline const ::Analytics::SystemAssert& MessageUnion::systemassert() const {
-  return has_systemassert() ? *msg_.systemassert_
-                      : ::Analytics::SystemAssert::default_instance();
+inline const ::Analytics::GameAssert& MessageUnion::gameassert() const {
+  return has_gameassert() ? *msg_.gameassert_
+                      : ::Analytics::GameAssert::default_instance();
 }
-inline ::Analytics::SystemAssert* MessageUnion::mutable_systemassert() {
-  if (!has_systemassert()) {
+inline ::Analytics::GameAssert* MessageUnion::mutable_gameassert() {
+  if (!has_gameassert()) {
     clear_msg();
-    set_has_systemassert();
-    msg_.systemassert_ = new ::Analytics::SystemAssert;
+    set_has_gameassert();
+    msg_.gameassert_ = new ::Analytics::GameAssert;
   }
-  return msg_.systemassert_;
+  return msg_.gameassert_;
 }
-inline ::Analytics::SystemAssert* MessageUnion::release_systemassert() {
-  if (has_systemassert()) {
+inline ::Analytics::GameAssert* MessageUnion::release_gameassert() {
+  if (has_gameassert()) {
     clear_has_msg();
-    ::Analytics::SystemAssert* temp = msg_.systemassert_;
-    msg_.systemassert_ = NULL;
+    ::Analytics::GameAssert* temp = msg_.gameassert_;
+    msg_.gameassert_ = NULL;
     return temp;
   } else {
     return NULL;
   }
 }
-inline void MessageUnion::set_allocated_systemassert(::Analytics::SystemAssert* systemassert) {
+inline void MessageUnion::set_allocated_gameassert(::Analytics::GameAssert* gameassert) {
   clear_msg();
-  if (systemassert) {
-    set_has_systemassert();
-    msg_.systemassert_ = systemassert;
+  if (gameassert) {
+    set_has_gameassert();
+    msg_.gameassert_ = gameassert;
   }
 }
 
-// optional .Analytics.SystemCrash systemCrash = 5;
-inline bool MessageUnion::has_systemcrash() const {
-  return msg_case() == kSystemCrash;
+// optional .Analytics.GameCrash gameCrash = 13;
+inline bool MessageUnion::has_gamecrash() const {
+  return msg_case() == kGameCrash;
 }
-inline void MessageUnion::set_has_systemcrash() {
-  _oneof_case_[0] = kSystemCrash;
+inline void MessageUnion::set_has_gamecrash() {
+  _oneof_case_[0] = kGameCrash;
 }
-inline void MessageUnion::clear_systemcrash() {
-  if (has_systemcrash()) {
-    delete msg_.systemcrash_;
+inline void MessageUnion::clear_gamecrash() {
+  if (has_gamecrash()) {
+    delete msg_.gamecrash_;
     clear_has_msg();
   }
 }
-inline const ::Analytics::SystemCrash& MessageUnion::systemcrash() const {
-  return has_systemcrash() ? *msg_.systemcrash_
-                      : ::Analytics::SystemCrash::default_instance();
+inline const ::Analytics::GameCrash& MessageUnion::gamecrash() const {
+  return has_gamecrash() ? *msg_.gamecrash_
+                      : ::Analytics::GameCrash::default_instance();
 }
-inline ::Analytics::SystemCrash* MessageUnion::mutable_systemcrash() {
-  if (!has_systemcrash()) {
+inline ::Analytics::GameCrash* MessageUnion::mutable_gamecrash() {
+  if (!has_gamecrash()) {
     clear_msg();
-    set_has_systemcrash();
-    msg_.systemcrash_ = new ::Analytics::SystemCrash;
+    set_has_gamecrash();
+    msg_.gamecrash_ = new ::Analytics::GameCrash;
   }
-  return msg_.systemcrash_;
+  return msg_.gamecrash_;
 }
-inline ::Analytics::SystemCrash* MessageUnion::release_systemcrash() {
-  if (has_systemcrash()) {
+inline ::Analytics::GameCrash* MessageUnion::release_gamecrash() {
+  if (has_gamecrash()) {
     clear_has_msg();
-    ::Analytics::SystemCrash* temp = msg_.systemcrash_;
-    msg_.systemcrash_ = NULL;
+    ::Analytics::GameCrash* temp = msg_.gamecrash_;
+    msg_.gamecrash_ = NULL;
     return temp;
   } else {
     return NULL;
   }
 }
-inline void MessageUnion::set_allocated_systemcrash(::Analytics::SystemCrash* systemcrash) {
+inline void MessageUnion::set_allocated_gamecrash(::Analytics::GameCrash* gamecrash) {
   clear_msg();
-  if (systemcrash) {
-    set_has_systemcrash();
-    msg_.systemcrash_ = systemcrash;
+  if (gamecrash) {
+    set_has_gamecrash();
+    msg_.gamecrash_ = gamecrash;
   }
 }
 
-// optional .Analytics.SystemModelData systemModelData = 6;
-inline bool MessageUnion::has_systemmodeldata() const {
-  return msg_case() == kSystemModelData;
+// optional .Analytics.GameModelData gameModelData = 14;
+inline bool MessageUnion::has_gamemodeldata() const {
+  return msg_case() == kGameModelData;
 }
-inline void MessageUnion::set_has_systemmodeldata() {
-  _oneof_case_[0] = kSystemModelData;
+inline void MessageUnion::set_has_gamemodeldata() {
+  _oneof_case_[0] = kGameModelData;
 }
-inline void MessageUnion::clear_systemmodeldata() {
-  if (has_systemmodeldata()) {
-    delete msg_.systemmodeldata_;
+inline void MessageUnion::clear_gamemodeldata() {
+  if (has_gamemodeldata()) {
+    delete msg_.gamemodeldata_;
     clear_has_msg();
   }
 }
-inline const ::Analytics::SystemModelData& MessageUnion::systemmodeldata() const {
-  return has_systemmodeldata() ? *msg_.systemmodeldata_
-                      : ::Analytics::SystemModelData::default_instance();
+inline const ::Analytics::GameModelData& MessageUnion::gamemodeldata() const {
+  return has_gamemodeldata() ? *msg_.gamemodeldata_
+                      : ::Analytics::GameModelData::default_instance();
 }
-inline ::Analytics::SystemModelData* MessageUnion::mutable_systemmodeldata() {
-  if (!has_systemmodeldata()) {
+inline ::Analytics::GameModelData* MessageUnion::mutable_gamemodeldata() {
+  if (!has_gamemodeldata()) {
     clear_msg();
-    set_has_systemmodeldata();
-    msg_.systemmodeldata_ = new ::Analytics::SystemModelData;
+    set_has_gamemodeldata();
+    msg_.gamemodeldata_ = new ::Analytics::GameModelData;
   }
-  return msg_.systemmodeldata_;
+  return msg_.gamemodeldata_;
 }
-inline ::Analytics::SystemModelData* MessageUnion::release_systemmodeldata() {
-  if (has_systemmodeldata()) {
+inline ::Analytics::GameModelData* MessageUnion::release_gamemodeldata() {
+  if (has_gamemodeldata()) {
     clear_has_msg();
-    ::Analytics::SystemModelData* temp = msg_.systemmodeldata_;
-    msg_.systemmodeldata_ = NULL;
+    ::Analytics::GameModelData* temp = msg_.gamemodeldata_;
+    msg_.gamemodeldata_ = NULL;
     return temp;
   } else {
     return NULL;
   }
 }
-inline void MessageUnion::set_allocated_systemmodeldata(::Analytics::SystemModelData* systemmodeldata) {
+inline void MessageUnion::set_allocated_gamemodeldata(::Analytics::GameModelData* gamemodeldata) {
   clear_msg();
-  if (systemmodeldata) {
-    set_has_systemmodeldata();
-    msg_.systemmodeldata_ = systemmodeldata;
+  if (gamemodeldata) {
+    set_has_gamemodeldata();
+    msg_.gamemodeldata_ = gamemodeldata;
   }
 }
 

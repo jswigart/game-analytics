@@ -87,6 +87,9 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 
+#define FIELD_SET(m,fieldname,val) \
+		m->set_##fieldname(val);
+
 #define SMART_FIELD_SET(m,fieldname,val) \
 	if ( m->fieldname() != val ) \
 		m->set_##fieldname(val);
@@ -124,18 +127,8 @@ public:
 
 	void SetPublisher( AnalyticsPublisher * publisher );
 	AnalyticsPublisher * GetPublisher() const;
-
-	google::protobuf::int64 GetTimeStamp() const;
-
+	
 	void AddEvent( const Analytics::MessageUnion & msg );
-
-	void AddGameEvent( const char * areaId, const char * eventId );
-	void AddGameEvent( const char * areaId, const char * eventId, float value );
-	void AddGameEvent( const char * areaId, const char * eventId, const float * xyz );
-	void AddGameEvent( const char * areaId, const char * eventId, const float * xyz, float value );
-
-	void AddQualityEvent( const char * areaId, const char * eventId );
-	void AddQualityEvent( const char * areaId, const char * eventId, const char * messageId );
 
 	bool Poll( Analytics::MessageUnion & msgOut );
 
@@ -170,7 +163,8 @@ private:
 
 	typedef std::map<std::string, Heatmap*> HeatMapsByName;
 
-	typedef std::map<std::string, Analytics::MessageUnion> MsgCache;
+	typedef std::map<std::string, Analytics::MessageUnion> MsgKeyCache;
+	typedef std::map<int, MsgKeyCache> MessageCache;
 
 	ErrorCallbacks*				mErrorCallbacks;
 
@@ -180,7 +174,7 @@ private:
 
 	AnalyticsPublisher *		mPublisher;
 
-	MsgCache					mMessageCache;
+	MessageCache				mMessageCache;
 
 	const google::protobuf::OneofDescriptor* mMsgSubtypes;
 

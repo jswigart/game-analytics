@@ -10,13 +10,14 @@
     <SQLITE>$(DEPENDENCIES)\sqlite</SQLITE>
     <ENET>$(DEPENDENCIES)\enet-1.3.12</ENET>
     <fastlz>$(DEPENDENCIES)\fastlz</fastlz>
+    <ZEROMQ>$(DEPENDENCIES)\zeromq-4.1.3</ZEROMQ>
+    <LIBSODIUM>$(DEPENDENCIES)\libsodium</LIBSODIUM>
     <PROTOBUF>D:\git\protobuf</PROTOBUF>
-    <BOOST>D:\Sourcecode\boost_1_57_0</BOOST>
-    <ZEROMQ>D:\Sourcecode\zmq\zeromq-4.1.2</ZEROMQ>
-    <LIBSODIUM>D:\Sourcecode\zmq\libsodium</LIBSODIUM>
+    <BOOST>D:\Sourcecode\boost_1_60_0</BOOST>
   </PropertyGroup>
   <PropertyGroup>
-    <OutDir>$(SolutionDir)build/$(Configuration)/</OutDir>
+    <OutDir>$(SolutionDir)build\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -68,20 +69,20 @@
       <Value>$(fastlz)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="PROTOBUF">
-      <Value>$(PROTOBUF)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
-    <BuildMacro Include="BOOST">
-      <Value>$(BOOST)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
     <BuildMacro Include="ZEROMQ">
       <Value>$(ZEROMQ)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="LIBSODIUM">
       <Value>$(LIBSODIUM)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="PROTOBUF">
+      <Value>$(PROTOBUF)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="BOOST">
+      <Value>$(BOOST)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

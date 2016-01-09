@@ -6,7 +6,12 @@
 
 #include "sqlite3.h"
 
+#define CURL_ENABLE 1
+
+#if(CURL_ENABLE)
 #include "curl\curl.h" // libcurl, for sending http requests
+#endif
+
 #include "MD5.h"  // MD5 hashing algorithm
 
 #include <zmq.hpp>
@@ -16,25 +21,14 @@
 
 #undef GetMessage
 
-#ifdef CODE_ANALYSIS
-#include <CodeAnalysis\SourceAnnotations.h>
-#define CHECK_PRINTF_ARGS			[SA_FormatString(Style="printf")]
-#define CHECK_PARAM_VALID			[vc_attributes::Pre(Valid=vc_attributes::Yes)]
-#define CHECK_VALID_BYTES(parm)		[vc_attributes::Pre(ValidBytes=#parm)]
-#else
-#define CHECK_PRINTF_ARGS
-#define CHECK_PARAM_VALID
-#define CHECK_VALID_BYTES(parm)
-#endif
-
 // todo: CURLOPT_PROGRESSFUNCTION
 
 // Callback to take returned data and convert it to a string.
 // The last parameter is actually user-defined - it can be whatever
 //   type you want it to be.
-static int DataToString(char *data, size_t size, size_t nmemb, std::string * result)
+static size_t DataToString( char *data, size_t size, size_t nmemb, std::string * result )
 {
-	int count = 0;
+	size_t count = 0;
 	if (result)
 	{
 		// Data is in a character array, so just append it to the string.
@@ -49,7 +43,7 @@ public:
 	const char * c_str() const { return buffer; }
 	operator const char *() const { return buffer; }
 
-	vaAnalytics(CHECK_PRINTF_ARGS const char* msg, ...)
+	vaAnalytics( const char* msg, ... )
 	{
 		va_list list;
 		va_start(list, msg);
@@ -115,12 +109,18 @@ GameAnalytics::GameAnalytics( const Keys & keys, ErrorCallbacks* errorCbs )
 	, mDatabase( NULL )
 	, mPublisher( NULL )
 	, mErrorCallbacks( errorCbs )
+	, mMsgSubtypes( NULL )
 {
+#if(CURL_ENABLE)
     // Initialize libcurl.
     curl_global_init(CURL_GLOBAL_ALL);
+#endif
 
 	SetUserID();
 	SetSessionID();
+
+	// make a unique table for each event type
+	mMsgSubtypes = Analytics::MessageUnion::descriptor()->FindOneofByName( "msg" );
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -292,6 +292,7 @@ void GameAnalytics::SetSessionID()
 
 size_t GameAnalytics::SubmitDesignEvents()
 {
+#if(CURL_ENABLE)
 	std::stringstream query;
 	query << "SELECT * in events WHERE ()";
 
@@ -356,7 +357,7 @@ size_t GameAnalytics::SubmitDesignEvents()
 			return 0;
 		}
 	}
-
+#endif
 	const size_t eventsSubmitted = 0;
 	/*const size_t eventsSubmitted = mEventsDesign.size();
 	mEventsDesign.resize( 0 );*/
@@ -365,6 +366,7 @@ size_t GameAnalytics::SubmitDesignEvents()
 
 size_t GameAnalytics::SubmitQualityEvents()
 {
+#if(CURL_ENABLE)
 	/*if ( mEventsQuality.size() == 0 )
 		return 0;*/
 
@@ -426,6 +428,7 @@ size_t GameAnalytics::SubmitQualityEvents()
 			return 0;
 		}
 	}
+#endif
 
 	const size_t eventsSubmitted = 0;
 	/*const size_t eventsSubmitted = mEventsQuality.size();
@@ -454,6 +457,8 @@ const GameAnalytics::Heatmap * GameAnalytics::GetHeatmap( const std::string & ar
 
 	if ( !loadFromServer )
 		return NULL;
+
+#if(CURL_ENABLE)
 
 	// New CURL object.
 	CURL * curl = curl_easy_init();
@@ -548,6 +553,7 @@ const GameAnalytics::Heatmap * GameAnalytics::GetHeatmap( const std::string & ar
 		//	return newHeatMap;
 		//}
 	}
+#endif
 	return NULL;
 }
 
@@ -606,9 +612,6 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 
 	CheckSqliteError( sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 ) );
 
-	// make a unique table for each event type
-	mMsgSubtypes = Analytics::MessageUnion::descriptor()->FindOneofByName( "msg" );
-
 	for ( int i = 0; i < mMsgSubtypes->field_count(); ++i )
 	{
 		const google::protobuf::FieldDescriptor* fdesc = mMsgSubtypes->field( i );
@@ -662,134 +665,10 @@ void GameAnalytics::CloseDatabase()
 	sqlite3_close_v2( mDatabase );
 }
 
-void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId )
-{
-	if ( mDatabase != NULL && areaId != NULL && eventId != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventsGame ( areaId, eventId ) VALUES( ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, areaId, strlen( areaId ), NULL );
-			sqlite3_bind_text( statement, 2, eventId, strlen( eventId ), NULL );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
-void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId, float value )
-{
-	if ( mDatabase != NULL && areaId != NULL && eventId != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventsGame ( areaId, eventId, value ) VALUES( ?, ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, areaId, strlen( areaId ), NULL );
-			sqlite3_bind_text( statement, 2, eventId, strlen( eventId ), NULL );
-			sqlite3_bind_double( statement, 3, value );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
-void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId, const float * xyz )
-{
-	if ( mDatabase != NULL && areaId != NULL && eventId != NULL && xyz != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventsGame ( areaId, eventId, x, y, z ) VALUES( ?, ?, ?, ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, areaId, strlen( areaId ), NULL );
-			sqlite3_bind_text( statement, 2, eventId, strlen( eventId ), NULL );
-			sqlite3_bind_double( statement, 3, xyz[ 0 ] );
-			sqlite3_bind_double( statement, 4, xyz[ 1 ] );
-			sqlite3_bind_double( statement, 5, xyz[ 2 ] );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
-void GameAnalytics::AddGameEvent( const char * areaId, const char * eventId, const float * xyz, float value )
-{
-	if ( mDatabase != NULL && areaId != NULL && eventId != NULL && xyz != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventsGame ( areaId, eventId, x, y, z, value ) VALUES( ?, ?, ?, ?, ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, areaId, strlen( areaId ), NULL );
-			sqlite3_bind_text( statement, 2, eventId, strlen( eventId ), NULL );
-			sqlite3_bind_double( statement, 3, xyz[ 0 ] );
-			sqlite3_bind_double( statement, 4, xyz[ 1 ] );
-			sqlite3_bind_double( statement, 5, xyz[ 2 ] );
-			sqlite3_bind_double( statement, 6, value );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
-
-void GameAnalytics::AddQualityEvent( const char * areaId, const char * eventId )
-{
-	if ( mDatabase != NULL && areaId != NULL && eventId != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventsQuality ( areaId, eventId ) VALUES( ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, areaId, strlen( areaId ), NULL );
-			sqlite3_bind_text( statement, 2, eventId, strlen( eventId ), NULL );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
-void GameAnalytics::AddQualityEvent( const char * areaId, const char * eventId, const char * messageId )
-{
-	if ( mDatabase != NULL && areaId != NULL && eventId != NULL && messageId != NULL )
-	{
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, "INSERT into eventsQuality ( areaId, eventId, message ) VALUES( ?, ?, ? )", -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_text( statement, 1, areaId, strlen( areaId ), NULL );
-			sqlite3_bind_text( statement, 2, eventId, strlen( eventId ), NULL );
-			sqlite3_bind_text( statement, 3, messageId, strlen( messageId ), NULL );
-
-			if ( CheckSqliteError( sqlite3_step(statement) ) == SQLITE_DONE )
-			{
-
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-}
-
 void GameAnalytics::WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents )
 {
 	scriptContents.clear();
-
+#if(0)
 	if ( mDatabase != NULL )
 	{
 		const double worldSizeX = ceil( def.mWorldMaxs[ 0 ] - def.mWorldMins[ 0 ] );
@@ -888,6 +767,7 @@ void GameAnalytics::WriteHeatmapScript( const HeatmapDef & def, std::string & sc
 			scriptContents.replace( scriptContents.begin()+p,scriptContents.begin()+p+varNumEvents.length(), va( "%d", progressCounter ) );
 		}
 	}
+#endif
 }
 
 void GameAnalytics::GetUniqueEventNames( std::vector< std::string > & eventNames )
@@ -988,13 +868,11 @@ bool StringFromField( std::string & strOut, const google::protobuf::Message & ms
 	return true;
 }
 
-google::protobuf::int64 GameAnalytics::GetTimeStamp() const
-{
-	return 10;
-}
-
 void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 {
+	if ( mMsgSubtypes == NULL )
+		return;
+
 	const int messageSize = msg.ByteSize();
 	
 	// construct a network friendly buffer
@@ -1011,8 +889,11 @@ void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 	
 	if ( cacheLast )
 	{
+		MsgKeyCache& keyCache = mMessageCache[ oneofField->number() ];
+		
 		// figure out the key with which to cache this message, to allow us to cache more than one of the same type message
 		std::string cacheKey = oneofField->camelcase_name();
+
 		if ( oneofField->message_type()->options().HasExtension( Analytics::cachekeysuffix ) )
 		{
 			cacheKey = oneofField->message_type()->options().GetExtension( Analytics::cachekeysuffix );
@@ -1029,7 +910,7 @@ void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 			}
 		}
 
-		mMessageCache[ cacheKey ].CopyFrom( msg );
+		keyCache[ cacheKey ].CopyFrom( msg );
 	}
 	
 	std::string messagePayload;
@@ -1041,14 +922,15 @@ void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
 	// todo: compression info?
 	msg.SerializeToCodedStream( &outputstr );
 
+	if ( mDatabase )
 	{
 		// Save it to the output stream
 		sqlite3_stmt * statement = NULL;
 		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "INSERT into %s ( timestamp, key, data ) VALUES( ?, ?, ? )", msgtype ), -1, &statement, NULL ) ) )
 		{
 			sqlite3_bind_int64( statement, 1, msg.timestamp() );
-			sqlite3_bind_text( statement, 2, msgtype, strlen( msgtype ), NULL );
-			sqlite3_bind_blob( statement, 3, messagePayload.c_str(), messagePayload.size(), NULL );
+			sqlite3_bind_text( statement, 2, msgtype, (int)strlen( msgtype ), NULL );
+			sqlite3_bind_blob( statement, 3, messagePayload.c_str(), (int)messagePayload.size(), NULL );
 
 			if ( CheckSqliteError( sqlite3_step( statement ) ) == SQLITE_DONE )
 			{
@@ -1075,24 +957,28 @@ bool GameAnalytics::Poll( Analytics::MessageUnion & msgOut )
 		{
 			if ( msgOut.has_topicsubscribe() )
 			{
-				for ( MsgCache::iterator it = mMessageCache.begin(); it != mMessageCache.end(); ++it )
+				for ( MessageCache::iterator mit = mMessageCache.begin(); mit != mMessageCache.end(); ++mit )
 				{
-					if ( msgOut.topicsubscribe().topic().empty() || it->first.find( msgOut.topicsubscribe().topic() ) == 0 )
+					const MsgKeyCache& keyCache = mit->second;
+					for ( MsgKeyCache::const_iterator it = keyCache.begin(); it != keyCache.end(); ++it )
 					{
-						const int messageSize = it->second.ByteSize();
+						if ( msgOut.topicsubscribe().topic().empty() || it->first.find( msgOut.topicsubscribe().topic() ) == 0 )
+						{
+							const int messageSize = it->second.ByteSize();
 
-						const google::protobuf::FieldDescriptor* oneofField = it->second.GetReflection()->GetOneofFieldDescriptor( it->second, mMsgSubtypes );
+							const google::protobuf::FieldDescriptor* oneofField = it->second.GetReflection()->GetOneofFieldDescriptor( it->second, mMsgSubtypes );
 
-						std::string messagePayload;
-						messagePayload.reserve( messageSize );
+							std::string messagePayload;
+							messagePayload.reserve( messageSize );
 
-						google::protobuf::io::StringOutputStream str( &messagePayload );
-						google::protobuf::io::CodedOutputStream outputstr( &str );
+							google::protobuf::io::StringOutputStream str( &messagePayload );
+							google::protobuf::io::CodedOutputStream outputstr( &str );
 
-						// todo: compression info?
-						it->second.SerializeToCodedStream( &outputstr );
+							// todo: compression info?
+							it->second.SerializeToCodedStream( &outputstr );
 
-						mPublisher->Publish( oneofField->camelcase_name().c_str(), it->second, messagePayload );
+							mPublisher->Publish( oneofField->camelcase_name().c_str(), it->second, messagePayload );
+						}
 					}
 				}
 				continue;
@@ -1217,7 +1103,7 @@ bool zmqSubscriber::Poll( Analytics::MessageUnion & msgOut )
 		{
 			if ( mSocketSub->recv( &zmsg, ZMQ_DONTWAIT ) )
 			{
-				io::ArrayInputStream arraystr( zmsg.data(), zmsg.size() );
+				io::ArrayInputStream arraystr( zmsg.data(), (int)zmsg.size() );
 				io::CodedInputStream inputstream( &arraystr );
 
 				msgOut.Clear();

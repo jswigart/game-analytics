@@ -4,16 +4,16 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include <Qt3DQuick/QQmlAspectEngine>
-
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QLabel>
-
+#include <Qt3dRender/QGeometry>
+#include <Qt3DQuick/QQmlAspectEngine>
+#include "timelinegraphicsscene.h"
 #include "ui_analyticsviewer.h"
 
 #include "Messaging.h"
 
-class Window;
-class ModelProcessor;
+class RenderWindow;
 class HostThreadENET;
 
 class QtVariantEditorFactory;
@@ -68,22 +68,39 @@ protected Q_SLOTS:
 	// message handling
 	void processMessage( MessageUnionPtr msg );
 private:
-	Ui::AnalyticsViewerClass		ui;
-	Qt3D::Quick::QQmlAspectEngine	mEngine;
-	Window*							mView;
-	ModelProcessor*					mModelProcessorThread;
-	HostThread0MQ*					mMessageThread;
-	QLabel*							mNetworkLabel;
+	Ui::AnalyticsViewerClass			ui;
+	Qt3DCore::Quick::QQmlAspectEngine	mEngine;
+	RenderWindow*						mView;
+	HostThread0MQ*						mMessageThread;
+	QLabel*								mNetworkLabel;
 
-	QtVariantEditorFactory*		mVariantEditor;
-	QtVariantPropertyManager*	mVariantPropMgr;
+	QtVariantEditorFactory*				mVariantEditor;
+	QtVariantPropertyManager*			mVariantPropMgr;
+	
+	TimelineGraphicsScene				mTimeline;
+
+	struct EventInfo
+	{
+		QTableWidgetItem*		mItemMessage;
+		QTableWidgetItem*		mItemCount;
+		int						mRow;
+		
+		EventInfo()
+			: mItemMessage( NULL )
+			, mItemCount( NULL )
+			, mRow( 0 )
+		{
+		}
+	};
+	typedef QMap<int, EventInfo> EventMap;
+	EventMap							mEventMap;
 
 	void FileLoad( const QString & filePath );
 	void FileSave( const QString & filePath );
 
 	void AddToTable( const LogEntry & log );
 	
-	void WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem );
+	void WalkHierarchy( Qt3DCore::QEntity* entity, QTreeWidgetItem * treeItem );
 
 	void AddObjectProperties_r( QObject * obj, QtVariantProperty * parent );
 

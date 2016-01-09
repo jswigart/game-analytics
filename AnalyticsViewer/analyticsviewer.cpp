@@ -1,11 +1,12 @@
 #include <QtQml/QQmlContext>
 #include <Qt3DInput/QInputAspect>
 #include <Qt3DCore/QComponent>
-#include <Qt3DRenderer/QRenderAspect>
+#include <Qt3DRender/QRenderAspect>
 #include <QtCore/QMetaType>
-#include <Qt3DQuick/Quick3DNode>
+#include <Qt3DCore/QNode>
 #include <QtQml>
 #include <QtQml/QQmlListProperty>
+#include <QtWidgets/QGraphicsTextItem>
 
 #include <QMetaProperty>
 #include <QCheckBox>
@@ -19,10 +20,9 @@
 #include <QMatrix4x4>
 
 #include "analyticsviewer.h"
-#include "window.h"
+#include "RenderWindow.h"
 
 #include "Messaging.h"
-#include "ModelProcessor.h"
 
 #include "AnalyticsScene.h"
 
@@ -46,14 +46,15 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	ui.toggleDebug->setProperty( "Title", QString( "Debug (%1)" ) );
 
 	// Initialize Qt3d QML
-	mView = new Window();
+	mView = new RenderWindow();
 
 	QWidget *container = QWidget::createWindowContainer( mView );
 
 	container->setMinimumSize( QSize( 100, 100 ) );
-
-	mEngine.aspectEngine()->registerAspect( new Qt3D::QRenderAspect() );
-	mEngine.aspectEngine()->registerAspect( new Qt3D::QInputAspect() );
+	container->updateGeometry();
+	
+	mEngine.aspectEngine()->registerAspect( new Qt3DRender::QRenderAspect() );
+	mEngine.aspectEngine()->registerAspect( new Qt3DInput::QInputAspect() );
 
 	QVariantMap data;
 	data.insert( QStringLiteral( "surface" ), QVariant::fromValue( static_cast<QSurface *>( mView ) ) );
@@ -62,12 +63,19 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	mEngine.aspectEngine()->initialize();
 	mEngine.qmlEngine()->rootContext()->setContextProperty( "_window", mView );
 	mEngine.qmlEngine()->rootContext()->setContextProperty( "_engine", mView );
-
+	
 	mEngine.setSource( QUrl( "main.qml" ) );
+	
+	connect( mEngine.aspectEngine()->rootEntity().data(), SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
+	connect( mEngine.aspectEngine()->rootEntity().data(), SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
+	connect( mEngine.aspectEngine()->rootEntity().data(), SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
+	connect( mEngine.aspectEngine()->rootEntity().data(), SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
 
 	ui.renderLayout->addWidget( container );
-	mView->show();
 
+	container->updateGeometry();
+	mView->show();
+		
 	mVariantPropMgr = new QtVariantPropertyManager( this );
 	mVariantEditor = new QtVariantEditorFactory( this );
 
@@ -86,6 +94,8 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	connect( ui.treeHierarchy, SIGNAL( itemSelectionChanged() ), this, SLOT( SelectionChanged() ) );
 	connect( mVariantPropMgr, SIGNAL( valueChanged( QtProperty *, const QVariant & ) ), this, SLOT( PropertyChanged( QtProperty *, const QVariant & ) ), Qt::DirectConnection );
 
+	ui.viewTimeline->setScene( &mTimeline );
+	
 	// schedule some processor time intervals
 	{
 		QTimer *timer = new QTimer( this );
@@ -114,6 +124,34 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 	}
 
 	{
+		const google::protobuf::Descriptor* desc = Analytics::MessageUnion::descriptor();
+		const google::protobuf::OneofDescriptor* oneOf = desc->FindOneofByName( "msg" );
+		if ( oneOf != NULL )
+		{
+			const int numFields = oneOf->field_count();
+			ui.tableEvents->setRowCount( numFields );
+
+			for ( int i = 0; i < numFields; ++i )
+			{
+				const google::protobuf::FieldDescriptor* fdesc = oneOf->field( i );
+			
+				EventInfo info;
+				info.mItemMessage = new QTableWidgetItem( QString( fdesc->name().c_str() ) );
+				info.mItemCount = new QTableWidgetItem( QString( "%1" ).arg( 0 ) );
+				info.mItemCount->setData( Qt::UserRole, QVariant( 0 ) );
+				
+				ui.tableEvents->setItem( i, 0, info.mItemMessage );
+				ui.tableEvents->setItem( i, 1, info.mItemCount );
+				
+				info.mRow = mTimeline.AddRow( QString( fdesc->name().c_str() ) );
+				
+				mEventMap[ fdesc->number() ] = info;
+			}
+		}
+		ui.tableEvents->resizeColumnsToContents();
+	}
+
+	{
 		QLineEdit * networkIp = new QLineEdit( this );
 		networkIp->setFixedWidth( 100 );
 		networkIp->setText( "127.0.0.1" );
@@ -138,28 +176,12 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 		connect( mMessageThread, SIGNAL( status( QString ) ), this, SLOT( StatusInfo( QString ) ) );
 
 		// message processing functions
-		//connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), this, SLOT( processMessage( MessageUnionPtr ) ) );
+		connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), this, SLOT( processMessage( MessageUnionPtr ) ) );
 		connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), mEngine.aspectEngine()->rootEntity().data(), SLOT( processMessage( MessageUnionPtr ) ) );
 
-		mModelProcessorThread = new ModelProcessor( this );
-		connect( mModelProcessorThread, SIGNAL( info( QString, QString ) ), this, SLOT( LogInfo( QString, QString ) ) );
-		connect( mModelProcessorThread, SIGNAL( warn( QString, QString ) ), this, SLOT( LogWarn( QString, QString ) ) );
-		connect( mModelProcessorThread, SIGNAL( error( QString, QString ) ), this, SLOT( LogError( QString, QString ) ) );
-		connect( mModelProcessorThread, SIGNAL( debug( QString, QString ) ), this, SLOT( LogDebug( QString, QString ) ) );
-		connect( mModelProcessorThread, SIGNAL( allocModel( Qt3D::QEntity* ) ), mEngine.aspectEngine()->rootEntity().data(), SLOT( AddToScene( Qt3D::QEntity* ) ) );
-
-		// message processing functions
-		connect( mMessageThread, SIGNAL( onmsg( MessageUnionPtr ) ), mModelProcessorThread, SLOT( processMessage( MessageUnionPtr ) ) );
-
 		mMessageThread->start();
-		mModelProcessorThread->start();
 	}
-
-	//installEventFilter( ui.renderBg );
-
-	// temp
-	//FileLoad( "D:/Sourcecode/AnalyticsViewer/AnalyticsViewer/etf_duel.obj" );
-
+	
 	AppendToLog( LOG_INFO, "Sample Information", QString( "Sample Additional Details\nFor the log entry" ) );
 	AppendToLog( LOG_WARNING, "Sample Warning", QString() );
 	AppendToLog( LOG_ERROR, "Sample Error", QString() );
@@ -169,10 +191,8 @@ AnalyticsViewer::AnalyticsViewer( QWidget *parent )
 AnalyticsViewer::~AnalyticsViewer()
 {
 	mMessageThread->mRunning = false;
-	mModelProcessorThread->mRunning = false;
 
 	mMessageThread->wait( 5000 );
-	mModelProcessorThread->wait( 5000 );
 
 	delete mView;
 	mView = NULL;
@@ -568,7 +588,7 @@ QTreeWidgetItem * AnalyticsViewer::FindOrAdd( QTreeWidgetItem * parent, const QS
 	return item;
 }
 
-void AnalyticsViewer::WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * treeItem )
+void AnalyticsViewer::WalkHierarchy( Qt3DCore::QEntity* entity, QTreeWidgetItem * treeItem )
 {
 	if ( entity == NULL )
 		return;
@@ -579,10 +599,10 @@ void AnalyticsViewer::WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * tr
 
 	QTreeWidgetItem * entityItem = FindOrAdd( treeItem, itemName, entity );
 
-	Qt3D::QComponentList components = entity->components();
+	Qt3DCore::QComponentList components = entity->components();
 	for ( int i = 0; i < components.size(); ++i )
 	{
-		Qt3D::QComponent* comp = components[ i ];
+		Qt3DCore::QComponent* comp = components[ i ];
 
 		QString cmpName = comp->objectName();
 		if ( cmpName.isEmpty() )
@@ -594,7 +614,7 @@ void AnalyticsViewer::WalkHierarchy( Qt3D::QEntity* entity, QTreeWidgetItem * tr
 	const QObjectList & ch = entity->children();
 	for ( int i = 0; i < ch.size(); ++i )
 	{
-		Qt3D::QEntity* ent = qobject_cast<Qt3D::QEntity*>( ch[ i ] );
+		Qt3DCore::QEntity* ent = qobject_cast<Qt3DCore::QEntity*>( ch[ i ] );
 		if ( ent != NULL )
 		{
 			WalkHierarchy( ent, entityItem );
@@ -635,12 +655,63 @@ QVector3D Convert( const modeldata::Vec3 & vec )
 
 void AnalyticsViewer::processMessage( MessageUnionPtr msg )
 {
-	/*if ( msg->has_gameentitylist() )
+	switch ( msg->msg_case() )
 	{
-	const Analytics::GameEntityList& elist = msg->gameentitylist();
-	for ( int i = 0; i < elist.entities_size(); ++i )
-	{
-	processMessage( elist.entities( i ) );
+		case Analytics::MessageUnion::kGameInfo:
+			LogWarn( QString( "Game Info %1" ).arg( msg->gameinfo().mapname().c_str() ), QString() );
+			break;
+		case Analytics::MessageUnion::kGameNavNotFound:
+			LogWarn( QString( "Navigation Not found for %1" ).arg( msg->gamenavnotfound().mapname().c_str() ), QString() );
+			break;
+		case Analytics::MessageUnion::kSystemNavDownloaded:
+			LogInfo( QString( "Navigation Downloaded for %1" ).arg( msg->systemnavdownloaded().mapname().c_str() ), QString() );
+			break;
+		case Analytics::MessageUnion::kGameAssert:
+			LogWarn( QString( "Assert %1: %2(%3)" )
+				.arg( msg->gameassert().condition().c_str() )
+				.arg( msg->gameassert().file().c_str() )
+				.arg( msg->gameassert().line() ), QString() );
+			break;
+		case Analytics::MessageUnion::kGameCrash:
+			LogError( QString( "Crash %1" )
+				.arg( msg->gamecrash().info().c_str() ), QString() );
+			break;
+		case Analytics::MessageUnion::kGameModelData:
+			// handled elsewhere
+			break;
+		case Analytics::MessageUnion::kGameEntityList:
+			// handled elsewhere
+			break;
+		case Analytics::MessageUnion::kGameWeaponFired:
+			// todo:
+			break;
+		case Analytics::MessageUnion::kGameDeath:
+			// todo:
+			break;
+		case Analytics::MessageUnion::kGameTookDamage:
+			// todo:
+			break;
+		case Analytics::MessageUnion::kGameNavigationStuck:
+			// todo:
+			break;
+		case Analytics::MessageUnion::kTopicSubscribe:
+			LogInfo( QString( "Topic Subscribed %1" ).arg( msg->topicsubscribe().topic().c_str() ), QString() );
+			break;
+		case Analytics::MessageUnion::kTopicUnsubscribe:
+			LogInfo( QString( "Topic Unsubscribed %1" ).arg( msg->topicunsubscribe().topic().c_str() ), QString() );
+			break;
+		case Analytics::MessageUnion::MSG_NOT_SET:
+			LogError( QString( "Message case not set" ), QString() );
+			break;
 	}
-	}*/
+	
+	EventInfo& info = mEventMap[ msg->msg_case() ];
+	if ( info.mItemCount )
+	{
+		const int newCount = info.mItemCount->data( Qt::UserRole ).toInt() + 1;
+		info.mItemCount->setData( Qt::UserRole, QVariant( newCount ) );
+		info.mItemCount->setText( QString( "%1" ).arg( newCount ) );
+
+		mTimeline.AddTick( info.mRow, msg->timestamp() );
+	}
 }

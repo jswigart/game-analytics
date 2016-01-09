@@ -1,5 +1,5 @@
-import Qt3D 2.0
-import Qt3D.Renderer 2.0
+import Qt3D.Core 2.0
+import Qt3D.Render 2.0
 import QtQuick 2.5
 import Qt3D.Input 2.0
 import Analytics 1.0 as Analytics
@@ -122,9 +122,9 @@ Analytics.Scene {
         aspectRatio: _window.width / _window.height
         nearPlane : 0.5
         farPlane : 10000.0
-        position: Qt.vector3d( 2500.0, 2500.0, 1000.0 )
+        position: Qt.vector3d( 2500.0, 2500.0, 2000.0 )
         upVector: Qt.vector3d( 0.0, 0.0, 1.0 )
-        viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )
+        viewCenter: Qt.vector3d( 0.0, 0.0, 1000.0 )
 		
 		Timer { 
 			id: time 

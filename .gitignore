@@ -1,1 +1,5 @@
 /*.sdf
+/dependencies/zeromq-4.1.3/builds/msvc/vs2013/*.sdf
+/dependencies/zeromq-4.1.3/builds/msvc/vs2013/*.opensdf
+/dependencies/zeromq/builds/msvc/vs2015/*.sdf
+/dependencies/zeromq/builds/msvc/vs2015/*.opendb

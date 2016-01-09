@@ -32,29 +32,36 @@ message TopicUnsubscribe
 	required string					topic						= 1;
 }
 
-message SystemNavNotFound
+message GameInfo
+{
+	option (cachelastvalue) = true;
+
+	required string					mapName						= 1;
+}
+
+message GameNavNotFound
 {
 	required string					mapName						= 1;
 }
 
-message SystemNavAutoDownloaded
+message GameNavAutoDownloaded
 {
 	required string					mapName						= 1;
 }
 
-message SystemAssert
+message GameAssert
 {
 	required string					condition					= 1;
 	optional string					file						= 2;
 	optional int32					line						= 3;
 }
 
-message SystemCrash
+message GameCrash
 {
 	required string					info						= 1;
 }
 
-message SystemModelData
+message GameModelData
 {
 	option (cachelastvalue) = true;
 	option (cachekeysuffix) = "modelName";
@@ -62,6 +69,7 @@ message SystemModelData
 	optional Compression			compressionType				= 1 [default=Compression_None];
 	required string					modelName					= 2;
 	required bytes					modelBytes					= 3;
+	optional uint32					modelBytesUncompressed		= 4;
 }
 
 message GameEntityInfo
@@ -100,10 +108,11 @@ message GameEntityList
 message GameWeaponFired
 {
 	required int32					weaponId					= 1;
-	required float					positionX					= 2;
-	required float					positionY					= 3;
-	required float					positionZ					= 4;
-	optional uint32					team						= 5;
+	optional float					positionX					= 2;
+	optional float					positionY					= 3;
+	optional float					positionZ					= 4;
+	optional uint32					fireMode					= 5;
+	optional int32					team						= 6;
 }
 
 message GameDeath
@@ -139,11 +148,12 @@ message MessageUnion
 	required int64					timestamp						= 1;
 
 	oneof msg {
-		SystemNavNotFound			systemNavNotFound				= 2;
-		SystemNavAutoDownloaded		systemNavDownloaded				= 3;
-		SystemAssert				systemAssert					= 4;
-		SystemCrash					systemCrash						= 5;
-		SystemModelData				systemModelData					= 6;
+		GameInfo					gameInfo						= 9;
+		GameNavNotFound				gameNavNotFound					= 10;
+		GameNavAutoDownloaded		systemNavDownloaded				= 11;
+		GameAssert					gameAssert						= 12;
+		GameCrash					gameCrash						= 13;
+		GameModelData				gameModelData					= 14;
 
 		GameEntityList				gameEntityList					= 100;
 		GameWeaponFired				gameWeaponFired					= 101;

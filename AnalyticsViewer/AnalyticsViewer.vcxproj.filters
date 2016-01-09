@@ -60,15 +60,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Messaging.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ModelProcessor.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ModelProcessor.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelProcessor.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="ThirdParty\QtPropertyBrowser\qtbuttonpropertybrowser.cpp">
       <Filter>PropertyBrowser</Filter>
     </ClCompile>
@@ -144,15 +135,6 @@
     <ClCompile Include="ThirdParty\QtPropertyBrowser\qttreepropertybrowser.cpp">
       <Filter>PropertyBrowser</Filter>
     </ClCompile>
-    <ClCompile Include="window.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_window.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_window.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="AnalyticsScene.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -160,6 +142,33 @@
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_AnalyticsScene.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_RenderWindow.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_RenderWindow.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_timelinegraphicsview.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_timelinegraphicsview.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="timelinegraphicsview.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="timelinegraphicsscene.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_timelinegraphicsscene.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_timelinegraphicsscene.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
@@ -175,9 +184,6 @@
     </CustomBuild>
     <CustomBuild Include="Messaging.h">
       <Filter>Messaging</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ModelProcessor.h">
-      <Filter>GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="ThirdParty\QtPropertyBrowser\qtbuttonpropertybrowser.h">
       <Filter>PropertyBrowser</Filter>
@@ -215,10 +221,16 @@
     <CustomBuild Include="GeneratedFiles\Release\qteditorfactory.moc">
       <Filter>Generated Files\Release</Filter>
     </CustomBuild>
-    <CustomBuild Include="window.h">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="AnalyticsScene.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RenderWindow.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="timelinegraphicsview.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="timelinegraphicsscene.h">
       <Filter>GUI</Filter>
     </CustomBuild>
   </ItemGroup>

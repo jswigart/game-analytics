@@ -26,21 +26,24 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* TopicUnsubscribe_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   TopicUnsubscribe_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SystemNavNotFound_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* GameInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  SystemNavNotFound_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SystemNavAutoDownloaded_descriptor_ = NULL;
+  GameInfo_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GameNavNotFound_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  SystemNavAutoDownloaded_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SystemAssert_descriptor_ = NULL;
+  GameNavNotFound_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GameNavAutoDownloaded_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  SystemAssert_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SystemCrash_descriptor_ = NULL;
+  GameNavAutoDownloaded_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GameAssert_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  SystemCrash_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SystemModelData_descriptor_ = NULL;
+  GameAssert_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GameCrash_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  SystemModelData_reflection_ = NULL;
+  GameCrash_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GameModelData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GameModelData_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GameEntityInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GameEntityInfo_reflection_ = NULL;
@@ -66,11 +69,12 @@ const ::google::protobuf::Descriptor* MessageUnion_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MessageUnion_reflection_ = NULL;
 struct MessageUnionOneofInstance {
-  const ::Analytics::SystemNavNotFound* systemnavnotfound_;
-  const ::Analytics::SystemNavAutoDownloaded* systemnavdownloaded_;
-  const ::Analytics::SystemAssert* systemassert_;
-  const ::Analytics::SystemCrash* systemcrash_;
-  const ::Analytics::SystemModelData* systemmodeldata_;
+  const ::Analytics::GameInfo* gameinfo_;
+  const ::Analytics::GameNavNotFound* gamenavnotfound_;
+  const ::Analytics::GameNavAutoDownloaded* systemnavdownloaded_;
+  const ::Analytics::GameAssert* gameassert_;
+  const ::Analytics::GameCrash* gamecrash_;
+  const ::Analytics::GameModelData* gamemodeldata_;
   const ::Analytics::GameEntityList* gameentitylist_;
   const ::Analytics::GameWeaponFired* gameweaponfired_;
   const ::Analytics::GameDeath* gamedeath_;
@@ -120,86 +124,102 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(TopicUnsubscribe));
-  SystemNavNotFound_descriptor_ = file->message_type(2);
-  static const int SystemNavNotFound_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemNavNotFound, mapname_),
+  GameInfo_descriptor_ = file->message_type(2);
+  static const int GameInfo_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameInfo, mapname_),
   };
-  SystemNavNotFound_reflection_ =
+  GameInfo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      SystemNavNotFound_descriptor_,
-      SystemNavNotFound::default_instance_,
-      SystemNavNotFound_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemNavNotFound, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemNavNotFound, _unknown_fields_),
+      GameInfo_descriptor_,
+      GameInfo::default_instance_,
+      GameInfo_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameInfo, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameInfo, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SystemNavNotFound));
-  SystemNavAutoDownloaded_descriptor_ = file->message_type(3);
-  static const int SystemNavAutoDownloaded_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemNavAutoDownloaded, mapname_),
+      sizeof(GameInfo));
+  GameNavNotFound_descriptor_ = file->message_type(3);
+  static const int GameNavNotFound_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavNotFound, mapname_),
   };
-  SystemNavAutoDownloaded_reflection_ =
+  GameNavNotFound_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      SystemNavAutoDownloaded_descriptor_,
-      SystemNavAutoDownloaded::default_instance_,
-      SystemNavAutoDownloaded_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemNavAutoDownloaded, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemNavAutoDownloaded, _unknown_fields_),
+      GameNavNotFound_descriptor_,
+      GameNavNotFound::default_instance_,
+      GameNavNotFound_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavNotFound, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavNotFound, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SystemNavAutoDownloaded));
-  SystemAssert_descriptor_ = file->message_type(4);
-  static const int SystemAssert_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemAssert, condition_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemAssert, file_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemAssert, line_),
+      sizeof(GameNavNotFound));
+  GameNavAutoDownloaded_descriptor_ = file->message_type(4);
+  static const int GameNavAutoDownloaded_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavAutoDownloaded, mapname_),
   };
-  SystemAssert_reflection_ =
+  GameNavAutoDownloaded_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      SystemAssert_descriptor_,
-      SystemAssert::default_instance_,
-      SystemAssert_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemAssert, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemAssert, _unknown_fields_),
+      GameNavAutoDownloaded_descriptor_,
+      GameNavAutoDownloaded::default_instance_,
+      GameNavAutoDownloaded_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavAutoDownloaded, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavAutoDownloaded, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SystemAssert));
-  SystemCrash_descriptor_ = file->message_type(5);
-  static const int SystemCrash_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemCrash, info_),
+      sizeof(GameNavAutoDownloaded));
+  GameAssert_descriptor_ = file->message_type(5);
+  static const int GameAssert_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameAssert, condition_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameAssert, file_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameAssert, line_),
   };
-  SystemCrash_reflection_ =
+  GameAssert_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      SystemCrash_descriptor_,
-      SystemCrash::default_instance_,
-      SystemCrash_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemCrash, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemCrash, _unknown_fields_),
+      GameAssert_descriptor_,
+      GameAssert::default_instance_,
+      GameAssert_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameAssert, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameAssert, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SystemCrash));
-  SystemModelData_descriptor_ = file->message_type(6);
-  static const int SystemModelData_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemModelData, compressiontype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemModelData, modelname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemModelData, modelbytes_),
+      sizeof(GameAssert));
+  GameCrash_descriptor_ = file->message_type(6);
+  static const int GameCrash_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCrash, info_),
   };
-  SystemModelData_reflection_ =
+  GameCrash_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      SystemModelData_descriptor_,
-      SystemModelData::default_instance_,
-      SystemModelData_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemModelData, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SystemModelData, _unknown_fields_),
+      GameCrash_descriptor_,
+      GameCrash::default_instance_,
+      GameCrash_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCrash, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCrash, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SystemModelData));
-  GameEntityInfo_descriptor_ = file->message_type(7);
+      sizeof(GameCrash));
+  GameModelData_descriptor_ = file->message_type(7);
+  static const int GameModelData_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameModelData, compressiontype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameModelData, modelname_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameModelData, modelbytes_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameModelData, modelbytesuncompressed_),
+  };
+  GameModelData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GameModelData_descriptor_,
+      GameModelData::default_instance_,
+      GameModelData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameModelData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameModelData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(GameModelData));
+  GameEntityInfo_descriptor_ = file->message_type(8);
   static const int GameEntityInfo_offsets_[16] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityInfo, entityid_),
@@ -245,7 +265,7 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameEntityInfo_Ammo));
-  GameEntityList_descriptor_ = file->message_type(8);
+  GameEntityList_descriptor_ = file->message_type(9);
   static const int GameEntityList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameEntityList, entities_),
   };
@@ -260,12 +280,13 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameEntityList));
-  GameWeaponFired_descriptor_ = file->message_type(9);
-  static const int GameWeaponFired_offsets_[5] = {
+  GameWeaponFired_descriptor_ = file->message_type(10);
+  static const int GameWeaponFired_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, weaponid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, positionx_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, positiony_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, positionz_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, firemode_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameWeaponFired, team_),
   };
   GameWeaponFired_reflection_ =
@@ -279,7 +300,7 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameWeaponFired));
-  GameDeath_descriptor_ = file->message_type(10);
+  GameDeath_descriptor_ = file->message_type(11);
   static const int GameDeath_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameDeath, killedbyclass_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameDeath, killedbyweapon_),
@@ -297,7 +318,7 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameDeath));
-  GameTookDamage_descriptor_ = file->message_type(11);
+  GameTookDamage_descriptor_ = file->message_type(12);
   static const int GameTookDamage_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, weaponid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameTookDamage, positionx_),
@@ -316,7 +337,7 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameTookDamage));
-  GameNavigationStuck_descriptor_ = file->message_type(12);
+  GameNavigationStuck_descriptor_ = file->message_type(13);
   static const int GameNavigationStuck_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavigationStuck, entityid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameNavigationStuck, positionx_),
@@ -334,14 +355,15 @@ void protobuf_AssignDesc_analytics_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameNavigationStuck));
-  MessageUnion_descriptor_ = file->message_type(13);
-  static const int MessageUnion_offsets_[14] = {
+  MessageUnion_descriptor_ = file->message_type(14);
+  static const int MessageUnion_offsets_[15] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MessageUnion, timestamp_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, systemnavnotfound_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gameinfo_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gamenavnotfound_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, systemnavdownloaded_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, systemassert_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, systemcrash_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, systemmodeldata_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gameassert_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gamecrash_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gamemodeldata_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gameentitylist_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gameweaponfired_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(MessageUnion_default_oneof_instance_, gamedeath_),
@@ -382,15 +404,17 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     TopicUnsubscribe_descriptor_, &TopicUnsubscribe::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SystemNavNotFound_descriptor_, &SystemNavNotFound::default_instance());
+    GameInfo_descriptor_, &GameInfo::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SystemNavAutoDownloaded_descriptor_, &SystemNavAutoDownloaded::default_instance());
+    GameNavNotFound_descriptor_, &GameNavNotFound::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SystemAssert_descriptor_, &SystemAssert::default_instance());
+    GameNavAutoDownloaded_descriptor_, &GameNavAutoDownloaded::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SystemCrash_descriptor_, &SystemCrash::default_instance());
+    GameAssert_descriptor_, &GameAssert::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SystemModelData_descriptor_, &SystemModelData::default_instance());
+    GameCrash_descriptor_, &GameCrash::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GameModelData_descriptor_, &GameModelData::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GameEntityInfo_descriptor_, &GameEntityInfo::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -416,16 +440,18 @@ void protobuf_ShutdownFile_analytics_2eproto() {
   delete TopicSubscribe_reflection_;
   delete TopicUnsubscribe::default_instance_;
   delete TopicUnsubscribe_reflection_;
-  delete SystemNavNotFound::default_instance_;
-  delete SystemNavNotFound_reflection_;
-  delete SystemNavAutoDownloaded::default_instance_;
-  delete SystemNavAutoDownloaded_reflection_;
-  delete SystemAssert::default_instance_;
-  delete SystemAssert_reflection_;
-  delete SystemCrash::default_instance_;
-  delete SystemCrash_reflection_;
-  delete SystemModelData::default_instance_;
-  delete SystemModelData_reflection_;
+  delete GameInfo::default_instance_;
+  delete GameInfo_reflection_;
+  delete GameNavNotFound::default_instance_;
+  delete GameNavNotFound_reflection_;
+  delete GameNavAutoDownloaded::default_instance_;
+  delete GameNavAutoDownloaded_reflection_;
+  delete GameAssert::default_instance_;
+  delete GameAssert_reflection_;
+  delete GameCrash::default_instance_;
+  delete GameCrash_reflection_;
+  delete GameModelData::default_instance_;
+  delete GameModelData_reflection_;
   delete GameEntityInfo::default_instance_;
   delete GameEntityInfo_reflection_;
   delete GameEntityInfo_Ammo::default_instance_;
@@ -456,67 +482,70 @@ void protobuf_AddDesc_analytics_2eproto() {
     "\n\017analytics.proto\022\tAnalytics\032 google/pro"
     "tobuf/descriptor.proto\"\037\n\016TopicSubscribe"
     "\022\r\n\005topic\030\001 \002(\t\"!\n\020TopicUnsubscribe\022\r\n\005t"
-    "opic\030\001 \002(\t\"$\n\021SystemNavNotFound\022\017\n\007mapNa"
-    "me\030\001 \002(\t\"*\n\027SystemNavAutoDownloaded\022\017\n\007m"
-    "apName\030\001 \002(\t\"=\n\014SystemAssert\022\021\n\tconditio"
-    "n\030\001 \002(\t\022\014\n\004file\030\002 \001(\t\022\014\n\004line\030\003 \001(\005\"\033\n\013S"
-    "ystemCrash\022\014\n\004info\030\001 \002(\t\"\216\001\n\017SystemModel"
-    "Data\022A\n\017compressionType\030\001 \001(\0162\026.Analytic"
-    "s.Compression:\020Compression_None\022\021\n\tmodel"
-    "Name\030\002 \002(\t\022\022\n\nmodelBytes\030\003 \002(\014:\021\300\270\002\001\312\270\002\t"
-    "modelName\"\346\002\n\016GameEntityInfo\022\014\n\004name\030\001 \001"
-    "(\t\022\020\n\010entityId\030\002 \002(\005\022\017\n\007groupId\030\003 \001(\005\022\017\n"
-    "\007classId\030\004 \001(\005\022\021\n\tpositionX\030\005 \001(\002\022\021\n\tpos"
-    "itionY\030\006 \001(\002\022\021\n\tpositionZ\030\007 \001(\002\022\017\n\007headi"
-    "ng\030\010 \001(\002\022\r\n\005pitch\030\t \001(\002\022\014\n\004roll\030\n \001(\002\022\016\n"
-    "\006health\030\014 \001(\r\022\021\n\thealthMax\030\r \001(\r\022\r\n\005armo"
-    "r\030\016 \001(\r\022\020\n\010armorMax\030\017 \001(\r\022\014\n\004team\030\020 \001(\r\022"
-    ",\n\004ammo\030\024 \003(\0132\036.Analytics.GameEntityInfo"
-    ".Ammo\032+\n\004Ammo\022\020\n\010ammoType\030\001 \002(\r\022\021\n\tammoC"
-    "ount\030\002 \001(\r\"C\n\016GameEntityList\022+\n\010entities"
-    "\030\001 \003(\0132\031.Analytics.GameEntityInfo:\004\300\270\002\001\""
-    "j\n\017GameWeaponFired\022\020\n\010weaponId\030\001 \002(\005\022\021\n\t"
+    "opic\030\001 \002(\t\"!\n\010GameInfo\022\017\n\007mapName\030\001 \002(\t:"
+    "\004\300\270\002\001\"\"\n\017GameNavNotFound\022\017\n\007mapName\030\001 \002("
+    "\t\"(\n\025GameNavAutoDownloaded\022\017\n\007mapName\030\001 "
+    "\002(\t\";\n\nGameAssert\022\021\n\tcondition\030\001 \002(\t\022\014\n\004"
+    "file\030\002 \001(\t\022\014\n\004line\030\003 \001(\005\"\031\n\tGameCrash\022\014\n"
+    "\004info\030\001 \002(\t\"\254\001\n\rGameModelData\022A\n\017compres"
+    "sionType\030\001 \001(\0162\026.Analytics.Compression:\020"
+    "Compression_None\022\021\n\tmodelName\030\002 \002(\t\022\022\n\nm"
+    "odelBytes\030\003 \002(\014\022\036\n\026modelBytesUncompresse"
+    "d\030\004 \001(\r:\021\300\270\002\001\312\270\002\tmodelName\"\346\002\n\016GameEntit"
+    "yInfo\022\014\n\004name\030\001 \001(\t\022\020\n\010entityId\030\002 \002(\005\022\017\n"
+    "\007groupId\030\003 \001(\005\022\017\n\007classId\030\004 \001(\005\022\021\n\tposit"
+    "ionX\030\005 \001(\002\022\021\n\tpositionY\030\006 \001(\002\022\021\n\tpositio"
+    "nZ\030\007 \001(\002\022\017\n\007heading\030\010 \001(\002\022\r\n\005pitch\030\t \001(\002"
+    "\022\014\n\004roll\030\n \001(\002\022\016\n\006health\030\014 \001(\r\022\021\n\thealth"
+    "Max\030\r \001(\r\022\r\n\005armor\030\016 \001(\r\022\020\n\010armorMax\030\017 \001"
+    "(\r\022\014\n\004team\030\020 \001(\r\022,\n\004ammo\030\024 \003(\0132\036.Analyti"
+    "cs.GameEntityInfo.Ammo\032+\n\004Ammo\022\020\n\010ammoTy"
+    "pe\030\001 \002(\r\022\021\n\tammoCount\030\002 \001(\r\"C\n\016GameEntit"
+    "yList\022+\n\010entities\030\001 \003(\0132\031.Analytics.Game"
+    "EntityInfo:\004\300\270\002\001\"|\n\017GameWeaponFired\022\020\n\010w"
+    "eaponId\030\001 \002(\005\022\021\n\tpositionX\030\002 \001(\002\022\021\n\tposi"
+    "tionY\030\003 \001(\002\022\021\n\tpositionZ\030\004 \001(\002\022\020\n\010fireMo"
+    "de\030\005 \001(\r\022\014\n\004team\030\006 \001(\005\"`\n\tGameDeath\022\025\n\rk"
+    "illedByClass\030\001 \002(\005\022\026\n\016killedByWeapon\030\002 \002"
+    "(\005\022\026\n\016killedByHealth\030\003 \002(\005\022\014\n\004team\030\004 \001(\r"
+    "\"i\n\016GameTookDamage\022\020\n\010weaponId\030\001 \002(\005\022\021\n\t"
     "positionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022\021\n\tpo"
-    "sitionZ\030\004 \002(\002\022\014\n\004team\030\005 \001(\r\"`\n\tGameDeath"
-    "\022\025\n\rkilledByClass\030\001 \002(\005\022\026\n\016killedByWeapo"
-    "n\030\002 \002(\005\022\026\n\016killedByHealth\030\003 \002(\005\022\014\n\004team\030"
-    "\004 \001(\r\"i\n\016GameTookDamage\022\020\n\010weaponId\030\001 \002("
-    "\005\022\021\n\tpositionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022"
-    "\021\n\tpositionZ\030\004 \002(\002\022\014\n\004team\030\005 \001(\r\"`\n\023Game"
-    "NavigationStuck\022\020\n\010entityId\030\001 \002(\005\022\021\n\tpos"
-    "itionX\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022\021\n\tposit"
-    "ionZ\030\004 \002(\002\"\270\005\n\014MessageUnion\022\021\n\ttimestamp"
-    "\030\001 \002(\003\0229\n\021systemNavNotFound\030\002 \001(\0132\034.Anal"
-    "ytics.SystemNavNotFoundH\000\022A\n\023systemNavDo"
-    "wnloaded\030\003 \001(\0132\".Analytics.SystemNavAuto"
-    "DownloadedH\000\022/\n\014systemAssert\030\004 \001(\0132\027.Ana"
-    "lytics.SystemAssertH\000\022-\n\013systemCrash\030\005 \001"
-    "(\0132\026.Analytics.SystemCrashH\000\0225\n\017systemMo"
-    "delData\030\006 \001(\0132\032.Analytics.SystemModelDat"
-    "aH\000\0223\n\016gameEntityList\030d \001(\0132\031.Analytics."
-    "GameEntityListH\000\0225\n\017gameWeaponFired\030e \001("
-    "\0132\032.Analytics.GameWeaponFiredH\000\022)\n\tgameD"
-    "eath\030f \001(\0132\024.Analytics.GameDeathH\000\0223\n\016ga"
-    "meTookDamage\030g \001(\0132\031.Analytics.GameTookD"
-    "amageH\000\022=\n\023gameNavigationStuck\030h \001(\0132\036.A"
-    "nalytics.GameNavigationStuckH\000\0224\n\016topicS"
-    "ubscribe\030\350\007 \001(\0132\031.Analytics.TopicSubscri"
-    "beH\000\0228\n\020topicUnsubscribe\030\351\007 \001(\0132\033.Analyt"
-    "ics.TopicUnsubscribeH\000B\005\n\003msg*;\n\013Compres"
-    "sion\022\024\n\020Compression_None\020\000\022\026\n\022Compressio"
-    "n_FastLZ\020\001:8\n\016cachelastvalue\022\037.google.pr"
-    "otobuf.MessageOptions\030\210\' \001(\010:8\n\016cachekey"
-    "suffix\022\037.google.protobuf.MessageOptions\030"
-    "\211\' \001(\t", 2166);
+    "sitionZ\030\004 \002(\002\022\014\n\004team\030\005 \001(\r\"`\n\023GameNavig"
+    "ationStuck\022\020\n\010entityId\030\001 \002(\005\022\021\n\tposition"
+    "X\030\002 \002(\002\022\021\n\tpositionY\030\003 \002(\002\022\021\n\tpositionZ\030"
+    "\004 \002(\002\"\317\005\n\014MessageUnion\022\021\n\ttimestamp\030\001 \002("
+    "\003\022\'\n\010gameInfo\030\t \001(\0132\023.Analytics.GameInfo"
+    "H\000\0225\n\017gameNavNotFound\030\n \001(\0132\032.Analytics."
+    "GameNavNotFoundH\000\022\?\n\023systemNavDownloaded"
+    "\030\013 \001(\0132 .Analytics.GameNavAutoDownloaded"
+    "H\000\022+\n\ngameAssert\030\014 \001(\0132\025.Analytics.GameA"
+    "ssertH\000\022)\n\tgameCrash\030\r \001(\0132\024.Analytics.G"
+    "ameCrashH\000\0221\n\rgameModelData\030\016 \001(\0132\030.Anal"
+    "ytics.GameModelDataH\000\0223\n\016gameEntityList\030"
+    "d \001(\0132\031.Analytics.GameEntityListH\000\0225\n\017ga"
+    "meWeaponFired\030e \001(\0132\032.Analytics.GameWeap"
+    "onFiredH\000\022)\n\tgameDeath\030f \001(\0132\024.Analytics"
+    ".GameDeathH\000\0223\n\016gameTookDamage\030g \001(\0132\031.A"
+    "nalytics.GameTookDamageH\000\022=\n\023gameNavigat"
+    "ionStuck\030h \001(\0132\036.Analytics.GameNavigatio"
+    "nStuckH\000\0224\n\016topicSubscribe\030\350\007 \001(\0132\031.Anal"
+    "ytics.TopicSubscribeH\000\0228\n\020topicUnsubscri"
+    "be\030\351\007 \001(\0132\033.Analytics.TopicUnsubscribeH\000"
+    "B\005\n\003msg*;\n\013Compression\022\024\n\020Compression_No"
+    "ne\020\000\022\026\n\022Compression_FastLZ\020\001:8\n\016cachelas"
+    "tvalue\022\037.google.protobuf.MessageOptions\030"
+    "\210\' \001(\010:8\n\016cachekeysuffix\022\037.google.protob"
+    "uf.MessageOptions\030\211\' \001(\t", 2264);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "analytics.proto", &protobuf_RegisterTypes);
   TopicSubscribe::default_instance_ = new TopicSubscribe();
   TopicUnsubscribe::default_instance_ = new TopicUnsubscribe();
-  SystemNavNotFound::default_instance_ = new SystemNavNotFound();
-  SystemNavAutoDownloaded::default_instance_ = new SystemNavAutoDownloaded();
-  SystemAssert::default_instance_ = new SystemAssert();
-  SystemCrash::default_instance_ = new SystemCrash();
-  SystemModelData::default_instance_ = new SystemModelData();
+  GameInfo::default_instance_ = new GameInfo();
+  GameNavNotFound::default_instance_ = new GameNavNotFound();
+  GameNavAutoDownloaded::default_instance_ = new GameNavAutoDownloaded();
+  GameAssert::default_instance_ = new GameAssert();
+  GameCrash::default_instance_ = new GameCrash();
+  GameModelData::default_instance_ = new GameModelData();
   GameEntityInfo::default_instance_ = new GameEntityInfo();
   GameEntityInfo_Ammo::default_instance_ = new GameEntityInfo_Ammo();
   GameEntityList::default_instance_ = new GameEntityList();
@@ -534,11 +563,12 @@ void protobuf_AddDesc_analytics_2eproto() {
     5001, 9, false, false);
   TopicSubscribe::default_instance_->InitAsDefaultInstance();
   TopicUnsubscribe::default_instance_->InitAsDefaultInstance();
-  SystemNavNotFound::default_instance_->InitAsDefaultInstance();
-  SystemNavAutoDownloaded::default_instance_->InitAsDefaultInstance();
-  SystemAssert::default_instance_->InitAsDefaultInstance();
-  SystemCrash::default_instance_->InitAsDefaultInstance();
-  SystemModelData::default_instance_->InitAsDefaultInstance();
+  GameInfo::default_instance_->InitAsDefaultInstance();
+  GameNavNotFound::default_instance_->InitAsDefaultInstance();
+  GameNavAutoDownloaded::default_instance_->InitAsDefaultInstance();
+  GameAssert::default_instance_->InitAsDefaultInstance();
+  GameCrash::default_instance_->InitAsDefaultInstance();
+  GameModelData::default_instance_->InitAsDefaultInstance();
   GameEntityInfo::default_instance_->InitAsDefaultInstance();
   GameEntityInfo_Ammo::default_instance_->InitAsDefaultInstance();
   GameEntityList::default_instance_->InitAsDefaultInstance();
@@ -1062,38 +1092,38 @@ void TopicUnsubscribe::Swap(TopicUnsubscribe* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SystemNavNotFound::kMapNameFieldNumber;
+const int GameInfo::kMapNameFieldNumber;
 #endif  // !_MSC_VER
 
-SystemNavNotFound::SystemNavNotFound()
+GameInfo::GameInfo()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(constructor:Analytics.GameInfo)
 }
 
-void SystemNavNotFound::InitAsDefaultInstance() {
+void GameInfo::InitAsDefaultInstance() {
 }
 
-SystemNavNotFound::SystemNavNotFound(const SystemNavNotFound& from)
+GameInfo::GameInfo(const GameInfo& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(copy_constructor:Analytics.GameInfo)
 }
 
-void SystemNavNotFound::SharedCtor() {
+void GameInfo::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-SystemNavNotFound::~SystemNavNotFound() {
-  // @@protoc_insertion_point(destructor:Analytics.SystemNavNotFound)
+GameInfo::~GameInfo() {
+  // @@protoc_insertion_point(destructor:Analytics.GameInfo)
   SharedDtor();
 }
 
-void SystemNavNotFound::SharedDtor() {
+void GameInfo::SharedDtor() {
   if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete mapname_;
   }
@@ -1101,28 +1131,28 @@ void SystemNavNotFound::SharedDtor() {
   }
 }
 
-void SystemNavNotFound::SetCachedSize(int size) const {
+void GameInfo::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SystemNavNotFound::descriptor() {
+const ::google::protobuf::Descriptor* GameInfo::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SystemNavNotFound_descriptor_;
+  return GameInfo_descriptor_;
 }
 
-const SystemNavNotFound& SystemNavNotFound::default_instance() {
+const GameInfo& GameInfo::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_analytics_2eproto();
   return *default_instance_;
 }
 
-SystemNavNotFound* SystemNavNotFound::default_instance_ = NULL;
+GameInfo* GameInfo::default_instance_ = NULL;
 
-SystemNavNotFound* SystemNavNotFound::New() const {
-  return new SystemNavNotFound;
+GameInfo* GameInfo::New() const {
+  return new GameInfo;
 }
 
-void SystemNavNotFound::Clear() {
+void GameInfo::Clear() {
   if (has_mapname()) {
     if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
       mapname_->clear();
@@ -1132,11 +1162,11 @@ void SystemNavNotFound::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool SystemNavNotFound::MergePartialFromCodedStream(
+bool GameInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(parse_start:Analytics.GameInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1172,17 +1202,17 @@ bool SystemNavNotFound::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(parse_success:Analytics.GameInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(parse_failure:Analytics.GameInfo)
   return false;
 #undef DO_
 }
 
-void SystemNavNotFound::SerializeWithCachedSizes(
+void GameInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(serialize_start:Analytics.GameInfo)
   // required string mapName = 1;
   if (has_mapname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1197,12 +1227,12 @@ void SystemNavNotFound::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(serialize_end:Analytics.GameInfo)
 }
 
-::google::protobuf::uint8* SystemNavNotFound::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* GameInfo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameInfo)
   // required string mapName = 1;
   if (has_mapname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1218,11 +1248,11 @@ void SystemNavNotFound::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Analytics.SystemNavNotFound)
+  // @@protoc_insertion_point(serialize_to_array_end:Analytics.GameInfo)
   return target;
 }
 
-int SystemNavNotFound::ByteSize() const {
+int GameInfo::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1245,10 +1275,10 @@ int SystemNavNotFound::ByteSize() const {
   return total_size;
 }
 
-void SystemNavNotFound::MergeFrom(const ::google::protobuf::Message& from) {
+void GameInfo::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const SystemNavNotFound* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SystemNavNotFound*>(
+  const GameInfo* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GameInfo*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1257,7 +1287,7 @@ void SystemNavNotFound::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void SystemNavNotFound::MergeFrom(const SystemNavNotFound& from) {
+void GameInfo::MergeFrom(const GameInfo& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_mapname()) {
@@ -1267,25 +1297,25 @@ void SystemNavNotFound::MergeFrom(const SystemNavNotFound& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void SystemNavNotFound::CopyFrom(const ::google::protobuf::Message& from) {
+void GameInfo::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void SystemNavNotFound::CopyFrom(const SystemNavNotFound& from) {
+void GameInfo::CopyFrom(const GameInfo& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool SystemNavNotFound::IsInitialized() const {
+bool GameInfo::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
-void SystemNavNotFound::Swap(SystemNavNotFound* other) {
+void GameInfo::Swap(GameInfo* other) {
   if (other != this) {
     std::swap(mapname_, other->mapname_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1294,11 +1324,11 @@ void SystemNavNotFound::Swap(SystemNavNotFound* other) {
   }
 }
 
-::google::protobuf::Metadata SystemNavNotFound::GetMetadata() const {
+::google::protobuf::Metadata GameInfo::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SystemNavNotFound_descriptor_;
-  metadata.reflection = SystemNavNotFound_reflection_;
+  metadata.descriptor = GameInfo_descriptor_;
+  metadata.reflection = GameInfo_reflection_;
   return metadata;
 }
 
@@ -1306,38 +1336,38 @@ void SystemNavNotFound::Swap(SystemNavNotFound* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SystemNavAutoDownloaded::kMapNameFieldNumber;
+const int GameNavNotFound::kMapNameFieldNumber;
 #endif  // !_MSC_VER
 
-SystemNavAutoDownloaded::SystemNavAutoDownloaded()
+GameNavNotFound::GameNavNotFound()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(constructor:Analytics.GameNavNotFound)
 }
 
-void SystemNavAutoDownloaded::InitAsDefaultInstance() {
+void GameNavNotFound::InitAsDefaultInstance() {
 }
 
-SystemNavAutoDownloaded::SystemNavAutoDownloaded(const SystemNavAutoDownloaded& from)
+GameNavNotFound::GameNavNotFound(const GameNavNotFound& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(copy_constructor:Analytics.GameNavNotFound)
 }
 
-void SystemNavAutoDownloaded::SharedCtor() {
+void GameNavNotFound::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-SystemNavAutoDownloaded::~SystemNavAutoDownloaded() {
-  // @@protoc_insertion_point(destructor:Analytics.SystemNavAutoDownloaded)
+GameNavNotFound::~GameNavNotFound() {
+  // @@protoc_insertion_point(destructor:Analytics.GameNavNotFound)
   SharedDtor();
 }
 
-void SystemNavAutoDownloaded::SharedDtor() {
+void GameNavNotFound::SharedDtor() {
   if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete mapname_;
   }
@@ -1345,28 +1375,28 @@ void SystemNavAutoDownloaded::SharedDtor() {
   }
 }
 
-void SystemNavAutoDownloaded::SetCachedSize(int size) const {
+void GameNavNotFound::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SystemNavAutoDownloaded::descriptor() {
+const ::google::protobuf::Descriptor* GameNavNotFound::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SystemNavAutoDownloaded_descriptor_;
+  return GameNavNotFound_descriptor_;
 }
 
-const SystemNavAutoDownloaded& SystemNavAutoDownloaded::default_instance() {
+const GameNavNotFound& GameNavNotFound::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_analytics_2eproto();
   return *default_instance_;
 }
 
-SystemNavAutoDownloaded* SystemNavAutoDownloaded::default_instance_ = NULL;
+GameNavNotFound* GameNavNotFound::default_instance_ = NULL;
 
-SystemNavAutoDownloaded* SystemNavAutoDownloaded::New() const {
-  return new SystemNavAutoDownloaded;
+GameNavNotFound* GameNavNotFound::New() const {
+  return new GameNavNotFound;
 }
 
-void SystemNavAutoDownloaded::Clear() {
+void GameNavNotFound::Clear() {
   if (has_mapname()) {
     if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
       mapname_->clear();
@@ -1376,11 +1406,11 @@ void SystemNavAutoDownloaded::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool SystemNavAutoDownloaded::MergePartialFromCodedStream(
+bool GameNavNotFound::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(parse_start:Analytics.GameNavNotFound)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1416,17 +1446,17 @@ bool SystemNavAutoDownloaded::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(parse_success:Analytics.GameNavNotFound)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(parse_failure:Analytics.GameNavNotFound)
   return false;
 #undef DO_
 }
 
-void SystemNavAutoDownloaded::SerializeWithCachedSizes(
+void GameNavNotFound::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(serialize_start:Analytics.GameNavNotFound)
   // required string mapName = 1;
   if (has_mapname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1441,12 +1471,12 @@ void SystemNavAutoDownloaded::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(serialize_end:Analytics.GameNavNotFound)
 }
 
-::google::protobuf::uint8* SystemNavAutoDownloaded::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* GameNavNotFound::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameNavNotFound)
   // required string mapName = 1;
   if (has_mapname()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1462,11 +1492,11 @@ void SystemNavAutoDownloaded::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Analytics.SystemNavAutoDownloaded)
+  // @@protoc_insertion_point(serialize_to_array_end:Analytics.GameNavNotFound)
   return target;
 }
 
-int SystemNavAutoDownloaded::ByteSize() const {
+int GameNavNotFound::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1489,10 +1519,10 @@ int SystemNavAutoDownloaded::ByteSize() const {
   return total_size;
 }
 
-void SystemNavAutoDownloaded::MergeFrom(const ::google::protobuf::Message& from) {
+void GameNavNotFound::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const SystemNavAutoDownloaded* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SystemNavAutoDownloaded*>(
+  const GameNavNotFound* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GameNavNotFound*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1501,7 +1531,7 @@ void SystemNavAutoDownloaded::MergeFrom(const ::google::protobuf::Message& from)
   }
 }
 
-void SystemNavAutoDownloaded::MergeFrom(const SystemNavAutoDownloaded& from) {
+void GameNavNotFound::MergeFrom(const GameNavNotFound& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_mapname()) {
@@ -1511,25 +1541,25 @@ void SystemNavAutoDownloaded::MergeFrom(const SystemNavAutoDownloaded& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void SystemNavAutoDownloaded::CopyFrom(const ::google::protobuf::Message& from) {
+void GameNavNotFound::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void SystemNavAutoDownloaded::CopyFrom(const SystemNavAutoDownloaded& from) {
+void GameNavNotFound::CopyFrom(const GameNavNotFound& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool SystemNavAutoDownloaded::IsInitialized() const {
+bool GameNavNotFound::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
-void SystemNavAutoDownloaded::Swap(SystemNavAutoDownloaded* other) {
+void GameNavNotFound::Swap(GameNavNotFound* other) {
   if (other != this) {
     std::swap(mapname_, other->mapname_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1538,11 +1568,11 @@ void SystemNavAutoDownloaded::Swap(SystemNavAutoDownloaded* other) {
   }
 }
 
-::google::protobuf::Metadata SystemNavAutoDownloaded::GetMetadata() const {
+::google::protobuf::Metadata GameNavNotFound::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SystemNavAutoDownloaded_descriptor_;
-  metadata.reflection = SystemNavAutoDownloaded_reflection_;
+  metadata.descriptor = GameNavNotFound_descriptor_;
+  metadata.reflection = GameNavNotFound_reflection_;
   return metadata;
 }
 
@@ -1550,28 +1580,272 @@ void SystemNavAutoDownloaded::Swap(SystemNavAutoDownloaded* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SystemAssert::kConditionFieldNumber;
-const int SystemAssert::kFileFieldNumber;
-const int SystemAssert::kLineFieldNumber;
+const int GameNavAutoDownloaded::kMapNameFieldNumber;
 #endif  // !_MSC_VER
 
-SystemAssert::SystemAssert()
+GameNavAutoDownloaded::GameNavAutoDownloaded()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Analytics.SystemAssert)
+  // @@protoc_insertion_point(constructor:Analytics.GameNavAutoDownloaded)
 }
 
-void SystemAssert::InitAsDefaultInstance() {
+void GameNavAutoDownloaded::InitAsDefaultInstance() {
 }
 
-SystemAssert::SystemAssert(const SystemAssert& from)
+GameNavAutoDownloaded::GameNavAutoDownloaded(const GameNavAutoDownloaded& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Analytics.SystemAssert)
+  // @@protoc_insertion_point(copy_constructor:Analytics.GameNavAutoDownloaded)
 }
 
-void SystemAssert::SharedCtor() {
+void GameNavAutoDownloaded::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  mapname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+GameNavAutoDownloaded::~GameNavAutoDownloaded() {
+  // @@protoc_insertion_point(destructor:Analytics.GameNavAutoDownloaded)
+  SharedDtor();
+}
+
+void GameNavAutoDownloaded::SharedDtor() {
+  if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete mapname_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void GameNavAutoDownloaded::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GameNavAutoDownloaded::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return GameNavAutoDownloaded_descriptor_;
+}
+
+const GameNavAutoDownloaded& GameNavAutoDownloaded::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_analytics_2eproto();
+  return *default_instance_;
+}
+
+GameNavAutoDownloaded* GameNavAutoDownloaded::default_instance_ = NULL;
+
+GameNavAutoDownloaded* GameNavAutoDownloaded::New() const {
+  return new GameNavAutoDownloaded;
+}
+
+void GameNavAutoDownloaded::Clear() {
+  if (has_mapname()) {
+    if (mapname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      mapname_->clear();
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool GameNavAutoDownloaded::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Analytics.GameNavAutoDownloaded)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string mapName = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_mapname()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->mapname().data(), this->mapname().length(),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "mapname");
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Analytics.GameNavAutoDownloaded)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Analytics.GameNavAutoDownloaded)
+  return false;
+#undef DO_
+}
+
+void GameNavAutoDownloaded::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Analytics.GameNavAutoDownloaded)
+  // required string mapName = 1;
+  if (has_mapname()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->mapname().data(), this->mapname().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "mapname");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->mapname(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Analytics.GameNavAutoDownloaded)
+}
+
+::google::protobuf::uint8* GameNavAutoDownloaded::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameNavAutoDownloaded)
+  // required string mapName = 1;
+  if (has_mapname()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->mapname().data(), this->mapname().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "mapname");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->mapname(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Analytics.GameNavAutoDownloaded)
+  return target;
+}
+
+int GameNavAutoDownloaded::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string mapName = 1;
+    if (has_mapname()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->mapname());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GameNavAutoDownloaded::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const GameNavAutoDownloaded* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GameNavAutoDownloaded*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void GameNavAutoDownloaded::MergeFrom(const GameNavAutoDownloaded& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_mapname()) {
+      set_mapname(from.mapname());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void GameNavAutoDownloaded::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GameNavAutoDownloaded::CopyFrom(const GameNavAutoDownloaded& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GameNavAutoDownloaded::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+
+  return true;
+}
+
+void GameNavAutoDownloaded::Swap(GameNavAutoDownloaded* other) {
+  if (other != this) {
+    std::swap(mapname_, other->mapname_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata GameNavAutoDownloaded::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = GameNavAutoDownloaded_descriptor_;
+  metadata.reflection = GameNavAutoDownloaded_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int GameAssert::kConditionFieldNumber;
+const int GameAssert::kFileFieldNumber;
+const int GameAssert::kLineFieldNumber;
+#endif  // !_MSC_VER
+
+GameAssert::GameAssert()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Analytics.GameAssert)
+}
+
+void GameAssert::InitAsDefaultInstance() {
+}
+
+GameAssert::GameAssert(const GameAssert& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Analytics.GameAssert)
+}
+
+void GameAssert::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   condition_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -1580,12 +1854,12 @@ void SystemAssert::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-SystemAssert::~SystemAssert() {
-  // @@protoc_insertion_point(destructor:Analytics.SystemAssert)
+GameAssert::~GameAssert() {
+  // @@protoc_insertion_point(destructor:Analytics.GameAssert)
   SharedDtor();
 }
 
-void SystemAssert::SharedDtor() {
+void GameAssert::SharedDtor() {
   if (condition_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete condition_;
   }
@@ -1596,28 +1870,28 @@ void SystemAssert::SharedDtor() {
   }
 }
 
-void SystemAssert::SetCachedSize(int size) const {
+void GameAssert::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SystemAssert::descriptor() {
+const ::google::protobuf::Descriptor* GameAssert::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SystemAssert_descriptor_;
+  return GameAssert_descriptor_;
 }
 
-const SystemAssert& SystemAssert::default_instance() {
+const GameAssert& GameAssert::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_analytics_2eproto();
   return *default_instance_;
 }
 
-SystemAssert* SystemAssert::default_instance_ = NULL;
+GameAssert* GameAssert::default_instance_ = NULL;
 
-SystemAssert* SystemAssert::New() const {
-  return new SystemAssert;
+GameAssert* GameAssert::New() const {
+  return new GameAssert;
 }
 
-void SystemAssert::Clear() {
+void GameAssert::Clear() {
   if (_has_bits_[0 / 32] & 7) {
     if (has_condition()) {
       if (condition_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
@@ -1635,11 +1909,11 @@ void SystemAssert::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool SystemAssert::MergePartialFromCodedStream(
+bool GameAssert::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Analytics.SystemAssert)
+  // @@protoc_insertion_point(parse_start:Analytics.GameAssert)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1707,17 +1981,17 @@ bool SystemAssert::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Analytics.SystemAssert)
+  // @@protoc_insertion_point(parse_success:Analytics.GameAssert)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Analytics.SystemAssert)
+  // @@protoc_insertion_point(parse_failure:Analytics.GameAssert)
   return false;
 #undef DO_
 }
 
-void SystemAssert::SerializeWithCachedSizes(
+void GameAssert::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Analytics.SystemAssert)
+  // @@protoc_insertion_point(serialize_start:Analytics.GameAssert)
   // required string condition = 1;
   if (has_condition()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1747,12 +2021,12 @@ void SystemAssert::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Analytics.SystemAssert)
+  // @@protoc_insertion_point(serialize_end:Analytics.GameAssert)
 }
 
-::google::protobuf::uint8* SystemAssert::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* GameAssert::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Analytics.SystemAssert)
+  // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameAssert)
   // required string condition = 1;
   if (has_condition()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -1784,11 +2058,11 @@ void SystemAssert::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Analytics.SystemAssert)
+  // @@protoc_insertion_point(serialize_to_array_end:Analytics.GameAssert)
   return target;
 }
 
-int SystemAssert::ByteSize() const {
+int GameAssert::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1825,10 +2099,10 @@ int SystemAssert::ByteSize() const {
   return total_size;
 }
 
-void SystemAssert::MergeFrom(const ::google::protobuf::Message& from) {
+void GameAssert::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const SystemAssert* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SystemAssert*>(
+  const GameAssert* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GameAssert*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1837,7 +2111,7 @@ void SystemAssert::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void SystemAssert::MergeFrom(const SystemAssert& from) {
+void GameAssert::MergeFrom(const GameAssert& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_condition()) {
@@ -1853,25 +2127,25 @@ void SystemAssert::MergeFrom(const SystemAssert& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void SystemAssert::CopyFrom(const ::google::protobuf::Message& from) {
+void GameAssert::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void SystemAssert::CopyFrom(const SystemAssert& from) {
+void GameAssert::CopyFrom(const GameAssert& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool SystemAssert::IsInitialized() const {
+bool GameAssert::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
-void SystemAssert::Swap(SystemAssert* other) {
+void GameAssert::Swap(GameAssert* other) {
   if (other != this) {
     std::swap(condition_, other->condition_);
     std::swap(file_, other->file_);
@@ -1882,11 +2156,11 @@ void SystemAssert::Swap(SystemAssert* other) {
   }
 }
 
-::google::protobuf::Metadata SystemAssert::GetMetadata() const {
+::google::protobuf::Metadata GameAssert::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SystemAssert_descriptor_;
-  metadata.reflection = SystemAssert_reflection_;
+  metadata.descriptor = GameAssert_descriptor_;
+  metadata.reflection = GameAssert_reflection_;
   return metadata;
 }
 
@@ -1894,38 +2168,38 @@ void SystemAssert::Swap(SystemAssert* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SystemCrash::kInfoFieldNumber;
+const int GameCrash::kInfoFieldNumber;
 #endif  // !_MSC_VER
 
-SystemCrash::SystemCrash()
+GameCrash::GameCrash()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Analytics.SystemCrash)
+  // @@protoc_insertion_point(constructor:Analytics.GameCrash)
 }
 
-void SystemCrash::InitAsDefaultInstance() {
+void GameCrash::InitAsDefaultInstance() {
 }
 
-SystemCrash::SystemCrash(const SystemCrash& from)
+GameCrash::GameCrash(const GameCrash& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Analytics.SystemCrash)
+  // @@protoc_insertion_point(copy_constructor:Analytics.GameCrash)
 }
 
-void SystemCrash::SharedCtor() {
+void GameCrash::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   info_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-SystemCrash::~SystemCrash() {
-  // @@protoc_insertion_point(destructor:Analytics.SystemCrash)
+GameCrash::~GameCrash() {
+  // @@protoc_insertion_point(destructor:Analytics.GameCrash)
   SharedDtor();
 }
 
-void SystemCrash::SharedDtor() {
+void GameCrash::SharedDtor() {
   if (info_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete info_;
   }
@@ -1933,28 +2207,28 @@ void SystemCrash::SharedDtor() {
   }
 }
 
-void SystemCrash::SetCachedSize(int size) const {
+void GameCrash::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SystemCrash::descriptor() {
+const ::google::protobuf::Descriptor* GameCrash::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SystemCrash_descriptor_;
+  return GameCrash_descriptor_;
 }
 
-const SystemCrash& SystemCrash::default_instance() {
+const GameCrash& GameCrash::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_analytics_2eproto();
   return *default_instance_;
 }
 
-SystemCrash* SystemCrash::default_instance_ = NULL;
+GameCrash* GameCrash::default_instance_ = NULL;
 
-SystemCrash* SystemCrash::New() const {
-  return new SystemCrash;
+GameCrash* GameCrash::New() const {
+  return new GameCrash;
 }
 
-void SystemCrash::Clear() {
+void GameCrash::Clear() {
   if (has_info()) {
     if (info_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
       info_->clear();
@@ -1964,11 +2238,11 @@ void SystemCrash::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool SystemCrash::MergePartialFromCodedStream(
+bool GameCrash::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Analytics.SystemCrash)
+  // @@protoc_insertion_point(parse_start:Analytics.GameCrash)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2004,17 +2278,17 @@ bool SystemCrash::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Analytics.SystemCrash)
+  // @@protoc_insertion_point(parse_success:Analytics.GameCrash)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Analytics.SystemCrash)
+  // @@protoc_insertion_point(parse_failure:Analytics.GameCrash)
   return false;
 #undef DO_
 }
 
-void SystemCrash::SerializeWithCachedSizes(
+void GameCrash::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Analytics.SystemCrash)
+  // @@protoc_insertion_point(serialize_start:Analytics.GameCrash)
   // required string info = 1;
   if (has_info()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -2029,12 +2303,12 @@ void SystemCrash::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Analytics.SystemCrash)
+  // @@protoc_insertion_point(serialize_end:Analytics.GameCrash)
 }
 
-::google::protobuf::uint8* SystemCrash::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* GameCrash::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Analytics.SystemCrash)
+  // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameCrash)
   // required string info = 1;
   if (has_info()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -2050,11 +2324,11 @@ void SystemCrash::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Analytics.SystemCrash)
+  // @@protoc_insertion_point(serialize_to_array_end:Analytics.GameCrash)
   return target;
 }
 
-int SystemCrash::ByteSize() const {
+int GameCrash::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -2077,10 +2351,10 @@ int SystemCrash::ByteSize() const {
   return total_size;
 }
 
-void SystemCrash::MergeFrom(const ::google::protobuf::Message& from) {
+void GameCrash::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const SystemCrash* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SystemCrash*>(
+  const GameCrash* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GameCrash*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -2089,7 +2363,7 @@ void SystemCrash::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void SystemCrash::MergeFrom(const SystemCrash& from) {
+void GameCrash::MergeFrom(const GameCrash& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_info()) {
@@ -2099,25 +2373,25 @@ void SystemCrash::MergeFrom(const SystemCrash& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void SystemCrash::CopyFrom(const ::google::protobuf::Message& from) {
+void GameCrash::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void SystemCrash::CopyFrom(const SystemCrash& from) {
+void GameCrash::CopyFrom(const GameCrash& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool SystemCrash::IsInitialized() const {
+bool GameCrash::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
-void SystemCrash::Swap(SystemCrash* other) {
+void GameCrash::Swap(GameCrash* other) {
   if (other != this) {
     std::swap(info_, other->info_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -2126,11 +2400,11 @@ void SystemCrash::Swap(SystemCrash* other) {
   }
 }
 
-::google::protobuf::Metadata SystemCrash::GetMetadata() const {
+::google::protobuf::Metadata GameCrash::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SystemCrash_descriptor_;
-  metadata.reflection = SystemCrash_reflection_;
+  metadata.descriptor = GameCrash_descriptor_;
+  metadata.reflection = GameCrash_reflection_;
   return metadata;
 }
 
@@ -2138,42 +2412,44 @@ void SystemCrash::Swap(SystemCrash* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int SystemModelData::kCompressionTypeFieldNumber;
-const int SystemModelData::kModelNameFieldNumber;
-const int SystemModelData::kModelBytesFieldNumber;
+const int GameModelData::kCompressionTypeFieldNumber;
+const int GameModelData::kModelNameFieldNumber;
+const int GameModelData::kModelBytesFieldNumber;
+const int GameModelData::kModelBytesUncompressedFieldNumber;
 #endif  // !_MSC_VER
 
-SystemModelData::SystemModelData()
+GameModelData::GameModelData()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:Analytics.SystemModelData)
+  // @@protoc_insertion_point(constructor:Analytics.GameModelData)
 }
 
-void SystemModelData::InitAsDefaultInstance() {
+void GameModelData::InitAsDefaultInstance() {
 }
 
-SystemModelData::SystemModelData(const SystemModelData& from)
+GameModelData::GameModelData(const GameModelData& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:Analytics.SystemModelData)
+  // @@protoc_insertion_point(copy_constructor:Analytics.GameModelData)
 }
 
-void SystemModelData::SharedCtor() {
+void GameModelData::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   compressiontype_ = 0;
   modelname_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   modelbytes_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  modelbytesuncompressed_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-SystemModelData::~SystemModelData() {
-  // @@protoc_insertion_point(destructor:Analytics.SystemModelData)
+GameModelData::~GameModelData() {
+  // @@protoc_insertion_point(destructor:Analytics.GameModelData)
   SharedDtor();
 }
 
-void SystemModelData::SharedDtor() {
+void GameModelData::SharedDtor() {
   if (modelname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete modelname_;
   }
@@ -2184,30 +2460,40 @@ void SystemModelData::SharedDtor() {
   }
 }
 
-void SystemModelData::SetCachedSize(int size) const {
+void GameModelData::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* SystemModelData::descriptor() {
+const ::google::protobuf::Descriptor* GameModelData::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SystemModelData_descriptor_;
+  return GameModelData_descriptor_;
 }
 
-const SystemModelData& SystemModelData::default_instance() {
+const GameModelData& GameModelData::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_analytics_2eproto();
   return *default_instance_;
 }
 
-SystemModelData* SystemModelData::default_instance_ = NULL;
+GameModelData* GameModelData::default_instance_ = NULL;
 
-SystemModelData* SystemModelData::New() const {
-  return new SystemModelData;
+GameModelData* GameModelData::New() const {
+  return new GameModelData;
 }
 
-void SystemModelData::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
-    compressiontype_ = 0;
+void GameModelData::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<GameModelData*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 15) {
+    ZR_(compressiontype_, modelbytesuncompressed_);
     if (has_modelname()) {
       if (modelname_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         modelname_->clear();
@@ -2219,15 +2505,19 @@ void SystemModelData::Clear() {
       }
     }
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool SystemModelData::MergePartialFromCodedStream(
+bool GameModelData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Analytics.SystemModelData)
+  // @@protoc_insertion_point(parse_start:Analytics.GameModelData)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2278,6 +2568,21 @@ bool SystemModelData::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(32)) goto parse_modelBytesUncompressed;
+        break;
+      }
+
+      // optional uint32 modelBytesUncompressed = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_modelBytesUncompressed:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &modelbytesuncompressed_)));
+          set_has_modelbytesuncompressed();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2296,17 +2601,17 @@ bool SystemModelData::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:Analytics.SystemModelData)
+  // @@protoc_insertion_point(parse_success:Analytics.GameModelData)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:Analytics.SystemModelData)
+  // @@protoc_insertion_point(parse_failure:Analytics.GameModelData)
   return false;
 #undef DO_
 }
 
-void SystemModelData::SerializeWithCachedSizes(
+void GameModelData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:Analytics.SystemModelData)
+  // @@protoc_insertion_point(serialize_start:Analytics.GameModelData)
   // optional .Analytics.Compression compressionType = 1 [default = Compression_None];
   if (has_compressiontype()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -2329,16 +2634,21 @@ void SystemModelData::SerializeWithCachedSizes(
       3, this->modelbytes(), output);
   }
 
+  // optional uint32 modelBytesUncompressed = 4;
+  if (has_modelbytesuncompressed()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->modelbytesuncompressed(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:Analytics.SystemModelData)
+  // @@protoc_insertion_point(serialize_end:Analytics.GameModelData)
 }
 
-::google::protobuf::uint8* SystemModelData::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* GameModelData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Analytics.SystemModelData)
+  // @@protoc_insertion_point(serialize_to_array_start:Analytics.GameModelData)
   // optional .Analytics.Compression compressionType = 1 [default = Compression_None];
   if (has_compressiontype()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
@@ -2363,15 +2673,20 @@ void SystemModelData::SerializeWithCachedSizes(
         3, this->modelbytes(), target);
   }
 
+  // optional uint32 modelBytesUncompressed = 4;
+  if (has_modelbytesuncompressed()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->modelbytesuncompressed(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Analytics.SystemModelData)
+  // @@protoc_insertion_point(serialize_to_array_end:Analytics.GameModelData)
   return target;
 }
 
-int SystemModelData::ByteSize() const {
+int GameModelData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -2395,6 +2710,13 @@ int SystemModelData::ByteSize() const {
           this->modelbytes());
     }
 
+    // optional uint32 modelBytesUncompressed = 4;
+    if (has_modelbytesuncompressed()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->modelbytesuncompressed());
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -2407,10 +2729,10 @@ int SystemModelData::ByteSize() const {
   return total_size;
 }
 
-void SystemModelData::MergeFrom(const ::google::protobuf::Message& from) {
+void GameModelData::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const SystemModelData* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SystemModelData*>(
+  const GameModelData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const GameModelData*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -2419,7 +2741,7 @@ void SystemModelData::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void SystemModelData::MergeFrom(const SystemModelData& from) {
+void GameModelData::MergeFrom(const GameModelData& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_compressiontype()) {
@@ -2431,44 +2753,48 @@ void SystemModelData::MergeFrom(const SystemModelData& from) {
     if (from.has_modelbytes()) {
       set_modelbytes(from.modelbytes());
     }
+    if (from.has_modelbytesuncompressed()) {
+      set_modelbytesuncompressed(from.modelbytesuncompressed());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void SystemModelData::CopyFrom(const ::google::protobuf::Message& from) {
+void GameModelData::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void SystemModelData::CopyFrom(const SystemModelData& from) {
+void GameModelData::CopyFrom(const GameModelData& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool SystemModelData::IsInitialized() const {
+bool GameModelData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000006) != 0x00000006) return false;
 
   return true;
 }
 
-void SystemModelData::Swap(SystemModelData* other) {
+void GameModelData::Swap(GameModelData* other) {
   if (other != this) {
     std::swap(compressiontype_, other->compressiontype_);
     std::swap(modelname_, other->modelname_);
     std::swap(modelbytes_, other->modelbytes_);
+    std::swap(modelbytesuncompressed_, other->modelbytesuncompressed_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata SystemModelData::GetMetadata() const {
+::google::protobuf::Metadata GameModelData::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SystemModelData_descriptor_;
-  metadata.reflection = SystemModelData_reflection_;
+  metadata.descriptor = GameModelData_descriptor_;
+  metadata.reflection = GameModelData_reflection_;
   return metadata;
 }
 
@@ -3803,6 +4129,7 @@ const int GameWeaponFired::kWeaponIdFieldNumber;
 const int GameWeaponFired::kPositionXFieldNumber;
 const int GameWeaponFired::kPositionYFieldNumber;
 const int GameWeaponFired::kPositionZFieldNumber;
+const int GameWeaponFired::kFireModeFieldNumber;
 const int GameWeaponFired::kTeamFieldNumber;
 #endif  // !_MSC_VER
 
@@ -3828,7 +4155,8 @@ void GameWeaponFired::SharedCtor() {
   positionx_ = 0;
   positiony_ = 0;
   positionz_ = 0;
-  team_ = 0u;
+  firemode_ = 0u;
+  team_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3874,7 +4202,7 @@ void GameWeaponFired::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 31) {
+  if (_has_bits_[0 / 32] & 63) {
     ZR_(weaponid_, team_);
   }
 
@@ -3909,7 +4237,7 @@ bool GameWeaponFired::MergePartialFromCodedStream(
         break;
       }
 
-      // required float positionX = 2;
+      // optional float positionX = 2;
       case 2: {
         if (tag == 21) {
          parse_positionX:
@@ -3924,7 +4252,7 @@ bool GameWeaponFired::MergePartialFromCodedStream(
         break;
       }
 
-      // required float positionY = 3;
+      // optional float positionY = 3;
       case 3: {
         if (tag == 29) {
          parse_positionY:
@@ -3939,7 +4267,7 @@ bool GameWeaponFired::MergePartialFromCodedStream(
         break;
       }
 
-      // required float positionZ = 4;
+      // optional float positionZ = 4;
       case 4: {
         if (tag == 37) {
          parse_positionZ:
@@ -3950,16 +4278,31 @@ bool GameWeaponFired::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_team;
+        if (input->ExpectTag(40)) goto parse_fireMode;
         break;
       }
 
-      // optional uint32 team = 5;
+      // optional uint32 fireMode = 5;
       case 5: {
         if (tag == 40) {
-         parse_team:
+         parse_fireMode:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &firemode_)));
+          set_has_firemode();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_team;
+        break;
+      }
+
+      // optional int32 team = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_team:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &team_)));
           set_has_team();
         } else {
@@ -3999,24 +4342,29 @@ void GameWeaponFired::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->weaponid(), output);
   }
 
-  // required float positionX = 2;
+  // optional float positionX = 2;
   if (has_positionx()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->positionx(), output);
   }
 
-  // required float positionY = 3;
+  // optional float positionY = 3;
   if (has_positiony()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->positiony(), output);
   }
 
-  // required float positionZ = 4;
+  // optional float positionZ = 4;
   if (has_positionz()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->positionz(), output);
   }
 
-  // optional uint32 team = 5;
+  // optional uint32 fireMode = 5;
+  if (has_firemode()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->firemode(), output);
+  }
+
+  // optional int32 team = 6;
   if (has_team()) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->team(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->team(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -4034,24 +4382,29 @@ void GameWeaponFired::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->weaponid(), target);
   }
 
-  // required float positionX = 2;
+  // optional float positionX = 2;
   if (has_positionx()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->positionx(), target);
   }
 
-  // required float positionY = 3;
+  // optional float positionY = 3;
   if (has_positiony()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->positiony(), target);
   }
 
-  // required float positionZ = 4;
+  // optional float positionZ = 4;
   if (has_positionz()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->positionz(), target);
   }
 
-  // optional uint32 team = 5;
+  // optional uint32 fireMode = 5;
+  if (has_firemode()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->firemode(), target);
+  }
+
+  // optional int32 team = 6;
   if (has_team()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->team(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->team(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4073,25 +4426,32 @@ int GameWeaponFired::ByteSize() const {
           this->weaponid());
     }
 
-    // required float positionX = 2;
+    // optional float positionX = 2;
     if (has_positionx()) {
       total_size += 1 + 4;
     }
 
-    // required float positionY = 3;
+    // optional float positionY = 3;
     if (has_positiony()) {
       total_size += 1 + 4;
     }
 
-    // required float positionZ = 4;
+    // optional float positionZ = 4;
     if (has_positionz()) {
       total_size += 1 + 4;
     }
 
-    // optional uint32 team = 5;
-    if (has_team()) {
+    // optional uint32 fireMode = 5;
+    if (has_firemode()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->firemode());
+    }
+
+    // optional int32 team = 6;
+    if (has_team()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->team());
     }
 
@@ -4134,6 +4494,9 @@ void GameWeaponFired::MergeFrom(const GameWeaponFired& from) {
     if (from.has_positionz()) {
       set_positionz(from.positionz());
     }
+    if (from.has_firemode()) {
+      set_firemode(from.firemode());
+    }
     if (from.has_team()) {
       set_team(from.team());
     }
@@ -4154,7 +4517,7 @@ void GameWeaponFired::CopyFrom(const GameWeaponFired& from) {
 }
 
 bool GameWeaponFired::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -4165,6 +4528,7 @@ void GameWeaponFired::Swap(GameWeaponFired* other) {
     std::swap(positionx_, other->positionx_);
     std::swap(positiony_, other->positiony_);
     std::swap(positionz_, other->positionz_);
+    std::swap(firemode_, other->firemode_);
     std::swap(team_, other->team_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -5266,11 +5630,12 @@ void GameNavigationStuck::Swap(GameNavigationStuck* other) {
 
 #ifndef _MSC_VER
 const int MessageUnion::kTimestampFieldNumber;
-const int MessageUnion::kSystemNavNotFoundFieldNumber;
+const int MessageUnion::kGameInfoFieldNumber;
+const int MessageUnion::kGameNavNotFoundFieldNumber;
 const int MessageUnion::kSystemNavDownloadedFieldNumber;
-const int MessageUnion::kSystemAssertFieldNumber;
-const int MessageUnion::kSystemCrashFieldNumber;
-const int MessageUnion::kSystemModelDataFieldNumber;
+const int MessageUnion::kGameAssertFieldNumber;
+const int MessageUnion::kGameCrashFieldNumber;
+const int MessageUnion::kGameModelDataFieldNumber;
 const int MessageUnion::kGameEntityListFieldNumber;
 const int MessageUnion::kGameWeaponFiredFieldNumber;
 const int MessageUnion::kGameDeathFieldNumber;
@@ -5287,11 +5652,12 @@ MessageUnion::MessageUnion()
 }
 
 void MessageUnion::InitAsDefaultInstance() {
-  MessageUnion_default_oneof_instance_->systemnavnotfound_ = const_cast< ::Analytics::SystemNavNotFound*>(&::Analytics::SystemNavNotFound::default_instance());
-  MessageUnion_default_oneof_instance_->systemnavdownloaded_ = const_cast< ::Analytics::SystemNavAutoDownloaded*>(&::Analytics::SystemNavAutoDownloaded::default_instance());
-  MessageUnion_default_oneof_instance_->systemassert_ = const_cast< ::Analytics::SystemAssert*>(&::Analytics::SystemAssert::default_instance());
-  MessageUnion_default_oneof_instance_->systemcrash_ = const_cast< ::Analytics::SystemCrash*>(&::Analytics::SystemCrash::default_instance());
-  MessageUnion_default_oneof_instance_->systemmodeldata_ = const_cast< ::Analytics::SystemModelData*>(&::Analytics::SystemModelData::default_instance());
+  MessageUnion_default_oneof_instance_->gameinfo_ = const_cast< ::Analytics::GameInfo*>(&::Analytics::GameInfo::default_instance());
+  MessageUnion_default_oneof_instance_->gamenavnotfound_ = const_cast< ::Analytics::GameNavNotFound*>(&::Analytics::GameNavNotFound::default_instance());
+  MessageUnion_default_oneof_instance_->systemnavdownloaded_ = const_cast< ::Analytics::GameNavAutoDownloaded*>(&::Analytics::GameNavAutoDownloaded::default_instance());
+  MessageUnion_default_oneof_instance_->gameassert_ = const_cast< ::Analytics::GameAssert*>(&::Analytics::GameAssert::default_instance());
+  MessageUnion_default_oneof_instance_->gamecrash_ = const_cast< ::Analytics::GameCrash*>(&::Analytics::GameCrash::default_instance());
+  MessageUnion_default_oneof_instance_->gamemodeldata_ = const_cast< ::Analytics::GameModelData*>(&::Analytics::GameModelData::default_instance());
   MessageUnion_default_oneof_instance_->gameentitylist_ = const_cast< ::Analytics::GameEntityList*>(&::Analytics::GameEntityList::default_instance());
   MessageUnion_default_oneof_instance_->gameweaponfired_ = const_cast< ::Analytics::GameWeaponFired*>(&::Analytics::GameWeaponFired::default_instance());
   MessageUnion_default_oneof_instance_->gamedeath_ = const_cast< ::Analytics::GameDeath*>(&::Analytics::GameDeath::default_instance());
@@ -5351,24 +5717,28 @@ MessageUnion* MessageUnion::New() const {
 
 void MessageUnion::clear_msg() {
   switch(msg_case()) {
-    case kSystemNavNotFound: {
-      delete msg_.systemnavnotfound_;
+    case kGameInfo: {
+      delete msg_.gameinfo_;
+      break;
+    }
+    case kGameNavNotFound: {
+      delete msg_.gamenavnotfound_;
       break;
     }
     case kSystemNavDownloaded: {
       delete msg_.systemnavdownloaded_;
       break;
     }
-    case kSystemAssert: {
-      delete msg_.systemassert_;
+    case kGameAssert: {
+      delete msg_.gameassert_;
       break;
     }
-    case kSystemCrash: {
-      delete msg_.systemcrash_;
+    case kGameCrash: {
+      delete msg_.gamecrash_;
       break;
     }
-    case kSystemModelData: {
-      delete msg_.systemmodeldata_;
+    case kGameModelData: {
+      delete msg_.gamemodeldata_;
       break;
     }
     case kGameEntityList: {
@@ -5434,68 +5804,81 @@ bool MessageUnion::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_systemNavNotFound;
+        if (input->ExpectTag(74)) goto parse_gameInfo;
         break;
       }
 
-      // optional .Analytics.SystemNavNotFound systemNavNotFound = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_systemNavNotFound:
+      // optional .Analytics.GameInfo gameInfo = 9;
+      case 9: {
+        if (tag == 74) {
+         parse_gameInfo:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_systemnavnotfound()));
+               input, mutable_gameinfo()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_systemNavDownloaded;
+        if (input->ExpectTag(82)) goto parse_gameNavNotFound;
         break;
       }
 
-      // optional .Analytics.SystemNavAutoDownloaded systemNavDownloaded = 3;
-      case 3: {
-        if (tag == 26) {
+      // optional .Analytics.GameNavNotFound gameNavNotFound = 10;
+      case 10: {
+        if (tag == 82) {
+         parse_gameNavNotFound:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_gamenavnotfound()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(90)) goto parse_systemNavDownloaded;
+        break;
+      }
+
+      // optional .Analytics.GameNavAutoDownloaded systemNavDownloaded = 11;
+      case 11: {
+        if (tag == 90) {
          parse_systemNavDownloaded:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_systemnavdownloaded()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_systemAssert;
+        if (input->ExpectTag(98)) goto parse_gameAssert;
         break;
       }
 
-      // optional .Analytics.SystemAssert systemAssert = 4;
-      case 4: {
-        if (tag == 34) {
-         parse_systemAssert:
+      // optional .Analytics.GameAssert gameAssert = 12;
+      case 12: {
+        if (tag == 98) {
+         parse_gameAssert:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_systemassert()));
+               input, mutable_gameassert()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_systemCrash;
+        if (input->ExpectTag(106)) goto parse_gameCrash;
         break;
       }
 
-      // optional .Analytics.SystemCrash systemCrash = 5;
-      case 5: {
-        if (tag == 42) {
-         parse_systemCrash:
+      // optional .Analytics.GameCrash gameCrash = 13;
+      case 13: {
+        if (tag == 106) {
+         parse_gameCrash:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_systemcrash()));
+               input, mutable_gamecrash()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_systemModelData;
+        if (input->ExpectTag(114)) goto parse_gameModelData;
         break;
       }
 
-      // optional .Analytics.SystemModelData systemModelData = 6;
-      case 6: {
-        if (tag == 50) {
-         parse_systemModelData:
+      // optional .Analytics.GameModelData gameModelData = 14;
+      case 14: {
+        if (tag == 114) {
+         parse_gameModelData:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_systemmodeldata()));
+               input, mutable_gamemodeldata()));
         } else {
           goto handle_unusual;
         }
@@ -5624,34 +6007,40 @@ void MessageUnion::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->timestamp(), output);
   }
 
-  // optional .Analytics.SystemNavNotFound systemNavNotFound = 2;
-  if (has_systemnavnotfound()) {
+  // optional .Analytics.GameInfo gameInfo = 9;
+  if (has_gameinfo()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->systemnavnotfound(), output);
+      9, this->gameinfo(), output);
   }
 
-  // optional .Analytics.SystemNavAutoDownloaded systemNavDownloaded = 3;
+  // optional .Analytics.GameNavNotFound gameNavNotFound = 10;
+  if (has_gamenavnotfound()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      10, this->gamenavnotfound(), output);
+  }
+
+  // optional .Analytics.GameNavAutoDownloaded systemNavDownloaded = 11;
   if (has_systemnavdownloaded()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->systemnavdownloaded(), output);
+      11, this->systemnavdownloaded(), output);
   }
 
-  // optional .Analytics.SystemAssert systemAssert = 4;
-  if (has_systemassert()) {
+  // optional .Analytics.GameAssert gameAssert = 12;
+  if (has_gameassert()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->systemassert(), output);
+      12, this->gameassert(), output);
   }
 
-  // optional .Analytics.SystemCrash systemCrash = 5;
-  if (has_systemcrash()) {
+  // optional .Analytics.GameCrash gameCrash = 13;
+  if (has_gamecrash()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, this->systemcrash(), output);
+      13, this->gamecrash(), output);
   }
 
-  // optional .Analytics.SystemModelData systemModelData = 6;
-  if (has_systemmodeldata()) {
+  // optional .Analytics.GameModelData gameModelData = 14;
+  if (has_gamemodeldata()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      6, this->systemmodeldata(), output);
+      14, this->gamemodeldata(), output);
   }
 
   // optional .Analytics.GameEntityList gameEntityList = 100;
@@ -5711,39 +6100,46 @@ void MessageUnion::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->timestamp(), target);
   }
 
-  // optional .Analytics.SystemNavNotFound systemNavNotFound = 2;
-  if (has_systemnavnotfound()) {
+  // optional .Analytics.GameInfo gameInfo = 9;
+  if (has_gameinfo()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->systemnavnotfound(), target);
+        9, this->gameinfo(), target);
   }
 
-  // optional .Analytics.SystemNavAutoDownloaded systemNavDownloaded = 3;
+  // optional .Analytics.GameNavNotFound gameNavNotFound = 10;
+  if (has_gamenavnotfound()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        10, this->gamenavnotfound(), target);
+  }
+
+  // optional .Analytics.GameNavAutoDownloaded systemNavDownloaded = 11;
   if (has_systemnavdownloaded()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->systemnavdownloaded(), target);
+        11, this->systemnavdownloaded(), target);
   }
 
-  // optional .Analytics.SystemAssert systemAssert = 4;
-  if (has_systemassert()) {
+  // optional .Analytics.GameAssert gameAssert = 12;
+  if (has_gameassert()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->systemassert(), target);
+        12, this->gameassert(), target);
   }
 
-  // optional .Analytics.SystemCrash systemCrash = 5;
-  if (has_systemcrash()) {
+  // optional .Analytics.GameCrash gameCrash = 13;
+  if (has_gamecrash()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        5, this->systemcrash(), target);
+        13, this->gamecrash(), target);
   }
 
-  // optional .Analytics.SystemModelData systemModelData = 6;
-  if (has_systemmodeldata()) {
+  // optional .Analytics.GameModelData gameModelData = 14;
+  if (has_gamemodeldata()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        6, this->systemmodeldata(), target);
+        14, this->gamemodeldata(), target);
   }
 
   // optional .Analytics.GameEntityList gameEntityList = 100;
@@ -5816,39 +6212,46 @@ int MessageUnion::ByteSize() const {
 
   }
   switch (msg_case()) {
-    // optional .Analytics.SystemNavNotFound systemNavNotFound = 2;
-    case kSystemNavNotFound: {
+    // optional .Analytics.GameInfo gameInfo = 9;
+    case kGameInfo: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->systemnavnotfound());
+          this->gameinfo());
       break;
     }
-    // optional .Analytics.SystemNavAutoDownloaded systemNavDownloaded = 3;
+    // optional .Analytics.GameNavNotFound gameNavNotFound = 10;
+    case kGameNavNotFound: {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->gamenavnotfound());
+      break;
+    }
+    // optional .Analytics.GameNavAutoDownloaded systemNavDownloaded = 11;
     case kSystemNavDownloaded: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->systemnavdownloaded());
       break;
     }
-    // optional .Analytics.SystemAssert systemAssert = 4;
-    case kSystemAssert: {
+    // optional .Analytics.GameAssert gameAssert = 12;
+    case kGameAssert: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->systemassert());
+          this->gameassert());
       break;
     }
-    // optional .Analytics.SystemCrash systemCrash = 5;
-    case kSystemCrash: {
+    // optional .Analytics.GameCrash gameCrash = 13;
+    case kGameCrash: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->systemcrash());
+          this->gamecrash());
       break;
     }
-    // optional .Analytics.SystemModelData systemModelData = 6;
-    case kSystemModelData: {
+    // optional .Analytics.GameModelData gameModelData = 14;
+    case kGameModelData: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->systemmodeldata());
+          this->gamemodeldata());
       break;
     }
     // optional .Analytics.GameEntityList gameEntityList = 100;
@@ -5930,24 +6333,28 @@ void MessageUnion::MergeFrom(const ::google::protobuf::Message& from) {
 void MessageUnion::MergeFrom(const MessageUnion& from) {
   GOOGLE_CHECK_NE(&from, this);
   switch (from.msg_case()) {
-    case kSystemNavNotFound: {
-      mutable_systemnavnotfound()->::Analytics::SystemNavNotFound::MergeFrom(from.systemnavnotfound());
+    case kGameInfo: {
+      mutable_gameinfo()->::Analytics::GameInfo::MergeFrom(from.gameinfo());
+      break;
+    }
+    case kGameNavNotFound: {
+      mutable_gamenavnotfound()->::Analytics::GameNavNotFound::MergeFrom(from.gamenavnotfound());
       break;
     }
     case kSystemNavDownloaded: {
-      mutable_systemnavdownloaded()->::Analytics::SystemNavAutoDownloaded::MergeFrom(from.systemnavdownloaded());
+      mutable_systemnavdownloaded()->::Analytics::GameNavAutoDownloaded::MergeFrom(from.systemnavdownloaded());
       break;
     }
-    case kSystemAssert: {
-      mutable_systemassert()->::Analytics::SystemAssert::MergeFrom(from.systemassert());
+    case kGameAssert: {
+      mutable_gameassert()->::Analytics::GameAssert::MergeFrom(from.gameassert());
       break;
     }
-    case kSystemCrash: {
-      mutable_systemcrash()->::Analytics::SystemCrash::MergeFrom(from.systemcrash());
+    case kGameCrash: {
+      mutable_gamecrash()->::Analytics::GameCrash::MergeFrom(from.gamecrash());
       break;
     }
-    case kSystemModelData: {
-      mutable_systemmodeldata()->::Analytics::SystemModelData::MergeFrom(from.systemmodeldata());
+    case kGameModelData: {
+      mutable_gamemodeldata()->::Analytics::GameModelData::MergeFrom(from.gamemodeldata());
       break;
     }
     case kGameEntityList: {
@@ -6005,20 +6412,23 @@ void MessageUnion::CopyFrom(const MessageUnion& from) {
 bool MessageUnion::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  if (has_systemnavnotfound()) {
-    if (!this->systemnavnotfound().IsInitialized()) return false;
+  if (has_gameinfo()) {
+    if (!this->gameinfo().IsInitialized()) return false;
+  }
+  if (has_gamenavnotfound()) {
+    if (!this->gamenavnotfound().IsInitialized()) return false;
   }
   if (has_systemnavdownloaded()) {
     if (!this->systemnavdownloaded().IsInitialized()) return false;
   }
-  if (has_systemassert()) {
-    if (!this->systemassert().IsInitialized()) return false;
+  if (has_gameassert()) {
+    if (!this->gameassert().IsInitialized()) return false;
   }
-  if (has_systemcrash()) {
-    if (!this->systemcrash().IsInitialized()) return false;
+  if (has_gamecrash()) {
+    if (!this->gamecrash().IsInitialized()) return false;
   }
-  if (has_systemmodeldata()) {
-    if (!this->systemmodeldata().IsInitialized()) return false;
+  if (has_gamemodeldata()) {
+    if (!this->gamemodeldata().IsInitialized()) return false;
   }
   if (has_gameentitylist()) {
     if (!this->gameentitylist().IsInitialized()) return false;

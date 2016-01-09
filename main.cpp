@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 			if ( ( frameNum % 100 ) == 0 )
 			{
 				Analytics::MessageUnion msg;
-				msg.set_timestamp( logger.GetTimeStamp() );
+				//msg.set_timestamp( logger.GetTimeStamp() );
 				msg.mutable_gamedeath()->set_killedbyclass( 5 );
 				msg.mutable_gamedeath()->set_killedbyhealth( 10 );
 				msg.mutable_gamedeath()->set_killedbyweapon( 15 );
@@ -82,8 +82,8 @@ int main(int argc, char *argv[])
 			if ( ( frameNum % 100 ) == 0 )
 			{
 				Analytics::MessageUnion msg;
-				msg.set_timestamp( logger.GetTimeStamp() );
-				msg.mutable_systemassert()->set_condition( "test string" );
+				//msg.set_timestamp( logger.GetTimeStamp() );
+				msg.mutable_gameassert()->set_condition( "test string" );
 				logger.AddEvent( msg );
 			}
 		}
@@ -113,19 +113,24 @@ int main(int argc, char *argv[])
 	const char * areaName = "TestAppArea";
 	const char * eventName = "TestAppEvent";
 	const size_t numDesignEvents = 10000;
-	const size_t numQualityEvents = 100;
-
+	
+	Analytics::MessageUnion msg;
 	for ( size_t i = 0; i < numDesignEvents; ++i )
 	{
-		const float pos[3] = { (float)RandInRange(-worldSizeX,worldSizeX), (float)RandInRange(-worldSizeY,worldSizeY), 0.f };
-		logger.AddGameEvent( areaName, eventName, pos, (float)RandInRange( 0, 5 ) );
-	}
+		msg.Clear();
 
-	for ( size_t i = 0; i < numQualityEvents; ++i )
-	{
-		logger.AddQualityEvent( areaName, eventName, "Test Quality Event" );
+		msg.set_timestamp( i * 100 ); // artificial timestamps
+
+		Analytics::GameWeaponFired* event = msg.mutable_gameweaponfired();
+		event->set_weaponid( rand() % 10 );
+		event->set_team( rand() % 4 );
+		event->set_positionx( (float)RandInRange( -worldSizeX, worldSizeX ) );
+		event->set_positiony( (float)RandInRange( -worldSizeY, worldSizeY ) );
+		event->set_positionz( 0.0f );
+		
+		logger.AddEvent( msg );
 	}
-	
+		
 	/*const size_t submittedQualityEvents = logger.SubmitQualityEvents();
 	const size_t submittedDesignEvents = logger.SubmitDesignEvents();	
 
