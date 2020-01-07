@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <set>
+#include <cctype>
 #include <algorithm> // std::remove
 
 #include "sqlite3.h"
@@ -14,10 +15,12 @@
 
 #include "MD5.h"  // MD5 hashing algorithm
 
-#include <zmq.hpp>
-
 #include "google/protobuf/io/zero_copy_stream_impl.h"
 #include "google/protobuf/io/coded_stream.h"
+#include "google/protobuf/util/json_util.h"
+
+#include <cpp_redis/cpp_redis>
+#include <cpp_redis/core/client.hpp>
 
 #undef GetMessage
 
@@ -26,7 +29,7 @@
 // Callback to take returned data and convert it to a string.
 // The last parameter is actually user-defined - it can be whatever
 //   type you want it to be.
-static size_t DataToString( char *data, size_t size, size_t nmemb, std::string * result )
+static size_t DataToString(char *data, size_t size, size_t nmemb, std::string * result)
 {
 	size_t count = 0;
 	if (result)
@@ -38,28 +41,17 @@ static size_t DataToString( char *data, size_t size, size_t nmemb, std::string *
 	return count;
 }
 
-class vaAnalytics {
-public:
-	const char * c_str() const { return buffer; }
-	operator const char *() const { return buffer; }
-
-	vaAnalytics( const char* msg, ... )
-	{
-		va_list list;
-		va_start(list, msg);
+vaAnalytics::vaAnalytics(const char* msg, ...)
+{
+	va_list list;
+	va_start(list, msg);
 #ifdef WIN32
-		_vsnprintf(buffer, BufferSize, msg, list);
+	_vsnprintf(buffer, BufferSize, msg, list);
 #else
-		vsnprintf(buffer, BufferSize, msg, list);
+	vsnprintf(buffer, BufferSize, msg, list);
 #endif
-		va_end(list);
-	}
-protected:
-	enum { BufferSize = 1024 };
-	char buffer[BufferSize];
-};
-
-#define va vaAnalytics
+	va_end(list);
+}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -84,503 +76,54 @@ protected:
 
 //////////////////////////////////////////////////////////////////////////
 
-AnalyticsPublisher::AnalyticsPublisher()
-{
-}
-
-AnalyticsPublisher::~AnalyticsPublisher()
-{
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-AnalyticsSubscriber::AnalyticsSubscriber()
-{
-}
-
-AnalyticsSubscriber::~AnalyticsSubscriber()
+GameAnalytics::GameAnalytics(GameAnalyticsCallbacks* callbacks)
+	: mDatabase(NULL)
+	, mCallbacks(callbacks)
+	, mClient(nullptr)
+	, mSubscriber(nullptr)
 {
 }
 
 //////////////////////////////////////////////////////////////////////////
-
-GameAnalytics::GameAnalytics( const Keys & keys, ErrorCallbacks* errorCbs )
-	: mKeys( keys )
-	, mDatabase( NULL )
-	, mPublisher( NULL )
-	, mErrorCallbacks( errorCbs )
-	, mMsgSubtypes( NULL )
-{
-#if(CURL_ENABLE)
-    // Initialize libcurl.
-    curl_global_init(CURL_GLOBAL_ALL);
-#endif
-
-	SetUserID();
-	SetSessionID();
-
-	// make a unique table for each event type
-	mMsgSubtypes = Analytics::MessageUnion::descriptor()->FindOneofByName( "msg" );
-}
-
-//////////////////////////////////////////////////////////////////////////
-
 
 GameAnalytics::~GameAnalytics()
 {
-	delete mPublisher;
-}
+	CloseDatabase();
 
-//////////////////////////////////////////////////////////////////////////
-
-void GameAnalytics::SetPublisher( AnalyticsPublisher * publisher )
-{
-	mPublisher = publisher;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-AnalyticsPublisher * GameAnalytics::GetPublisher() const
-{
-	return mPublisher;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-//void GameAnalyticsEventDesign::WriteToObject( Json::Value & obj ) const
-//{
-//	GameAnalyticsEvent::WriteToObject( obj );
-//
-//	if ( mUseValue )
-//		obj[ "value" ] = mValue;
-//}
-
-//////////////////////////////////////////////////////////////////////////
-
-//void GameAnalyticsEventQuality::WriteToObject( Json::Value & obj ) const
-//{
-//	GameAnalyticsEvent::WriteToObject( obj );
-//
-//	if ( mUseMessage )
-//		obj[ "message" ] = mMessage;
-//}
-
-// User ID and session ID are necessary for all events to identify the source uniquely
-// When possible this should probably be some sort of UID for a particular user
-// For general use using a network MAC address is probably a decent way to create a UID
-// More info here: http://support.gameanalytics.com/entries/23054568-Generating-unique-user-identifiers
-
-// This hashes the user's MAC address to create an ID unique to that machine.
-void GameAnalytics::SetUserID()
-{
-	mUserId = "DREVIL";
-
-#if(0)
-    // Prepare an array to get info for up to 16 network adapters.
-    // It's a little hacky, but it's way complicated to do otherwise,
-    //   and the chances of someone having more than 16 are pretty crazy.
-    IP_ADAPTER_INFO info[16];
-
-    // Get info for all the network adapters.
-    DWORD dwBufLen = sizeof(info);
-    DWORD dwStatus = GetAdaptersInfo(info, &dwBufLen);
-    if (dwStatus != ERROR_SUCCESS)
-    {
-        /* deal with error */
-    }
-    else
-    {
-        PIP_ADAPTER_INFO pAdapterInfo = info;
-
-        // Iterate through the adapter array until we find one.
-        // (Will most likely be the first.)
-        while (pAdapterInfo && pAdapterInfo == 0)
-        {
-            pAdapterInfo = pAdapterInfo->Next;
-        }
-        
-        if (!pAdapterInfo)
-        {
-            // No network adapter found. In my code I just use a GUID at this point,
-            //   (same code to get a session ID), but I'll leave that up to you.
-        }
-        else
-        {
-            // Get a hash of the MAC address using SHA1.
-            unsigned char hash[10];
-            char hexstring[41];
-            sha1::calc(pAdapterInfo->Address, pAdapterInfo->AddressLength, hash);
-            sha1::toHexString(hash, hexstring);
-            mUserId = hexstring;
-
-            // Remove any hyphens.
-            mUserId.erase(std::remove(mUserId.begin(), mUserId.end(), '-'), mUserId.end());
-        }
-    }
-#endif
-}
-
-// Sets the session ID with a GUID (Globally Unique Identifier).
-void GameAnalytics::SetSessionID()
-{
-    // Get the GUID.
-    //GUID guid;
-    //CoCreateGuid(&guid);
-
-    //// Turn the GUID into an ASCII string.
-    //RPC_CSTR str;
-    //UuidToStringA((UUID*)&guid, &str);
-
-    //// Get a standard string out of that.
-    //session_id_ = (LPSTR)str;
-
-    //// Remove any hyphens.
-    //session_id_.erase(std::remove(session_id_.begin(), session_id_.end(), '-'), session_id_.end());
-
-	// just use the start time for the session id
-	std::stringstream ss;
-
-#ifdef WIN32
-	LARGE_INTEGER timer;
-	QueryPerformanceCounter(&timer);
-	ss << "TS" << timer.QuadPart;
-#else
-	clock_t timer = clock();
-	ss << "TS" << timer;
-#endif	
-	
-	mSessionId = ss.str();
-}
-
-/*void GameAnalytics::BuildDesignEventsJsonTree( Json::Value & tree )
-{
-	tree = Json::Value(Json::arrayValue);
-	tree.resize( mEventsDesign.size() );
-
-	for ( size_t i = 0; i < mEventsDesign.size(); ++i )
+	if (mClient != nullptr)
 	{
-		const GameAnalyticsEvent & evt = mEventsDesign[ i ];
-
-		Json::Value & evtValue = tree[ i ];
-
-		evtValue = Json::Value( Json::objectValue );
-		evtValue[ "user_id" ] = mUserId;
-		evtValue[ "session_id" ] = mSessionId;
-		evtValue[ "build" ] = mKeys.mVersionKey;
-		evt.WriteToObject( evtValue );
+		mClient->disconnect(true);
+		delete mClient;
+		mClient = nullptr;
 	}
-}*/
 
-/*void GameAnalytics::BuildQualityEventsJsonTree( Json::Value & tree )
-{
-	tree = Json::Value(Json::arrayValue);
-	tree.resize( mEventsQuality.size() );
-
-	for ( size_t i = 0; i < mEventsQuality.size(); ++i )
-	{
-		const GameAnalyticsEvent & evt = mEventsQuality[ i ];
-
-		Json::Value & evtValue = tree[ i ];
-
-		evtValue = Json::Value( Json::objectValue );
-		evtValue[ "user_id" ] = mUserId;
-		evtValue[ "session_id" ] = mSessionId;
-		evtValue[ "build" ] = mKeys.mVersionKey;
-		evt.WriteToObject( evtValue );
-	}
-}*/
-
-size_t GameAnalytics::SubmitDesignEvents()
-{
-#if(CURL_ENABLE)
-	std::stringstream query;
-	query << "SELECT * in events WHERE ()";
-
-	//sqlite3_prepare_v2( mDatabase, "SELECT * in events WHERE ()" );
-	
-	// New CURL object.
-	CURL * curl = curl_easy_init();
-	if (curl)
-	{
-		// build the event string to send
-		/*Json::Value root;
-		BuildDesignEventsJsonTree( root );
-		
-		Json::StyledWriter writer;*/
-		const std::string gaEvents;// = writer.write( root );
-				
-		// The URL to send events to
-		const std::string url = BuildUrl( "design" );
-
-		// Combine your events string and secret key for the header.
-		std::string header = gaEvents + mKeys.mSecretKey;
-		// Then hash that, and give it the label "Authorization:".
-		std::string auth = "Authorization:" + md5(header);
-
-		// Create a struct of headers.
-		struct curl_slist *chunk = NULL;
-		// Add the auth header to the struct.
-		chunk = curl_slist_append(chunk, auth.c_str());
-
-		// Set the URL of the request.
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-		// Set the POST data (the string of events).
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, gaEvents.c_str());
-		// Set the headers (hashed secret key + data).
-		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-		// Set request mode to POST.
-		curl_easy_setopt(curl, CURLOPT_POST, 1);
-
-		std::string result;
-		// Set the callback to deal with the returned data.
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, DataToString);
-		// Pass in a string to accept the result.
-		// (This will be taken care of in the callback function.)
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-
-		// Send the request!
-		const CURLcode res = curl_easy_perform(curl);
-		
-		// Cleanup your CURL object.
-		curl_easy_cleanup(curl);
-		// Free the headers.
-		curl_slist_free_all(chunk);
-
-		// Check the error flag.
-		if (res != CURLE_OK)
-		{
-			std::string err = "Error Submitting Design Events ";
-			err += curl_easy_strerror(res);
-
-			if ( mErrorCallbacks )
-				mErrorCallbacks->Error( err.c_str() );
-			return 0;
-		}
-	}
-#endif
-	const size_t eventsSubmitted = 0;
-	/*const size_t eventsSubmitted = mEventsDesign.size();
-	mEventsDesign.resize( 0 );*/
-	return eventsSubmitted;
+	tacopie::set_default_io_service(nullptr);
 }
 
-size_t GameAnalytics::SubmitQualityEvents()
-{
-#if(CURL_ENABLE)
-	/*if ( mEventsQuality.size() == 0 )
-		return 0;*/
-
-	// New CURL object.
-	CURL * curl = curl_easy_init();
-	if (curl)
-	{
-		// build the event string to send
-		/*Json::Value root;
-		BuildQualityEventsJsonTree( root );
-		
-		Json::StyledWriter writer;*/
-		const std::string gaEvents;// = writer.write( root );
-		
-		const std::string url = BuildUrl( "quality" );
-
-		// Combine your events string and secret key for the header.
-		std::string header = gaEvents + mKeys.mSecretKey;
-		// Then hash that, and give it the label "Authorization:".
-		std::string auth = "Authorization:" + md5(header);
-
-		// Create a struct of headers.
-		struct curl_slist *chunk = NULL;
-		// Add the auth header to the struct.
-		chunk = curl_slist_append(chunk, auth.c_str());
-
-		// Set the URL of the request.
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-		// Set the POST data (the string of events).
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, gaEvents.c_str());
-		// Set the headers (hashed secret key + data).
-		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-		// Set request mode to POST.
-		curl_easy_setopt(curl, CURLOPT_POST, 1);
-
-		std::string result;
-		// Set the callback to deal with the returned data.
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, DataToString);
-		// Pass in a string to accept the result.
-		// (This will be taken care of in the callback function.)
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-
-		// Send the request!
-		const CURLcode res = curl_easy_perform(curl);
-		
-		// Cleanup your CURL object.
-		curl_easy_cleanup(curl);
-		// Free the headers.
-		curl_slist_free_all(chunk);
-
-		// Check the error flag.
-		if (res != CURLE_OK)
-		{
-			std::string err = "Error Submitting Quality Events ";
-			err += curl_easy_strerror(res);
-			
-			if ( mErrorCallbacks )
-				mErrorCallbacks->Error( err.c_str() );
-			return 0;
-		}
-	}
-#endif
-
-	const size_t eventsSubmitted = 0;
-	/*const size_t eventsSubmitted = mEventsQuality.size();
-	mEventsQuality.resize( 0 );*/
-	return eventsSubmitted;
-}
-
-std::string GameAnalytics::BuildUrl( const std::string & category )
-{
-	// Currently the API's version is 1. Leave it like this for now.
-	const std::string apiVersion_ = "1";
-
-	// category options are
-	// design (gameplay)
-	// quality (quality assurance)
-	// business (transactions)
-	// user (player profiles)
-	return std::string("http://api.gameanalytics.com/") + apiVersion_ + "/" + mKeys.mGameKey + "/" + category;
-}
-
-const GameAnalytics::Heatmap * GameAnalytics::GetHeatmap( const std::string & area, const std::string & eventIds, bool loadFromServer )
-{
-	HeatMapsByName::iterator it = mHeatMaps.find( area );
-	if ( it != mHeatMaps.end() )
-		return it->second;
-
-	if ( !loadFromServer )
-		return NULL;
-
-#if(CURL_ENABLE)
-
-	// New CURL object.
-	CURL * curl = curl_easy_init();
-	if (curl)
-	{
-		// Request URL for getting heatmap data.
-		std::string url = "http://data-api.gameanalytics.com/heatmap";
-		// Specify what area the heatmap should be from, and what events it
-		//   should be getting data for.
-		// Note: you can ask for multiple events at the same time with |,
-		//   like "Death:Enemy|Death:Fall".
-		std::string requestInfo = "game_key=" + mKeys.mGameKey + "&event_ids=" + eventIds + "&area=" + area;
-		// Concatenate the request with the URL.
-		url += "/?";
-		url += requestInfo;
-
-		// Build the header with the request and API key.
-		std::string header = requestInfo + mKeys.mDataApiKey;
-		// Hash that, and give it the label "Authorization:".
-		std::string auth = "Authorization:" + md5(header);
-
-		// Create a struct of headers.
-		struct curl_slist *chunk = NULL;
-		// Add the auth header to the struct.
-		chunk = curl_slist_append(chunk, auth.c_str());
-
-		// Set the URL of the request.
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-		// Set the headers (hashed API key + request).
-		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-		
-		std::string result;
-		// Set the callback to deal with the returned data.
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, DataToString);
-		// Pass in a string to accept the result.
-		// (This will be taken care of in the callback function.)
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-
-		// Send the request!
-		const CURLcode res = curl_easy_perform(curl);
-		
-		// Cleanup your CURL object.
-		curl_easy_cleanup(curl);
-		// Free the headers.
-		curl_slist_free_all(chunk);
-
-		// Check the error flag.
-		if (res != CURLE_OK)
-		{
-			std::string err = "Error Getting Heat Map ";
-			err += curl_easy_strerror(res);
-			
-			if ( mErrorCallbacks )
-				mErrorCallbacks->Error( err.c_str() );
-			return NULL;
-		}
-
-		//Json::Reader reader;
-		//Json::Value jsonRoot;
-		//if ( !reader.parse( result, jsonRoot ) )
-		//{
-		//	reader.getFormatedErrorMessages();
-		//	return NULL;
-		//}
-
-		//// Data returned consists of 4 arrays: x, y, z, and value.
-		//// x, y, and z being coordinates of course, and value being
-		////   the number of instances at that point.
-		//
-		//Json::Value heatx = jsonRoot.get( "x", Json::Value::null );
-		//Json::Value heaty = jsonRoot.get( "y", Json::Value::null );
-		//Json::Value heatz = jsonRoot.get( "z", Json::Value::null );
-		//Json::Value heatvalue = jsonRoot.get( "value", Json::Value::null );
-
-		//if ( heatx.isArray() && heaty.isArray() && heatz.isArray() && heatvalue.isArray() )
-		//{
-		//	GameAnalyticsHeatmap * newHeatMap = new GameAnalyticsHeatmap();
-
-		//	// Iterate through the arrays. (We're just iterating through x technically,
-		//	//   but all arrays are the same length.)
-		//	newHeatMap->mEvents.resize( heatx.size() );
-
-		//	for (unsigned i = 0; i < heatx.size(); ++i)
-		//	{
-		//		newHeatMap->mEvents[ i ].mXYZ[0] = (float)heatx.get( i, Json::Value::null ).asDouble();
-		//		newHeatMap->mEvents[ i ].mXYZ[1] = (float)heaty.get( i, Json::Value::null ).asDouble();
-		//		newHeatMap->mEvents[ i ].mXYZ[2] = (float)heatz.get( i, Json::Value::null ).asDouble();
-		//		newHeatMap->mEvents[ i ].mValue = (float)heatvalue.get( i, Json::Value::null ).asDouble();
-		//	}
-
-		//	mHeatMaps.insert( std::make_pair( area, newHeatMap ) );
-		//	return newHeatMap;
-		//}
-	}
-#endif
-	return NULL;
-}
-
-bool GameAnalytics::OpenDatabase( const char * filename )
+bool GameAnalytics::OpenDatabase(const char * filename)
 {
 	std::string filepath = "file:";
 	filepath += filename;
 
-	if ( CheckSqliteError( sqlite3_open_v2( filepath.c_str(), &mDatabase, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL ) ) != SQLITE_OK )
+	if (CheckSqliteError(sqlite3_open_v2(filepath.c_str(), &mDatabase, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL)) != SQLITE_OK)
 		return false;
 
-	CheckSqliteError( sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 ) );
+	CheckSqliteError(sqlite3_exec(mDatabase, "VACUUM", 0, 0, 0));
 
 	return true;
 }
 
-bool GameAnalytics::CreateDatabase( const char * filename )
+bool GameAnalytics::CreateDatabase(const char * filename)
 {
 	std::string filepath = "file:";
 	filepath += filename;
 
-	if ( CheckSqliteError( sqlite3_open_v2( filepath.c_str(), &mDatabase, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL ) ) != SQLITE_OK )
+	if (CheckSqliteError(sqlite3_open_v2(filepath.c_str(), &mDatabase, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL)) != SQLITE_OK)
 		return false;
-	
-	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA synchronous=OFF", NULL, NULL, NULL ) );
-	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA journal_mode=MEMORY", NULL, NULL, NULL ) );
-	CheckSqliteError( sqlite3_exec( mDatabase, "PRAGMA temp_store=MEMORY", NULL, NULL, NULL ) );
+
+	CheckSqliteError(sqlite3_exec(mDatabase, "PRAGMA synchronous=OFF", NULL, NULL, NULL));
+	CheckSqliteError(sqlite3_exec(mDatabase, "PRAGMA journal_mode=MEMORY", NULL, NULL, NULL));
+	CheckSqliteError(sqlite3_exec(mDatabase, "PRAGMA temp_store=MEMORY", NULL, NULL, NULL));
 
 	/*enum { NumDefaultTables = 2 };
 	const char * defaultTableName[NumDefaultTables] =
@@ -593,7 +136,7 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 		"( id INTEGER PRIMARY KEY, time TIMESTAMP DEFAULT (strftime('%Y-%m-%d %H:%M:%S.%f', 'now')), areaId TEXT, eventId TEXT, x REAL, y REAL, z REAL, value REAL, eventData BLOB )",
 		"( id INTEGER PRIMARY KEY, time TIMESTAMP DEFAULT (strftime('%Y-%m-%d %H:%M:%S.%f', 'now')), areaId TEXT, eventId TEXT, message TEXT, eventData BLOB )",
 	};
-	
+
 	for ( int i = 0; i < NumDefaultTables; ++i )
 	{
 		sqlite3_stmt * statement = NULL;
@@ -610,80 +153,81 @@ bool GameAnalytics::CreateDatabase( const char * filename )
 		}
 	}*/
 
-	CheckSqliteError( sqlite3_exec( mDatabase, "VACUUM", 0, 0, 0 ) );
+	CheckSqliteError(sqlite3_exec(mDatabase, "VACUUM", 0, 0, 0));
 
-	for ( int i = 0; i < mMsgSubtypes->field_count(); ++i )
+	// todo: replace with a pre-register for message types
+	/*for (int i = 0; i < mMsgSubtypes->field_count(); ++i)
 	{
-		const google::protobuf::FieldDescriptor* fdesc = mMsgSubtypes->field( i );
+		const google::protobuf::FieldDescriptor* fdesc = mMsgSubtypes->field(i);
 
 		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "DROP TABLE %s", fdesc->camelcase_name().c_str() ), -1, &statement, NULL ) ) )
+		if (SQLITE_OK == CheckSqliteError(sqlite3_prepare_v2(mDatabase, vaAnalytics("DROP TABLE %s", fdesc->camelcase_name().c_str()), -1, &statement, NULL)))
 		{
-			CheckSqliteError( sqlite3_step( statement ) );
-			CheckSqliteError( sqlite3_finalize( statement ) );
+			CheckSqliteError(sqlite3_step(statement));
+			CheckSqliteError(sqlite3_finalize(statement));
 		}
 
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "CREATE TABLE %s( id INTEGER PRIMARY KEY, timestamp INTEGER KEY, key TEXT, data BLOB )", fdesc->camelcase_name().c_str() ), -1, &statement, NULL ) ) )
+		if (SQLITE_OK == CheckSqliteError(sqlite3_prepare_v2(mDatabase, vaAnalytics("CREATE TABLE %s( id INTEGER PRIMARY KEY, timestamp INTEGER KEY, key TEXT, data BLOB )", fdesc->camelcase_name().c_str()), -1, &statement, NULL)))
 		{
-			CheckSqliteError( sqlite3_step( statement ) );
-			CheckSqliteError( sqlite3_finalize( statement ) );
+			CheckSqliteError(sqlite3_step(statement));
+			CheckSqliteError(sqlite3_finalize(statement));
 		}
-	}
+	}*/
 
 	// todo: http://www.sqlite.org/rtree.html
 
 	return true;
 }
 
-int GameAnalytics::CheckSqliteError( int errcode )
+int GameAnalytics::CheckSqliteError(int errcode)
 {
-	switch( errcode )
+	switch (errcode)
 	{
 	case SQLITE_OK:
 	case SQLITE_ROW:
 	case SQLITE_DONE:
 		break;
 	default:
-		{
-			const int excode = sqlite3_extended_errcode( mDatabase );
-			const char * exerr = sqlite3_errstr( excode );
+	{
+		const int excode = sqlite3_extended_errcode(mDatabase);
+		const char * exerr = sqlite3_errstr(excode);
 
-			std::string str = va( "sqlite3 error: %s%s%s", 
-				exerr ? exerr : "",
-				exerr ? "\n" : "",
-				sqlite3_errmsg( mDatabase ) );
-			
-			if ( mErrorCallbacks )
-				mErrorCallbacks->Error( str.c_str() );
-		}
+		std::string str = vaAnalytics("sqlite3 error: %s%s%s",
+			exerr ? exerr : "",
+			exerr ? "\n" : "",
+			sqlite3_errmsg(mDatabase));
+
+		if (mCallbacks)
+			mCallbacks->AnalyticsError(str.c_str());
+	}
 	}
 	return errcode;
 }
 
 void GameAnalytics::CloseDatabase()
 {
-	sqlite3_close_v2( mDatabase );
+	sqlite3_close_v2(mDatabase);
 }
 
-void GameAnalytics::WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents )
+void GameAnalytics::WriteHeatmapScript(const HeatmapDef & def, std::string & scriptContents)
 {
 	scriptContents.clear();
 #if(0)
-	if ( mDatabase != NULL )
+	if (mDatabase != NULL)
 	{
-		const double worldSizeX = ceil( def.mWorldMaxs[ 0 ] - def.mWorldMins[ 0 ] );
-		const double worldSizeY = ceil( def.mWorldMaxs[ 1 ] - def.mWorldMins[ 1 ] );
+		const double worldSizeX = ceil(def.mWorldMaxs[0] - def.mWorldMins[0]);
+		const double worldSizeY = ceil(def.mWorldMaxs[1] - def.mWorldMins[1]);
 		const double aspect = (double)worldSizeX / (double)worldSizeY;
 
-		const double worldCenterX = ( def.mWorldMaxs[ 0 ] + def.mWorldMins[ 0 ] ) * 0.5;
-		const double worldCenterY = ( def.mWorldMaxs[ 1 ] + def.mWorldMins[ 1 ] ) * 0.5;
+		const double worldCenterX = (def.mWorldMaxs[0] + def.mWorldMins[0]) * 0.5;
+		const double worldCenterY = (def.mWorldMaxs[1] + def.mWorldMins[1]) * 0.5;
 
 		int imageX = 0;
 		int imageY = 0;
-		if ( worldSizeX > worldSizeY )
+		if (worldSizeX > worldSizeY)
 		{
 			imageX = def.mImageSize;
-			imageY = (int)ceil( (double)def.mImageSize / aspect );
+			imageY = (int)ceil((double)def.mImageSize / aspect);
 		}
 		else
 		{
@@ -696,48 +240,48 @@ void GameAnalytics::WriteHeatmapScript( const HeatmapDef & def, std::string & sc
 
 		std::stringstream str;
 		str << "-gravity center" << std::endl;
-		str << va( "-print 'Generating Image Buffer(%d x %d)\\n'", imageX, imageY ) << std::endl;
-		str << va( "-size %dx%d", imageX, imageY ) << std::endl;
+		str << va("-print 'Generating Image Buffer(%d x %d)\\n'", imageX, imageY) << std::endl;
+		str << va("-size %dx%d", imageX, imageY) << std::endl;
 		str << "xc:black" << std::endl;
 		str << "-print 'Rasterizing $(NUMEVENTS) Events\\n'" << std::endl;
 		str << std::endl;
-		
+
 		int progressCounter = 0;
 		const int progressMarker = 1000;
 
 		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, 
-			"SELECT x, y, z, value FROM eventsGame WHERE ( areaId=? AND eventId=? AND x NOT NULL )", 
-			-1, &statement, NULL ) ) )
+		if (SQLITE_OK == CheckSqliteError(sqlite3_prepare_v2(mDatabase,
+			"SELECT x, y, z, value FROM eventsGame WHERE ( areaId=? AND eventId=? AND x NOT NULL )",
+			-1, &statement, NULL)))
 		{
-			sqlite3_bind_text( statement, 1, def.mAreaId, strlen( def.mAreaId ), NULL );
-			sqlite3_bind_text( statement, 2, def.mEventId, strlen( def.mEventId ), NULL );
+			sqlite3_bind_text(statement, 1, def.mAreaId, strlen(def.mAreaId), NULL);
+			sqlite3_bind_text(statement, 2, def.mEventId, strlen(def.mEventId), NULL);
 
-			while ( SQLITE_ROW == CheckSqliteError( sqlite3_step( statement ) ) )
+			while (SQLITE_ROW == CheckSqliteError(sqlite3_step(statement)))
 			{
-				if ( ( progressCounter % progressMarker ) == 0 )
-					str << va( "-print 'Generating Event Gradients %d...\\n'", progressCounter ) << std::endl;
+				if ((progressCounter % progressMarker) == 0)
+					str << va("-print 'Generating Event Gradients %d...\\n'", progressCounter) << std::endl;
 				++progressCounter;
-				
-				const double resultX = sqlite3_column_double( statement, 0 ) - worldCenterX;
-				const double resultY = sqlite3_column_double( statement, 1 ) - worldCenterY;
-				const double resultZ = sqlite3_column_double( statement, 2 );
-				const double value = sqlite3_column_double( statement, 3 );
+
+				const double resultX = sqlite3_column_double(statement, 0) - worldCenterX;
+				const double resultY = sqlite3_column_double(statement, 1) - worldCenterY;
+				const double resultZ = sqlite3_column_double(statement, 2);
+				const double value = sqlite3_column_double(statement, 3);
 
 				const float multiplier = 1.0f;
 
-				str << va( "( -size %dx%d radial-gradient: -evaluate Multiply %g ) -geometry +%d+%d -compose Plus -composite",
-					(int)(def.mEventRadius * scaleX), 
+				str << va("( -size %dx%d radial-gradient: -evaluate Multiply %g ) -geometry +%d+%d -compose Plus -composite",
+					(int)(def.mEventRadius * scaleX),
 					(int)(def.mEventRadius * scaleY),
 					multiplier,
 					(int)(resultX * scaleX),
-					(int)(resultY * scaleY) ) << std::endl;
+					(int)(resultY * scaleY)) << std::endl;
 			}
 		}
-		if ( progressCounter == 0 )
-			str << va( "-print 'No Events.\\n'", progressCounter ) << std::endl;
+		if (progressCounter == 0)
+			str << va("-print 'No Events.\\n'", progressCounter) << std::endl;
 
-		CheckSqliteError( sqlite3_finalize( statement ) );
+		CheckSqliteError(sqlite3_finalize(statement));
 
 		str << std::endl;
 		str << "-print 'Colorizing Heatmap\\n'" << std::endl;
@@ -752,367 +296,399 @@ void GameAnalytics::WriteHeatmapScript( const HeatmapDef & def, std::string & sc
 		str << "	gradient:#ff0-#ffa" << std::endl;
 		str << "	-append" << std::endl;
 		str << ") -clut" << std::endl;
-		
+
 		str << "-print 'Writing Heatmap\\n'" << std::endl;
-		str << "-write " << va( "heatmap_%s_%s.png", def.mAreaId, def.mEventId ) << std::endl;
+		str << "-write " << va("heatmap_%s_%s.png", def.mAreaId, def.mEventId) << std::endl;
 		str << "-exit" << std::endl;
 
 		scriptContents = str.str();
-		
+
 		// replace variables
 		const std::string varNumEvents = "$(NUMEVENTS)";
-		const size_t p = scriptContents.find( varNumEvents );
-		if ( p != std::string::npos )
+		const size_t p = scriptContents.find(varNumEvents);
+		if (p != std::string::npos)
 		{
-			scriptContents.replace( scriptContents.begin()+p,scriptContents.begin()+p+varNumEvents.length(), va( "%d", progressCounter ) );
+			scriptContents.replace(scriptContents.begin() + p, scriptContents.begin() + p + varNumEvents.length(), va("%d", progressCounter));
 		}
 	}
 #endif
 }
 
-void GameAnalytics::GetUniqueEventNames( std::vector< std::string > & eventNames )
+void GameAnalytics::GetUniqueEventNames(std::vector< std::string > & eventNames)
 {
-	if ( mDatabase )
+	if (mDatabase)
 	{
 		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, 
-			"SELECT eventId FROM eventsGame", -1, &statement, NULL ) ) )
+		if (SQLITE_OK == CheckSqliteError(sqlite3_prepare_v2(mDatabase,
+			"SELECT eventId FROM eventsGame", -1, &statement, NULL)))
 		{
-			while ( SQLITE_ROW == CheckSqliteError( sqlite3_step( statement ) ) )
+			while (SQLITE_ROW == CheckSqliteError(sqlite3_step(statement)))
 			{
-				const unsigned char * eventName = sqlite3_column_text( statement, 0 );
-				if ( eventName != NULL )
+				const unsigned char * eventName = sqlite3_column_text(statement, 0);
+				if (eventName != NULL)
 				{
-					if ( std::find( eventNames.begin(), eventNames.end(), (const char *)eventName ) == eventNames.end() )
-						eventNames.push_back( (const char *)eventName );
-				}			
+					if (std::find(eventNames.begin(), eventNames.end(), (const char *)eventName) == eventNames.end())
+						eventNames.push_back((const char *)eventName);
+				}
 			}
 		}
 	}
 }
 
-bool StringFromField( std::string & strOut, const google::protobuf::Message & msg, const google::protobuf::FieldDescriptor* fdesc )
+bool StringFromField(std::string & strOut, const google::protobuf::Message & msg, const google::protobuf::FieldDescriptor* fdesc)
 {
-	if ( fdesc->is_repeated() )
+	if (fdesc->is_repeated())
 		return false;
 
-	switch ( fdesc->type() )
+	switch (fdesc->type())
 	{
-		case google::protobuf::FieldDescriptor::TYPE_DOUBLE:
-		{
-			const double val = msg.GetReflection()->GetBool( msg, fdesc );
-			strOut = vaAnalytics( "%f", val );
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_FLOAT:
-		{
-			const float val = msg.GetReflection()->GetFloat( msg, fdesc );
-			strOut = vaAnalytics( "%f", val );
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_INT64:
-		case google::protobuf::FieldDescriptor::TYPE_FIXED64:
-		case google::protobuf::FieldDescriptor::TYPE_SINT64:
-		case google::protobuf::FieldDescriptor::TYPE_SFIXED64:
-		{
-			const google::protobuf::int64 val = msg.GetReflection()->GetInt64( msg, fdesc );
-			strOut = vaAnalytics( "%ll", val );
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_UINT64:
-		{
-			const google::protobuf::uint64 val = msg.GetReflection()->GetUInt64( msg, fdesc );
-			strOut = vaAnalytics( "%ull", val );
-			break;
-		}		
-		case google::protobuf::FieldDescriptor::TYPE_SINT32:
-		case google::protobuf::FieldDescriptor::TYPE_FIXED32:
-		case google::protobuf::FieldDescriptor::TYPE_SFIXED32:
-		{
-			const google::protobuf::int32 val = msg.GetReflection()->GetInt32( msg, fdesc );
-			strOut = vaAnalytics( "%d", val );
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_INT32:
-		case google::protobuf::FieldDescriptor::TYPE_UINT32:
-		{
-			const google::protobuf::uint32 val = msg.GetReflection()->GetUInt32( msg, fdesc );
-			strOut = vaAnalytics( "%d", val );
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_BOOL:
-		{
-			const bool val = msg.GetReflection()->GetBool( msg, fdesc );
-			strOut = val ? "1" : "0";
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_STRING:
-		{
-			strOut = msg.GetReflection()->GetString( msg, fdesc );
-			break;
-		}
-		case google::protobuf::FieldDescriptor::TYPE_ENUM:
-		{
-			const google::protobuf::EnumValueDescriptor* eval = msg.GetReflection()->GetEnum( msg, fdesc );
-			if ( eval == NULL )
-				return false;
-
-			strOut = eval->name();
-			break;
-		}
-		default:
-		{
+	case google::protobuf::FieldDescriptor::TYPE_DOUBLE:
+	{
+		const double val = msg.GetReflection()->GetBool(msg, fdesc);
+		strOut = vaAnalytics("%f", val);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_FLOAT:
+	{
+		const float val = msg.GetReflection()->GetFloat(msg, fdesc);
+		strOut = vaAnalytics("%f", val);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_INT64:
+	case google::protobuf::FieldDescriptor::TYPE_FIXED64:
+	case google::protobuf::FieldDescriptor::TYPE_SINT64:
+	case google::protobuf::FieldDescriptor::TYPE_SFIXED64:
+	{
+		const google::protobuf::int64 val = msg.GetReflection()->GetInt64(msg, fdesc);
+		strOut = vaAnalytics("%ll", val);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_UINT64:
+	{
+		const google::protobuf::uint64 val = msg.GetReflection()->GetUInt64(msg, fdesc);
+		strOut = vaAnalytics("%ull", val);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_SINT32:
+	case google::protobuf::FieldDescriptor::TYPE_FIXED32:
+	case google::protobuf::FieldDescriptor::TYPE_SFIXED32:
+	case google::protobuf::FieldDescriptor::TYPE_INT32:
+	{
+		const google::protobuf::uint32 val = msg.GetReflection()->GetInt32(msg, fdesc);
+		strOut = vaAnalytics("%d", val);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_UINT32:
+	{
+		const google::protobuf::uint32 val = msg.GetReflection()->GetUInt32(msg, fdesc);
+		strOut = vaAnalytics("%d", val);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_BOOL:
+	{
+		const bool val = msg.GetReflection()->GetBool(msg, fdesc);
+		strOut = val ? "1" : "0";
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_STRING:
+	{
+		strOut = msg.GetReflection()->GetString(msg, fdesc);
+		break;
+	}
+	case google::protobuf::FieldDescriptor::TYPE_ENUM:
+	{
+		const google::protobuf::EnumValueDescriptor* eval = msg.GetReflection()->GetEnum(msg, fdesc);
+		if (eval == NULL)
 			return false;
-		}
+
+		strOut = eval->name();
+		break;
+	}
+	default:
+	{
+		return false;
+	}
 	}
 	return true;
 }
 
-void GameAnalytics::AddEvent( const Analytics::MessageUnion & msg )
+//void GameAnalytics::AddEvent(const google::protobuf::Message& msg)
+//{
+//	/*
+//	std::string cacheKey;
+//
+//	if (cacheLast)
+//	{
+//		MsgKeyCache& keyCache = mMessageCache[msg.GetTypeName()];
+//
+//		// figure out the key with which to cache this message, to allow us to cache more than one of the same type message
+//		cacheKey = msg.GetTypeName();
+//
+//		if (msg.GetDescriptor()->options().HasExtension(Analytics::cachekeysuffix))
+//		{
+//			cacheKey = msg.GetDescriptor()->options().GetExtension(Analytics::cachekeysuffix);
+//
+//			const google::protobuf::FieldDescriptor* fdesc = msg.GetDescriptor()->FindFieldByCamelcaseName(cacheKey);
+//			if (fdesc != NULL && !fdesc->is_repeated())
+//			{
+//				std::string fieldString;
+//				StringFromField(fieldString, msg, fdesc);
+//				cacheKey += "_";
+//				cacheKey += fieldString;
+//			}
+//		}
+//		
+//		std::shared_ptr<google::protobuf::Message> msgCopy;
+//		msgCopy.reset(msg.New());
+//		msgCopy->CopyFrom(msg);
+//
+//		keyCache[cacheKey] = msgCopy;
+//	}
+//
+//	std::string messagePayload;
+//	messagePayload.reserve(messageSize);
+//	
+//	google::protobuf::io::StringOutputStream str(&messagePayload);
+//	google::protobuf::io::CodedOutputStream outputstr(&str);
+//
+//	// todo: compression info?
+//	msg.SerializeToCodedStream(&outputstr);
+//	
+//	messagePayload.resize(outputstr.ByteCount());
+//
+//	if (mDatabase != nullptr)
+//	{
+//		// Save it to the output stream
+//		sqlite3_stmt * statement = NULL;
+//		if (SQLITE_OK == CheckSqliteError(sqlite3_prepare_v2(mDatabase, vaAnalytics("INSERT into %s ( key, data ) VALUES( ?, ?, ? )", msgName), -1, &statement, NULL)))
+//		{
+//			sqlite3_bind_text(statement, 1, msgName.c_str(), (int)msgName.length(), NULL);
+//			sqlite3_bind_blob(statement, 2, messagePayload.c_str(), (int)messagePayload.size(), NULL);
+//
+//			if (CheckSqliteError(sqlite3_step(statement)) == SQLITE_DONE)
+//			{
+//			}
+//		}
+//		CheckSqliteError(sqlite3_finalize(statement));
+//	}*/
+//
+//	std::string serializedMsg = msg.SerializeAsString();
+//
+//	if (mRedisDb != nullptr)
+//	{
+//		mRedisDb->AddEvent(msg, serializedMsg);
+//	}
+//
+//	/*if (mPublisher != NULL)
+//	{
+//		mPublisher->Publish(msgName, msg, messagePayload);
+//	}*/
+//}
+
+//////////////////////////////////////////////////////////////////////////
+
+void GameAnalytics::SendMesh(const std::string& modelName, const Analytics::Mesh& message)
 {
-	if ( mMsgSubtypes == NULL )
+	if (mClient == nullptr)
 		return;
 
-	const int messageSize = msg.ByteSize();
-	
-	// construct a network friendly buffer
-	const google::protobuf::FieldDescriptor* oneofField = msg.GetReflection()->GetOneofFieldDescriptor( msg, mMsgSubtypes );
-
-	if ( oneofField == NULL || oneofField->message_type() == NULL )
-		return;
-
-	const char * msgtype = oneofField->camelcase_name().c_str();
-
-	bool cacheLast = false;
-	if ( oneofField->message_type()->options().HasExtension( Analytics::cachelastvalue ) )
-		cacheLast = oneofField->message_type()->options().GetExtension( Analytics::cachelastvalue );
-	
-	if ( cacheLast )
+	std::string cachedFileData;
+	if (message.SerializeToString(&cachedFileData))
 	{
-		MsgKeyCache& keyCache = mMessageCache[ oneofField->number() ];
-		
-		// figure out the key with which to cache this message, to allow us to cache more than one of the same type message
-		std::string cacheKey = oneofField->camelcase_name();
+		Analytics::GameMeshData msg;
+		msg.set_modelname(modelName);
 
-		if ( oneofField->message_type()->options().HasExtension( Analytics::cachekeysuffix ) )
+		switch (msg.compressiontype())
 		{
-			cacheKey = oneofField->message_type()->options().GetExtension( Analytics::cachekeysuffix );
+		case Analytics::Compression_FastLZ:
+		{
+			// compress the tile data
+			/*const size_t bufferSize = cachedFileData.size() + (size_t)(cachedFileData.size() * 0.1);
+			boost::shared_array<char> compressBuffer(new char[bufferSize]);
+			const int sizeCompressed = fastlz_compress_level(2, cachedFileData.c_str(), cachedFileData.size(), compressBuffer.get());
+			msg.mutable_modelbytes()->assign(compressBuffer.get(), sizeCompressed);
+			msg.set_modelbytesuncompressed((uint32_t)cachedFileData.size());*/
+			break;
+		}
+		default:
+			// no special processing
+			msg.set_modelbytes(cachedFileData);
+			break;
+		}
+		
+		AddEvent(msg);
+	}
+}
 
-			const google::protobuf::FieldDescriptor* fdesc = oneofField->message_type()->FindFieldByCamelcaseName( cacheKey );
-			if ( fdesc != NULL && !fdesc->is_repeated() )
+//////////////////////////////////////////////////////////////////////////
+
+void GameAnalytics::SendGameEnum(const google::protobuf::EnumDescriptor* descriptor)
+{
+	if (mClient == nullptr)
+		return;
+
+	std::string enumName = descriptor->name();
+	std::transform(enumName.begin(), enumName.end(), enumName.begin(), [](unsigned char c) { return std::toupper(c); });
+
+	Analytics::GameEnum msg;
+	msg.set_enumname(enumName);
+
+	for (int i = 0; i < descriptor->value_count(); ++i)
+	{
+		auto v = descriptor->value(i);
+
+		auto val = msg.add_values();
+		val->set_name(v->name());
+		val->set_value(v->index());
+	}
+
+	AddEvent(msg);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void GameAnalytics::AddEvent(const google::protobuf::Message& msg)
+{
+	if (mClient == nullptr)
+		return;
+
+	std::string payload;
+
+	if (msg.GetDescriptor()->options().HasExtension(Analytics::useJsonEncoding))
+	{
+		google::protobuf::util::MessageToJsonString(msg, &payload);
+	}
+	else
+	{
+		payload = msg.SerializeAsString();
+	}
+
+	Analytics::RedisKeyType redisKeyType = Analytics::UNKNOWN;
+	if (msg.GetDescriptor()->options().HasExtension(Analytics::rediskeytype))
+		redisKeyType = msg.GetDescriptor()->options().GetExtension(Analytics::rediskeytype);
+
+	std::string keyName = msg.GetDescriptor()->name();
+	if (msg.GetDescriptor()->options().HasExtension(Analytics::rediskeysuffix))
+	{
+		std::string suffix = msg.GetDescriptor()->options().GetExtension(Analytics::rediskeysuffix);
+
+		const google::protobuf::FieldDescriptor* fdesc = msg.GetDescriptor()->FindFieldByCamelcaseName(suffix);
+		if (fdesc != NULL && !fdesc->is_repeated())
+		{
+			std::string fieldString;
+			if (StringFromField(fieldString, msg, fdesc))
 			{
-				const google::protobuf::Message & oneofMsg = msg.GetReflection()->GetMessage( msg, oneofField );
-				
+				suffix = fieldString;
+			}
+		}
+
+		keyName += ":" + suffix;
+	}
+
+	const std::string eventKey = vaAnalytics("%s:%s", mKeySpacePrefix.c_str(), keyName.c_str()).c_str();
+
+	switch (redisKeyType)
+	{
+	case Analytics::SET:
+	case Analytics::UNKNOWN:
+	{
+		std::vector<std::string> keys, args;
+		keys.push_back(eventKey);
+		args.push_back(payload);
+		mClient->evalsha(mScriptSHA_SET, 1, keys, args);
+		break;
+	}
+	case Analytics::RPUSH:
+	{
+		std::vector<std::string> keys, args;
+		keys.push_back(eventKey);
+		args.push_back(payload);
+		mClient->evalsha(mScriptSHA_RPUSH, 1, keys, args);
+		break;
+	}
+	case Analytics::HMSET:
+	{
+		std::string setKey = msg.GetTypeName();
+
+		if (msg.GetDescriptor()->options().HasExtension(Analytics::redishmsetkey))
+		{
+			setKey = msg.GetDescriptor()->options().GetExtension(Analytics::redishmsetkey);
+
+			const google::protobuf::FieldDescriptor* fdesc = msg.GetDescriptor()->FindFieldByCamelcaseName(setKey);
+			if (fdesc != NULL && !fdesc->is_repeated())
+			{
 				std::string fieldString;
-				StringFromField( fieldString, oneofMsg, fdesc );				
-				cacheKey += "_";
-				cacheKey += fieldString;
-			}
-		}
-
-		keyCache[ cacheKey ].CopyFrom( msg );
-	}
-	
-	std::string messagePayload;
-	messagePayload.reserve( messageSize );
-
-	google::protobuf::io::StringOutputStream str( &messagePayload );
-	google::protobuf::io::CodedOutputStream outputstr( &str );
-
-	// todo: compression info?
-	msg.SerializeToCodedStream( &outputstr );
-
-	if ( mDatabase )
-	{
-		// Save it to the output stream
-		sqlite3_stmt * statement = NULL;
-		if ( SQLITE_OK == CheckSqliteError( sqlite3_prepare_v2( mDatabase, va( "INSERT into %s ( timestamp, key, data ) VALUES( ?, ?, ? )", msgtype ), -1, &statement, NULL ) ) )
-		{
-			sqlite3_bind_int64( statement, 1, msg.timestamp() );
-			sqlite3_bind_text( statement, 2, msgtype, (int)strlen( msgtype ), NULL );
-			sqlite3_bind_blob( statement, 3, messagePayload.c_str(), (int)messagePayload.size(), NULL );
-
-			if ( CheckSqliteError( sqlite3_step( statement ) ) == SQLITE_DONE )
-			{
-			}
-		}
-		CheckSqliteError( sqlite3_finalize( statement ) );
-	}
-	
-	if ( mPublisher != NULL )
-	{
-		mPublisher->Publish( oneofField->camelcase_name().c_str(), msg, messagePayload );
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-bool GameAnalytics::Poll( Analytics::MessageUnion & msgOut )
-{
-	if ( mPublisher != NULL )
-	{
-		// process queued messages?
-
-		while ( mPublisher->Poll( msgOut ) )
-		{
-			if ( msgOut.has_topicsubscribe() )
-			{
-				for ( MessageCache::iterator mit = mMessageCache.begin(); mit != mMessageCache.end(); ++mit )
+				if (StringFromField(fieldString, msg, fdesc))
 				{
-					const MsgKeyCache& keyCache = mit->second;
-					for ( MsgKeyCache::const_iterator it = keyCache.begin(); it != keyCache.end(); ++it )
-					{
-						if ( msgOut.topicsubscribe().topic().empty() || it->first.find( msgOut.topicsubscribe().topic() ) == 0 )
-						{
-							const int messageSize = it->second.ByteSize();
-
-							const google::protobuf::FieldDescriptor* oneofField = it->second.GetReflection()->GetOneofFieldDescriptor( it->second, mMsgSubtypes );
-
-							std::string messagePayload;
-							messagePayload.reserve( messageSize );
-
-							google::protobuf::io::StringOutputStream str( &messagePayload );
-							google::protobuf::io::CodedOutputStream outputstr( &str );
-
-							// todo: compression info?
-							it->second.SerializeToCodedStream( &outputstr );
-
-							mPublisher->Publish( oneofField->camelcase_name().c_str(), it->second, messagePayload );
-						}
-					}
+					setKey = fieldString;
 				}
-				continue;
-			}
-			else if ( msgOut.has_topicunsubscribe() )
-			{
-				continue;
-			}
-			else
-			{
-				return true;
 			}
 		}
+
+		std::vector<std::string> keys, args;
+		keys.push_back(eventKey);
+		args.push_back(setKey);
+		args.push_back(payload);
+		mClient->evalsha(mScriptSHA_HMSET, 1, keys, args);
+		break;
 	}
-	return false;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-zmqPublisher::zmqPublisher( const char * ipAddr, unsigned short port )
-	: mContext( new zmq::context_t( 1 ) )
-	, mSocketPub( NULL )
-	, mSocketSub( NULL )
+void GameAnalytics::EndOfFrame()
 {
-	/*mSocketSub = new zmq::socket_t( *mCtx, ZMQ_SUB );
-	mSocketSub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
-	mSocketSub->setsockopt( ZMQ_SUBSCRIBE, "", 0 );*/
-
-	mSocketPub = new zmq::socket_t( *mContext, ZMQ_XPUB );
-	mSocketPub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-zmqPublisher::zmqPublisher( zmq::context_t & context, const char * ipAddr, unsigned short port )
-	: mContext( NULL )
-	, mSocketPub( NULL )
-	, mSocketSub( NULL )
-{
-	/*mSocketSub = new zmq::socket_t( *mCtx, ZMQ_SUB );
-	mSocketSub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
-	mSocketSub->setsockopt( ZMQ_SUBSCRIBE, "", 0 );*/
-
-	mSocketPub = new zmq::socket_t( context, ZMQ_XPUB );
-	mSocketPub->bind( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
-}
-
-zmqPublisher::~zmqPublisher()
-{
-	zmq_close( mSocketPub );
-}
-
-void zmqPublisher::Publish( const char * topic, const Analytics::MessageUnion & msg, const std::string & payload )
-{
-	zmq::message_t ztopic( strlen( topic ) );
-	strncpy( (char*)ztopic.data(), topic, ztopic.size() );
-
-	zmq::message_t zmsg( payload.size() );
-	memcpy( zmsg.data(), payload.c_str(), payload.size() );
-	mSocketPub->send( ztopic, ZMQ_SNDMORE );
-	mSocketPub->send( zmsg );
-}
-
-bool zmqPublisher::Poll( Analytics::MessageUnion & msgOut )
-{
-	using namespace google::protobuf;
-
-	zmq::message_t zmsg;
-	if ( mSocketPub->recv( &zmsg, ZMQ_DONTWAIT ) )
+	if (mClient != nullptr)
 	{
-		enum Command
-		{
-			CMD_UNSUBSCRIBE = 0,
-			CMD_SUBSCRIBE = 1,
-		};
-		
-		const size_t sz = zmsg.size();
-		// these messages are subscription messages
-		const Command sub = (Command)( *(char*)zmsg.data() );
+		mClient->commit();
+	}
+}
 
-		if ( sub == CMD_SUBSCRIBE )
-		{
-			msgOut.mutable_topicsubscribe()->mutable_topic()->assign( (char*)zmsg.data() + 1, zmsg.size() - 1 );
-		}
-		else
-		{
-			msgOut.mutable_topicunsubscribe()->mutable_topic()->assign( (char*)zmsg.data() + 1, zmsg.size() - 1 );
-		}
+bool GameAnalytics::AnyFieldSet(const google::protobuf::Message & msg)
+{
+	using namespace google;
+	const protobuf::Reflection * refl = msg.GetReflection();
+
+	std::vector<const protobuf::FieldDescriptor*> fields;
+	refl->ListFields(msg, &fields);
+	for (size_t i = 0; i < fields.size(); ++i)
+	{
+		const protobuf::FieldDescriptor * fieldDesc = fields[i];
+
+		if (fieldDesc->is_extension())
+			continue;
+
 		return true;
 	}
 	return false;
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-zmqSubscriber::zmqSubscriber( zmq::context_t & context, const char * ipAddr, unsigned short port )
+void GameAnalytics::Subscribe(const std::string& channelName)
 {
-	mSocketSub = new zmq::socket_t( context, ZMQ_SUB );
-	mSocketSub->connect( vaAnalytics( "tcp://%s:%d", ipAddr, port ) );
-}
-
-zmqSubscriber::~zmqSubscriber()
-{
-	zmq_close( mSocketSub );
-}
-
-void zmqSubscriber::Subscribe( const char * topic )
-{
-	mSocketSub->setsockopt( ZMQ_SUBSCRIBE, topic, strlen( topic ) );
-}
-
-bool zmqSubscriber::Poll( Analytics::MessageUnion & msgOut )
-{
-	using namespace google::protobuf;
-
-	zmq::message_t zmsg;
-	if ( mSocketSub->recv( &zmsg, ZMQ_DONTWAIT ) )
+	if (mSubscriber != nullptr)
 	{
-		const std::string topic( (char*)zmsg.data(), zmsg.size() );
-		
-		if ( zmsg.more() )
+		mSubscriber->subscribe(vaAnalytics("%s:%s", mKeySpacePrefix.c_str(), channelName.c_str()).c_str(), [=](const std::string& chan, const std::string& msg)
 		{
-			if ( mSocketSub->recv( &zmsg, ZMQ_DONTWAIT ) )
-			{
-				io::ArrayInputStream arraystr( zmsg.data(), (int)zmsg.size() );
-				io::CodedInputStream inputstream( &arraystr );
+			std::lock_guard<std::mutex> lock(mChannelDataMutex);
 
-				msgOut.Clear();
-				if ( msgOut.ParseFromCodedStream( &inputstream ) )
-				{
-					return true;
-				}
-			}
-		}
+			ChannelData data;
+			data.mChannel = channelName; // not using the keyspace encoded name
+			data.mData = msg;
+			mChannelData.push(data);
+		});
+		mSubscriber->commit();
 	}
-	return false;
+	
+}
+
+void GameAnalytics::ProcessPublishedMessages(channel_message_recieved_t exec)
+{
+	std::lock_guard<std::mutex> lock(mChannelDataMutex);
+	while (!mChannelData.empty())
+	{
+		const ChannelData& data = mChannelData.front();
+		exec(data.mChannel, data.mData);
+		mChannelData.pop();
+	}
 }

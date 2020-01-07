@@ -35,7 +35,6 @@
 #include "stdint.hpp"
 #include "err.hpp"
 #include "ip.hpp"
-#include "Netioapi.h"
 
 #ifdef ZMQ_HAVE_WINDOWS
 #include "windows.hpp"
@@ -87,7 +86,7 @@ int zmq::tcp_address_t::resolve_nic_name (const char *nic_, bool ipv6_, bool is_
     //  Find the interface with the specified name and AF_INET family.
     bool found = false;
     lifreq *ifrp = ifc.lifc_req;
-    for (int n = 0; n < (int) (ifc.lifc_len / sizeof lifreq);
+    for (int n = 0; n < (int) (ifc.lifc_len / sizeof (lifreq));
           n ++, ifrp ++) {
         if (!strcmp (nic_, ifrp->lifr_name)) {
             rc = ioctl (fd, SIOCGLIFADDR, (char*) ifrp);
@@ -123,11 +122,17 @@ int zmq::tcp_address_t::resolve_nic_name (const char *nic_, bool ipv6_, bool is_
 
 int zmq::tcp_address_t::resolve_nic_name (const char *nic_, bool ipv6_, bool is_src_)
 {
-    //  TODO: Unused parameter, IPv6 support not implemented for AIX or HP/UX.
-    (void) ipv6_;
+#if defined ZMQ_HAVE_AIX || defined ZMQ_HAVE_HPUX
+    // IPv6 support not implemented for AIX or HP/UX.
+    if (ipv6_)
+    {
+        errno = ENODEV;
+        return -1;
+    }
+#endif
 
     //  Create a socket.
-    const int sd = open_socket (AF_INET, SOCK_DGRAM, 0);
+    const int sd = open_socket (ipv6_ ? AF_INET6 : AF_INET, SOCK_DGRAM, 0);
     errno_assert (sd != -1);
 
     struct ifreq ifr;
@@ -145,12 +150,25 @@ int zmq::tcp_address_t::resolve_nic_name (const char *nic_, bool ipv6_, bool is_
         errno = ENODEV;
         return -1;
     }
-    if (is_src_)
-        memcpy (&source_address.ipv4.sin_addr,
-            &((sockaddr_in*) &ifr.ifr_addr)->sin_addr, sizeof (struct in_addr));
+
+    const int family = ifr.ifr_addr.sa_family;
+    if ((family == AF_INET || (ipv6_ && family == AF_INET6))
+        && !strcmp (nic_, ifr.ifr_name))
+    {
+        if (is_src_)
+            memcpy (&source_address, &ifr.ifr_addr,
+                    (family == AF_INET) ? sizeof (struct sockaddr_in)
+                                        : sizeof (struct sockaddr_in6));
+        else
+            memcpy (&address, &ifr.ifr_addr,
+                    (family == AF_INET) ? sizeof (struct sockaddr_in)
+                                        : sizeof (struct sockaddr_in6));
+    }
     else
-       memcpy (&address.ipv4.sin_addr,
-            &((sockaddr_in*) &ifr.ifr_addr)->sin_addr, sizeof (struct in_addr));
+    {
+        errno = ENODEV;
+        return -1;
+    }
 
     return 0;
 }
@@ -161,7 +179,7 @@ int zmq::tcp_address_t::resolve_nic_name (const char *nic_, bool ipv6_, bool is_
     && defined ZMQ_HAVE_IFADDRS)
 
 #include <ifaddrs.h>
-#include <net/if.h>
+#include <unistd.h>
 
 //  On these platforms, network interface name can be queried
 //  using getifaddrs function.
@@ -169,7 +187,15 @@ int zmq::tcp_address_t::resolve_nic_name (const char *nic_, bool ipv6_, bool is_
 {
     //  Get the addresses.
     ifaddrs *ifa = NULL;
-    const int rc = getifaddrs (&ifa);
+    int rc;
+    const int max_attempts = 10;
+    const int backoff_msec = 1;
+    for (int i = 0; i < max_attempts; i++) {
+        rc = getifaddrs (&ifa);
+        if (rc == 0 || (rc < 0 && errno != ECONNREFUSED))
+            break;
+        usleep ((backoff_msec << i) * 1000);
+    }
     errno_assert (rc == 0);
     zmq_assert (ifa != NULL);
 
@@ -430,23 +456,6 @@ int zmq::tcp_address_t::resolve (const char *name_, bool local_, bool ipv6_, boo
           addr_str [addr_str.size () - 1] == ']')
         addr_str = addr_str.substr (1, addr_str.size () - 2);
 
-    // Test the '%' to know if we have an interface name / zone_id in the address
-    // Reference: https://tools.ietf.org/html/rfc4007
-    std::size_t pos = addr_str.rfind("%");
-    uint32_t zone_id = 0;
-    if (pos != std::string::npos) {
-        std::string if_str = addr_str.substr(pos + 1);
-        addr_str = addr_str.substr(0, pos);
-        if (isalpha (if_str.at (0)))
-            zone_id = if_nametoindex(if_str.c_str());
-        else
-            zone_id = (uint32_t) atoi (if_str.c_str ());
-        if (zone_id == 0) {
-            errno = EINVAL;
-            return -1;
-        }
-    }
-
     //  Allow 0 specifically, to detect invalid port error in atoi if not
     uint16_t port;
     if (port_str == "*" || port_str == "0")
@@ -472,18 +481,14 @@ int zmq::tcp_address_t::resolve (const char *name_, bool local_, bool ipv6_, boo
 
     //  Set the port into the address structure.
     if (is_src_) {
-        if (source_address.generic.sa_family == AF_INET6) {
+        if (source_address.generic.sa_family == AF_INET6)
             source_address.ipv6.sin6_port = htons (port);
-            source_address.ipv6.sin6_scope_id = zone_id;
-        }
         else
             source_address.ipv4.sin_port = htons (port);
     }
     else {
-        if (address.generic.sa_family == AF_INET6) {
+        if (address.generic.sa_family == AF_INET6)
             address.ipv6.sin6_port = htons (port);
-            address.ipv6.sin6_scope_id = zone_id;
-        }
         else
             address.ipv4.sin_port = htons (port);
     }

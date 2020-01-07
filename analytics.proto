@@ -1,18 +1,158 @@
+syntax = "proto3";
 
 package Analytics;
 
 import "google/protobuf/descriptor.proto";
 
+enum RedisKeyType
+{
+	UNKNOWN		= 0;
+	SET			= 1;
+	RPUSH		= 2;
+	HMSET		= 3;
+}
+
+message PointEvent
+{
+	string radius = 1;
+	string weight = 2;
+}
+
+message LineEvent
+{
+	string radius = 1;
+	string weight = 2;
+}
+
 extend google.protobuf.MessageOptions 
 {
-	// if this option is defined the library will cache the last message of this type into memory so that even if the
-	// visualization application connects to the host application 'late', the cached values of all events may be sent
-	// to seed the visualizer with up to date information with regards to whatever messages utilize this option
-	optional bool cachelastvalue	= 5000;
-
+	// how this message will be stored in the redis database
+	RedisKeyType rediskeytype = 5000;
+		
 	// this suffix may be optionally used when generating the key value for caching the contents of a message, 
 	// so that multiple types of a given message may be cached, using this suffix prepended to the message type name
-	optional string cachekeysuffix	= 5001;
+	string redishmsetkey = 5001;
+
+	// use a string literal or the value of a field of the message to further uniquify the redis key by appending a key space suffix
+	string rediskeysuffix = 5002;
+
+	bool useJsonEncoding = 5003;
+	
+	string objectname = 5005;
+}
+
+extend google.protobuf.FieldOptions
+{
+	// this associates a field with an set of enumeration data so that values can be mapped to something readable	
+	string enumkey = 4001;
+	bool editable = 4002;
+	int32 expires = 4003;
+	bool enumflags = 4004;
+	bool tooltip = 4005;
+	bool hidden = 4006;
+	bool enumflagsindexed = 4007;
+	bool editable_key = 4008;
+	bool track_event = 4009;
+	PointEvent point_event = 4012;
+	LineEvent line_event = 4013;
+}
+
+message EditorChangeValue
+{
+	string messageType				= 1;
+	string fieldName				= 2;
+	string payload					= 3;
+}
+
+message EditorChanges
+{
+	repeated EditorChangeValue changes= 1;
+}
+
+message RangeF
+{
+	float min						= 1;
+	float max						= 2;
+}
+
+message RangeI
+{
+	int32 min						= 1;
+	int32 max						= 2;
+}
+
+message Vec3 
+{
+	float x							= 1;
+	float y							= 2;
+	float z							= 3;
+}
+
+message Vec3Color
+{
+	float x							= 1;
+	float y							= 2;
+	float z							= 3;
+	uint32 color					= 4;
+}
+
+message Vec4
+{
+	float x							= 1;
+	float y							= 2;
+	float z							= 3;
+	float w							= 4;
+}
+
+message Line
+{
+	Vec3 p0							= 1;
+	Vec3 p1							= 2;
+}
+
+message Euler 
+{
+	float heading					= 1;
+	float pitch						= 2;
+	float roll						= 3;
+}
+
+message Material
+{
+	string				name			= 1;
+	uint32				contents		= 2 [(enumkey)="CONTENT_FLAGS", (enumflags)=true];
+	uint32				surfaceFlags	= 3 [(enumkey)="SURFACE_FLAGS", (enumflags)=true];
+	bool				renderEvents	= 4;
+}
+
+enum PrimitiveType
+{
+	Triangles	= 0;
+	Lines		= 1;
+	Points		= 2;
+	Quad		= 3;
+}
+
+message PrimitiveOptions
+{
+	uint32				partIndex				= 1 [(editable_key)=true];
+	uint32				overrideSurfaceFlags	= 2 [(editable)=true,(enumkey)="SURFACE_FLAGS", (enumflags)=true];
+}
+
+message Primitive
+{
+	PrimitiveType		type			= 1;
+	uint32				materialIndex	= 2;
+	PrimitiveOptions	options			= 3;
+	float				size			= 4;
+	repeated Vec3Color	vertices		= 5;
+}
+
+message Mesh
+{
+	repeated Primitive	primitives			= 1;
+	repeated Material	materials			= 2;
+	string				name				= 3;
 }
 
 // compression schemes may be utilized to reduce the size of certain message types
@@ -22,146 +162,236 @@ enum Compression
 	Compression_FastLZ	= 1;
 }
 
-message TopicSubscribe
+message UTCTime
 {
-	required string					topic						= 1;
-}
-
-message TopicUnsubscribe
-{
-	required string					topic						= 1;
+	int32					hour						= 1;
+	int32					minute						= 2;
+	int32					second						= 3;
+	int32					day							= 4;
+	int32					month						= 5;
+	int32					year						= 6;
 }
 
 message GameInfo
 {
-	option (cachelastvalue) = true;
+	option (rediskeytype) = SET;
+	option (useJsonEncoding) = true;
 
-	required string					mapName						= 1;
+	UTCTime					timeStamp					= 1;
+	string					mapName						= 2;
+	string					gameName					= 3;
+	string					gameVersion					= 4;
+}
+
+message GameEnum
+{
+	option (rediskeytype) = HMSET;
+	option (redishmsetkey) = "enumname";
+
+	message EnumPair
+	{
+		string				name						= 1;
+		int64				value						= 2;
+	}
+
+	repeated EnumPair		values						= 1;
+	string					enumname					= 2;
+	bool					isbitfield					= 3;
 }
 
 message GameNavNotFound
 {
-	required string					mapName						= 1;
+	option (rediskeytype) = RPUSH;
+	string					mapName						= 1;
 }
 
 message GameNavAutoDownloaded
 {
-	required string					mapName						= 1;
+	option (rediskeytype) = RPUSH;
+	string					mapName						= 1;
 }
 
 message GameAssert
 {
-	required string					condition					= 1;
-	optional string					file						= 2;
-	optional int32					line						= 3;
+	option (rediskeytype) = RPUSH;
+	string					condition					= 1;
+	string					file						= 2;
+	int32					line						= 3;
 }
 
 message GameCrash
 {
-	required string					info						= 1;
+	option (rediskeytype) = RPUSH;
+	string					info						= 1;
 }
 
-message GameModelData
+message GameMeshData
 {
-	option (cachelastvalue) = true;
-	option (cachekeysuffix) = "modelName";
+	option (rediskeytype) = HMSET;
+	option (redishmsetkey) = "modelName";
 
-	optional Compression			compressionType				= 1 [default=Compression_None];
-	required string					modelName					= 2;
-	required bytes					modelBytes					= 3;
-	optional uint32					modelBytesUncompressed		= 4;
+	Compression		compressionType				= 1;
+	string			modelName					= 2;
+	bytes			modelBytes					= 3;
+	uint32			modelBytesUncompressed		= 4;
 }
 
 message GameEntityInfo
 {
+	option (rediskeytype) = HMSET;
+	option (redishmsetkey) = "entityIndex";
+	option (objectname) = "Entity(%entityIndex% - %entityName%)";
+	
 	message Ammo
 	{
-		required uint32				ammoType					= 1;
-		optional uint32				ammoCount					= 2;
+		uint32		ammoType					= 1 [(enumkey)="AMMO_TYPE"];
+		uint32		ammoCount					= 2;
 	}
 
-	optional string					name						= 1;
-	required int32					entityId					= 2;
-	optional int32					groupId						= 3;
-	optional int32					classId						= 4;
-	optional float					positionX					= 5;
-	optional float					positionY					= 6;
-	optional float					positionZ					= 7;
-	optional float					heading						= 8;
-	optional float					pitch						= 9;
-	optional float					roll						= 10;
-	optional uint32					health						= 12;
-	optional uint32					healthMax					= 13;
-	optional uint32					armor						= 14;
-	optional uint32					armorMax					= 15;
-	optional uint32					team						= 16;
-	repeated Ammo					ammo						= 20;
+	string					entityName					= 1;
+	int32					entityIndex					= 2;
+	int32					entitySerial				= 3;
+	int32					groupId						= 4 [(enumkey)="GROUP_ID"];
+	int32					classId						= 5 [(enumkey)="CLASS_ID"];
+	int32					team						= 6 [(enumkey)="TEAM_ID"];
+	int64					entityFlags					= 7 [(enumkey)="ENTITY_FLAGS", (enumflagsindexed)=true];
+	int32					category					= 8 [(enumkey)="CATEGORY_ID", (enumflagsindexed)=true];
+	int32					powerUps					= 9 [(enumkey)="POWERUP_ID", (enumflagsindexed)=true];
+	int64					navFlags					= 10 [(enumkey)="NAV_FLAGS"];
+	Vec3					eulerRotation				= 11 [(hidden)=true];
+	Vec3					position					= 12 [(hidden)=true];
+	Vec3					eyeOffset					= 13 [(hidden)=true];
+	Vec3					eyeDir						= 14 [(hidden)=true];
+	RangeI					health						= 15;
+	RangeI					armor						= 16;
+	Vec3					boundsMin					= 17;
+	Vec3					boundsMax					= 18;
+	repeated Ammo			ammo						= 19;
+
+	bool					deleted						= 1000 [(hidden)=true];
 }
 
-message GameEntityList
+message GameEntityPosition
 {
-	option (cachelastvalue) = true;
+	option (rediskeytype) = RPUSH;
 
-	repeated GameEntityInfo			entities					= 1;
+	Vec3					position					= 1 [(point_event).radius = "32", (point_event).weight = "1"];
+	int32					team						= 2 [(enumkey)="TEAM_ID", (track_event)=true];
+}
+
+message GameNode
+{
+	option (rediskeytype) = HMSET;
+	option (redishmsetkey) = "nodePath";
+
+	string				nodePath		= 1 [(editable_key)=true];
+	Vec3				eulerRotation	= 2;
+	Vec3				translation		= 3;
+	string				meshName		= 4;
+
+	int32				entityId		= 10;
+	string				entityName		= 11;
+	int32				activeState		= 12 [(enumkey)="MODEL_STATE"];
+	int64				navFlagsActive	= 13 [(enumkey)="NAV_FLAGS"];
+	int64				navFlagsOverride= 14 [(enumkey)="NAV_FLAGS", (editable)=true];
+	int32				shapeMode		= 15 [(enumkey)="SHAPEMODE", (editable)=true];
 }
 
 message GameWeaponFired
 {
-	required int32					weaponId					= 1;
-	optional float					positionX					= 2;
-	optional float					positionY					= 3;
-	optional float					positionZ					= 4;
-	optional uint32					fireMode					= 5;
-	optional int32					team						= 6;
+	option (rediskeytype) = RPUSH;
+	option (useJsonEncoding) = true;
+
+	Vec3					position					= 1 [(point_event).radius = "64", (point_event).weight = "1"];
+	int32					attackTeam					= 2 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					weaponId					= 3 [(enumkey)="WEAPON_ID", (track_event)=true];
+	int32					firedByClass				= 4 [(enumkey)="CLASS_ID", (track_event)=true];
 }
 
 message GameDeath
 {
-	required int32					killedByClass				= 1; // this class Id maps to an enumeration defined by the client who is communicating this message
-	required int32					killedByWeapon				= 2; // this weapon Id maps to an enumeration defined by the client who is communicating this message
-	required int32					killedByHealth				= 3; // how much health did they have left when they killed me
-	optional uint32					team						= 4;
+	option (rediskeytype) = RPUSH;
+
+	Vec3					position					= 1 [(point_event).radius = "32", (point_event).weight = "1"];
+	int32					victimTeam					= 2 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					attackTeam					= 3 [(enumkey)="TEAM_ID", (track_event)=true];
+	string					meansOfDeath				= 4 [(track_event)=true];
 }
 
-message GameTookDamage
+message GameKilledSomeone
 {
-	required int32					weaponId					= 1;
-	required float					positionX					= 2;
-	required float					positionY					= 3;
-	required float					positionZ					= 4;
-	optional uint32					team						= 5;
+	option (rediskeytype) = RPUSH;
+
+	Vec3					position					= 1 [(point_event).radius = "32", (point_event).weight = "1"];
+	int32					victimTeam					= 2 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					attackTeam					= 3 [(enumkey)="TEAM_ID", (track_event)=true];
+	string					meansOfDeath				= 4 [(track_event)=true];
+}
+
+message GameRecieveDamage
+{
+	option (rediskeytype) = RPUSH;
+
+	Vec3					position					= 1 [(point_event).radius = "32", (point_event).weight = "damageAmount"];
+	int32					victimTeam					= 2 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					attackTeam					= 3 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					weaponId					= 4 [(enumkey)="WEAPON_ID", (track_event)=true];	
+	string					damageType					= 5 [(track_event)=true];
+	float					damageAmount				= 6;
+}
+
+message GameInflictDamage
+{
+	option (rediskeytype) = RPUSH;
+
+	Vec3					position					= 1 [(point_event).radius = "32", (point_event).weight = "damageAmount"];
+	int32					victimTeam					= 2 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					attackTeam					= 3 [(enumkey)="TEAM_ID", (track_event)=true];
+	int32					weaponId					= 4 [(enumkey)="WEAPON_ID", (track_event)=true];
+	string					damageType					= 5 [(track_event)=true];
+	float					damageAmount				= 6;
+}
+
+message GameRadiusDamage
+{
+	option (rediskeytype) = RPUSH;
+	option (useJsonEncoding) = true;
+
+	Vec3					position					= 1 [(point_event).radius = "damageRadius", (point_event).weight = "damageAmount"];
+	string					damageType					= 2;
+	float					damageAmount				= 3;
+	float					damageRadius				= 4;
 }
 
 message GameNavigationStuck
 {
-	required int32					entityId					= 1;
-	required float					positionX					= 2;
-	required float					positionY					= 3;
-	required float					positionZ					= 4;
+	option (rediskeytype) = RPUSH;
+
+	int32					entityId					= 1;
+	Vec3					position					= 2 [(point_event).radius = "32", (point_event).weight = "1"];
 }
 
-// This message type represents the root message type of the data sent between the application and the library
-// Since the contents of this message form a union between one of an extendable number and types of message payloads,
-// the data is very easily extendable or modifiable without the need to worry about versioning or breaking the format
-message MessageUnion
+message GameVoiceMacro
 {
-	required int64					timestamp						= 1;
+	option (rediskeytype) = RPUSH;
 
-	oneof msg {
-		GameInfo					gameInfo						= 9;
-		GameNavNotFound				gameNavNotFound					= 10;
-		GameNavAutoDownloaded		systemNavDownloaded				= 11;
-		GameAssert					gameAssert						= 12;
-		GameCrash					gameCrash						= 13;
-		GameModelData				gameModelData					= 14;
+	int32					entityId					= 1;
+	int32					voiceMacro					= 2 [(enumkey)="VOICE_MACRO", (track_event)=true];
+	Vec3					position					= 3 [(point_event).radius = "32", (point_event).weight = "1"];
+}
 
-		GameEntityList				gameEntityList					= 100;
-		GameWeaponFired				gameWeaponFired					= 101;
-		GameDeath					gameDeath						= 102;
-		GameTookDamage				gameTookDamage					= 103;
-		GameNavigationStuck			gameNavigationStuck				= 104;
+enum LogType
+{
+	Log	= 0;
+	Warning	= 1;
+	Error	= 3;
+}
 
-		TopicSubscribe				topicSubscribe					= 1000;
-		TopicUnsubscribe			topicUnsubscribe				= 1001;
-	}
+message GameLogMessage
+{
+	option (rediskeytype) = RPUSH;
+
+	LogType					logType						= 1;
+	string					logMessage					= 2;
+	string					logExtraInfo				= 3;
 }

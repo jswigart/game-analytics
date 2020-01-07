@@ -1,0 +1,23 @@
+using System.IO;
+using GameLibrary;
+
+public class TestEntity2 : ScriptEntity
+{
+	public override void PrintSomething() 
+	{ 
+		EngineWrapper.Error("TestEntity2");  
+	}
+};
+
+public class TestEntity3 : ScriptEntity
+{
+	public override void PrintSomething() 
+	{ 
+		EngineWrapper.Error("TestEntity3");  
+
+		EngineWrapper.Error("Path " + Path.Combine("some_path","some_other_path"));  
+
+		// this wont compile
+		//File.WriteAllText("D:/git/game-analytics/UnityAnalyticsViewer/UnityAnalyticsViewer/Assets/GameAnalytics/Scripts/test_write.txt", "test contents");
+	}
+};

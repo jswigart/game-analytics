@@ -1,7 +1,7 @@
 #ifndef TIMELINEGRAPHICSVIEW_H
 #define TIMELINEGRAPHICSVIEW_H
 
-#include <QGraphicsView>
+#include <QtWidgets/QGraphicsView>
 
 class TimelineGraphicsView : public QGraphicsView
 {

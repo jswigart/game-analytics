@@ -5,94 +5,36 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <functional>
+#include <thread>
+#include <mutex>
+#include <queue>
 
 //#include "json\json.h"
 
 #include "analytics.pb.h"
+#include "google/protobuf/text_format.h"
+#include "google/protobuf/util/json_util.h"
+
+namespace cpp_redis
+{
+	class client;
+	class subscriber;
+};
 
 class GameAnalytics;
 struct sqlite3;
-struct _ENetHost;
-
-namespace zmq
-{
-	class context_t;
-	class socket_t;
-};
+class RedisDatabase;
 
 //////////////////////////////////////////////////////////////////////////
 
-class ErrorCallbacks
+class GameAnalyticsCallbacks
 {
 public:
-	virtual ~ErrorCallbacks()
-	{
-	}
-
-	virtual void Error( const char * str ) = 0;
+	virtual void AnalyticsInfo(const char * str) = 0;
+	virtual void AnalyticsWarn(const char * str) = 0;
+	virtual void AnalyticsError(const char * str) = 0;
 };
-
-//////////////////////////////////////////////////////////////////////////
-
-class AnalyticsPublisher
-{
-public:
-	AnalyticsPublisher();
-	virtual ~AnalyticsPublisher();
-
-	virtual void Publish( const char * topic, const Analytics::MessageUnion & msg, const std::string & payload ) = 0;
-
-	virtual bool Poll( Analytics::MessageUnion & msgOut ) = 0;
-};
-
-class AnalyticsSubscriber
-{
-public:
-	AnalyticsSubscriber();
-	virtual ~AnalyticsSubscriber();
-
-	virtual void Subscribe( const char * topic ) = 0;
-	virtual bool Poll( Analytics::MessageUnion & msgOut ) = 0;
-};
-
-//////////////////////////////////////////////////////////////////////////
-
-class zmqPublisher : public AnalyticsPublisher
-{
-public:
-	zmqPublisher( const char * ipAddr, unsigned short port );
-	zmqPublisher( zmq::context_t & context, const char * ipAddr, unsigned short port );
-	~zmqPublisher();
-
-	virtual void Publish( const char * topic, const Analytics::MessageUnion & msg, const std::string & payload );
-
-	virtual bool Poll( Analytics::MessageUnion & msgOut );
-private:
-	zmq::context_t *	mContext;
-	zmq::socket_t *		mSocketPub;
-	zmq::socket_t *		mSocketSub;
-};
-
-class zmqSubscriber : public AnalyticsSubscriber
-{
-public:
-	zmqSubscriber( zmq::context_t & context, const char * ipAddr, unsigned short port );
-	~zmqSubscriber();
-
-	virtual void Subscribe( const char * topic = "" );
-	virtual bool Poll( Analytics::MessageUnion & msgOut );
-private:
-	zmq::socket_t *		mSocketSub;
-};
-
-//////////////////////////////////////////////////////////////////////////
-
-#define FIELD_SET(m,fieldname,val) \
-		m->set_##fieldname(val);
-
-#define SMART_FIELD_SET(m,fieldname,val) \
-	if ( m->fieldname() != val ) \
-		m->set_##fieldname(val);
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -100,46 +42,32 @@ private:
 class GameAnalytics
 {
 public:
-	struct Keys
+	typedef std::function<void(const std::string&, const std::string&)> channel_message_recieved_t;
+
+	struct ChannelData
 	{
-		std::string		mGameKey;
-		std::string		mSecretKey;
-		std::string		mDataApiKey;
-		std::string		mVersionKey;
+		std::string		mChannel;
+		std::string		mData;
 	};
-
-	class Heatmap
-	{
-	public:
-		struct HeatEvent
-		{
-			float				mXYZ[ 3 ];
-			float				mValue;
-		};
-
-		typedef std::vector<HeatEvent> HeatEvents;
-
-		HeatEvents	mEvents;
-	};
-
-	GameAnalytics( const Keys & keys, ErrorCallbacks* errorCbs );
-	~GameAnalytics();
-
-	void SetPublisher( AnalyticsPublisher * publisher );
-	AnalyticsPublisher * GetPublisher() const;
 	
-	void AddEvent( const Analytics::MessageUnion & msg );
+	GameAnalytics(GameAnalyticsCallbacks* callbacks);
+	~GameAnalytics();
+	
+	void Subscribe(const std::string& channelName);
+	void ProcessPublishedMessages(channel_message_recieved_t exec);
 
-	bool Poll( Analytics::MessageUnion & msgOut );
+	void AddEvent(const google::protobuf::Message & msg);
 
-	size_t SubmitDesignEvents();
-	size_t SubmitQualityEvents();
+	void SendMesh(const std::string& modelName, const Analytics::Mesh& message);
+	void SendGameEnum(const google::protobuf::EnumDescriptor* descriptor);
 
-	const Heatmap * GetHeatmap( const std::string & area, const std::string & eventIds, bool loadFromServer );
+	void EndOfFrame();
 
-	bool OpenDatabase( const char * filename );
-	bool CreateDatabase( const char * filename );
+	bool OpenDatabase(const char * filename);
+	bool CreateDatabase(const char * filename);
 	void CloseDatabase();
+
+	bool OpenRedisConnection(const char *ipAddress = "127.0.0.1", int port = 6379);
 
 	struct HeatmapDef
 	{
@@ -147,42 +75,47 @@ public:
 		const char *	mEventId;
 		float			mEventRadius;
 		int				mImageSize;
-		float			mWorldMins[ 2 ];
-		float			mWorldMaxs[ 2 ];
+		float			mWorldMins[2];
+		float			mWorldMaxs[2];
 	};
-	void WriteHeatmapScript( const HeatmapDef & def, std::string & scriptContents );
+	void WriteHeatmapScript(const HeatmapDef & def, std::string & scriptContents);
 
-	void GetUniqueEventNames( std::vector< std::string > & eventNames );
-private:
-	void SetUserID();
-	void SetSessionID();
+	void GetUniqueEventNames(std::vector< std::string > & eventNames);
 
-	const Keys					mKeys;
-	std::string					mUserId;
-	std::string					mSessionId;
-
-	typedef std::map<std::string, Heatmap*> HeatMapsByName;
-
-	typedef std::map<std::string, Analytics::MessageUnion> MsgKeyCache;
-	typedef std::map<int, MsgKeyCache> MessageCache;
-
-	ErrorCallbacks*				mErrorCallbacks;
-
-	HeatMapsByName				mHeatMaps;
-
+	static bool AnyFieldSet(const google::protobuf::Message & msg);
+private:	
+	GameAnalyticsCallbacks*		mCallbacks;
+	
 	sqlite3 *					mDatabase;
+	
+	// NEW REDIS
+	cpp_redis::client *		mClient;
+	cpp_redis::subscriber*	mSubscriber;
 
-	AnalyticsPublisher *		mPublisher;
+	std::mutex				mChannelDataMutex;
+	std::queue<ChannelData> mChannelData;
 
-	MessageCache				mMessageCache;
+	std::string				mKeySpacePrefix;
 
-	const google::protobuf::OneofDescriptor* mMsgSubtypes;
+	std::string				mScriptSHA_SET;
+	std::string				mScriptSHA_RPUSH;
+	std::string				mScriptSHA_HMSET;
 
-	GameAnalytics & operator=( const GameAnalytics & other );
+	GameAnalytics & operator=(const GameAnalytics & other);
+	
+	int CheckSqliteError(int errcode);
+};
 
-	std::string BuildUrl( const std::string & category );
+class vaAnalytics
+{
+public:
+	const char * c_str() const { return buffer; }
+	operator const char *() const { return buffer; }
 
-	int CheckSqliteError( int errcode );
+	vaAnalytics(const char* msg, ...);
+protected:
+	enum { BufferSize = 1024 };
+	char buffer[BufferSize];
 };
 
 #endif

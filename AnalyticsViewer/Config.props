@@ -4,10 +4,9 @@
   <PropertyGroup Label="UserMacros">
     <DEPENDENCIES>$(ProjectDir)..\dependencies\</DEPENDENCIES>
     <GAMEANALYTICS>$(ProjectDir)..\</GAMEANALYTICS>
-    <LIBCURL>$(DEPENDENCIES)\libcurl\include</LIBCURL>
-    <FASTLZ>$(DEPENDENCIES)\fastlz</FASTLZ>
-    <ZEROMQ>$(DEPENDENCIES)\zeromq-4.1.3</ZEROMQ>
-    <LIBSODIUM>$(DEPENDENCIES)\libsodium</LIBSODIUM>
+    <LIBCURL>$(DEPENDENCIES)libcurl\include</LIBCURL>
+    <FASTLZ>$(DEPENDENCIES)fastlz</FASTLZ>
+    <ZEROMQ>$(DEPENDENCIES)zeromq</ZEROMQ>
     <PROTOBUF>D:\git\protobuf\</PROTOBUF>
   </PropertyGroup>
   <PropertyGroup>
@@ -20,8 +19,8 @@
       <PreprocessorDefinitions>ZMQ_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ZEROMQ)\bin\$(PlatformName)\$(ConfigurationName)\v120\static;$(LIBSODIUM)\bin\$(PlatformName)\$(ConfigurationName)\v120\static</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;winmm.lib;Wldap32.lib;libzmq.lib;libsodium.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ZEROMQ)\bin\$(PlatformName)\$(Configuration)\$(PlatformToolset)\static\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;winmm.lib;Wldap32.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -43,10 +42,6 @@
     </BuildMacro>
     <BuildMacro Include="ZEROMQ">
       <Value>$(ZEROMQ)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
-    <BuildMacro Include="LIBSODIUM">
-      <Value>$(LIBSODIUM)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="PROTOBUF">

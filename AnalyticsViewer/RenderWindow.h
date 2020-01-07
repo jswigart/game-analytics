@@ -37,13 +37,15 @@
 #ifndef RENDER_WINDOW_H
 #define RENDER_WINDOW_H
 
-#include <QWindow>
+#include <QtGui/QWindow>
+#include <Qt3DExtras/Qt3DWindow>
+#include <Qt3DQuickExtras/Qt3DQuickWindow>
 
-class RenderWindow : public QWindow
+class RenderWindow : public Qt3DExtras::Quick::Qt3DQuickWindow
 {
     Q_OBJECT
 public:
-	explicit RenderWindow( QScreen *screen = 0 );
+	explicit RenderWindow(QWindow *parent = nullptr);
 	~RenderWindow();
 
 protected:

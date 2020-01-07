@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <fstream>
 
-#include "GameAnalytics.h"
+#include "GameAnalytics_zmq.h"
 
 static int RandInRange( int minValue, int maxValue )
 {

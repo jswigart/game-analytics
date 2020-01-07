@@ -1,7 +1,7 @@
 #ifndef TIMELINEGRAPHICSSCENE_H
 #define TIMELINEGRAPHICSSCENE_H
 
-#include <QGraphicsScene>
+#include <QtWidgets/QGraphicsScene>
 
 class TimelineGraphicsScene : public QGraphicsScene
 {
@@ -13,7 +13,8 @@ public:
 	bool focusNextPrevChild( bool next );
 
 	int AddRow( const QString& text );
-	void AddTick( int row, qint64 milliseconds );
+	QGraphicsItem* AddTick( int row, qint64 milliseconds );
+protected:
 private Q_SLOTS:
 	void SceneSizeChanged( const QRectF &rect );
 private:

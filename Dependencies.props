@@ -10,10 +10,11 @@
     <SQLITE>$(DEPENDENCIES)\sqlite</SQLITE>
     <ENET>$(DEPENDENCIES)\enet-1.3.12</ENET>
     <fastlz>$(DEPENDENCIES)\fastlz</fastlz>
-    <ZEROMQ>$(DEPENDENCIES)\zeromq-4.1.3</ZEROMQ>
-    <LIBSODIUM>$(DEPENDENCIES)\libsodium</LIBSODIUM>
+    <ZEROMQ>$(DEPENDENCIES)\zeromq</ZEROMQ>
     <PROTOBUF>D:\git\protobuf</PROTOBUF>
     <BOOST>D:\Sourcecode\boost_1_60_0</BOOST>
+    <CPP_REDIS>$(DEPENDENCIES)\cpp_redis</CPP_REDIS>
+    <TACOPIE>$(DEPENDENCIES)\tacopie</TACOPIE>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)build\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
@@ -22,11 +23,13 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>SQLITE_ENABLE_RTREE;SQLITE_ENABLE_UPDATE_DELETE_LIMIT;NOMINMAX;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;ZMQ_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(GAMEANALYTICS);$(LIBCURL);$(MD5);$(JSONCPP);$(SHA1);$(SQLITE);$(ENET)/include;$(BOOST);$(PROTOBUF);$(PROTOBUF)/src;$(FASTLZ);$(ZEROMQ)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(GAMEANALYTICS);$(LIBCURL);$(MD5);$(JSONCPP);$(SHA1);$(SQLITE);$(ENET)/include;$(BOOST);$(PROTOBUF);$(PROTOBUF)/src;$(FASTLZ);$(ZEROMQ)\include;$(CPP_REDIS)\include;$(TACOPIE)\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libzmq.lib;libsodium.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ZEROMQ)\bin\$(PlatformName)\$(ConfigurationName)\v120\static;$(LIBSODIUM)\bin\$(PlatformName)\$(ConfigurationName)\v120\static</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>
@@ -73,16 +76,20 @@
       <Value>$(ZEROMQ)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
-    <BuildMacro Include="LIBSODIUM">
-      <Value>$(LIBSODIUM)</Value>
-      <EnvironmentVariable>true</EnvironmentVariable>
-    </BuildMacro>
     <BuildMacro Include="PROTOBUF">
       <Value>$(PROTOBUF)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
     <BuildMacro Include="BOOST">
       <Value>$(BOOST)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CPP_REDIS">
+      <Value>$(CPP_REDIS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="TACOPIE">
+      <Value>$(TACOPIE)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

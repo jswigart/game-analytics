@@ -32,9 +32,11 @@ AC_SUBST(PACKAGE_VERSION)
 # ZeroMQ version 3.1: 3:0:0 (ABI version 3)
 # ZeroMQ version 4.0: 4:0:0 (ABI version 4)
 # ZeroMQ version 4.1: 5:0:0 (ABI version 5)
+# ZeroMQ version 4.1.5: 5:1:0 (ABI version 5)
+# ZeroMQ version 4.1.6: 5:2:0 (ABI version 5)
 #
 # libzmq -version-info current:revision:age
-LTVER="5:0:0"
+LTVER="5:2:0"
 AC_SUBST(LTVER)
 
 # Take a copy of original flags
@@ -138,7 +140,7 @@ libzmq_on_android="no"
 libzmq_on_linux="no"
 
 # Set some default features required by 0MQ code.
-CPPFLAGS="-D_REENTRANT -D_THREAD_SAFE $CPPFLAGS"
+CPPFLAGS="-D_REENTRANT -D_THREAD_SAFE -Wno-long-long $CPPFLAGS"
 
 # For host type checks
 AC_CANONICAL_HOST
@@ -182,8 +184,6 @@ case "${host_os}" in
         if test "x$solaris_has_atomic" = "xno"; then
             AC_DEFINE(ZMQ_FORCE_MUTEXES, 1, [Force to use mutexes])
         fi
-        # ssp library is required for libsodium on Solaris-like systems
-        LDFLAGS="-lssp $LDFLAGS"
         CPPFLAGS="$CPPFLAGS -Wno-long-long"
         ;;
     *freebsd*)
@@ -293,7 +293,7 @@ fi
 
 # CPU-specific optimizations
 case "${host_cpu}" in
-    *sparc*)
+    *sparc64*)
         AC_LANG_PUSH([C++])
         LIBZMQ_CHECK_LANG_FLAG_PREPEND([-mcpu=v9])
         AC_LANG_POP([C++])
@@ -306,8 +306,8 @@ esac
 LIBZMQ_CHECK_DOC_BUILD
 
 # Check polling system
-LIBZMQ_CHECK_POLLER([CPPFLAGS="${CPPFLAGS} -D${libzmq_cv_poller_flag}"],
-    [AC_MSG_ERROR([Unable to continue without polling system])])
+# Check polling system, set appropriate macro in src/platform.hpp
+LIBZMQ_CHECK_POLLER
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -389,24 +389,50 @@ if test "x$require_libgssapi_krb5_ext" != "xno"; then
         AC_MSG_ERROR(libgssapi_krb5 is needed for GSSAPI security))
 fi
 
-# build using libsodium
-have_sodium_library="no"
+# Select curve encryption library, defaults to tweetnacl
+# To use libsodium instead, use --with-libsodium (must be installed)
+# To disable curve, use --disable-curve
 
-AC_ARG_WITH([libsodium], [AS_HELP_STRING([--with-libsodium],
-    [require libzmq build with libsodium. Requires pkg-config [default=no]])],
-    [require_libsodium_ext=$withval],
-    [require_libsodium_ext=yes])
+AC_ARG_WITH([libsodium],
+    [AS_HELP_STRING([--with-libsodium], [use libsodium instead of built-in tweetnacl [default=no]])])
 
-# conditionally require libsodium package
-if test "x$require_libsodium_ext" != "xno"; then
-    PKG_CHECK_MODULES([sodium], [libsodium], [have_sodium_library="yes"])
+AS_IF([test "x$with_libsodium" = "xyes"], [
+    PKG_CHECK_MODULES([sodium], [libsodium], [libsodium_found=yes], [
+        AC_MSG_ERROR(libsodium is not installed. Install it, then run configure again)
+    ])
+])
+
+AC_ARG_ENABLE([curve],
+    [AS_HELP_STRING([--disable-curve], [disable CURVE security [default=no]])])
+
+if test "x$enable_curve" = "xno"; then
+    curve_library=""
+    AC_MSG_NOTICE([CURVE security is disabled])
+
+elif test "x$with_libsodium" = "xyes"; then
+    AC_MSG_NOTICE([Using libsodium for CURVE security])
+    AC_DEFINE(ZMQ_HAVE_CURVE, [1], [Using curve encryption])
+    AC_DEFINE(ZMQ_USE_LIBSODIUM, [1], [Using libsodium for curve encryption])
+    curve_library="libsodium"
+
+    # On Solaris, libsodium depends on libssp
+    case "${host_os}" in
+        *solaris*)
+            LDFLAGS="-lssp $LDFLAGS"
+            libzmq_pedantic="no"
+            libzmq_werror="no"
+        ;;
+    esac
+else
+    AC_MSG_NOTICE([Using tweetnacl for CURVE security])
+    AC_DEFINE(ZMQ_HAVE_CURVE, [1], [Using curve encryption])
+    AC_DEFINE(ZMQ_USE_TWEETNACL, [1], [Using tweetnacl for curve encryption])
+    curve_library="tweetnacl"
 fi
 
-if test "x$have_sodium_library" != "xno"; then
-    AC_DEFINE(HAVE_LIBSODIUM, 1, [The libsodium library is to be used.])
-fi
-
-AM_CONDITIONAL(HAVE_SODIUM, test "x$have_sodium_library" != "xno")
+AM_CONDITIONAL(ENABLE_CURVE_KEYGEN, test "x$enable_curve" = "xyes")
+AM_CONDITIONAL(USE_LIBSODIUM, test "$curve_library" = "libsodium")
+AM_CONDITIONAL(USE_TWEETNACL, test "$curve_library" = "tweetnacl")
 
 # build using pgm
 have_pgm_library="no"
@@ -444,6 +470,7 @@ AC_ARG_WITH([norm],
 AC_MSG_CHECKING("with_norm_ext = ${with_norm_ext}")
 
 if test "x$with_norm_ext" != "xno"; then
+    AC_MSG_RESULT([yes])
     AC_DEFINE(ZMQ_HAVE_NORM, 1, [Have NORM protocol extension])
 
     if test "x$wwith_norm_ext" != "xyes"; then
@@ -451,8 +478,9 @@ if test "x$with_norm_ext" != "xno"; then
         LIBZMQ_EXTRA_CXXFLAGS="-I${norm_path}/include ${LIBZMQ_EXTRA_CXXFLAGS}"
         LIBZMQ_EXTRA_LDFLAGS="-I${norm_path}/include ${LIBZMQ_EXTRA_LDFLAGS}"
     fi
-
     LIBS="-lnorm $LIBS"
+else
+    AC_MSG_RESULT([no])
 fi
 
 # Set -Wall, -Werror and -pedantic
@@ -536,6 +564,7 @@ AC_CONFIG_FILES([ \
     Makefile \
     src/libzmq.pc \
     doc/Makefile \
+    builds/Makefile \
     builds/msvc/Makefile \
     builds/redhat/zeromq.spec])
 

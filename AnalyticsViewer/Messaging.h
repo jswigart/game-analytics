@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QThread>
-#include <QSharedPointer>
+#include <QtCore/QThread>
+#include <QtCore/QSharedPointer>
 
 #include "analytics.pb.h"
 

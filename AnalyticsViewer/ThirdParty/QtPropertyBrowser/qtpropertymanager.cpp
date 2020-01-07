@@ -44,9 +44,9 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QLabel>
 #include <QtCore/QMath.h>
-#include <QVector2D>
-#include <QVector3D>
-#include <QVector4D>
+#include <QtGui/QVector2D>
+#include <QtGui/QVector3D>
+#include <QtGui/QVector4D>
 
 #include "qtpropertymanager.h"
 #include "qtpropertybrowserutils_p.h"

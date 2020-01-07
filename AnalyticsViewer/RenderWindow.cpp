@@ -36,28 +36,28 @@
 
 #include "RenderWindow.h"
 
-#include <QKeyEvent>
-#include <QGuiApplication>
-#include <QOpenGLContext>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QGuiApplication>
+#include <QtGui/QOpenGLContext>
 
-RenderWindow::RenderWindow( QScreen *screen )
-    : QWindow(screen)
+RenderWindow::RenderWindow(QWindow *parent)
+    : Qt3DExtras::Quick::Qt3DQuickWindow(parent)
 
 {
-    setSurfaceType(QSurface::OpenGLSurface);
+    //setSurfaceType(QSurface::OpenGLSurface);
 
-    //resize(1024, 768);
+    ////resize(1024, 768);
 
-    QSurfaceFormat format;
-    if (QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL) {
-        format.setVersion(4, 3);
-        format.setProfile(QSurfaceFormat::CoreProfile);
-    }
-    format.setDepthBufferSize( 24 );
-    format.setSamples( 4 );
-    format.setStencilBufferSize(8);
-    setFormat(format);
-    create();
+    //QSurfaceFormat format;
+    //if (QOpenGLContext::openGLModuleType() == QOpenGLContext::LibGL) {
+    //    format.setVersion(4, 3);
+    //    format.setProfile(QSurfaceFormat::CoreProfile);
+    //}
+    //format.setDepthBufferSize( 24 );
+    //format.setSamples( 4 );
+    //format.setStencilBufferSize(8);
+    //setFormat(format);
+    //create();
 }
 
 RenderWindow::~RenderWindow()

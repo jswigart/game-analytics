@@ -46,12 +46,10 @@
 #include "err.hpp"
 #include "msg.hpp"
 
-#ifdef HAVE_LIBSODIUM
-#ifdef HAVE_TWEETNACL
-#include "randombytes.h"
-#else
-#include "sodium.h"
-#endif
+#if defined (ZMQ_USE_TWEETNACL)
+#   include "randombytes.h"
+#elif defined (ZMQ_USE_LIBSODIUM)
+#   include "sodium.h"
 #endif
 
 #define ZMQ_CTX_TAG_VALUE_GOOD 0xabadcafe
@@ -113,7 +111,7 @@ zmq::ctx_t::~ctx_t ()
 
     //  If we've done any Curve encryption, we may have a file handle
     //  to /dev/urandom open that needs to be cleaned up.
-#ifdef HAVE_LIBSODIUM
+#if defined (ZMQ_USE_TWEETNACL)
     randombytes_close();
 #endif
 
@@ -549,7 +547,13 @@ void zmq::ctx_t::connect_inproc_sockets (zmq::socket_base_t *bind_socket_,
     else
         pending_connection_.connect_pipe->send_bind (bind_socket_, pending_connection_.bind_pipe, false);
 
-    if (pending_connection_.endpoint.options.recv_identity) {
+    // When a ctx is terminated all pending inproc connection will be
+    // connected, but the socket will already be closed and the pipe will be
+    // in waiting_for_delimiter state, which means no more writes can be done
+    // and the identity write fails and causes an assert. Check if the socket
+    // is open before sending.
+    if (pending_connection_.endpoint.options.recv_identity &&
+            pending_connection_.endpoint.socket->check_tag ()) {
         msg_t id;
         int rc = id.init_size (bind_options.identity_size);
         errno_assert (rc == 0);

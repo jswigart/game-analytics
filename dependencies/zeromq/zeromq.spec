@@ -1,5 +1,5 @@
 Name:          zeromq
-Version:       4.1.4
+Version:       4.1.6
 Release:       1%{?dist}
 Summary:       The ZeroMQ messaging library
 Group:         Applications/Internet
@@ -112,8 +112,7 @@ This package contains ZeroMQ related development libraries and header files.
 %{_bindir}/curve_keygen
 
 # libraries
-%{_libdir}/libzmq.so.5
-%{_libdir}/libzmq.so.5.0.0
+%{_libdir}/libzmq.so.*
 
 %{_mandir}/man7/zmq.7.gz
 

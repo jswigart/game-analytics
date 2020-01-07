@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package Analytics;
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions 
+{
+	// if this option is defined the library will cache the last message of this type into memory so that even if the
+	// visualization application connects to the host application 'late', the cached values of all events may be sent
+	// to seed the visualizer with up to date information with regards to whatever messages utilize this option
+	bool cachelastvalue	= 5000;
+
+	// this suffix may be optionally used when generating the key value for caching the contents of a message, 
+	// so that multiple types of a given message may be cached, using this suffix prepended to the message type name
+	string cachekeysuffix = 5001;
+}
+
+extend google.protobuf.FieldOptions
+{
+	// this associates a field with an set of enumeration data so that values can be mapped to something readable
+	string gameenumkey = 5002;
+	bool editable = 5003;
+}
+
+// compression schemes may be utilized to reduce the size of certain message types
+enum Compression
+{
+	Compression_None	= 0;
+	Compression_FastLZ	= 1;
+}
+
+message TopicSubscribe
+{
+	string					topic						= 1;
+}
+
+message TopicUnsubscribe
+{
+	string					topic						= 1;
+}
+
+message GameInfo
+{
+	option (cachelastvalue) = true;
+
+	string					mapName						= 1;
+}
+
+message GameEnum
+{
+	option (cachelastvalue) = true;
+	option (cachekeysuffix) = "enumname";
+
+	message EnumPair
+	{
+		string				name						= 1;
+		int32				value						= 2;
+	}
+
+	repeated EnumPair		values						= 1;
+	string					enumname					= 2;
+	bool					isbitfield					= 3;
+}
+
+message GameNavNotFound
+{
+	string					mapName						= 1;
+}
+
+message GameNavAutoDownloaded
+{
+	string					mapName						= 1;
+}
+
+message GameAssert
+{
+	string					condition					= 1;
+	string					file						= 2;
+	int32					line						= 3;
+}
+
+message GameCrash
+{
+	string					info						= 1;
+}
+
+message GameModelData
+{
+	option (cachelastvalue) = true;
+	option (cachekeysuffix) = "modelName";
+
+	Compression		compressionType				= 1;
+	string			modelName					= 2;
+	bytes			modelBytes					= 3;
+	uint32			modelBytesUncompressed		= 4;
+}
+
+message GameEntityInfo
+{
+	message Ammo
+	{
+		uint32		ammoType					= 1 [(gameenumkey)="AMMO_TYPE"];
+		uint32		ammoCount					= 2;
+	}
+
+	string					name						= 1;
+	int32					entityId					= 2;
+	int32					groupId						= 3 [(gameenumkey)="GROUP_ID"];
+	int32					classId						= 4 [(gameenumkey)="CLASS_ID"];
+	float					positionX					= 5;
+	float					positionY					= 6;
+	float					positionZ					= 7;
+	float					heading						= 8;
+	float					pitch						= 9;
+	float					roll						= 10;
+	uint32					health						= 12;
+	uint32					healthMax					= 13;
+	uint32					armor						= 14;
+	uint32					armorMax					= 15;
+	uint32					team						= 16;
+	repeated Ammo			ammo						= 20;
+}
+
+message GameEntityList
+{
+	option (cachelastvalue) = true;
+
+	repeated GameEntityInfo			entities					= 1;
+}
+
+message GameWeaponFired
+{
+	int32					weaponId					= 1 [(gameenumkey)="WEAPON_ID"];
+	float					positionX					= 2;
+	float					positionY					= 3;
+	float					positionZ					= 4;
+	uint32					fireMode					= 5 [(gameenumkey)="FIRE_MODE"];
+	int32					team						= 6;
+}
+
+message GameDeath
+{
+	int32					killedByClass				= 1 [(gameenumkey)="CLASS_ID"]; // this class Id maps to an enumeration defined by the client who is communicating this message
+	int32					killedByWeapon				= 2 [(gameenumkey)="WEAPON_ID"]; // this weapon Id maps to an enumeration defined by the client who is communicating this message
+	int32					killedByHealth				= 3; // how much health did they have left when they killed me
+	uint32					team						= 4 [(gameenumkey)="TEAM_ID"];
+	float					positionX					= 5;
+	float					positionY					= 6;
+	float					positionZ					= 7;
+}
+
+message GameTookDamage
+{
+	int32					weaponId					= 1 [(gameenumkey)="WEAPON_ID"];
+	float					positionX					= 2;
+	float					positionY					= 3;
+	float					positionZ					= 4;
+	uint32					team						= 5 [(gameenumkey)="TEAM_ID"];
+}
+
+message GameNavigationStuck
+{
+	int32					entityId					= 1;
+	float					positionX					= 2;
+	float					positionY					= 3;
+	float					positionZ					= 4;
+}
+
+message GameVoiceMacro
+{
+	int32					entityId					= 1;
+	int32					voiceMacro					= 2 [(gameenumkey)="VOICE_MACRO"];
+	float					positionX					= 3;
+	float					positionY					= 4;
+	float					positionZ					= 5;
+}
+
+// This message type represents the root message type of the data sent between the application and the library
+// Since the contents of this message form a union between one of an extendable number and types of message payloads,
+// the data is very easily extendable or modifiable without the need to worry about versioning or breaking the format
+message MessageUnion
+{
+	int64					timestamp								= 1;
+
+	oneof msg 
+	{
+		GameInfo					gameInfo						= 9;
+		GameNavNotFound				gameNavNotFound					= 10;
+		GameNavAutoDownloaded		systemNavDownloaded				= 11;
+		GameAssert					gameAssert						= 12;
+		GameCrash					gameCrash						= 13;
+		GameModelData				gameModelData					= 14;
+		GameEnum					gameEnum						= 15;
+
+		GameEntityList				gameEntityList					= 100;
+		GameWeaponFired				gameWeaponFired					= 101;
+		GameDeath					gameDeath						= 102;
+		GameTookDamage				gameTookDamage					= 103;
+		GameNavigationStuck			gameNavigationStuck				= 104;
+		GameVoiceMacro				gameVoiceMacro					= 105;
+
+		TopicSubscribe				topicSubscribe					= 1000;
+		TopicUnsubscribe			topicUnsubscribe				= 1001;
+	}
+}

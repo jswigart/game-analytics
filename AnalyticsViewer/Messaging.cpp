@@ -158,6 +158,7 @@ void HostThreadENET::run()
 }
 
 #include <zmq.hpp>
+#include "GameAnalytics_zmq.h"
 
 HostThread0MQ::HostThread0MQ( QObject *parent )
 	: QThread( parent )

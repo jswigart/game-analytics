@@ -31,7 +31,7 @@
 /*  Version macros for compile-time API version detection                     */
 #define ZMQ_VERSION_MAJOR 4
 #define ZMQ_VERSION_MINOR 1
-#define ZMQ_VERSION_PATCH 4
+#define ZMQ_VERSION_PATCH 6
 
 #define ZMQ_MAKE_VERSION(major, minor, patch) \
     ((major) * 10000 + (minor) * 100 + (patch))
@@ -74,6 +74,16 @@ extern "C" {
 #define ZMQ_DEFINED_STDINT 1
 #if defined ZMQ_HAVE_SOLARIS || defined ZMQ_HAVE_OPENVMS
 #   include <inttypes.h>
+#elif defined _MSC_VER && _MSC_VER < 1600
+#   ifndef int32_t
+        typedef __int32 int32_t;
+#   endif
+#   ifndef uint16_t
+        typedef unsigned __int16 uint16_t;
+#   endif
+#   ifndef uint8_t
+        typedef unsigned __int8 uint8_t;
+#   endif
 #else
 #   include <stdint.h>
 #endif
@@ -195,7 +205,23 @@ ZMQ_EXPORT int zmq_ctx_destroy (void *context);
 /*  0MQ message definition.                                                   */
 /******************************************************************************/
 
-typedef struct zmq_msg_t {unsigned char _ [64];} zmq_msg_t;
+/* Some architectures, like sparc64 and some variants of aarch64, enforce pointer
+ * alignment and raise sigbus on violations. Make sure applications allocate
+ * zmq_msg_t on addresses aligned on a pointer-size boundary to avoid this issue.
+ */
+typedef struct zmq_msg_t {
+#if defined (__GNUC__) || defined ( __INTEL_COMPILER) || \
+        (defined (__SUNPRO_C) && __SUNPRO_C >= 0x590) || \
+        (defined (__SUNPRO_CC) && __SUNPRO_CC >= 0x590)
+    unsigned char _ [64] __attribute__ ((aligned (sizeof (void *))));
+#elif defined (_MSC_VER) && (defined (_M_X64) || defined (_M_ARM64))
+    __declspec (align (8)) unsigned char _ [64];
+#elif defined (_MSC_VER) && (defined (_M_IX86) || defined (_M_ARM_ARMV7VE))
+    __declspec (align (4)) unsigned char _ [64];
+#else
+    unsigned char _ [64];
+#endif
+} zmq_msg_t;
 
 typedef void (zmq_free_fn) (void *data, void *hint);
 

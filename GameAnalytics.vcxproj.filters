@@ -32,6 +32,12 @@
     <Filter Include="dependencies\fastlz">
       <UniqueIdentifier>{e3e95dd5-aa07-4141-bf9b-ac089d1efc22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dependencies\cpp_redis">
+      <UniqueIdentifier>{9e040fc1-206b-4547-b5e9-7ffaa11d1f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\tacopie">
+      <UniqueIdentifier>{edd5abb3-e94a-4db1-9265-06910b708c50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameAnalytics.h">
@@ -76,9 +82,6 @@
     <ClInclude Include="analytics.pb.h">
       <Filter>proto\autogen</Filter>
     </ClInclude>
-    <ClInclude Include="modeldata.pb.h">
-      <Filter>proto\autogen</Filter>
-    </ClInclude>
     <ClInclude Include="dependencies\sqlite\sqlite3.h">
       <Filter>dependencies\sqlite</Filter>
     </ClInclude>
@@ -87,6 +90,96 @@
     </ClInclude>
     <ClInclude Include="dependencies\fastlz\fastlz.h">
       <Filter>dependencies\fastlz</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\array_builder.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\builders_factory.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\builder_iface.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\bulk_string_builder.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\error_builder.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\integer_builder.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\reply_builder.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\builders\simple_string_builder.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\core\client.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\core\reply.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\core\sentinel.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\core\subscriber.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\helpers\variadic_template.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\misc\error.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\misc\logger.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\misc\macro.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\network\redis_connection.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\network\tcp_client.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\cpp_redis\include\cpp_redis\network\tcp_client_iface.hpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\network\io_service.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\network\self_pipe.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\network\tcp_server.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\network\tcp_socket.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\utils\error.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\utils\thread_pool.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\utils\typedefs.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAnalytics_zmq.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\network\tacopie_tcp_client.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\tacopie\include\tacopie\utils\tacopie_logger.hpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAnalytics_redis.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +236,6 @@
     <ClCompile Include="analytics.pb.cc">
       <Filter>proto\autogen</Filter>
     </ClCompile>
-    <ClCompile Include="modeldata.pb.cc">
-      <Filter>proto\autogen</Filter>
-    </ClCompile>
     <ClCompile Include="dependencies\sqlite\shell.c">
       <Filter>dependencies\sqlite</Filter>
     </ClCompile>
@@ -154,6 +244,87 @@
     </ClCompile>
     <ClCompile Include="dependencies\fastlz\fastlz.c">
       <Filter>dependencies\fastlz</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\array_builder.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\builders_factory.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\bulk_string_builder.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\error_builder.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\integer_builder.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\reply_builder.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\builders\simple_string_builder.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\core\client.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\core\reply.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\core\sentinel.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\core\subscriber.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\misc\logger.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\network\redis_connection.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\cpp_redis\src\network\tcp_client.cpp">
+      <Filter>dependencies\cpp_redis</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\utils\error.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\utils\thread_pool.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\common\tcp_socket.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\io_service.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\tcp_server.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\unix\unix_self_pipe.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\unix\unix_tcp_socket.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\windows\windows_self_pipe.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\windows\windows_tcp_socket.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="GameAnalytics_zmq.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\utils\tacopie_logger.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\tacopie\src\network\tacopie_tcp_client.cpp">
+      <Filter>dependencies\tacopie</Filter>
+    </ClCompile>
+    <ClCompile Include="GameAnalytics_redis.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,13 +340,18 @@
     <None Include="dependencies\json-cpp\json\sconscript">
       <Filter>dependencies\json-cpp</Filter>
     </None>
+    <None Include="dependencies\cpp_redis\include\cpp_redis\cpp_redis">
+      <Filter>dependencies\cpp_redis</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="analytics.proto">
       <Filter>proto</Filter>
     </CustomBuild>
-    <CustomBuild Include="modeldata.proto">
-      <Filter>proto</Filter>
-    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="dependencies\json-cpp\json\json-cpp.natvis">
+      <Filter>dependencies\json-cpp</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>

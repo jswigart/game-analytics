@@ -1,3 +1,57 @@
+0MQ version 4.1.6 stable, released on 2016/11/01
+================================================
+
+* Fixed #2051 - getifaddrs can fail with ECONNREFUSED
+
+* Fixed #2091 - testutil.hpp fails to build on Windows XP
+
+* Fixed #2096 - add tests/CMakeLists.in and version.rc.in to dist tar
+
+* Fixed #2107 - zmq_connect with IPv6 "source:port;dest:port" broken
+
+* Fixed #2117 - ctx_term assert with inproc zmq_router connect-before-bind
+
+* Fixed #2158 - Socket monitor uses internal Pair from multiple threads
+
+* Fixed #2161 - messages dropped due to HWM race
+
+* Fixed #1325 - alignment issue with zmq_msg_t causes SIGBUS on SPARC and ARM
+
+
+0MQ version 4.1.5 stable, released on 2016/06/17
+================================================
+
+* Fixed #1673 - CMake on Windows put PDB in wrong directory.
+
+* Fixed #1723 - Family is not set when resolving NIC on Android.
+
+* Fixed #1608 - Windows 7 TCP slow start issue.
+
+* Fixed #1806 - uninitialised read in curve getsockopt.
+
+* Fixed #1807 - build broken with GCC 6.
+
+* Fixed #1831 - potential assertion failure with latest libsodium.
+
+* Fixed #1850 - detection issues with tweetnacl/libsodium.
+
+* Fixed #1877 - Avoid terminating connections prematurely
+
+* Fixed #1887 - zmq_bind IPv4 fallback still tries IPv6
+
+* Fixed #1866 - fails to build on SunOS 5.10 / Solaris 10
+
+* Fixed #919 - ZMQ_LINGER (related to #1877)
+
+* Fixed #114 - cannot unbind with same endpoint with IPv6 enabled.
+
+* Fixed #1952 - CMake scripts not part of release tarballs
+
+* Fixed #1542 - Fix a crash on Windows when port 5905 is in use.
+
+* Fixed #2021 - Fix building on sparc32.
+
+
 0MQ version 4.1.4 stable, released on 2015/12/18
 ================================================
 

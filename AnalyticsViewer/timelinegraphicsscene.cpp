@@ -1,5 +1,6 @@
-#include <QTimer>
+#include <QtCore/QTimer>
 #include <QtWidgets/QGraphicsTextItem>
+#include <QtWidgets/QGraphicsSceneMouseEvent>
 
 #include "TimelineGraphicsScene.h"
 
@@ -43,7 +44,7 @@ int TimelineGraphicsScene::AddRow( const QString& text )
 	return mRows.size() - 1;
 }
 
-void TimelineGraphicsScene::AddTick( int row, qint64 milliseconds )
+QGraphicsItem* TimelineGraphicsScene::AddTick( int row, qint64 milliseconds )
 {
 	if ( row >= 0 && row < mRows.size() )
 	{
@@ -88,7 +89,10 @@ void TimelineGraphicsScene::AddTick( int row, qint64 milliseconds )
 				}
 			}
 		}
+
+		return tick;
 	}
+	return nullptr;
 }
 
 bool TimelineGraphicsScene::focusNextPrevChild( bool next )

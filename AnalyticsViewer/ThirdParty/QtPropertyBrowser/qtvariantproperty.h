@@ -37,7 +37,7 @@
 #include "qtpropertybrowser.h"
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
-#include <QMetaProperty>
+#include <QtCore/QMetaProperty>
 
 QT_BEGIN_NAMESPACE
 

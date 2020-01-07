@@ -1,0 +1,5 @@
+var entity2 = new TestEntity2();
+entity2.PrintSomething();
+
+var entity3 = new TestEntity3();
+entity3.PrintSomething();

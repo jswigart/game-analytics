@@ -44,6 +44,7 @@
 #endif
 #else
 #include <unistd.h>
+#include <ctype.h>
 #endif
 
 #include "socket_base.hpp"
@@ -149,7 +150,10 @@ zmq::socket_base_t::socket_base_t (ctx_t *parent_, uint32_t tid_, int sid_) :
     rcvmore (false),
     file_desc(-1),
     monitor_socket (NULL),
-    monitor_events (0)
+    monitor_events (0),
+    last_endpoint(),
+    sync(),
+    monitor_sync()
 {
     options.socket_id = sid_;
     options.ipv6 = (parent_->get (ZMQ_IPV6) != 0);
@@ -157,7 +161,10 @@ zmq::socket_base_t::socket_base_t (ctx_t *parent_, uint32_t tid_, int sid_) :
 
 zmq::socket_base_t::~socket_base_t ()
 {
-    stop_monitor ();
+    {
+        scoped_lock_t lock(monitor_sync);
+        stop_monitor ();
+    }
     zmq_assert (destroyed);
 }
 
@@ -598,8 +605,6 @@ int zmq::socket_base_t::connect (const char *addr_)
         //  Do some basic sanity checks on tcp:// address syntax
         //  - hostname starts with digit or letter, with embedded '-' or '.'
         //  - IPv6 address may contain hex chars and colons.
-        //  - IPv6 link local address may contain % followed by interface name / zone_id
-        //    (Reference: https://tools.ietf.org/html/rfc4007)
         //  - IPv4 address may contain decimal digits and dots.
         //  - Address must end in ":port" where port is *, or numeric
         //  - Address may contain two parts separated by ':'
@@ -610,8 +615,8 @@ int zmq::socket_base_t::connect (const char *addr_)
             check++;
             while (isalnum  (*check)
                 || isxdigit (*check)
-                || *check == '.' || *check == '-' || *check == ':' || *check == '%'
-                || *check == ';' || *check == ']')
+                || *check == '.' || *check == '-' || *check == ':'|| *check == ';'
+                || *check == '[' || *check == ']')
                 check++;
         }
         //  Assume the worst, now look for success
@@ -765,8 +770,38 @@ int zmq::socket_base_t::term_endpoint (const char *addr_)
         return 0;
     }
 
+    std::string resolved_addr = std::string (addr_);
+    std::pair <endpoints_t::iterator, endpoints_t::iterator> range;
+
+    // The resolved last_endpoint is used as a key in the endpoints map.
+    // The address passed by the user might not match in the TCP case due to
+    // IPv4-in-IPv6 mapping (EG: tcp://[::ffff:127.0.0.1]:9999), so try to
+    // resolve before giving up. Given at this stage we don't know whether a
+    // socket is connected or bound, try with both.
+    if (protocol == "tcp") {
+        range = endpoints.equal_range (resolved_addr);
+        if (range.first == range.second) {
+            tcp_address_t *tcp_addr = new (std::nothrow) tcp_address_t ();
+            alloc_assert (tcp_addr);
+            rc = tcp_addr->resolve (address.c_str (), false, options.ipv6);
+
+            if (rc == 0) {
+                tcp_addr->to_string (resolved_addr);
+                range = endpoints.equal_range (resolved_addr);
+
+                if (range.first == range.second) {
+                    rc = tcp_addr->resolve (address.c_str (), true, options.ipv6);
+                    if (rc == 0) {
+                        tcp_addr->to_string (resolved_addr);
+                    }
+                }
+            }
+            delete tcp_addr;
+        }
+    }
+
     //  Find the endpoints range (if any) corresponding to the addr_ string.
-    std::pair <endpoints_t::iterator, endpoints_t::iterator> range = endpoints.equal_range (std::string (addr_));
+    range = endpoints.equal_range (resolved_addr);
     if (range.first == range.second) {
         errno = ENOENT;
         return -1;
@@ -1040,7 +1075,9 @@ void zmq::socket_base_t::process_stop ()
     //  We'll remember the fact so that any blocking call is interrupted and any
     //  further attempt to use the socket will return ETERM. The user is still
     //  responsible for calling zmq_close on the socket though!
+    scoped_lock_t lock(monitor_sync);
     stop_monitor ();
+
     ctx_terminated = true;
 }
 
@@ -1206,10 +1243,13 @@ void zmq::socket_base_t::extract_flags (msg_t *msg_)
 
 int zmq::socket_base_t::monitor (const char *addr_, int events_)
 {
+    scoped_lock_t lock(monitor_sync);
+
     if (unlikely (ctx_terminated)) {
         errno = ETERM;
         return -1;
     }
+
     //  Support deregistering monitoring endpoints as well
     if (addr_ == NULL) {
         stop_monitor ();
@@ -1255,64 +1295,62 @@ zmq::fd_t zmq::socket_base_t::fd()
     return file_desc;
 }
 
-void zmq::socket_base_t::event_connected (const std::string &addr_, int fd_)
+
+void zmq::socket_base_t::event_connected (const std::string &addr_, zmq::fd_t fd_)
 {
-    if (monitor_events & ZMQ_EVENT_CONNECTED)
-        monitor_event (ZMQ_EVENT_CONNECTED, fd_, addr_);
+    event(addr_, fd_, ZMQ_EVENT_CONNECTED);
 }
 
 void zmq::socket_base_t::event_connect_delayed (const std::string &addr_, int err_)
 {
-    if (monitor_events & ZMQ_EVENT_CONNECT_DELAYED)
-        monitor_event (ZMQ_EVENT_CONNECT_DELAYED, err_, addr_);
+    event(addr_, err_, ZMQ_EVENT_CONNECT_DELAYED);
 }
 
 void zmq::socket_base_t::event_connect_retried (const std::string &addr_, int interval_)
 {
-    if (monitor_events & ZMQ_EVENT_CONNECT_RETRIED)
-        monitor_event (ZMQ_EVENT_CONNECT_RETRIED, interval_, addr_);
+    event(addr_, interval_, ZMQ_EVENT_CONNECT_RETRIED);
 }
 
-void zmq::socket_base_t::event_listening (const std::string &addr_, int fd_)
+void zmq::socket_base_t::event_listening (const std::string &addr_, zmq::fd_t fd_)
 {
-    if (monitor_events & ZMQ_EVENT_LISTENING)
-        monitor_event (ZMQ_EVENT_LISTENING, fd_, addr_);
+    event(addr_, fd_, ZMQ_EVENT_LISTENING);
 }
 
 void zmq::socket_base_t::event_bind_failed (const std::string &addr_, int err_)
 {
-    if (monitor_events & ZMQ_EVENT_BIND_FAILED)
-        monitor_event (ZMQ_EVENT_BIND_FAILED, err_, addr_);
+    event(addr_, err_, ZMQ_EVENT_BIND_FAILED);
 }
 
-void zmq::socket_base_t::event_accepted (const std::string &addr_, int fd_)
+void zmq::socket_base_t::event_accepted (const std::string &addr_, zmq::fd_t fd_)
 {
-    if (monitor_events & ZMQ_EVENT_ACCEPTED)
-        monitor_event (ZMQ_EVENT_ACCEPTED, fd_, addr_);
+    event(addr_, fd_, ZMQ_EVENT_ACCEPTED);
 }
 
 void zmq::socket_base_t::event_accept_failed (const std::string &addr_, int err_)
 {
-    if (monitor_events & ZMQ_EVENT_ACCEPT_FAILED)
-        monitor_event (ZMQ_EVENT_ACCEPT_FAILED, err_, addr_);
+    event(addr_, err_, ZMQ_EVENT_ACCEPT_FAILED);
 }
 
-void zmq::socket_base_t::event_closed (const std::string &addr_, int fd_)
+void zmq::socket_base_t::event_closed (const std::string &addr_, zmq::fd_t fd_)
 {
-    if (monitor_events & ZMQ_EVENT_CLOSED)
-        monitor_event (ZMQ_EVENT_CLOSED, fd_, addr_);
+    event(addr_, fd_, ZMQ_EVENT_CLOSED);
 }
 
 void zmq::socket_base_t::event_close_failed (const std::string &addr_, int err_)
 {
-    if (monitor_events & ZMQ_EVENT_CLOSE_FAILED)
-        monitor_event (ZMQ_EVENT_CLOSE_FAILED, err_, addr_);
+    event(addr_, err_, ZMQ_EVENT_CLOSE_FAILED);
 }
 
-void zmq::socket_base_t::event_disconnected (const std::string &addr_, int fd_)
+void zmq::socket_base_t::event_disconnected (const std::string &addr_, zmq::fd_t fd_)
 {
-    if (monitor_events & ZMQ_EVENT_DISCONNECTED)
-        monitor_event (ZMQ_EVENT_DISCONNECTED, fd_, addr_);
+    event(addr_, fd_, ZMQ_EVENT_DISCONNECTED);
+}
+
+void zmq::socket_base_t::event(const std::string &addr_, intptr_t fd_, int type_)
+{
+    scoped_lock_t lock(monitor_sync);
+        if (monitor_events & type_)
+            monitor_event (type_, fd_, addr_);
 }
 
 //  Send a monitor event
@@ -1336,6 +1374,9 @@ void zmq::socket_base_t::monitor_event (int event_, int value_, const std::strin
 
 void zmq::socket_base_t::stop_monitor (bool send_monitor_stopped_event_)
 {
+    // this is a private method which is only called from
+    // contexts where the mutex has been locked before
+
     if (monitor_socket) {
         if ((monitor_events & ZMQ_EVENT_MONITOR_STOPPED) && send_monitor_stopped_event_)
             monitor_event (ZMQ_EVENT_MONITOR_STOPPED, 0, "");
