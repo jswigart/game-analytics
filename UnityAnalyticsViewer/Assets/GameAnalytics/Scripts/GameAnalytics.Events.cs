@@ -54,7 +54,7 @@ public class GameAnalyticsEventList
         FieldFilter = new Dictionary<FieldDescriptor, FieldFilterState>();
 
         Analytics.PointEvent pointEvent;
-        if (EventField.CustomOptions.TryGetMessage(Analytics.Extensions.PointEventFieldNumber, out pointEvent))
+        if (EventField.TryGetOption<Analytics.PointEvent>(Analytics.AnalyticsExtensions.PointEvent, out pointEvent))
         {
             // parse and cache out the event radius
             float radiusLiteral;
@@ -90,8 +90,8 @@ public class GameAnalyticsEventList
         // all fields marked as tracked we will keep track of so they can be used for filtering
         foreach (var fd in EventDescriptor.Fields.InFieldNumberOrder())
         {
-            bool tracked;
-            if(fd.CustomOptions.TryGetBool(Analytics.Extensions.TrackEventFieldNumber, out tracked) && tracked)
+            bool b;
+            if(fd.TryGetOption<bool>(Analytics.AnalyticsExtensions.TrackEvent, out b) && b)
             {
                 var filterState = new FieldFilterState();
                 FieldFilter.Add(fd, filterState);
@@ -108,8 +108,8 @@ public class GameAnalyticsEventList
     {
         IMessage parsedMessage = null;
 
-        bool useJsonEncoding = false;
-        if (EventDescriptor.CustomOptions.TryGetBool(Analytics.Extensions.UseJsonEncodingFieldNumber, out useJsonEncoding) && useJsonEncoding)
+        bool b;
+        if (EventDescriptor.TryGetOption<bool>(Analytics.AnalyticsExtensions.UseJsonEncoding, out b) && b)
         {
             try
             {
@@ -157,9 +157,9 @@ public class GameAnalyticsEventList
         float eventWeight = _getEventWeight(message);
 
         Analytics.PointEvent pointEvent;
-        if (EventField.CustomOptions.TryGetMessage<Analytics.PointEvent>(Analytics.Extensions.PointEventFieldNumber, out pointEvent))
+        if (EventField.TryGetOption<Analytics.PointEvent>(Analytics.AnalyticsExtensions.PointEvent, out pointEvent))
         {
-            Analytics.Vec3 position = EventField.Accessor.GetValue(message) as Analytics.Vec3;
+            Analytics.Pos3 position = EventField.Accessor.GetValue(message) as Analytics.Pos3;
             if (position == null)
                 return;
 

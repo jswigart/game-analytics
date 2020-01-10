@@ -23,11 +23,11 @@ internal sealed class ProtoProcessor : AssetPostprocessor
         {
             // D:\git\protobuf/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=D:\git\protobuf/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
 
-            string pbSrc = "D:\\git\\game-analytics\\UnityAnalyticsViewer\\UnityAnalyticsViewer\\Assets\\GameAnalytics\\proto\\include";
+            string pbSrc = "E:\\p4\\wildcard\\development\\Plugins\\GameAnalytics\\Source\\protobuf\\include";
             string assetPath = Path.GetDirectoryName(Application.dataPath);
             string assetFile = Path.Combine(assetPath, asset.Replace("/", "\\"));
             string dir = Path.Combine(assetPath, Path.GetDirectoryName(asset));
-            string exe = Path.Combine(dir, "protoc.exe");
+            string exe = "protoc.exe";// Path.Combine(dir, "protoc.exe");
             string args = string.Format("-I=\"{0}\" -I=\"{1}\" --csharp_out=\"{0}\" {2}", dir, pbSrc, assetFile);
             
             Debug.LogFormat("Compiling Protobuf {0}\n{1}\n{2}", exe, asset, args);

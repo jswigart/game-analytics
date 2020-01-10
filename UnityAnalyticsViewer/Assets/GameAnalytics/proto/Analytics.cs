@@ -11,24 +11,6 @@ using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
 namespace Analytics {
 
-  public static class Extensions {
-    public const int RediskeytypeFieldNumber = 5000;
-    public const int RedishmsetkeyFieldNumber = 5001;
-    public const int RediskeysuffixFieldNumber = 5002;
-    public const int UseJsonEncodingFieldNumber = 5003;
-    public const int ObjectnameFieldNumber = 5005;
-    public const int EnumkeyFieldNumber = 4001;
-    public const int EditableFieldNumber = 4002;
-    public const int ExpiresFieldNumber = 4003;
-    public const int EnumflagsFieldNumber = 4004;
-    public const int TooltipFieldNumber = 4005;
-    public const int HiddenFieldNumber = 4006;
-    public const int EnumflagsindexedFieldNumber = 4007;
-    public const int EditableKeyFieldNumber = 4008;
-    public const int TrackEventFieldNumber = 4009;
-    public const int PointEventFieldNumber = 4012;
-    public const int LineEventFieldNumber = 4013;
-  }
   /// <summary>Holder for reflection information generated from analytics.proto</summary>
   public static partial class AnalyticsReflection {
 
@@ -50,12 +32,12 @@ namespace Analytics {
             "GAMgASgJIj4KDUVkaXRvckNoYW5nZXMSLQoHY2hhbmdlcxgBIAMoCzIcLkFu",
             "YWx5dGljcy5FZGl0b3JDaGFuZ2VWYWx1ZSIiCgZSYW5nZUYSCwoDbWluGAEg",
             "ASgCEgsKA21heBgCIAEoAiIiCgZSYW5nZUkSCwoDbWluGAEgASgFEgsKA21h",
-            "eBgCIAEoBSInCgRWZWMzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMg",
-            "ASgCIjsKCVZlYzNDb2xvchIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgD",
+            "eBgCIAEoBSInCgRQb3MzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMg",
+            "ASgCIjsKCVBvczNDb2xvchIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgD",
             "IAEoAhINCgVjb2xvchgEIAEoDSIyCgRWZWM0EgkKAXgYASABKAISCQoBeRgC",
             "IAEoAhIJCgF6GAMgASgCEgkKAXcYBCABKAIiQAoETGluZRIbCgJwMBgBIAEo",
-            "CzIPLkFuYWx5dGljcy5WZWMzEhsKAnAxGAIgASgLMg8uQW5hbHl0aWNzLlZl",
-            "YzMiNQoFRXVsZXISDwoHaGVhZGluZxgBIAEoAhINCgVwaXRjaBgCIAEoAhIM",
+            "CzIPLkFuYWx5dGljcy5Qb3MzEhsKAnAxGAIgASgLMg8uQW5hbHl0aWNzLlBv",
+            "czMiNQoFRXVsZXISDwoHaGVhZGluZxgBIAEoAhINCgVwaXRjaBgCIAEoAhIM",
             "CgRyb2xsGAMgASgCIoQBCghNYXRlcmlhbBIMCgRuYW1lGAEgASgJEicKCGNv",
             "bnRlbnRzGAIgASgNQhWK+gENQ09OVEVOVF9GTEFHU6D6AQESKwoMc3VyZmFj",
             "ZUZsYWdzGAMgASgNQhWK+gENU1VSRkFDRV9GTEFHU6D6AQESFAoMcmVuZGVy",
@@ -65,163 +47,202 @@ namespace Analytics {
             "ZRgBIAEoDjIYLkFuYWx5dGljcy5QcmltaXRpdmVUeXBlEhUKDW1hdGVyaWFs",
             "SW5kZXgYAiABKA0SLAoHb3B0aW9ucxgDIAEoCzIbLkFuYWx5dGljcy5Qcmlt",
             "aXRpdmVPcHRpb25zEgwKBHNpemUYBCABKAISJgoIdmVydGljZXMYBSADKAsy",
-            "FC5BbmFseXRpY3MuVmVjM0NvbG9yImYKBE1lc2gSKAoKcHJpbWl0aXZlcxgB",
+            "FC5BbmFseXRpY3MuUG9zM0NvbG9yImYKBE1lc2gSKAoKcHJpbWl0aXZlcxgB",
             "IAMoCzIULkFuYWx5dGljcy5QcmltaXRpdmUSJgoJbWF0ZXJpYWxzGAIgAygL",
             "MhMuQW5hbHl0aWNzLk1hdGVyaWFsEgwKBG5hbWUYAyABKAkiYQoHVVRDVGlt",
             "ZRIMCgRob3VyGAEgASgFEg4KBm1pbnV0ZRgCIAEoBRIOCgZzZWNvbmQYAyAB",
             "KAUSCwoDZGF5GAQgASgFEg0KBW1vbnRoGAUgASgFEgwKBHllYXIYBiABKAUi",
-            "cwoIR2FtZUluZm8SJQoJdGltZVN0YW1wGAEgASgLMhIuQW5hbHl0aWNzLlVU",
-            "Q1RpbWUSDwoHbWFwTmFtZRgCIAEoCRIQCghnYW1lTmFtZRgDIAEoCRITCgtn",
-            "YW1lVmVyc2lvbhgEIAEoCToIwLgCAdi4AgEimQEKCEdhbWVFbnVtEiwKBnZh",
-            "bHVlcxgBIAMoCzIcLkFuYWx5dGljcy5HYW1lRW51bS5FbnVtUGFpchIQCghl",
-            "bnVtbmFtZRgCIAEoCRISCgppc2JpdGZpZWxkGAMgASgIGicKCEVudW1QYWly",
-            "EgwKBG5hbWUYASABKAkSDQoFdmFsdWUYAiABKAM6EMC4AgPKuAIIZW51bW5h",
-            "bWUiKAoPR2FtZU5hdk5vdEZvdW5kEg8KB21hcE5hbWUYASABKAk6BMC4AgIi",
-            "LgoVR2FtZU5hdkF1dG9Eb3dubG9hZGVkEg8KB21hcE5hbWUYASABKAk6BMC4",
-            "AgIiQQoKR2FtZUFzc2VydBIRCgljb25kaXRpb24YASABKAkSDAoEZmlsZRgC",
-            "IAEoCRIMCgRsaW5lGAMgASgFOgTAuAICIh8KCUdhbWVDcmFzaBIMCgRpbmZv",
-            "GAEgASgJOgTAuAICIpkBCgxHYW1lTWVzaERhdGESLwoPY29tcHJlc3Npb25U",
-            "eXBlGAEgASgOMhYuQW5hbHl0aWNzLkNvbXByZXNzaW9uEhEKCW1vZGVsTmFt",
-            "ZRgCIAEoCRISCgptb2RlbEJ5dGVzGAMgASgMEh4KFm1vZGVsQnl0ZXNVbmNv",
-            "bXByZXNzZWQYBCABKA06EcC4AgPKuAIJbW9kZWxOYW1lIrUGCg5HYW1lRW50",
-            "aXR5SW5mbxISCgplbnRpdHlOYW1lGAEgASgJEhMKC2VudGl0eUluZGV4GAIg",
-            "ASgFEhQKDGVudGl0eVNlcmlhbBgDIAEoBRIdCgdncm91cElkGAQgASgFQgyK",
-            "+gEIR1JPVVBfSUQSHQoHY2xhc3NJZBgFIAEoBUIMivoBCENMQVNTX0lEEhkK",
-            "BHRlYW0YBiABKAVCC4r6AQdURUFNX0lEEikKC2VudGl0eUZsYWdzGAcgASgD",
-            "QhSK+gEMRU5USVRZX0ZMQUdTuPoBARIlCghjYXRlZ29yeRgIIAEoBUITivoB",
-            "C0NBVEVHT1JZX0lEuPoBARIkCghwb3dlclVwcxgJIAEoBUISivoBClBPV0VS",
-            "VVBfSUS4+gEBEh8KCG5hdkZsYWdzGAogASgDQg2K+gEJTkFWX0ZMQUdTEiwK",
-            "DWV1bGVyUm90YXRpb24YCyABKAsyDy5BbmFseXRpY3MuVmVjM0IEsPoBARIn",
-            "Cghwb3NpdGlvbhgMIAEoCzIPLkFuYWx5dGljcy5WZWMzQgSw+gEBEigKCWV5",
-            "ZU9mZnNldBgNIAEoCzIPLkFuYWx5dGljcy5WZWMzQgSw+gEBEiUKBmV5ZURp",
-            "chgOIAEoCzIPLkFuYWx5dGljcy5WZWMzQgSw+gEBEiEKBmhlYWx0aBgPIAEo",
-            "CzIRLkFuYWx5dGljcy5SYW5nZUkSIAoFYXJtb3IYECABKAsyES5BbmFseXRp",
-            "Y3MuUmFuZ2VJEiIKCWJvdW5kc01pbhgRIAEoCzIPLkFuYWx5dGljcy5WZWMz",
-            "EiIKCWJvdW5kc01heBgSIAEoCzIPLkFuYWx5dGljcy5WZWMzEiwKBGFtbW8Y",
-            "EyADKAsyHi5BbmFseXRpY3MuR2FtZUVudGl0eUluZm8uQW1tbxIWCgdkZWxl",
-            "dGVkGOgHIAEoCEIEsPoBARo6CgRBbW1vEh8KCGFtbW9UeXBlGAEgASgNQg2K",
-            "+gEJQU1NT19UWVBFEhEKCWFtbW9Db3VudBgCIAEoDTo7wLgCA8q4AgtlbnRp",
-            "dHlJbmRleOq4AiRFbnRpdHkoJWVudGl0eUluZGV4JSAtICVlbnRpdHlOYW1l",
-            "JSkibQoSR2FtZUVudGl0eVBvc2l0aW9uEjIKCHBvc2l0aW9uGAEgASgLMg8u",
-            "QW5hbHl0aWNzLlZlYzNCD+L6AQQKAjMy4voBAxIBMRIdCgR0ZWFtGAIgASgF",
-            "Qg+K+gEHVEVBTV9JRMj6AQE6BMC4AgIi2gIKCEdhbWVOb2RlEhYKCG5vZGVQ",
-            "YXRoGAEgASgJQgTA+gEBEiYKDWV1bGVyUm90YXRpb24YAiABKAsyDy5BbmFs",
-            "eXRpY3MuVmVjMxIkCgt0cmFuc2xhdGlvbhgDIAEoCzIPLkFuYWx5dGljcy5W",
-            "ZWMzEhAKCG1lc2hOYW1lGAQgASgJEhAKCGVudGl0eUlkGAogASgFEhIKCmVu",
-            "dGl0eU5hbWUYCyABKAkSJAoLYWN0aXZlU3RhdGUYDCABKAVCD4r6AQtNT0RF",
-            "TF9TVEFURRIlCg5uYXZGbGFnc0FjdGl2ZRgNIAEoA0INivoBCU5BVl9GTEFH",
-            "UxIrChBuYXZGbGFnc092ZXJyaWRlGA4gASgDQhGK+gEJTkFWX0ZMQUdTkPoB",
-            "ARIkCglzaGFwZU1vZGUYDyABKAVCEYr6AQlTSEFQRU1PREWQ+gEBOhDAuAID",
-            "yrgCCG5vZGVQYXRoIsEBCg9HYW1lV2VhcG9uRmlyZWQSMgoIcG9zaXRpb24Y",
-            "ASABKAsyDy5BbmFseXRpY3MuVmVjM0IP4voBBAoCNjTi+gEDEgExEiMKCmF0",
-            "dGFja1RlYW0YAiABKAVCD4r6AQdURUFNX0lEyPoBARIjCgh3ZWFwb25JZBgD",
-            "IAEoBUIRivoBCVdFQVBPTl9JRMj6AQESJgoMZmlyZWRCeUNsYXNzGAQgASgF",
-            "QhCK+gEIQ0xBU1NfSUTI+gEBOgjAuAIC2LgCASKrAQoJR2FtZURlYXRoEjIK",
-            "CHBvc2l0aW9uGAEgASgLMg8uQW5hbHl0aWNzLlZlYzNCD+L6AQQKAjMy4voB",
-            "AxIBMRIjCgp2aWN0aW1UZWFtGAIgASgFQg+K+gEHVEVBTV9JRMj6AQESIwoK",
-            "YXR0YWNrVGVhbRgDIAEoBUIPivoBB1RFQU1fSUTI+gEBEhoKDG1lYW5zT2ZE",
-            "ZWF0aBgEIAEoCUIEyPoBAToEwLgCAiKzAQoRR2FtZUtpbGxlZFNvbWVvbmUS",
-            "MgoIcG9zaXRpb24YASABKAsyDy5BbmFseXRpY3MuVmVjM0IP4voBBAoCMzLi",
-            "+gEDEgExEiMKCnZpY3RpbVRlYW0YAiABKAVCD4r6AQdURUFNX0lEyPoBARIj",
-            "CgphdHRhY2tUZWFtGAMgASgFQg+K+gEHVEVBTV9JRMj6AQESGgoMbWVhbnNP",
-            "ZkRlYXRoGAQgASgJQgTI+gEBOgTAuAICIvcBChFHYW1lUmVjaWV2ZURhbWFn",
-            "ZRI9Cghwb3NpdGlvbhgBIAEoCzIPLkFuYWx5dGljcy5WZWMzQhri+gEECgIz",
-            "MuL6AQ4SDGRhbWFnZUFtb3VudBIjCgp2aWN0aW1UZWFtGAIgASgFQg+K+gEH",
-            "VEVBTV9JRMj6AQESIwoKYXR0YWNrVGVhbRgDIAEoBUIPivoBB1RFQU1fSUTI",
-            "+gEBEiMKCHdlYXBvbklkGAQgASgFQhGK+gEJV0VBUE9OX0lEyPoBARIYCgpk",
-            "YW1hZ2VUeXBlGAUgASgJQgTI+gEBEhQKDGRhbWFnZUFtb3VudBgGIAEoAjoE",
-            "wLgCAiL3AQoRR2FtZUluZmxpY3REYW1hZ2USPQoIcG9zaXRpb24YASABKAsy",
-            "Dy5BbmFseXRpY3MuVmVjM0Ia4voBBAoCMzLi+gEOEgxkYW1hZ2VBbW91bnQS",
-            "IwoKdmljdGltVGVhbRgCIAEoBUIPivoBB1RFQU1fSUTI+gEBEiMKCmF0dGFj",
-            "a1RlYW0YAyABKAVCD4r6AQdURUFNX0lEyPoBARIjCgh3ZWFwb25JZBgEIAEo",
-            "BUIRivoBCVdFQVBPTl9JRMj6AQESGAoKZGFtYWdlVHlwZRgFIAEoCUIEyPoB",
-            "ARIUCgxkYW1hZ2VBbW91bnQYBiABKAI6BMC4AgIipQEKEEdhbWVSYWRpdXNE",
-            "YW1hZ2USRwoIcG9zaXRpb24YASABKAsyDy5BbmFseXRpY3MuVmVjM0Ik4voB",
-            "DgoMZGFtYWdlUmFkaXVz4voBDhIMZGFtYWdlQW1vdW50EhIKCmRhbWFnZVR5",
-            "cGUYAiABKAkSFAoMZGFtYWdlQW1vdW50GAMgASgCEhQKDGRhbWFnZVJhZGl1",
-            "cxgEIAEoAjoIwLgCAti4AgEiYQoTR2FtZU5hdmlnYXRpb25TdHVjaxIQCghl",
-            "bnRpdHlJZBgBIAEoBRIyCghwb3NpdGlvbhgCIAEoCzIPLkFuYWx5dGljcy5W",
-            "ZWMzQg/i+gEECgIzMuL6AQMSATE6BMC4AgIihQEKDkdhbWVWb2ljZU1hY3Jv",
-            "EhAKCGVudGl0eUlkGAEgASgFEicKCnZvaWNlTWFjcm8YAiABKAVCE4r6AQtW",
-            "T0lDRV9NQUNST8j6AQESMgoIcG9zaXRpb24YAyABKAsyDy5BbmFseXRpY3Mu",
-            "VmVjM0IP4voBBAoCMzLi+gEDEgExOgTAuAICImUKDkdhbWVMb2dNZXNzYWdl",
-            "EiMKB2xvZ1R5cGUYASABKA4yEi5BbmFseXRpY3MuTG9nVHlwZRISCgpsb2dN",
-            "ZXNzYWdlGAIgASgJEhQKDGxvZ0V4dHJhSW5mbxgDIAEoCToEwLgCAio6CgxS",
-            "ZWRpc0tleVR5cGUSCwoHVU5LTk9XThAAEgcKA1NFVBABEgkKBVJQVVNIEAIS",
-            "CQoFSE1TRVQQAyo/Cg1QcmltaXRpdmVUeXBlEg0KCVRyaWFuZ2xlcxAAEgkK",
-            "BUxpbmVzEAESCgoGUG9pbnRzEAISCAoEUXVhZBADKjsKC0NvbXByZXNzaW9u",
-            "EhQKEENvbXByZXNzaW9uX05vbmUQABIWChJDb21wcmVzc2lvbl9GYXN0TFoQ",
-            "ASoqCgdMb2dUeXBlEgcKA0xvZxAAEgsKB1dhcm5pbmcQARIJCgVFcnJvchAD",
-            "Ok8KDHJlZGlza2V5dHlwZRIfLmdvb2dsZS5wcm90b2J1Zi5NZXNzYWdlT3B0",
-            "aW9ucxiIJyABKA4yFy5BbmFseXRpY3MuUmVkaXNLZXlUeXBlOjcKDXJlZGlz",
-            "aG1zZXRrZXkSHy5nb29nbGUucHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYiScg",
-            "ASgJOjgKDnJlZGlza2V5c3VmZml4Eh8uZ29vZ2xlLnByb3RvYnVmLk1lc3Nh",
-            "Z2VPcHRpb25zGIonIAEoCTo5Cg91c2VKc29uRW5jb2RpbmcSHy5nb29nbGUu",
-            "cHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYiycgASgIOjQKCm9iamVjdG5hbWUS",
-            "Hy5nb29nbGUucHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYjScgASgJOi8KB2Vu",
-            "dW1rZXkSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKEfIAEoCTow",
-            "CghlZGl0YWJsZRIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYoh8g",
-            "ASgIOi8KB2V4cGlyZXMSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25z",
-            "GKMfIAEoBToxCgllbnVtZmxhZ3MSHS5nb29nbGUucHJvdG9idWYuRmllbGRP",
-            "cHRpb25zGKQfIAEoCDovCgd0b29sdGlwEh0uZ29vZ2xlLnByb3RvYnVmLkZp",
-            "ZWxkT3B0aW9ucxilHyABKAg6LgoGaGlkZGVuEh0uZ29vZ2xlLnByb3RvYnVm",
-            "LkZpZWxkT3B0aW9ucximHyABKAg6OAoQZW51bWZsYWdzaW5kZXhlZBIdLmdv",
-            "b2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYpx8gASgIOjQKDGVkaXRhYmxl",
-            "X2tleRIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYqB8gASgIOjMK",
-            "C3RyYWNrX2V2ZW50Eh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucxip",
-            "HyABKAg6SgoLcG9pbnRfZXZlbnQSHS5nb29nbGUucHJvdG9idWYuRmllbGRP",
-            "cHRpb25zGKwfIAEoCzIVLkFuYWx5dGljcy5Qb2ludEV2ZW50OkgKCmxpbmVf",
-            "ZXZlbnQSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGK0fIAEoCzIU",
-            "LkFuYWx5dGljcy5MaW5lRXZlbnRiBnByb3RvMw=="));
+            "TAoIR2FtZUluZm8SDwoHbWFwTmFtZRgBIAEoCRIQCghnYW1lTmFtZRgCIAEo",
+            "CRITCgtnYW1lVmVyc2lvbhgDIAEoCToIwLgCAdi4AgEimQEKCEdhbWVFbnVt",
+            "EiwKBnZhbHVlcxgBIAMoCzIcLkFuYWx5dGljcy5HYW1lRW51bS5FbnVtUGFp",
+            "chIQCghlbnVtbmFtZRgCIAEoCRISCgppc2JpdGZpZWxkGAMgASgIGicKCEVu",
+            "dW1QYWlyEgwKBG5hbWUYASABKAkSDQoFdmFsdWUYAiABKAM6EMC4AgPKuAII",
+            "ZW51bW5hbWUiKAoPR2FtZU5hdk5vdEZvdW5kEg8KB21hcE5hbWUYASABKAk6",
+            "BMC4AgIiLgoVR2FtZU5hdkF1dG9Eb3dubG9hZGVkEg8KB21hcE5hbWUYASAB",
+            "KAk6BMC4AgIiQQoKR2FtZUFzc2VydBIRCgljb25kaXRpb24YASABKAkSDAoE",
+            "ZmlsZRgCIAEoCRIMCgRsaW5lGAMgASgFOgTAuAICIh8KCUdhbWVDcmFzaBIM",
+            "CgRpbmZvGAEgASgJOgTAuAICIpkBCgxHYW1lTWVzaERhdGESLwoPY29tcHJl",
+            "c3Npb25UeXBlGAEgASgOMhYuQW5hbHl0aWNzLkNvbXByZXNzaW9uEhEKCW1v",
+            "ZGVsTmFtZRgCIAEoCRISCgptb2RlbEJ5dGVzGAMgASgMEh4KFm1vZGVsQnl0",
+            "ZXNVbmNvbXByZXNzZWQYBCABKA06EcC4AgPKuAIJbW9kZWxOYW1lIt0CCg5H",
+            "YW1lRW50aXR5SW5mbxIQCghlbnRpdHlJZBgBIAEoCRISCgplbnRpdHlOYW1l",
+            "GAIgASgJEgwKBHRlYW0YAyABKAUSJwoIcG9zaXRpb24YBCABKAsyDy5BbmFs",
+            "eXRpY3MuUG9zM0IEsPoBARItCg1ldWxlclJvdGF0aW9uGAUgASgLMhAuQW5h",
+            "bHl0aWNzLkV1bGVyQgSw+gEBEiEKBmhlYWx0aBgGIAEoCzIRLkFuYWx5dGlj",
+            "cy5SYW5nZUYSHwoEbWFuYRgHIAEoCzIRLkFuYWx5dGljcy5SYW5nZUYSJQoM",
+            "Ym91bmRzT3JpZ2luGAggASgLMg8uQW5hbHl0aWNzLlBvczMSJgoNYm91bmRz",
+            "RXh0ZW50cxgJIAEoCzIPLkFuYWx5dGljcy5Qb3MzOizAuAIDyrgCCGVudGl0",
+            "eUlk6rgCFEVudGl0eSglZW50aXR5TmFtZSUp2LgCASI3ChFHYW1lRW50aXR5",
+            "RGVsZXRlZBIQCghlbnRpdHlJZBgBIAEoCToQwLgCBMq4AghlbnRpdHlJZCJi",
+            "ChJHYW1lRW50aXR5UG9zaXRpb24SMgoIcG9zaXRpb24YASABKAsyDy5BbmFs",
+            "eXRpY3MuUG9zM0IP4voBBAoCMzLi+gEDEgExEhIKBHRlYW0YAiABKAVCBMj6",
+            "AQE6BMC4AgIi2wIKCEdhbWVOb2RlEhYKCG5vZGVQYXRoGAEgASgJQgTA+gEB",
+            "EicKDWV1bGVyUm90YXRpb24YAiABKAsyEC5BbmFseXRpY3MuRXVsZXISJAoL",
+            "dHJhbnNsYXRpb24YAyABKAsyDy5BbmFseXRpY3MuUG9zMxIQCghtZXNoTmFt",
+            "ZRgEIAEoCRIQCghlbnRpdHlJZBgKIAEoBRISCgplbnRpdHlOYW1lGAsgASgJ",
+            "EiQKC2FjdGl2ZVN0YXRlGAwgASgFQg+K+gELTU9ERUxfU1RBVEUSJQoObmF2",
+            "RmxhZ3NBY3RpdmUYDSABKANCDYr6AQlOQVZfRkxBR1MSKwoQbmF2RmxhZ3NP",
+            "dmVycmlkZRgOIAEoA0IRivoBCU5BVl9GTEFHU5D6AQESJAoJc2hhcGVNb2Rl",
+            "GA8gASgFQhGK+gEJU0hBUEVNT0RFkPoBAToQwLgCA8q4Aghub2RlUGF0aCKS",
+            "AQoPR2FtZUNhcmRTcGF3bmVkEjIKCHBvc2l0aW9uGAEgASgLMg8uQW5hbHl0",
+            "aWNzLlBvczNCD+L6AQQKAjY04voBAxIBMRIUCgZjYXJkSWQYAiABKAlCBMj6",
+            "AQESFQoHb3duZXJJZBgDIAEoCUIEyPoBARIUCgZ0ZWFtSWQYBCABKAVCBMj6",
+            "AQE6CMC4AgLYuAIBIpUBCglHYW1lRGVhdGgSMgoIcG9zaXRpb24YASABKAsy",
+            "Dy5BbmFseXRpY3MuUG9zM0IP4voBBAoCMzLi+gEDEgExEhgKCnZpY3RpbVRl",
+            "YW0YAiABKAVCBMj6AQESGAoKYXR0YWNrVGVhbRgDIAEoBUIEyPoBARIaCgxt",
+            "ZWFuc09mRGVhdGgYBCABKAlCBMj6AQE6BMC4AgIinQEKEUdhbWVLaWxsZWRT",
+            "b21lb25lEjIKCHBvc2l0aW9uGAEgASgLMg8uQW5hbHl0aWNzLlBvczNCD+L6",
+            "AQQKAjMy4voBAxIBMRIYCgp2aWN0aW1UZWFtGAIgASgFQgTI+gEBEhgKCmF0",
+            "dGFja1RlYW0YAyABKAVCBMj6AQESGgoMbWVhbnNPZkRlYXRoGAQgASgJQgTI",
+            "+gEBOgTAuAICIvMBCg5HYW1lVGFrZURhbWFnZRI9Cghwb3NpdGlvbhgBIAEo",
+            "CzIPLkFuYWx5dGljcy5Qb3MzQhri+gEECgIzMuL6AQ4SDGRhbWFnZUFtb3Vu",
+            "dBIYCgphdHRhY2tUZWFtGAIgASgFQgTI+gEBEhgKCnZpY3RpbVRlYW0YAyAB",
+            "KAVCBMj6AQESFAoMZGFtYWdlQW1vdW50GAQgASgCEhgKCmRhbWFnZVR5cGUY",
+            "BSABKAlCBMj6AQESGgoMYXR0YWNrZXJUeXBlGAYgASgJQgTI+gEBEhgKCnZp",
+            "Y3RpbVR5cGUYByABKAlCBMj6AQE6CMC4AgLYuAIBIvYBChFHYW1lSW5mbGlj",
+            "dERhbWFnZRI9Cghwb3NpdGlvbhgBIAEoCzIPLkFuYWx5dGljcy5Qb3MzQhri",
+            "+gEECgIzMuL6AQ4SDGRhbWFnZUFtb3VudBIYCgphdHRhY2tUZWFtGAIgASgF",
+            "QgTI+gEBEhgKCnZpY3RpbVRlYW0YAyABKAVCBMj6AQESFAoMZGFtYWdlQW1v",
+            "dW50GAQgASgCEhgKCmRhbWFnZVR5cGUYBSABKAlCBMj6AQESGgoMYXR0YWNr",
+            "ZXJUeXBlGAYgASgJQgTI+gEBEhgKCnZpY3RpbVR5cGUYByABKAlCBMj6AQE6",
+            "CMC4AgLYuAIBIqUBChBHYW1lUmFkaXVzRGFtYWdlEkcKCHBvc2l0aW9uGAEg",
+            "ASgLMg8uQW5hbHl0aWNzLlBvczNCJOL6AQ4KDGRhbWFnZVJhZGl1c+L6AQ4S",
+            "DGRhbWFnZUFtb3VudBISCgpkYW1hZ2VUeXBlGAIgASgJEhQKDGRhbWFnZUFt",
+            "b3VudBgDIAEoAhIUCgxkYW1hZ2VSYWRpdXMYBCABKAI6CMC4AgLYuAIBImEK",
+            "E0dhbWVOYXZpZ2F0aW9uU3R1Y2sSEAoIZW50aXR5SWQYASABKAUSMgoIcG9z",
+            "aXRpb24YAiABKAsyDy5BbmFseXRpY3MuUG9zM0IP4voBBAoCMzLi+gEDEgEx",
+            "OgTAuAICIoUBCg5HYW1lVm9pY2VNYWNybxIQCghlbnRpdHlJZBgBIAEoBRIn",
+            "Cgp2b2ljZU1hY3JvGAIgASgFQhOK+gELVk9JQ0VfTUFDUk/I+gEBEjIKCHBv",
+            "c2l0aW9uGAMgASgLMg8uQW5hbHl0aWNzLlBvczNCD+L6AQQKAjMy4voBAxIB",
+            "MToEwLgCAiJlCg5HYW1lTG9nTWVzc2FnZRIjCgdsb2dUeXBlGAEgASgOMhIu",
+            "QW5hbHl0aWNzLkxvZ1R5cGUSEgoKbG9nTWVzc2FnZRgCIAEoCRIUCgxsb2dF",
+            "eHRyYUluZm8YAyABKAk6BMC4AgIqRQoMUmVkaXNLZXlUeXBlEgsKB1VOS05P",
+            "V04QABIHCgNTRVQQARIJCgVSUFVTSBACEgkKBUhNU0VUEAMSCQoFSE1ERUwQ",
+            "BCo/Cg1QcmltaXRpdmVUeXBlEg0KCVRyaWFuZ2xlcxAAEgkKBUxpbmVzEAES",
+            "CgoGUG9pbnRzEAISCAoEUXVhZBADKjsKC0NvbXByZXNzaW9uEhQKEENvbXBy",
+            "ZXNzaW9uX05vbmUQABIWChJDb21wcmVzc2lvbl9GYXN0TFoQASoqCgdMb2dU",
+            "eXBlEgcKA0xvZxAAEgsKB1dhcm5pbmcQARIJCgVFcnJvchADOk8KDHJlZGlz",
+            "a2V5dHlwZRIfLmdvb2dsZS5wcm90b2J1Zi5NZXNzYWdlT3B0aW9ucxiIJyAB",
+            "KA4yFy5BbmFseXRpY3MuUmVkaXNLZXlUeXBlOjcKDXJlZGlzaG1zZXRrZXkS",
+            "Hy5nb29nbGUucHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYiScgASgJOjgKDnJl",
+            "ZGlza2V5c3VmZml4Eh8uZ29vZ2xlLnByb3RvYnVmLk1lc3NhZ2VPcHRpb25z",
+            "GIonIAEoCTo5Cg91c2VKc29uRW5jb2RpbmcSHy5nb29nbGUucHJvdG9idWYu",
+            "TWVzc2FnZU9wdGlvbnMYiycgASgIOjQKCm9iamVjdG5hbWUSHy5nb29nbGUu",
+            "cHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYjScgASgJOi8KB2VudW1rZXkSHS5n",
+            "b29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKEfIAEoCTowCghlZGl0YWJs",
+            "ZRIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYoh8gASgIOi8KB2V4",
+            "cGlyZXMSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKMfIAEoBTox",
+            "CgllbnVtZmxhZ3MSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKQf",
+            "IAEoCDovCgd0b29sdGlwEh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9u",
+            "cxilHyABKAk6LgoGaGlkZGVuEh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0",
+            "aW9ucximHyABKAg6OAoQZW51bWZsYWdzaW5kZXhlZBIdLmdvb2dsZS5wcm90",
+            "b2J1Zi5GaWVsZE9wdGlvbnMYpx8gASgIOjQKDGVkaXRhYmxlX2tleRIdLmdv",
+            "b2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYqB8gASgIOjMKC3RyYWNrX2V2",
+            "ZW50Eh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucxipHyABKAg6SgoL",
+            "cG9pbnRfZXZlbnQSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKwf",
+            "IAEoCzIVLkFuYWx5dGljcy5Qb2ludEV2ZW50OkgKCmxpbmVfZXZlbnQSHS5n",
+            "b29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGK0fIAEoCzIULkFuYWx5dGlj",
+            "cy5MaW5lRXZlbnRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { pbr::FileDescriptor.DescriptorProtoFileDescriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Analytics.RedisKeyType), typeof(global::Analytics.PrimitiveType), typeof(global::Analytics.Compression), typeof(global::Analytics.LogType), }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.PointEvent), global::Analytics.PointEvent.Parser, new[]{ "Radius", "Weight" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.LineEvent), global::Analytics.LineEvent.Parser, new[]{ "Radius", "Weight" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.EditorChangeValue), global::Analytics.EditorChangeValue.Parser, new[]{ "MessageType", "FieldName", "Payload" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.EditorChanges), global::Analytics.EditorChanges.Parser, new[]{ "Changes" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RangeF), global::Analytics.RangeF.Parser, new[]{ "Min", "Max" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RangeI), global::Analytics.RangeI.Parser, new[]{ "Min", "Max" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Vec3), global::Analytics.Vec3.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Vec3Color), global::Analytics.Vec3Color.Parser, new[]{ "X", "Y", "Z", "Color" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Vec4), global::Analytics.Vec4.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Line), global::Analytics.Line.Parser, new[]{ "P0", "P1" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Euler), global::Analytics.Euler.Parser, new[]{ "Heading", "Pitch", "Roll" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Material), global::Analytics.Material.Parser, new[]{ "Name", "Contents", "SurfaceFlags", "RenderEvents" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.PrimitiveOptions), global::Analytics.PrimitiveOptions.Parser, new[]{ "PartIndex", "OverrideSurfaceFlags" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Primitive), global::Analytics.Primitive.Parser, new[]{ "Type", "MaterialIndex", "Options", "Size", "Vertices" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Mesh), global::Analytics.Mesh.Parser, new[]{ "Primitives", "Materials", "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.UTCTime), global::Analytics.UTCTime.Parser, new[]{ "Hour", "Minute", "Second", "Day", "Month", "Year" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameInfo), global::Analytics.GameInfo.Parser, new[]{ "TimeStamp", "MapName", "GameName", "GameVersion" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEnum), global::Analytics.GameEnum.Parser, new[]{ "Values", "Enumname", "Isbitfield" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEnum.Types.EnumPair), global::Analytics.GameEnum.Types.EnumPair.Parser, new[]{ "Name", "Value" }, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavNotFound), global::Analytics.GameNavNotFound.Parser, new[]{ "MapName" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavAutoDownloaded), global::Analytics.GameNavAutoDownloaded.Parser, new[]{ "MapName" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameAssert), global::Analytics.GameAssert.Parser, new[]{ "Condition", "File", "Line" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameCrash), global::Analytics.GameCrash.Parser, new[]{ "Info" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameMeshData), global::Analytics.GameMeshData.Parser, new[]{ "CompressionType", "ModelName", "ModelBytes", "ModelBytesUncompressed" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityInfo), global::Analytics.GameEntityInfo.Parser, new[]{ "EntityName", "EntityIndex", "EntitySerial", "GroupId", "ClassId", "Team", "EntityFlags", "Category", "PowerUps", "NavFlags", "EulerRotation", "Position", "EyeOffset", "EyeDir", "Health", "Armor", "BoundsMin", "BoundsMax", "Ammo", "Deleted" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityInfo.Types.Ammo), global::Analytics.GameEntityInfo.Types.Ammo.Parser, new[]{ "AmmoType", "AmmoCount" }, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityPosition), global::Analytics.GameEntityPosition.Parser, new[]{ "Position", "Team" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNode), global::Analytics.GameNode.Parser, new[]{ "NodePath", "EulerRotation", "Translation", "MeshName", "EntityId", "EntityName", "ActiveState", "NavFlagsActive", "NavFlagsOverride", "ShapeMode" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameWeaponFired), global::Analytics.GameWeaponFired.Parser, new[]{ "Position", "AttackTeam", "WeaponId", "FiredByClass" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameDeath), global::Analytics.GameDeath.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "MeansOfDeath" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameKilledSomeone), global::Analytics.GameKilledSomeone.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "MeansOfDeath" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameRecieveDamage), global::Analytics.GameRecieveDamage.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "WeaponId", "DamageType", "DamageAmount" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameInflictDamage), global::Analytics.GameInflictDamage.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "WeaponId", "DamageType", "DamageAmount" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameRadiusDamage), global::Analytics.GameRadiusDamage.Parser, new[]{ "Position", "DamageType", "DamageAmount", "DamageRadius" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavigationStuck), global::Analytics.GameNavigationStuck.Parser, new[]{ "EntityId", "Position" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameVoiceMacro), global::Analytics.GameVoiceMacro.Parser, new[]{ "EntityId", "VoiceMacro", "Position" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameLogMessage), global::Analytics.GameLogMessage.Parser, new[]{ "LogType", "LogMessage", "LogExtraInfo" }, null, null, null)
+          new pbr::FileDescriptor[] { global::Google.Protobuf.Reflection.DescriptorReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Analytics.RedisKeyType), typeof(global::Analytics.PrimitiveType), typeof(global::Analytics.Compression), typeof(global::Analytics.LogType), }, new pb::Extension[] { AnalyticsExtensions.Rediskeytype, AnalyticsExtensions.Redishmsetkey, AnalyticsExtensions.Rediskeysuffix, AnalyticsExtensions.UseJsonEncoding, AnalyticsExtensions.Objectname, AnalyticsExtensions.Enumkey, AnalyticsExtensions.Editable, AnalyticsExtensions.Expires, AnalyticsExtensions.Enumflags, AnalyticsExtensions.Tooltip, AnalyticsExtensions.Hidden, AnalyticsExtensions.Enumflagsindexed, AnalyticsExtensions.EditableKey, AnalyticsExtensions.TrackEvent, AnalyticsExtensions.PointEvent, AnalyticsExtensions.LineEvent }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.PointEvent), global::Analytics.PointEvent.Parser, new[]{ "Radius", "Weight" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.LineEvent), global::Analytics.LineEvent.Parser, new[]{ "Radius", "Weight" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.EditorChangeValue), global::Analytics.EditorChangeValue.Parser, new[]{ "MessageType", "FieldName", "Payload" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.EditorChanges), global::Analytics.EditorChanges.Parser, new[]{ "Changes" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RangeF), global::Analytics.RangeF.Parser, new[]{ "Min", "Max" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RangeI), global::Analytics.RangeI.Parser, new[]{ "Min", "Max" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Pos3), global::Analytics.Pos3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Pos3Color), global::Analytics.Pos3Color.Parser, new[]{ "X", "Y", "Z", "Color" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Vec4), global::Analytics.Vec4.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Line), global::Analytics.Line.Parser, new[]{ "P0", "P1" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Euler), global::Analytics.Euler.Parser, new[]{ "Heading", "Pitch", "Roll" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Material), global::Analytics.Material.Parser, new[]{ "Name", "Contents", "SurfaceFlags", "RenderEvents" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.PrimitiveOptions), global::Analytics.PrimitiveOptions.Parser, new[]{ "PartIndex", "OverrideSurfaceFlags" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Primitive), global::Analytics.Primitive.Parser, new[]{ "Type", "MaterialIndex", "Options", "Size", "Vertices" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Mesh), global::Analytics.Mesh.Parser, new[]{ "Primitives", "Materials", "Name" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.UTCTime), global::Analytics.UTCTime.Parser, new[]{ "Hour", "Minute", "Second", "Day", "Month", "Year" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameInfo), global::Analytics.GameInfo.Parser, new[]{ "MapName", "GameName", "GameVersion" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEnum), global::Analytics.GameEnum.Parser, new[]{ "Values", "Enumname", "Isbitfield" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEnum.Types.EnumPair), global::Analytics.GameEnum.Types.EnumPair.Parser, new[]{ "Name", "Value" }, null, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavNotFound), global::Analytics.GameNavNotFound.Parser, new[]{ "MapName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavAutoDownloaded), global::Analytics.GameNavAutoDownloaded.Parser, new[]{ "MapName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameAssert), global::Analytics.GameAssert.Parser, new[]{ "Condition", "File", "Line" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameCrash), global::Analytics.GameCrash.Parser, new[]{ "Info" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameMeshData), global::Analytics.GameMeshData.Parser, new[]{ "CompressionType", "ModelName", "ModelBytes", "ModelBytesUncompressed" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityInfo), global::Analytics.GameEntityInfo.Parser, new[]{ "EntityId", "EntityName", "Team", "Position", "EulerRotation", "Health", "Mana", "BoundsOrigin", "BoundsExtents" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityDeleted), global::Analytics.GameEntityDeleted.Parser, new[]{ "EntityId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityPosition), global::Analytics.GameEntityPosition.Parser, new[]{ "Position", "Team" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNode), global::Analytics.GameNode.Parser, new[]{ "NodePath", "EulerRotation", "Translation", "MeshName", "EntityId", "EntityName", "ActiveState", "NavFlagsActive", "NavFlagsOverride", "ShapeMode" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameCardSpawned), global::Analytics.GameCardSpawned.Parser, new[]{ "Position", "CardId", "OwnerId", "TeamId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameDeath), global::Analytics.GameDeath.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "MeansOfDeath" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameKilledSomeone), global::Analytics.GameKilledSomeone.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "MeansOfDeath" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameTakeDamage), global::Analytics.GameTakeDamage.Parser, new[]{ "Position", "AttackTeam", "VictimTeam", "DamageAmount", "DamageType", "AttackerType", "VictimType" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameInflictDamage), global::Analytics.GameInflictDamage.Parser, new[]{ "Position", "AttackTeam", "VictimTeam", "DamageAmount", "DamageType", "AttackerType", "VictimType" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameRadiusDamage), global::Analytics.GameRadiusDamage.Parser, new[]{ "Position", "DamageType", "DamageAmount", "DamageRadius" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavigationStuck), global::Analytics.GameNavigationStuck.Parser, new[]{ "EntityId", "Position" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameVoiceMacro), global::Analytics.GameVoiceMacro.Parser, new[]{ "EntityId", "VoiceMacro", "Position" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameLogMessage), global::Analytics.GameLogMessage.Parser, new[]{ "LogType", "LogMessage", "LogExtraInfo" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
+  /// <summary>Holder for extension identifiers generated from the top level of analytics.proto</summary>
+  public static partial class AnalyticsExtensions {
+    /// <summary>
+    /// how this message will be stored in the redis database
+    /// </summary>
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::Analytics.RedisKeyType> Rediskeytype =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::Analytics.RedisKeyType>(5000, pb::FieldCodec.ForEnum(40000, x => (int) x, x => (global::Analytics.RedisKeyType) x, global::Analytics.RedisKeyType.Unknown));
+    /// <summary>
+    /// this suffix may be optionally used when generating the key value for caching the contents of a message, 
+    /// so that multiple types of a given message may be cached, using this suffix prepended to the message type name
+    /// </summary>
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string> Redishmsetkey =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string>(5001, pb::FieldCodec.ForString(40010, ""));
+    /// <summary>
+    /// use a string literal or the value of a field of the message to further uniquify the redis key by appending a key space suffix
+    /// </summary>
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string> Rediskeysuffix =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string>(5002, pb::FieldCodec.ForString(40018, ""));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, bool> UseJsonEncoding =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, bool>(5003, pb::FieldCodec.ForBool(40024, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string> Objectname =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string>(5005, pb::FieldCodec.ForString(40042, ""));
+    /// <summary>
+    /// this associates a field with an set of enumeration data so that values can be mapped to something readable	
+    /// </summary>
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, string> Enumkey =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, string>(4001, pb::FieldCodec.ForString(32010, ""));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool> Editable =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool>(4002, pb::FieldCodec.ForBool(32016, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, int> Expires =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, int>(4003, pb::FieldCodec.ForInt32(32024, 0));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool> Enumflags =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool>(4004, pb::FieldCodec.ForBool(32032, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, string> Tooltip =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, string>(4005, pb::FieldCodec.ForString(32042, ""));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool> Hidden =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool>(4006, pb::FieldCodec.ForBool(32048, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool> Enumflagsindexed =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool>(4007, pb::FieldCodec.ForBool(32056, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool> EditableKey =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool>(4008, pb::FieldCodec.ForBool(32064, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool> TrackEvent =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, bool>(4009, pb::FieldCodec.ForBool(32072, false));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::Analytics.PointEvent> PointEvent =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::Analytics.PointEvent>(4012, pb::FieldCodec.ForMessage(32098, global::Analytics.PointEvent.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::Analytics.LineEvent> LineEvent =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::Analytics.LineEvent>(4013, pb::FieldCodec.ForMessage(32106, global::Analytics.LineEvent.Parser));
+  }
+
   #region Enums
   public enum RedisKeyType {
     [pbr::OriginalName("UNKNOWN")] Unknown = 0,
     [pbr::OriginalName("SET")] Set = 1,
     [pbr::OriginalName("RPUSH")] Rpush = 2,
     [pbr::OriginalName("HMSET")] Hmset = 3,
+    [pbr::OriginalName("HMDEL")] Hmdel = 4,
   }
 
   public enum PrimitiveType {
@@ -1182,11 +1203,11 @@ namespace Analytics {
 
   }
 
-  public sealed partial class Vec3 : pb::IMessage<Vec3> {
-    private static readonly pb::MessageParser<Vec3> _parser = new pb::MessageParser<Vec3>(() => new Vec3());
+  public sealed partial class Pos3 : pb::IMessage<Pos3> {
+    private static readonly pb::MessageParser<Pos3> _parser = new pb::MessageParser<Pos3>(() => new Pos3());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Vec3> Parser { get { return _parser; } }
+    public static pb::MessageParser<Pos3> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1199,14 +1220,14 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Vec3() {
+    public Pos3() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Vec3(Vec3 other) : this() {
+    public Pos3(Pos3 other) : this() {
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
@@ -1214,8 +1235,8 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Vec3 Clone() {
-      return new Vec3(this);
+    public Pos3 Clone() {
+      return new Pos3(this);
     }
 
     /// <summary>Field number for the "x" field.</summary>
@@ -1253,11 +1274,11 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Vec3);
+      return Equals(other as Pos3);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Vec3 other) {
+    public bool Equals(Pos3 other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1325,7 +1346,7 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Vec3 other) {
+    public void MergeFrom(Pos3 other) {
       if (other == null) {
         return;
       }
@@ -1367,11 +1388,11 @@ namespace Analytics {
 
   }
 
-  public sealed partial class Vec3Color : pb::IMessage<Vec3Color> {
-    private static readonly pb::MessageParser<Vec3Color> _parser = new pb::MessageParser<Vec3Color>(() => new Vec3Color());
+  public sealed partial class Pos3Color : pb::IMessage<Pos3Color> {
+    private static readonly pb::MessageParser<Pos3Color> _parser = new pb::MessageParser<Pos3Color>(() => new Pos3Color());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Vec3Color> Parser { get { return _parser; } }
+    public static pb::MessageParser<Pos3Color> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1384,14 +1405,14 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Vec3Color() {
+    public Pos3Color() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Vec3Color(Vec3Color other) : this() {
+    public Pos3Color(Pos3Color other) : this() {
       x_ = other.x_;
       y_ = other.y_;
       z_ = other.z_;
@@ -1400,8 +1421,8 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Vec3Color Clone() {
-      return new Vec3Color(this);
+    public Pos3Color Clone() {
+      return new Pos3Color(this);
     }
 
     /// <summary>Field number for the "x" field.</summary>
@@ -1450,11 +1471,11 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Vec3Color);
+      return Equals(other as Pos3Color);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Vec3Color other) {
+    public bool Equals(Pos3Color other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1531,7 +1552,7 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Vec3Color other) {
+    public void MergeFrom(Pos3Color other) {
       if (other == null) {
         return;
       }
@@ -1830,9 +1851,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "p0" field.</summary>
     public const int P0FieldNumber = 1;
-    private global::Analytics.Vec3 p0_;
+    private global::Analytics.Pos3 p0_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 P0 {
+    public global::Analytics.Pos3 P0 {
       get { return p0_; }
       set {
         p0_ = value;
@@ -1841,9 +1862,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "p1" field.</summary>
     public const int P1FieldNumber = 2;
-    private global::Analytics.Vec3 p1_;
+    private global::Analytics.Pos3 p1_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 P1 {
+    public global::Analytics.Pos3 P1 {
       get { return p1_; }
       set {
         p1_ = value;
@@ -1921,13 +1942,13 @@ namespace Analytics {
       }
       if (other.p0_ != null) {
         if (p0_ == null) {
-          P0 = new global::Analytics.Vec3();
+          P0 = new global::Analytics.Pos3();
         }
         P0.MergeFrom(other.P0);
       }
       if (other.p1_ != null) {
         if (p1_ == null) {
-          P1 = new global::Analytics.Vec3();
+          P1 = new global::Analytics.Pos3();
         }
         P1.MergeFrom(other.P1);
       }
@@ -1944,14 +1965,14 @@ namespace Analytics {
             break;
           case 10: {
             if (p0_ == null) {
-              P0 = new global::Analytics.Vec3();
+              P0 = new global::Analytics.Pos3();
             }
             input.ReadMessage(P0);
             break;
           }
           case 18: {
             if (p1_ == null) {
-              P1 = new global::Analytics.Vec3();
+              P1 = new global::Analytics.Pos3();
             }
             input.ReadMessage(P1);
             break;
@@ -2557,7 +2578,7 @@ namespace Analytics {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 1;
-    private global::Analytics.PrimitiveType type_ = 0;
+    private global::Analytics.PrimitiveType type_ = global::Analytics.PrimitiveType.Triangles;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Analytics.PrimitiveType Type {
       get { return type_; }
@@ -2601,11 +2622,11 @@ namespace Analytics {
 
     /// <summary>Field number for the "vertices" field.</summary>
     public const int VerticesFieldNumber = 5;
-    private static readonly pb::FieldCodec<global::Analytics.Vec3Color> _repeated_vertices_codec
-        = pb::FieldCodec.ForMessage(42, global::Analytics.Vec3Color.Parser);
-    private readonly pbc::RepeatedField<global::Analytics.Vec3Color> vertices_ = new pbc::RepeatedField<global::Analytics.Vec3Color>();
+    private static readonly pb::FieldCodec<global::Analytics.Pos3Color> _repeated_vertices_codec
+        = pb::FieldCodec.ForMessage(42, global::Analytics.Pos3Color.Parser);
+    private readonly pbc::RepeatedField<global::Analytics.Pos3Color> vertices_ = new pbc::RepeatedField<global::Analytics.Pos3Color>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Analytics.Vec3Color> Vertices {
+    public pbc::RepeatedField<global::Analytics.Pos3Color> Vertices {
       get { return vertices_; }
     }
 
@@ -2633,7 +2654,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Type != 0) hash ^= Type.GetHashCode();
+      if (Type != global::Analytics.PrimitiveType.Triangles) hash ^= Type.GetHashCode();
       if (MaterialIndex != 0) hash ^= MaterialIndex.GetHashCode();
       if (options_ != null) hash ^= Options.GetHashCode();
       if (Size != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Size);
@@ -2651,7 +2672,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Type != 0) {
+      if (Type != global::Analytics.PrimitiveType.Triangles) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Type);
       }
@@ -2676,7 +2697,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Type != 0) {
+      if (Type != global::Analytics.PrimitiveType.Triangles) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (MaterialIndex != 0) {
@@ -2700,7 +2721,7 @@ namespace Analytics {
       if (other == null) {
         return;
       }
-      if (other.Type != 0) {
+      if (other.Type != global::Analytics.PrimitiveType.Triangles) {
         Type = other.Type;
       }
       if (other.MaterialIndex != 0) {
@@ -3219,7 +3240,6 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public GameInfo(GameInfo other) : this() {
-      timeStamp_ = other.timeStamp_ != null ? other.timeStamp_.Clone() : null;
       mapName_ = other.mapName_;
       gameName_ = other.gameName_;
       gameVersion_ = other.gameVersion_;
@@ -3231,19 +3251,8 @@ namespace Analytics {
       return new GameInfo(this);
     }
 
-    /// <summary>Field number for the "timeStamp" field.</summary>
-    public const int TimeStampFieldNumber = 1;
-    private global::Analytics.UTCTime timeStamp_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.UTCTime TimeStamp {
-      get { return timeStamp_; }
-      set {
-        timeStamp_ = value;
-      }
-    }
-
     /// <summary>Field number for the "mapName" field.</summary>
-    public const int MapNameFieldNumber = 2;
+    public const int MapNameFieldNumber = 1;
     private string mapName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string MapName {
@@ -3254,7 +3263,7 @@ namespace Analytics {
     }
 
     /// <summary>Field number for the "gameName" field.</summary>
-    public const int GameNameFieldNumber = 3;
+    public const int GameNameFieldNumber = 2;
     private string gameName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string GameName {
@@ -3265,7 +3274,7 @@ namespace Analytics {
     }
 
     /// <summary>Field number for the "gameVersion" field.</summary>
-    public const int GameVersionFieldNumber = 4;
+    public const int GameVersionFieldNumber = 3;
     private string gameVersion_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string GameVersion {
@@ -3288,7 +3297,6 @@ namespace Analytics {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(TimeStamp, other.TimeStamp)) return false;
       if (MapName != other.MapName) return false;
       if (GameName != other.GameName) return false;
       if (GameVersion != other.GameVersion) return false;
@@ -3298,7 +3306,6 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (timeStamp_ != null) hash ^= TimeStamp.GetHashCode();
       if (MapName.Length != 0) hash ^= MapName.GetHashCode();
       if (GameName.Length != 0) hash ^= GameName.GetHashCode();
       if (GameVersion.Length != 0) hash ^= GameVersion.GetHashCode();
@@ -3315,20 +3322,16 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (timeStamp_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(TimeStamp);
-      }
       if (MapName.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteString(MapName);
       }
       if (GameName.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(GameName);
       }
       if (GameVersion.Length != 0) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(26);
         output.WriteString(GameVersion);
       }
       if (_unknownFields != null) {
@@ -3339,9 +3342,6 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (timeStamp_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(TimeStamp);
-      }
       if (MapName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(MapName);
       }
@@ -3361,12 +3361,6 @@ namespace Analytics {
     public void MergeFrom(GameInfo other) {
       if (other == null) {
         return;
-      }
-      if (other.timeStamp_ != null) {
-        if (timeStamp_ == null) {
-          TimeStamp = new global::Analytics.UTCTime();
-        }
-        TimeStamp.MergeFrom(other.TimeStamp);
       }
       if (other.MapName.Length != 0) {
         MapName = other.MapName;
@@ -3389,21 +3383,14 @@ namespace Analytics {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            if (timeStamp_ == null) {
-              TimeStamp = new global::Analytics.UTCTime();
-            }
-            input.ReadMessage(TimeStamp);
-            break;
-          }
-          case 18: {
             MapName = input.ReadString();
             break;
           }
-          case 26: {
+          case 18: {
             GameName = input.ReadString();
             break;
           }
-          case 34: {
+          case 26: {
             GameVersion = input.ReadString();
             break;
           }
@@ -4365,7 +4352,7 @@ namespace Analytics {
 
     /// <summary>Field number for the "compressionType" field.</summary>
     public const int CompressionTypeFieldNumber = 1;
-    private global::Analytics.Compression compressionType_ = 0;
+    private global::Analytics.Compression compressionType_ = global::Analytics.Compression.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Analytics.Compression CompressionType {
       get { return compressionType_; }
@@ -4430,7 +4417,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (CompressionType != 0) hash ^= CompressionType.GetHashCode();
+      if (CompressionType != global::Analytics.Compression.None) hash ^= CompressionType.GetHashCode();
       if (ModelName.Length != 0) hash ^= ModelName.GetHashCode();
       if (ModelBytes.Length != 0) hash ^= ModelBytes.GetHashCode();
       if (ModelBytesUncompressed != 0) hash ^= ModelBytesUncompressed.GetHashCode();
@@ -4447,7 +4434,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (CompressionType != 0) {
+      if (CompressionType != global::Analytics.Compression.None) {
         output.WriteRawTag(8);
         output.WriteEnum((int) CompressionType);
       }
@@ -4471,7 +4458,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (CompressionType != 0) {
+      if (CompressionType != global::Analytics.Compression.None) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) CompressionType);
       }
       if (ModelName.Length != 0) {
@@ -4494,7 +4481,7 @@ namespace Analytics {
       if (other == null) {
         return;
       }
-      if (other.CompressionType != 0) {
+      if (other.CompressionType != global::Analytics.Compression.None) {
         CompressionType = other.CompressionType;
       }
       if (other.ModelName.Length != 0) {
@@ -4564,26 +4551,15 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public GameEntityInfo(GameEntityInfo other) : this() {
+      entityId_ = other.entityId_;
       entityName_ = other.entityName_;
-      entityIndex_ = other.entityIndex_;
-      entitySerial_ = other.entitySerial_;
-      groupId_ = other.groupId_;
-      classId_ = other.classId_;
       team_ = other.team_;
-      entityFlags_ = other.entityFlags_;
-      category_ = other.category_;
-      powerUps_ = other.powerUps_;
-      navFlags_ = other.navFlags_;
-      eulerRotation_ = other.eulerRotation_ != null ? other.eulerRotation_.Clone() : null;
       position_ = other.position_ != null ? other.position_.Clone() : null;
-      eyeOffset_ = other.eyeOffset_ != null ? other.eyeOffset_.Clone() : null;
-      eyeDir_ = other.eyeDir_ != null ? other.eyeDir_.Clone() : null;
+      eulerRotation_ = other.eulerRotation_ != null ? other.eulerRotation_.Clone() : null;
       health_ = other.health_ != null ? other.health_.Clone() : null;
-      armor_ = other.armor_ != null ? other.armor_.Clone() : null;
-      boundsMin_ = other.boundsMin_ != null ? other.boundsMin_.Clone() : null;
-      boundsMax_ = other.boundsMax_ != null ? other.boundsMax_.Clone() : null;
-      ammo_ = other.ammo_.Clone();
-      deleted_ = other.deleted_;
+      mana_ = other.mana_ != null ? other.mana_.Clone() : null;
+      boundsOrigin_ = other.boundsOrigin_ != null ? other.boundsOrigin_.Clone() : null;
+      boundsExtents_ = other.boundsExtents_ != null ? other.boundsExtents_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4592,8 +4568,19 @@ namespace Analytics {
       return new GameEntityInfo(this);
     }
 
+    /// <summary>Field number for the "entityId" field.</summary>
+    public const int EntityIdFieldNumber = 1;
+    private string entityId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string EntityId {
+      get { return entityId_; }
+      set {
+        entityId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "entityName" field.</summary>
-    public const int EntityNameFieldNumber = 1;
+    public const int EntityNameFieldNumber = 2;
     private string entityName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string EntityName {
@@ -4603,52 +4590,8 @@ namespace Analytics {
       }
     }
 
-    /// <summary>Field number for the "entityIndex" field.</summary>
-    public const int EntityIndexFieldNumber = 2;
-    private int entityIndex_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int EntityIndex {
-      get { return entityIndex_; }
-      set {
-        entityIndex_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "entitySerial" field.</summary>
-    public const int EntitySerialFieldNumber = 3;
-    private int entitySerial_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int EntitySerial {
-      get { return entitySerial_; }
-      set {
-        entitySerial_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "groupId" field.</summary>
-    public const int GroupIdFieldNumber = 4;
-    private int groupId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int GroupId {
-      get { return groupId_; }
-      set {
-        groupId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "classId" field.</summary>
-    public const int ClassIdFieldNumber = 5;
-    private int classId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int ClassId {
-      get { return classId_; }
-      set {
-        classId_ = value;
-      }
-    }
-
     /// <summary>Field number for the "team" field.</summary>
-    public const int TeamFieldNumber = 6;
+    public const int TeamFieldNumber = 3;
     private int team_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Team {
@@ -4658,156 +4601,69 @@ namespace Analytics {
       }
     }
 
-    /// <summary>Field number for the "entityFlags" field.</summary>
-    public const int EntityFlagsFieldNumber = 7;
-    private long entityFlags_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long EntityFlags {
-      get { return entityFlags_; }
-      set {
-        entityFlags_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "category" field.</summary>
-    public const int CategoryFieldNumber = 8;
-    private int category_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Category {
-      get { return category_; }
-      set {
-        category_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "powerUps" field.</summary>
-    public const int PowerUpsFieldNumber = 9;
-    private int powerUps_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PowerUps {
-      get { return powerUps_; }
-      set {
-        powerUps_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "navFlags" field.</summary>
-    public const int NavFlagsFieldNumber = 10;
-    private long navFlags_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long NavFlags {
-      get { return navFlags_; }
-      set {
-        navFlags_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "eulerRotation" field.</summary>
-    public const int EulerRotationFieldNumber = 11;
-    private global::Analytics.Vec3 eulerRotation_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 EulerRotation {
-      get { return eulerRotation_; }
-      set {
-        eulerRotation_ = value;
-      }
-    }
-
     /// <summary>Field number for the "position" field.</summary>
-    public const int PositionFieldNumber = 12;
-    private global::Analytics.Vec3 position_;
+    public const int PositionFieldNumber = 4;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
       }
     }
 
-    /// <summary>Field number for the "eyeOffset" field.</summary>
-    public const int EyeOffsetFieldNumber = 13;
-    private global::Analytics.Vec3 eyeOffset_;
+    /// <summary>Field number for the "eulerRotation" field.</summary>
+    public const int EulerRotationFieldNumber = 5;
+    private global::Analytics.Euler eulerRotation_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 EyeOffset {
-      get { return eyeOffset_; }
+    public global::Analytics.Euler EulerRotation {
+      get { return eulerRotation_; }
       set {
-        eyeOffset_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "eyeDir" field.</summary>
-    public const int EyeDirFieldNumber = 14;
-    private global::Analytics.Vec3 eyeDir_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 EyeDir {
-      get { return eyeDir_; }
-      set {
-        eyeDir_ = value;
+        eulerRotation_ = value;
       }
     }
 
     /// <summary>Field number for the "health" field.</summary>
-    public const int HealthFieldNumber = 15;
-    private global::Analytics.RangeI health_;
+    public const int HealthFieldNumber = 6;
+    private global::Analytics.RangeF health_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.RangeI Health {
+    public global::Analytics.RangeF Health {
       get { return health_; }
       set {
         health_ = value;
       }
     }
 
-    /// <summary>Field number for the "armor" field.</summary>
-    public const int ArmorFieldNumber = 16;
-    private global::Analytics.RangeI armor_;
+    /// <summary>Field number for the "mana" field.</summary>
+    public const int ManaFieldNumber = 7;
+    private global::Analytics.RangeF mana_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.RangeI Armor {
-      get { return armor_; }
+    public global::Analytics.RangeF Mana {
+      get { return mana_; }
       set {
-        armor_ = value;
+        mana_ = value;
       }
     }
 
-    /// <summary>Field number for the "boundsMin" field.</summary>
-    public const int BoundsMinFieldNumber = 17;
-    private global::Analytics.Vec3 boundsMin_;
+    /// <summary>Field number for the "boundsOrigin" field.</summary>
+    public const int BoundsOriginFieldNumber = 8;
+    private global::Analytics.Pos3 boundsOrigin_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 BoundsMin {
-      get { return boundsMin_; }
+    public global::Analytics.Pos3 BoundsOrigin {
+      get { return boundsOrigin_; }
       set {
-        boundsMin_ = value;
+        boundsOrigin_ = value;
       }
     }
 
-    /// <summary>Field number for the "boundsMax" field.</summary>
-    public const int BoundsMaxFieldNumber = 18;
-    private global::Analytics.Vec3 boundsMax_;
+    /// <summary>Field number for the "boundsExtents" field.</summary>
+    public const int BoundsExtentsFieldNumber = 9;
+    private global::Analytics.Pos3 boundsExtents_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 BoundsMax {
-      get { return boundsMax_; }
+    public global::Analytics.Pos3 BoundsExtents {
+      get { return boundsExtents_; }
       set {
-        boundsMax_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "ammo" field.</summary>
-    public const int AmmoFieldNumber = 19;
-    private static readonly pb::FieldCodec<global::Analytics.GameEntityInfo.Types.Ammo> _repeated_ammo_codec
-        = pb::FieldCodec.ForMessage(154, global::Analytics.GameEntityInfo.Types.Ammo.Parser);
-    private readonly pbc::RepeatedField<global::Analytics.GameEntityInfo.Types.Ammo> ammo_ = new pbc::RepeatedField<global::Analytics.GameEntityInfo.Types.Ammo>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Analytics.GameEntityInfo.Types.Ammo> Ammo {
-      get { return ammo_; }
-    }
-
-    /// <summary>Field number for the "deleted" field.</summary>
-    public const int DeletedFieldNumber = 1000;
-    private bool deleted_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Deleted {
-      get { return deleted_; }
-      set {
-        deleted_ = value;
+        boundsExtents_ = value;
       }
     }
 
@@ -4824,52 +4680,30 @@ namespace Analytics {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (EntityId != other.EntityId) return false;
       if (EntityName != other.EntityName) return false;
-      if (EntityIndex != other.EntityIndex) return false;
-      if (EntitySerial != other.EntitySerial) return false;
-      if (GroupId != other.GroupId) return false;
-      if (ClassId != other.ClassId) return false;
       if (Team != other.Team) return false;
-      if (EntityFlags != other.EntityFlags) return false;
-      if (Category != other.Category) return false;
-      if (PowerUps != other.PowerUps) return false;
-      if (NavFlags != other.NavFlags) return false;
-      if (!object.Equals(EulerRotation, other.EulerRotation)) return false;
       if (!object.Equals(Position, other.Position)) return false;
-      if (!object.Equals(EyeOffset, other.EyeOffset)) return false;
-      if (!object.Equals(EyeDir, other.EyeDir)) return false;
+      if (!object.Equals(EulerRotation, other.EulerRotation)) return false;
       if (!object.Equals(Health, other.Health)) return false;
-      if (!object.Equals(Armor, other.Armor)) return false;
-      if (!object.Equals(BoundsMin, other.BoundsMin)) return false;
-      if (!object.Equals(BoundsMax, other.BoundsMax)) return false;
-      if(!ammo_.Equals(other.ammo_)) return false;
-      if (Deleted != other.Deleted) return false;
+      if (!object.Equals(Mana, other.Mana)) return false;
+      if (!object.Equals(BoundsOrigin, other.BoundsOrigin)) return false;
+      if (!object.Equals(BoundsExtents, other.BoundsExtents)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (EntityId.Length != 0) hash ^= EntityId.GetHashCode();
       if (EntityName.Length != 0) hash ^= EntityName.GetHashCode();
-      if (EntityIndex != 0) hash ^= EntityIndex.GetHashCode();
-      if (EntitySerial != 0) hash ^= EntitySerial.GetHashCode();
-      if (GroupId != 0) hash ^= GroupId.GetHashCode();
-      if (ClassId != 0) hash ^= ClassId.GetHashCode();
       if (Team != 0) hash ^= Team.GetHashCode();
-      if (EntityFlags != 0L) hash ^= EntityFlags.GetHashCode();
-      if (Category != 0) hash ^= Category.GetHashCode();
-      if (PowerUps != 0) hash ^= PowerUps.GetHashCode();
-      if (NavFlags != 0L) hash ^= NavFlags.GetHashCode();
-      if (eulerRotation_ != null) hash ^= EulerRotation.GetHashCode();
       if (position_ != null) hash ^= Position.GetHashCode();
-      if (eyeOffset_ != null) hash ^= EyeOffset.GetHashCode();
-      if (eyeDir_ != null) hash ^= EyeDir.GetHashCode();
+      if (eulerRotation_ != null) hash ^= EulerRotation.GetHashCode();
       if (health_ != null) hash ^= Health.GetHashCode();
-      if (armor_ != null) hash ^= Armor.GetHashCode();
-      if (boundsMin_ != null) hash ^= BoundsMin.GetHashCode();
-      if (boundsMax_ != null) hash ^= BoundsMax.GetHashCode();
-      hash ^= ammo_.GetHashCode();
-      if (Deleted != false) hash ^= Deleted.GetHashCode();
+      if (mana_ != null) hash ^= Mana.GetHashCode();
+      if (boundsOrigin_ != null) hash ^= BoundsOrigin.GetHashCode();
+      if (boundsExtents_ != null) hash ^= BoundsExtents.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4883,82 +4717,41 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (EntityName.Length != 0) {
+      if (EntityId.Length != 0) {
         output.WriteRawTag(10);
+        output.WriteString(EntityId);
+      }
+      if (EntityName.Length != 0) {
+        output.WriteRawTag(18);
         output.WriteString(EntityName);
       }
-      if (EntityIndex != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(EntityIndex);
-      }
-      if (EntitySerial != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(EntitySerial);
-      }
-      if (GroupId != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(GroupId);
-      }
-      if (ClassId != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(ClassId);
-      }
       if (Team != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(24);
         output.WriteInt32(Team);
       }
-      if (EntityFlags != 0L) {
-        output.WriteRawTag(56);
-        output.WriteInt64(EntityFlags);
-      }
-      if (Category != 0) {
-        output.WriteRawTag(64);
-        output.WriteInt32(Category);
-      }
-      if (PowerUps != 0) {
-        output.WriteRawTag(72);
-        output.WriteInt32(PowerUps);
-      }
-      if (NavFlags != 0L) {
-        output.WriteRawTag(80);
-        output.WriteInt64(NavFlags);
-      }
-      if (eulerRotation_ != null) {
-        output.WriteRawTag(90);
-        output.WriteMessage(EulerRotation);
-      }
       if (position_ != null) {
-        output.WriteRawTag(98);
+        output.WriteRawTag(34);
         output.WriteMessage(Position);
       }
-      if (eyeOffset_ != null) {
-        output.WriteRawTag(106);
-        output.WriteMessage(EyeOffset);
-      }
-      if (eyeDir_ != null) {
-        output.WriteRawTag(114);
-        output.WriteMessage(EyeDir);
+      if (eulerRotation_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(EulerRotation);
       }
       if (health_ != null) {
-        output.WriteRawTag(122);
+        output.WriteRawTag(50);
         output.WriteMessage(Health);
       }
-      if (armor_ != null) {
-        output.WriteRawTag(130, 1);
-        output.WriteMessage(Armor);
+      if (mana_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(Mana);
       }
-      if (boundsMin_ != null) {
-        output.WriteRawTag(138, 1);
-        output.WriteMessage(BoundsMin);
+      if (boundsOrigin_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(BoundsOrigin);
       }
-      if (boundsMax_ != null) {
-        output.WriteRawTag(146, 1);
-        output.WriteMessage(BoundsMax);
-      }
-      ammo_.WriteTo(output, _repeated_ammo_codec);
-      if (Deleted != false) {
-        output.WriteRawTag(192, 62);
-        output.WriteBool(Deleted);
+      if (boundsExtents_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(BoundsExtents);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -4968,63 +4761,32 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (EntityId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityId);
+      }
       if (EntityName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityName);
-      }
-      if (EntityIndex != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EntityIndex);
-      }
-      if (EntitySerial != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EntitySerial);
-      }
-      if (GroupId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(GroupId);
-      }
-      if (ClassId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ClassId);
       }
       if (Team != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Team);
       }
-      if (EntityFlags != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(EntityFlags);
-      }
-      if (Category != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Category);
-      }
-      if (PowerUps != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PowerUps);
-      }
-      if (NavFlags != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(NavFlags);
+      if (position_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
       }
       if (eulerRotation_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(EulerRotation);
       }
-      if (position_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
-      }
-      if (eyeOffset_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(EyeOffset);
-      }
-      if (eyeDir_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(EyeDir);
-      }
       if (health_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Health);
       }
-      if (armor_ != null) {
-        size += 2 + pb::CodedOutputStream.ComputeMessageSize(Armor);
+      if (mana_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Mana);
       }
-      if (boundsMin_ != null) {
-        size += 2 + pb::CodedOutputStream.ComputeMessageSize(BoundsMin);
+      if (boundsOrigin_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(BoundsOrigin);
       }
-      if (boundsMax_ != null) {
-        size += 2 + pb::CodedOutputStream.ComputeMessageSize(BoundsMax);
-      }
-      size += ammo_.CalculateSize(_repeated_ammo_codec);
-      if (Deleted != false) {
-        size += 2 + 1;
+      if (boundsExtents_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(BoundsExtents);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -5037,87 +4799,50 @@ namespace Analytics {
       if (other == null) {
         return;
       }
+      if (other.EntityId.Length != 0) {
+        EntityId = other.EntityId;
+      }
       if (other.EntityName.Length != 0) {
         EntityName = other.EntityName;
-      }
-      if (other.EntityIndex != 0) {
-        EntityIndex = other.EntityIndex;
-      }
-      if (other.EntitySerial != 0) {
-        EntitySerial = other.EntitySerial;
-      }
-      if (other.GroupId != 0) {
-        GroupId = other.GroupId;
-      }
-      if (other.ClassId != 0) {
-        ClassId = other.ClassId;
       }
       if (other.Team != 0) {
         Team = other.Team;
       }
-      if (other.EntityFlags != 0L) {
-        EntityFlags = other.EntityFlags;
-      }
-      if (other.Category != 0) {
-        Category = other.Category;
-      }
-      if (other.PowerUps != 0) {
-        PowerUps = other.PowerUps;
-      }
-      if (other.NavFlags != 0L) {
-        NavFlags = other.NavFlags;
-      }
-      if (other.eulerRotation_ != null) {
-        if (eulerRotation_ == null) {
-          EulerRotation = new global::Analytics.Vec3();
-        }
-        EulerRotation.MergeFrom(other.EulerRotation);
-      }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
-      if (other.eyeOffset_ != null) {
-        if (eyeOffset_ == null) {
-          EyeOffset = new global::Analytics.Vec3();
+      if (other.eulerRotation_ != null) {
+        if (eulerRotation_ == null) {
+          EulerRotation = new global::Analytics.Euler();
         }
-        EyeOffset.MergeFrom(other.EyeOffset);
-      }
-      if (other.eyeDir_ != null) {
-        if (eyeDir_ == null) {
-          EyeDir = new global::Analytics.Vec3();
-        }
-        EyeDir.MergeFrom(other.EyeDir);
+        EulerRotation.MergeFrom(other.EulerRotation);
       }
       if (other.health_ != null) {
         if (health_ == null) {
-          Health = new global::Analytics.RangeI();
+          Health = new global::Analytics.RangeF();
         }
         Health.MergeFrom(other.Health);
       }
-      if (other.armor_ != null) {
-        if (armor_ == null) {
-          Armor = new global::Analytics.RangeI();
+      if (other.mana_ != null) {
+        if (mana_ == null) {
+          Mana = new global::Analytics.RangeF();
         }
-        Armor.MergeFrom(other.Armor);
+        Mana.MergeFrom(other.Mana);
       }
-      if (other.boundsMin_ != null) {
-        if (boundsMin_ == null) {
-          BoundsMin = new global::Analytics.Vec3();
+      if (other.boundsOrigin_ != null) {
+        if (boundsOrigin_ == null) {
+          BoundsOrigin = new global::Analytics.Pos3();
         }
-        BoundsMin.MergeFrom(other.BoundsMin);
+        BoundsOrigin.MergeFrom(other.BoundsOrigin);
       }
-      if (other.boundsMax_ != null) {
-        if (boundsMax_ == null) {
-          BoundsMax = new global::Analytics.Vec3();
+      if (other.boundsExtents_ != null) {
+        if (boundsExtents_ == null) {
+          BoundsExtents = new global::Analytics.Pos3();
         }
-        BoundsMax.MergeFrom(other.BoundsMax);
-      }
-      ammo_.Add(other.ammo_);
-      if (other.Deleted != false) {
-        Deleted = other.Deleted;
+        BoundsExtents.MergeFrom(other.BoundsExtents);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5131,276 +4856,191 @@ namespace Analytics {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
+            EntityId = input.ReadString();
+            break;
+          }
+          case 18: {
             EntityName = input.ReadString();
             break;
           }
-          case 16: {
-            EntityIndex = input.ReadInt32();
-            break;
-          }
           case 24: {
-            EntitySerial = input.ReadInt32();
-            break;
-          }
-          case 32: {
-            GroupId = input.ReadInt32();
-            break;
-          }
-          case 40: {
-            ClassId = input.ReadInt32();
-            break;
-          }
-          case 48: {
             Team = input.ReadInt32();
             break;
           }
-          case 56: {
-            EntityFlags = input.ReadInt64();
-            break;
-          }
-          case 64: {
-            Category = input.ReadInt32();
-            break;
-          }
-          case 72: {
-            PowerUps = input.ReadInt32();
-            break;
-          }
-          case 80: {
-            NavFlags = input.ReadInt64();
-            break;
-          }
-          case 90: {
-            if (eulerRotation_ == null) {
-              EulerRotation = new global::Analytics.Vec3();
-            }
-            input.ReadMessage(EulerRotation);
-            break;
-          }
-          case 98: {
+          case 34: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
           }
-          case 106: {
-            if (eyeOffset_ == null) {
-              EyeOffset = new global::Analytics.Vec3();
+          case 42: {
+            if (eulerRotation_ == null) {
+              EulerRotation = new global::Analytics.Euler();
             }
-            input.ReadMessage(EyeOffset);
+            input.ReadMessage(EulerRotation);
             break;
           }
-          case 114: {
-            if (eyeDir_ == null) {
-              EyeDir = new global::Analytics.Vec3();
-            }
-            input.ReadMessage(EyeDir);
-            break;
-          }
-          case 122: {
+          case 50: {
             if (health_ == null) {
-              Health = new global::Analytics.RangeI();
+              Health = new global::Analytics.RangeF();
             }
             input.ReadMessage(Health);
             break;
           }
-          case 130: {
-            if (armor_ == null) {
-              Armor = new global::Analytics.RangeI();
+          case 58: {
+            if (mana_ == null) {
+              Mana = new global::Analytics.RangeF();
             }
-            input.ReadMessage(Armor);
+            input.ReadMessage(Mana);
             break;
           }
-          case 138: {
-            if (boundsMin_ == null) {
-              BoundsMin = new global::Analytics.Vec3();
+          case 66: {
+            if (boundsOrigin_ == null) {
+              BoundsOrigin = new global::Analytics.Pos3();
             }
-            input.ReadMessage(BoundsMin);
+            input.ReadMessage(BoundsOrigin);
             break;
           }
-          case 146: {
-            if (boundsMax_ == null) {
-              BoundsMax = new global::Analytics.Vec3();
+          case 74: {
+            if (boundsExtents_ == null) {
+              BoundsExtents = new global::Analytics.Pos3();
             }
-            input.ReadMessage(BoundsMax);
-            break;
-          }
-          case 154: {
-            ammo_.AddEntriesFrom(input, _repeated_ammo_codec);
-            break;
-          }
-          case 8000: {
-            Deleted = input.ReadBool();
+            input.ReadMessage(BoundsExtents);
             break;
           }
         }
       }
     }
 
-    #region Nested types
-    /// <summary>Container for nested types declared in the GameEntityInfo message type.</summary>
+  }
+
+  public sealed partial class GameEntityDeleted : pb::IMessage<GameEntityDeleted> {
+    private static readonly pb::MessageParser<GameEntityDeleted> _parser = new pb::MessageParser<GameEntityDeleted>(() => new GameEntityDeleted());
+    private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static partial class Types {
-      public sealed partial class Ammo : pb::IMessage<Ammo> {
-        private static readonly pb::MessageParser<Ammo> _parser = new pb::MessageParser<Ammo>(() => new Ammo());
-        private pb::UnknownFieldSet _unknownFields;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pb::MessageParser<Ammo> Parser { get { return _parser; } }
+    public static pb::MessageParser<GameEntityDeleted> Parser { get { return _parser; } }
 
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pbr::MessageDescriptor Descriptor {
-          get { return global::Analytics.GameEntityInfo.Descriptor.NestedTypes[0]; }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        pbr::MessageDescriptor pb::IMessage.Descriptor {
-          get { return Descriptor; }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Ammo() {
-          OnConstruction();
-        }
-
-        partial void OnConstruction();
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Ammo(Ammo other) : this() {
-          ammoType_ = other.ammoType_;
-          ammoCount_ = other.ammoCount_;
-          _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Ammo Clone() {
-          return new Ammo(this);
-        }
-
-        /// <summary>Field number for the "ammoType" field.</summary>
-        public const int AmmoTypeFieldNumber = 1;
-        private uint ammoType_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public uint AmmoType {
-          get { return ammoType_; }
-          set {
-            ammoType_ = value;
-          }
-        }
-
-        /// <summary>Field number for the "ammoCount" field.</summary>
-        public const int AmmoCountFieldNumber = 2;
-        private uint ammoCount_;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public uint AmmoCount {
-          get { return ammoCount_; }
-          set {
-            ammoCount_ = value;
-          }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override bool Equals(object other) {
-          return Equals(other as Ammo);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public bool Equals(Ammo other) {
-          if (ReferenceEquals(other, null)) {
-            return false;
-          }
-          if (ReferenceEquals(other, this)) {
-            return true;
-          }
-          if (AmmoType != other.AmmoType) return false;
-          if (AmmoCount != other.AmmoCount) return false;
-          return Equals(_unknownFields, other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override int GetHashCode() {
-          int hash = 1;
-          if (AmmoType != 0) hash ^= AmmoType.GetHashCode();
-          if (AmmoCount != 0) hash ^= AmmoCount.GetHashCode();
-          if (_unknownFields != null) {
-            hash ^= _unknownFields.GetHashCode();
-          }
-          return hash;
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override string ToString() {
-          return pb::JsonFormatter.ToDiagnosticString(this);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void WriteTo(pb::CodedOutputStream output) {
-          if (AmmoType != 0) {
-            output.WriteRawTag(8);
-            output.WriteUInt32(AmmoType);
-          }
-          if (AmmoCount != 0) {
-            output.WriteRawTag(16);
-            output.WriteUInt32(AmmoCount);
-          }
-          if (_unknownFields != null) {
-            _unknownFields.WriteTo(output);
-          }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public int CalculateSize() {
-          int size = 0;
-          if (AmmoType != 0) {
-            size += 1 + pb::CodedOutputStream.ComputeUInt32Size(AmmoType);
-          }
-          if (AmmoCount != 0) {
-            size += 1 + pb::CodedOutputStream.ComputeUInt32Size(AmmoCount);
-          }
-          if (_unknownFields != null) {
-            size += _unknownFields.CalculateSize();
-          }
-          return size;
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(Ammo other) {
-          if (other == null) {
-            return;
-          }
-          if (other.AmmoType != 0) {
-            AmmoType = other.AmmoType;
-          }
-          if (other.AmmoCount != 0) {
-            AmmoCount = other.AmmoCount;
-          }
-          _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(pb::CodedInputStream input) {
-          uint tag;
-          while ((tag = input.ReadTag()) != 0) {
-            switch(tag) {
-              default:
-                _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-                break;
-              case 8: {
-                AmmoType = input.ReadUInt32();
-                break;
-              }
-              case 16: {
-                AmmoCount = input.ReadUInt32();
-                break;
-              }
-            }
-          }
-        }
-
-      }
-
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[24]; }
     }
-    #endregion
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GameEntityDeleted() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GameEntityDeleted(GameEntityDeleted other) : this() {
+      entityId_ = other.entityId_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GameEntityDeleted Clone() {
+      return new GameEntityDeleted(this);
+    }
+
+    /// <summary>Field number for the "entityId" field.</summary>
+    public const int EntityIdFieldNumber = 1;
+    private string entityId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string EntityId {
+      get { return entityId_; }
+      set {
+        entityId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GameEntityDeleted);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GameEntityDeleted other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (EntityId != other.EntityId) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (EntityId.Length != 0) hash ^= EntityId.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (EntityId.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(EntityId);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (EntityId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityId);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GameEntityDeleted other) {
+      if (other == null) {
+        return;
+      }
+      if (other.EntityId.Length != 0) {
+        EntityId = other.EntityId;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            EntityId = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
 
   }
 
@@ -5412,7 +5052,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[24]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5441,9 +5081,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
@@ -5532,7 +5172,7 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
@@ -5552,7 +5192,7 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
@@ -5575,7 +5215,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[25]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5623,9 +5263,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "eulerRotation" field.</summary>
     public const int EulerRotationFieldNumber = 2;
-    private global::Analytics.Vec3 eulerRotation_;
+    private global::Analytics.Euler eulerRotation_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 EulerRotation {
+    public global::Analytics.Euler EulerRotation {
       get { return eulerRotation_; }
       set {
         eulerRotation_ = value;
@@ -5634,9 +5274,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "translation" field.</summary>
     public const int TranslationFieldNumber = 3;
-    private global::Analytics.Vec3 translation_;
+    private global::Analytics.Pos3 translation_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Translation {
+    public global::Analytics.Pos3 Translation {
       get { return translation_; }
       set {
         translation_ = value;
@@ -5866,13 +5506,13 @@ namespace Analytics {
       }
       if (other.eulerRotation_ != null) {
         if (eulerRotation_ == null) {
-          EulerRotation = new global::Analytics.Vec3();
+          EulerRotation = new global::Analytics.Euler();
         }
         EulerRotation.MergeFrom(other.EulerRotation);
       }
       if (other.translation_ != null) {
         if (translation_ == null) {
-          Translation = new global::Analytics.Vec3();
+          Translation = new global::Analytics.Pos3();
         }
         Translation.MergeFrom(other.Translation);
       }
@@ -5914,14 +5554,14 @@ namespace Analytics {
           }
           case 18: {
             if (eulerRotation_ == null) {
-              EulerRotation = new global::Analytics.Vec3();
+              EulerRotation = new global::Analytics.Euler();
             }
             input.ReadMessage(EulerRotation);
             break;
           }
           case 26: {
             if (translation_ == null) {
-              Translation = new global::Analytics.Vec3();
+              Translation = new global::Analytics.Pos3();
             }
             input.ReadMessage(Translation);
             break;
@@ -5960,15 +5600,15 @@ namespace Analytics {
 
   }
 
-  public sealed partial class GameWeaponFired : pb::IMessage<GameWeaponFired> {
-    private static readonly pb::MessageParser<GameWeaponFired> _parser = new pb::MessageParser<GameWeaponFired>(() => new GameWeaponFired());
+  public sealed partial class GameCardSpawned : pb::IMessage<GameCardSpawned> {
+    private static readonly pb::MessageParser<GameCardSpawned> _parser = new pb::MessageParser<GameCardSpawned>(() => new GameCardSpawned());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameWeaponFired> Parser { get { return _parser; } }
+    public static pb::MessageParser<GameCardSpawned> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5977,77 +5617,77 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameWeaponFired() {
+    public GameCardSpawned() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameWeaponFired(GameWeaponFired other) : this() {
+    public GameCardSpawned(GameCardSpawned other) : this() {
       position_ = other.position_ != null ? other.position_.Clone() : null;
-      attackTeam_ = other.attackTeam_;
-      weaponId_ = other.weaponId_;
-      firedByClass_ = other.firedByClass_;
+      cardId_ = other.cardId_;
+      ownerId_ = other.ownerId_;
+      teamId_ = other.teamId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameWeaponFired Clone() {
-      return new GameWeaponFired(this);
+    public GameCardSpawned Clone() {
+      return new GameCardSpawned(this);
     }
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
       }
     }
 
-    /// <summary>Field number for the "attackTeam" field.</summary>
-    public const int AttackTeamFieldNumber = 2;
-    private int attackTeam_;
+    /// <summary>Field number for the "cardId" field.</summary>
+    public const int CardIdFieldNumber = 2;
+    private string cardId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int AttackTeam {
-      get { return attackTeam_; }
+    public string CardId {
+      get { return cardId_; }
       set {
-        attackTeam_ = value;
+        cardId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
-    /// <summary>Field number for the "weaponId" field.</summary>
-    public const int WeaponIdFieldNumber = 3;
-    private int weaponId_;
+    /// <summary>Field number for the "ownerId" field.</summary>
+    public const int OwnerIdFieldNumber = 3;
+    private string ownerId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int WeaponId {
-      get { return weaponId_; }
+    public string OwnerId {
+      get { return ownerId_; }
       set {
-        weaponId_ = value;
+        ownerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
-    /// <summary>Field number for the "firedByClass" field.</summary>
-    public const int FiredByClassFieldNumber = 4;
-    private int firedByClass_;
+    /// <summary>Field number for the "teamId" field.</summary>
+    public const int TeamIdFieldNumber = 4;
+    private int teamId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int FiredByClass {
-      get { return firedByClass_; }
+    public int TeamId {
+      get { return teamId_; }
       set {
-        firedByClass_ = value;
+        teamId_ = value;
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GameWeaponFired);
+      return Equals(other as GameCardSpawned);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameWeaponFired other) {
+    public bool Equals(GameCardSpawned other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -6055,9 +5695,9 @@ namespace Analytics {
         return true;
       }
       if (!object.Equals(Position, other.Position)) return false;
-      if (AttackTeam != other.AttackTeam) return false;
-      if (WeaponId != other.WeaponId) return false;
-      if (FiredByClass != other.FiredByClass) return false;
+      if (CardId != other.CardId) return false;
+      if (OwnerId != other.OwnerId) return false;
+      if (TeamId != other.TeamId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6065,9 +5705,9 @@ namespace Analytics {
     public override int GetHashCode() {
       int hash = 1;
       if (position_ != null) hash ^= Position.GetHashCode();
-      if (AttackTeam != 0) hash ^= AttackTeam.GetHashCode();
-      if (WeaponId != 0) hash ^= WeaponId.GetHashCode();
-      if (FiredByClass != 0) hash ^= FiredByClass.GetHashCode();
+      if (CardId.Length != 0) hash ^= CardId.GetHashCode();
+      if (OwnerId.Length != 0) hash ^= OwnerId.GetHashCode();
+      if (TeamId != 0) hash ^= TeamId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6085,17 +5725,17 @@ namespace Analytics {
         output.WriteRawTag(10);
         output.WriteMessage(Position);
       }
-      if (AttackTeam != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(AttackTeam);
+      if (CardId.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(CardId);
       }
-      if (WeaponId != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(WeaponId);
+      if (OwnerId.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(OwnerId);
       }
-      if (FiredByClass != 0) {
+      if (TeamId != 0) {
         output.WriteRawTag(32);
-        output.WriteInt32(FiredByClass);
+        output.WriteInt32(TeamId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -6108,14 +5748,14 @@ namespace Analytics {
       if (position_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
       }
-      if (AttackTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackTeam);
+      if (CardId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(CardId);
       }
-      if (WeaponId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(WeaponId);
+      if (OwnerId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OwnerId);
       }
-      if (FiredByClass != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FiredByClass);
+      if (TeamId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(TeamId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6124,24 +5764,24 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameWeaponFired other) {
+    public void MergeFrom(GameCardSpawned other) {
       if (other == null) {
         return;
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
-      if (other.AttackTeam != 0) {
-        AttackTeam = other.AttackTeam;
+      if (other.CardId.Length != 0) {
+        CardId = other.CardId;
       }
-      if (other.WeaponId != 0) {
-        WeaponId = other.WeaponId;
+      if (other.OwnerId.Length != 0) {
+        OwnerId = other.OwnerId;
       }
-      if (other.FiredByClass != 0) {
-        FiredByClass = other.FiredByClass;
+      if (other.TeamId != 0) {
+        TeamId = other.TeamId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6156,21 +5796,21 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
           }
-          case 16: {
-            AttackTeam = input.ReadInt32();
+          case 18: {
+            CardId = input.ReadString();
             break;
           }
-          case 24: {
-            WeaponId = input.ReadInt32();
+          case 26: {
+            OwnerId = input.ReadString();
             break;
           }
           case 32: {
-            FiredByClass = input.ReadInt32();
+            TeamId = input.ReadInt32();
             break;
           }
         }
@@ -6187,7 +5827,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6218,9 +5858,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
@@ -6349,7 +5989,7 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
@@ -6375,7 +6015,7 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
@@ -6406,7 +6046,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6437,9 +6077,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
@@ -6568,7 +6208,7 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
@@ -6594,7 +6234,7 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
@@ -6617,15 +6257,15 @@ namespace Analytics {
 
   }
 
-  public sealed partial class GameRecieveDamage : pb::IMessage<GameRecieveDamage> {
-    private static readonly pb::MessageParser<GameRecieveDamage> _parser = new pb::MessageParser<GameRecieveDamage>(() => new GameRecieveDamage());
+  public sealed partial class GameTakeDamage : pb::IMessage<GameTakeDamage> {
+    private static readonly pb::MessageParser<GameTakeDamage> _parser = new pb::MessageParser<GameTakeDamage>(() => new GameTakeDamage());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameRecieveDamage> Parser { get { return _parser; } }
+    public static pb::MessageParser<GameTakeDamage> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6634,52 +6274,42 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameRecieveDamage() {
+    public GameTakeDamage() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameRecieveDamage(GameRecieveDamage other) : this() {
+    public GameTakeDamage(GameTakeDamage other) : this() {
       position_ = other.position_ != null ? other.position_.Clone() : null;
-      victimTeam_ = other.victimTeam_;
       attackTeam_ = other.attackTeam_;
-      weaponId_ = other.weaponId_;
-      damageType_ = other.damageType_;
+      victimTeam_ = other.victimTeam_;
       damageAmount_ = other.damageAmount_;
+      damageType_ = other.damageType_;
+      attackerType_ = other.attackerType_;
+      victimType_ = other.victimType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameRecieveDamage Clone() {
-      return new GameRecieveDamage(this);
+    public GameTakeDamage Clone() {
+      return new GameTakeDamage(this);
     }
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
       }
     }
 
-    /// <summary>Field number for the "victimTeam" field.</summary>
-    public const int VictimTeamFieldNumber = 2;
-    private int victimTeam_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int VictimTeam {
-      get { return victimTeam_; }
-      set {
-        victimTeam_ = value;
-      }
-    }
-
     /// <summary>Field number for the "attackTeam" field.</summary>
-    public const int AttackTeamFieldNumber = 3;
+    public const int AttackTeamFieldNumber = 2;
     private int attackTeam_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int AttackTeam {
@@ -6689,14 +6319,25 @@ namespace Analytics {
       }
     }
 
-    /// <summary>Field number for the "weaponId" field.</summary>
-    public const int WeaponIdFieldNumber = 4;
-    private int weaponId_;
+    /// <summary>Field number for the "victimTeam" field.</summary>
+    public const int VictimTeamFieldNumber = 3;
+    private int victimTeam_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int WeaponId {
-      get { return weaponId_; }
+    public int VictimTeam {
+      get { return victimTeam_; }
       set {
-        weaponId_ = value;
+        victimTeam_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "damageAmount" field.</summary>
+    public const int DamageAmountFieldNumber = 4;
+    private float damageAmount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float DamageAmount {
+      get { return damageAmount_; }
+      set {
+        damageAmount_ = value;
       }
     }
 
@@ -6711,24 +6352,35 @@ namespace Analytics {
       }
     }
 
-    /// <summary>Field number for the "damageAmount" field.</summary>
-    public const int DamageAmountFieldNumber = 6;
-    private float damageAmount_;
+    /// <summary>Field number for the "attackerType" field.</summary>
+    public const int AttackerTypeFieldNumber = 6;
+    private string attackerType_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float DamageAmount {
-      get { return damageAmount_; }
+    public string AttackerType {
+      get { return attackerType_; }
       set {
-        damageAmount_ = value;
+        attackerType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "victimType" field.</summary>
+    public const int VictimTypeFieldNumber = 7;
+    private string victimType_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string VictimType {
+      get { return victimType_; }
+      set {
+        victimType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GameRecieveDamage);
+      return Equals(other as GameTakeDamage);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameRecieveDamage other) {
+    public bool Equals(GameTakeDamage other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -6736,11 +6388,12 @@ namespace Analytics {
         return true;
       }
       if (!object.Equals(Position, other.Position)) return false;
-      if (VictimTeam != other.VictimTeam) return false;
       if (AttackTeam != other.AttackTeam) return false;
-      if (WeaponId != other.WeaponId) return false;
-      if (DamageType != other.DamageType) return false;
+      if (VictimTeam != other.VictimTeam) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(DamageAmount, other.DamageAmount)) return false;
+      if (DamageType != other.DamageType) return false;
+      if (AttackerType != other.AttackerType) return false;
+      if (VictimType != other.VictimType) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6748,11 +6401,12 @@ namespace Analytics {
     public override int GetHashCode() {
       int hash = 1;
       if (position_ != null) hash ^= Position.GetHashCode();
-      if (VictimTeam != 0) hash ^= VictimTeam.GetHashCode();
       if (AttackTeam != 0) hash ^= AttackTeam.GetHashCode();
-      if (WeaponId != 0) hash ^= WeaponId.GetHashCode();
-      if (DamageType.Length != 0) hash ^= DamageType.GetHashCode();
+      if (VictimTeam != 0) hash ^= VictimTeam.GetHashCode();
       if (DamageAmount != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(DamageAmount);
+      if (DamageType.Length != 0) hash ^= DamageType.GetHashCode();
+      if (AttackerType.Length != 0) hash ^= AttackerType.GetHashCode();
+      if (VictimType.Length != 0) hash ^= VictimType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6770,25 +6424,29 @@ namespace Analytics {
         output.WriteRawTag(10);
         output.WriteMessage(Position);
       }
-      if (VictimTeam != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(VictimTeam);
-      }
       if (AttackTeam != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(16);
         output.WriteInt32(AttackTeam);
       }
-      if (WeaponId != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(WeaponId);
+      if (VictimTeam != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(VictimTeam);
+      }
+      if (DamageAmount != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(DamageAmount);
       }
       if (DamageType.Length != 0) {
         output.WriteRawTag(42);
         output.WriteString(DamageType);
       }
-      if (DamageAmount != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(DamageAmount);
+      if (AttackerType.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(AttackerType);
+      }
+      if (VictimType.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(VictimType);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -6801,20 +6459,23 @@ namespace Analytics {
       if (position_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
       }
-      if (VictimTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VictimTeam);
-      }
       if (AttackTeam != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackTeam);
       }
-      if (WeaponId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(WeaponId);
+      if (VictimTeam != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VictimTeam);
+      }
+      if (DamageAmount != 0F) {
+        size += 1 + 4;
       }
       if (DamageType.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DamageType);
       }
-      if (DamageAmount != 0F) {
-        size += 1 + 4;
+      if (AttackerType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(AttackerType);
+      }
+      if (VictimType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(VictimType);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6823,30 +6484,33 @@ namespace Analytics {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameRecieveDamage other) {
+    public void MergeFrom(GameTakeDamage other) {
       if (other == null) {
         return;
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
-      }
-      if (other.VictimTeam != 0) {
-        VictimTeam = other.VictimTeam;
       }
       if (other.AttackTeam != 0) {
         AttackTeam = other.AttackTeam;
       }
-      if (other.WeaponId != 0) {
-        WeaponId = other.WeaponId;
+      if (other.VictimTeam != 0) {
+        VictimTeam = other.VictimTeam;
+      }
+      if (other.DamageAmount != 0F) {
+        DamageAmount = other.DamageAmount;
       }
       if (other.DamageType.Length != 0) {
         DamageType = other.DamageType;
       }
-      if (other.DamageAmount != 0F) {
-        DamageAmount = other.DamageAmount;
+      if (other.AttackerType.Length != 0) {
+        AttackerType = other.AttackerType;
+      }
+      if (other.VictimType.Length != 0) {
+        VictimType = other.VictimType;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6861,29 +6525,33 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
           }
           case 16: {
-            VictimTeam = input.ReadInt32();
-            break;
-          }
-          case 24: {
             AttackTeam = input.ReadInt32();
             break;
           }
-          case 32: {
-            WeaponId = input.ReadInt32();
+          case 24: {
+            VictimTeam = input.ReadInt32();
+            break;
+          }
+          case 37: {
+            DamageAmount = input.ReadFloat();
             break;
           }
           case 42: {
             DamageType = input.ReadString();
             break;
           }
-          case 53: {
-            DamageAmount = input.ReadFloat();
+          case 50: {
+            AttackerType = input.ReadString();
+            break;
+          }
+          case 58: {
+            VictimType = input.ReadString();
             break;
           }
         }
@@ -6900,7 +6568,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6918,11 +6586,12 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public GameInflictDamage(GameInflictDamage other) : this() {
       position_ = other.position_ != null ? other.position_.Clone() : null;
-      victimTeam_ = other.victimTeam_;
       attackTeam_ = other.attackTeam_;
-      weaponId_ = other.weaponId_;
-      damageType_ = other.damageType_;
+      victimTeam_ = other.victimTeam_;
       damageAmount_ = other.damageAmount_;
+      damageType_ = other.damageType_;
+      attackerType_ = other.attackerType_;
+      victimType_ = other.victimType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -6933,28 +6602,17 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
       }
     }
 
-    /// <summary>Field number for the "victimTeam" field.</summary>
-    public const int VictimTeamFieldNumber = 2;
-    private int victimTeam_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int VictimTeam {
-      get { return victimTeam_; }
-      set {
-        victimTeam_ = value;
-      }
-    }
-
     /// <summary>Field number for the "attackTeam" field.</summary>
-    public const int AttackTeamFieldNumber = 3;
+    public const int AttackTeamFieldNumber = 2;
     private int attackTeam_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int AttackTeam {
@@ -6964,14 +6622,25 @@ namespace Analytics {
       }
     }
 
-    /// <summary>Field number for the "weaponId" field.</summary>
-    public const int WeaponIdFieldNumber = 4;
-    private int weaponId_;
+    /// <summary>Field number for the "victimTeam" field.</summary>
+    public const int VictimTeamFieldNumber = 3;
+    private int victimTeam_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int WeaponId {
-      get { return weaponId_; }
+    public int VictimTeam {
+      get { return victimTeam_; }
       set {
-        weaponId_ = value;
+        victimTeam_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "damageAmount" field.</summary>
+    public const int DamageAmountFieldNumber = 4;
+    private float damageAmount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float DamageAmount {
+      get { return damageAmount_; }
+      set {
+        damageAmount_ = value;
       }
     }
 
@@ -6986,14 +6655,25 @@ namespace Analytics {
       }
     }
 
-    /// <summary>Field number for the "damageAmount" field.</summary>
-    public const int DamageAmountFieldNumber = 6;
-    private float damageAmount_;
+    /// <summary>Field number for the "attackerType" field.</summary>
+    public const int AttackerTypeFieldNumber = 6;
+    private string attackerType_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float DamageAmount {
-      get { return damageAmount_; }
+    public string AttackerType {
+      get { return attackerType_; }
       set {
-        damageAmount_ = value;
+        attackerType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "victimType" field.</summary>
+    public const int VictimTypeFieldNumber = 7;
+    private string victimType_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string VictimType {
+      get { return victimType_; }
+      set {
+        victimType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -7011,11 +6691,12 @@ namespace Analytics {
         return true;
       }
       if (!object.Equals(Position, other.Position)) return false;
-      if (VictimTeam != other.VictimTeam) return false;
       if (AttackTeam != other.AttackTeam) return false;
-      if (WeaponId != other.WeaponId) return false;
-      if (DamageType != other.DamageType) return false;
+      if (VictimTeam != other.VictimTeam) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(DamageAmount, other.DamageAmount)) return false;
+      if (DamageType != other.DamageType) return false;
+      if (AttackerType != other.AttackerType) return false;
+      if (VictimType != other.VictimType) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -7023,11 +6704,12 @@ namespace Analytics {
     public override int GetHashCode() {
       int hash = 1;
       if (position_ != null) hash ^= Position.GetHashCode();
-      if (VictimTeam != 0) hash ^= VictimTeam.GetHashCode();
       if (AttackTeam != 0) hash ^= AttackTeam.GetHashCode();
-      if (WeaponId != 0) hash ^= WeaponId.GetHashCode();
-      if (DamageType.Length != 0) hash ^= DamageType.GetHashCode();
+      if (VictimTeam != 0) hash ^= VictimTeam.GetHashCode();
       if (DamageAmount != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(DamageAmount);
+      if (DamageType.Length != 0) hash ^= DamageType.GetHashCode();
+      if (AttackerType.Length != 0) hash ^= AttackerType.GetHashCode();
+      if (VictimType.Length != 0) hash ^= VictimType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -7045,25 +6727,29 @@ namespace Analytics {
         output.WriteRawTag(10);
         output.WriteMessage(Position);
       }
-      if (VictimTeam != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(VictimTeam);
-      }
       if (AttackTeam != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(16);
         output.WriteInt32(AttackTeam);
       }
-      if (WeaponId != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(WeaponId);
+      if (VictimTeam != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(VictimTeam);
+      }
+      if (DamageAmount != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(DamageAmount);
       }
       if (DamageType.Length != 0) {
         output.WriteRawTag(42);
         output.WriteString(DamageType);
       }
-      if (DamageAmount != 0F) {
-        output.WriteRawTag(53);
-        output.WriteFloat(DamageAmount);
+      if (AttackerType.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(AttackerType);
+      }
+      if (VictimType.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(VictimType);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -7076,20 +6762,23 @@ namespace Analytics {
       if (position_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
       }
-      if (VictimTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VictimTeam);
-      }
       if (AttackTeam != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackTeam);
       }
-      if (WeaponId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(WeaponId);
+      if (VictimTeam != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VictimTeam);
+      }
+      if (DamageAmount != 0F) {
+        size += 1 + 4;
       }
       if (DamageType.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DamageType);
       }
-      if (DamageAmount != 0F) {
-        size += 1 + 4;
+      if (AttackerType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(AttackerType);
+      }
+      if (VictimType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(VictimType);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -7104,24 +6793,27 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
-      }
-      if (other.VictimTeam != 0) {
-        VictimTeam = other.VictimTeam;
       }
       if (other.AttackTeam != 0) {
         AttackTeam = other.AttackTeam;
       }
-      if (other.WeaponId != 0) {
-        WeaponId = other.WeaponId;
+      if (other.VictimTeam != 0) {
+        VictimTeam = other.VictimTeam;
+      }
+      if (other.DamageAmount != 0F) {
+        DamageAmount = other.DamageAmount;
       }
       if (other.DamageType.Length != 0) {
         DamageType = other.DamageType;
       }
-      if (other.DamageAmount != 0F) {
-        DamageAmount = other.DamageAmount;
+      if (other.AttackerType.Length != 0) {
+        AttackerType = other.AttackerType;
+      }
+      if (other.VictimType.Length != 0) {
+        VictimType = other.VictimType;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -7136,29 +6828,33 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
           }
           case 16: {
-            VictimTeam = input.ReadInt32();
-            break;
-          }
-          case 24: {
             AttackTeam = input.ReadInt32();
             break;
           }
-          case 32: {
-            WeaponId = input.ReadInt32();
+          case 24: {
+            VictimTeam = input.ReadInt32();
+            break;
+          }
+          case 37: {
+            DamageAmount = input.ReadFloat();
             break;
           }
           case 42: {
             DamageType = input.ReadString();
             break;
           }
-          case 53: {
-            DamageAmount = input.ReadFloat();
+          case 50: {
+            AttackerType = input.ReadString();
+            break;
+          }
+          case 58: {
+            VictimType = input.ReadString();
             break;
           }
         }
@@ -7175,7 +6871,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[31]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7206,9 +6902,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 1;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
@@ -7337,7 +7033,7 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
@@ -7363,7 +7059,7 @@ namespace Analytics {
             break;
           case 10: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
@@ -7394,7 +7090,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7434,9 +7130,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 2;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
@@ -7517,7 +7213,7 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
@@ -7538,7 +7234,7 @@ namespace Analytics {
           }
           case 18: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
@@ -7557,7 +7253,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[33]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7609,9 +7305,9 @@ namespace Analytics {
 
     /// <summary>Field number for the "position" field.</summary>
     public const int PositionFieldNumber = 3;
-    private global::Analytics.Vec3 position_;
+    private global::Analytics.Pos3 position_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Vec3 Position {
+    public global::Analytics.Pos3 Position {
       get { return position_; }
       set {
         position_ = value;
@@ -7704,7 +7400,7 @@ namespace Analytics {
       }
       if (other.position_ != null) {
         if (position_ == null) {
-          Position = new global::Analytics.Vec3();
+          Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
       }
@@ -7729,7 +7425,7 @@ namespace Analytics {
           }
           case 26: {
             if (position_ == null) {
-              Position = new global::Analytics.Vec3();
+              Position = new global::Analytics.Pos3();
             }
             input.ReadMessage(Position);
             break;
@@ -7748,7 +7444,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[34]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7778,7 +7474,7 @@ namespace Analytics {
 
     /// <summary>Field number for the "logType" field.</summary>
     public const int LogTypeFieldNumber = 1;
-    private global::Analytics.LogType logType_ = 0;
+    private global::Analytics.LogType logType_ = global::Analytics.LogType.Log;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Analytics.LogType LogType {
       get { return logType_; }
@@ -7831,7 +7527,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (LogType != 0) hash ^= LogType.GetHashCode();
+      if (LogType != global::Analytics.LogType.Log) hash ^= LogType.GetHashCode();
       if (LogMessage.Length != 0) hash ^= LogMessage.GetHashCode();
       if (LogExtraInfo.Length != 0) hash ^= LogExtraInfo.GetHashCode();
       if (_unknownFields != null) {
@@ -7847,7 +7543,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (LogType != 0) {
+      if (LogType != global::Analytics.LogType.Log) {
         output.WriteRawTag(8);
         output.WriteEnum((int) LogType);
       }
@@ -7867,7 +7563,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (LogType != 0) {
+      if (LogType != global::Analytics.LogType.Log) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) LogType);
       }
       if (LogMessage.Length != 0) {
@@ -7887,7 +7583,7 @@ namespace Analytics {
       if (other == null) {
         return;
       }
-      if (other.LogType != 0) {
+      if (other.LogType != global::Analytics.LogType.Log) {
         LogType = other.LogType;
       }
       if (other.LogMessage.Length != 0) {

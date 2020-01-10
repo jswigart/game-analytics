@@ -22,46 +22,45 @@ public class GameAnalyticsEntity : MonoBehaviour
     {
         CachedInfo = info;
         
-        transform.eulerAngles = new Vector3(info.EulerRotation.X, info.EulerRotation.Y, info.EulerRotation.Z);
+        transform.eulerAngles = new Vector3(info.EulerRotation.Heading, info.EulerRotation.Pitch, info.EulerRotation.Roll);
         transform.position = new Vector3(info.Position.X, info.Position.Y, info.Position.Z);
 
-        if(info.EyeOffset != null || info.EyeDir != null)
-        {
-            if(_eye == null)
-            {
-                _eye = new GameObject("eye");
-                _eye.transform.parent = transform;
-                _eye.transform.localPosition = Vector3.zero;
-                _eye.transform.localRotation = Quaternion.identity;
-                _eye.transform.localScale = Vector3.one;
-            }
+        //if(info.EyeOffset != null || info.EyeDir != null)
+        //{
+        //    if(_eye == null)
+        //    {
+        //        _eye = new GameObject("eye");
+        //        _eye.transform.parent = transform;
+        //        _eye.transform.localPosition = Vector3.zero;
+        //        _eye.transform.localRotation = Quaternion.identity;
+        //        _eye.transform.localScale = Vector3.one;
+        //    }
 
-            if(info.EyeOffset != null)
-                _eye.transform.localPosition = new Vector3(info.EyeOffset.X, info.EyeOffset.Z, info.EyeOffset.Y);
-            if(info.EyeDir != null)
-            {
-                _eye.transform.rotation = Quaternion.LookRotation(new Vector3(info.EyeDir.X, info.EyeDir.Z, info.EyeDir.Y), transform.up);
-            }
-        }
+        //    if(info.EyeOffset != null)
+        //        _eye.transform.localPosition = new Vector3(info.EyeOffset.X, info.EyeOffset.Z, info.EyeOffset.Y);
+        //    if(info.EyeDir != null)
+        //    {
+        //        _eye.transform.rotation = Quaternion.LookRotation(new Vector3(info.EyeDir.X, info.EyeDir.Z, info.EyeDir.Y), transform.up);
+        //    }
+        //}
         
         if (_primitive == null)
         {
             _primitive = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            _primitive.transform.parent = transform;
+            _primitive.transform.SetParent(transform, false);
+            _primitive.transform.localPosition = Vector3.zero;
             _primitive.transform.localRotation = Quaternion.identity;
         }
 
         // update bounds representation
 
         // swizzle for coordinate system
-        if(CachedInfo.BoundsMin != null)
+        if(CachedInfo.BoundsOrigin != null && CachedInfo.BoundsExtents != null)
         {
-            Vector3 mins = new Vector3(CachedInfo.BoundsMin.X, CachedInfo.BoundsMin.Y, CachedInfo.BoundsMin.Z);
-            Vector3 maxs = new Vector3(CachedInfo.BoundsMax.X, CachedInfo.BoundsMax.Y, CachedInfo.BoundsMax.Z);
-            Vector3 extents = maxs - mins;
+            Vector3 extents = new Vector3(CachedInfo.BoundsExtents.X, CachedInfo.BoundsExtents.Y, CachedInfo.BoundsExtents.Z);
 
-            _primitive.transform.localPosition = (maxs + mins) * 0.5f;
-            _primitive.transform.localScale = new Vector3(extents.x, extents.y, extents.z);
+            _primitive.transform.localPosition = Vector3.zero;
+            _primitive.transform.localScale = extents;
 
             //if(_textMeshPro == null)
             //{

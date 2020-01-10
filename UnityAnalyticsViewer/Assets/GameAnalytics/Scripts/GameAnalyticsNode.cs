@@ -26,9 +26,9 @@ public class GameAnalyticsNode : MonoBehaviour
         }
 
         if (node.EulerRotation != null)
-            transform.eulerAngles = new Vector3(node.EulerRotation.X, node.EulerRotation.Y, node.EulerRotation.Z);
+            transform.eulerAngles = new Vector3(node.EulerRotation.Heading, node.EulerRotation.Pitch, node.EulerRotation.Roll);
         if (node.Translation != null)
-            transform.position = new Vector3(node.Translation.X, node.Translation.Z, node.Translation.Y);
+            transform.position = new Vector3(node.Translation.X, node.Translation.Y, node.Translation.Z);
     }
 
     DateTime _modelTime = DateTime.UtcNow - TimeSpan.FromDays(1);
@@ -52,7 +52,7 @@ public class GameAnalyticsNode : MonoBehaviour
             if (!MeshNodes.TryGetValue(mdlNode.MeshName, out meshGo))
             {
                 meshGo = new GameObject("mesh");
-                meshGo.transform.parent = transform;
+                meshGo.transform.SetParent(transform, false);
                 MeshNodes.Add(mdlNode.MeshName, meshGo);
             }
 
@@ -69,7 +69,7 @@ public class GameAnalyticsNode : MonoBehaviour
 
                         GameObject go = new GameObject("lines_"+l, typeof(LineRenderer));
                         go.name = "lines_" + l;
-                        go.transform.parent = meshGo.transform;
+                        go.transform.SetParent(meshGo.transform, false);
                         go.transform.localPosition = Vector3.zero;
                         go.transform.localRotation = Quaternion.identity;
                         go.transform.localScale = Vector3.one;
@@ -96,7 +96,7 @@ public class GameAnalyticsNode : MonoBehaviour
                     foreach(var m in submesh.meshes)
                     {
                         GameObject go = new GameObject(m.name, typeof(MeshFilter), typeof(MeshRenderer), typeof(GameAnalyticsMesh));
-                        go.transform.parent = meshGo.transform;
+                        go.transform.SetParent(meshGo.transform, false);
                         go.transform.localPosition = Vector3.zero;
                         go.transform.localRotation = Quaternion.identity;
                         go.transform.localScale = Vector3.one;

@@ -11,7 +11,7 @@ public partial class GameAnalytics : MonoBehaviour
     public string[] AllEventStreams { get; protected set; }
     
     Dictionary<string, GameAnalyticsNode> SceneNodes = new Dictionary<string, GameAnalyticsNode>();
-    Dictionary<int, GameAnalyticsEntity> EntityNodes = new Dictionary<int, GameAnalyticsEntity>();
+    Dictionary<string, GameAnalyticsEntity> EntityNodes = new Dictionary<string, GameAnalyticsEntity>();
     
     public static GameAnalytics Instance { get; protected set; }
 

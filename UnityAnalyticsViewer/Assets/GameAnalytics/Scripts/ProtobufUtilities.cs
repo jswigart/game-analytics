@@ -42,7 +42,7 @@ public static class ProtobufUtilities
             }
 
             bool editable_key;
-            if (!field.CustomOptions.TryGetBool(Analytics.Extensions.EditableKeyFieldNumber, out editable_key) || !editable_key)
+            if (!field.TryGetOption<bool>(Analytics.AnalyticsExtensions.EditableKey, out editable_key) || !editable_key)
             {
                 field.Accessor.Clear(modifiedMessage);
             }
@@ -63,7 +63,7 @@ public static class ProtobufUtilities
         foreach (var field in message.Descriptor.Fields.InDeclarationOrder())
         {
             bool hidden;
-            if (field.CustomOptions.TryGetBool(Analytics.Extensions.HiddenFieldNumber, out hidden) && hidden)
+            if (field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Hidden, out hidden) && hidden)
                 continue;
 
             // found the field that this change applies to
@@ -232,7 +232,7 @@ public static class ProtobufUtilities
         List<KeyValuePair<string, long>> evalues = null;
 
         string enumKey;
-        if (field.CustomOptions.TryGetString(Analytics.Extensions.EnumkeyFieldNumber, out enumKey))
+        if (field.TryGetOption<string>(Analytics.AnalyticsExtensions.Enumkey, out enumKey))
         {
             GameAnalytics.EnumMap.TryGetValue(enumKey, out evalues);
         }
@@ -240,11 +240,11 @@ public static class ProtobufUtilities
         EnumType enumType = EnumType.SelectOne;
 
         bool b = false;
-        if (field.CustomOptions.TryGetBool(Analytics.Extensions.EnumflagsFieldNumber, out b) && b)
+        if (field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Enumflags, out b) && b)
         {
             enumType = EnumType.Masked;
         }
-        else if (field.CustomOptions.TryGetBool(Analytics.Extensions.EnumflagsindexedFieldNumber, out b) && b)
+        else if (field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Enumflagsindexed, out b) && b)
         {
             enumType = EnumType.Indexed;
         }
@@ -431,21 +431,21 @@ public static class ProtobufUtilities
         foreach (var field in message.Descriptor.Fields.InDeclarationOrder())
         {
             bool hidden;
-            if (field.CustomOptions.TryGetBool(Analytics.Extensions.HiddenFieldNumber, out hidden) && hidden)
+            if (field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Hidden, out hidden) && hidden)
                 continue;
 
             bool editable;
-            GUI.enabled = field.CustomOptions.TryGetBool(Analytics.Extensions.EditableFieldNumber, out editable) && editable;
+            GUI.enabled = field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Editable, out editable) && editable;
 
             string tooltip = null;
-            if (field.CustomOptions.TryGetString(Analytics.Extensions.TooltipFieldNumber, out tooltip))
+            if (field.TryGetOption<string>(Analytics.AnalyticsExtensions.Tooltip, out tooltip))
             {
             }
 
             List<KeyValuePair<string, long>> evalues = null;
 
             string enumKey;
-            if (field.CustomOptions.TryGetString(Analytics.Extensions.EnumkeyFieldNumber, out enumKey))
+            if (field.TryGetOption<string>(Analytics.AnalyticsExtensions.Enumkey, out enumKey))
             {
                 if (!GameAnalytics.EnumMap.TryGetValue(enumKey, out evalues))
                     tooltip = string.Format("Failed To Find Enum {0}", enumKey);
@@ -454,11 +454,11 @@ public static class ProtobufUtilities
             EnumType enumType = EnumType.SelectOne;
 
             bool b = false;
-            if (field.CustomOptions.TryGetBool(Analytics.Extensions.EnumflagsFieldNumber, out b) && b)
+            if (field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Enumflags, out b) && b)
             {
                 enumType = EnumType.Masked;
             }
-            else if (field.CustomOptions.TryGetBool(Analytics.Extensions.EnumflagsindexedFieldNumber, out b) && b)
+            else if (field.TryGetOption<bool>(Analytics.AnalyticsExtensions.Enumflagsindexed, out b) && b)
             {
                 enumType = EnumType.Indexed;
             }
@@ -697,7 +697,7 @@ public static class ProtobufUtilities
     {
         string objectName = defaultName;
 
-        if (message.Descriptor.CustomOptions.TryGetString(Analytics.Extensions.ObjectnameFieldNumber, out objectName))
+        if (message.Descriptor.TryGetOption<string>(Analytics.AnalyticsExtensions.Objectname, out objectName))
         {
             string[] subVars = objectName.ParseMacros("%", "%");
             for (int i = 0; i < subVars.Length; ++i)

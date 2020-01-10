@@ -11,6 +11,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEditor;
+using Google.Protobuf;
 
 public partial class GameAnalytics : MonoBehaviour
 {   
@@ -113,60 +114,133 @@ public partial class GameAnalytics : MonoBehaviour
 
     void ProcessGameEntityData(RedisValue value)
     {
-        byte[] bytes = value;
-        using (var ms = new MemoryStream(bytes))
+        Analytics.GameEntityInfo msg = null;
+
+        bool jsonEncoded;
+        if (Analytics.GameEntityInfo.Descriptor.TryGetOption<bool>(Analytics.AnalyticsExtensions.UseJsonEncoding, out jsonEncoded) && jsonEncoded)
         {
-            using (var instream = Google.Protobuf.CodedInputStream.CreateWithLimits(ms, bytes.Length, 2))
+            try
             {
-                try
-                {
-                    Analytics.GameEntityInfo msg = Analytics.GameEntityInfo.Parser.ParseFrom(bytes);
+                string json = value;
 
-                    lock (_mainThreadQueue)
+                msg = JsonParser.Default.Parse(json, Analytics.GameEntityInfo.Descriptor) as Analytics.GameEntityInfo;
+
+                if (DebugGameEntityInfo)
+                {
+                    Debug.LogWarningFormat("Entity {0} updated( {1} bytes )", msg.EntityId, json.Length);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogErrorFormat("Exception reading message {0}", ex);
+                return;
+            }
+        }
+        else
+        {
+            byte[] bytes = value;
+            using (var ms = new MemoryStream(bytes))
+            {
+                using (var instream = Google.Protobuf.CodedInputStream.CreateWithLimits(ms, bytes.Length, 2))
+                {
+                    try
                     {
-                        _mainThreadQueue.Enqueue(() =>
+                        msg = Analytics.GameEntityInfo.Parser.ParseFrom(bytes);
+
+                        if (DebugGameEntityInfo)
                         {
-                            GameAnalyticsEntity gaEnt;
-                            GameAnalyticsNode entityRoot = GetOrCreateNode("entities");
-                            if (msg.Deleted)
-                            {
-                                if (DebugGameEntityInfo)
-                                {
-                                    Debug.LogWarningFormat("Entity {0} marked for deletion", msg.EntityIndex);
-                                }
-
-                                if (EntityNodes.TryGetValue(msg.EntityIndex, out gaEnt))
-                                {
-                                    GameObject.Destroy(gaEnt.gameObject);
-
-                                    EntityNodes.Remove(msg.EntityIndex);
-                                }
-                                return;
-                            }
-
-                            if (!EntityNodes.TryGetValue(msg.EntityIndex, out gaEnt))
-                            {
-                                _sortEntities = true;
-
-                                string objectName = ProtobufUtilities.ParseObjectName(msg, "<unknown>");
-
-                                gaEnt = new GameObject(objectName, typeof(GameAnalyticsEntity)).GetComponent<GameAnalyticsEntity>();
-                                gaEnt.transform.parent = entityRoot.transform;
-                                EntityNodes.Add(msg.EntityIndex, gaEnt);
-                            }
-
-                            if (DebugGameEntityInfo)
-                            {
-                                Debug.LogWarningFormat("Entity {0} updated( {1} bytes )", msg.EntityIndex, bytes.Length);
-                            }
-                            gaEnt.UpdateData(msg);
-                        });
-                    }                    
+                            Debug.LogWarningFormat("Entity {0} updated( {1} bytes )", msg.EntityId, bytes.Length);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogErrorFormat("Exception reading message {0}", ex);
+                    }
                 }
-                catch (Exception ex)
+            }
+        }
+
+        if(msg != null)
+        {
+            lock (_mainThreadQueue)
+            {
+                _mainThreadQueue.Enqueue(() =>
                 {
-                    Debug.LogErrorFormat("Exception reading message {0}", ex);
+                    GameAnalyticsEntity gaEnt;
+                    GameAnalyticsNode entityRoot = GetOrCreateNode("entities");
+                    if (!EntityNodes.TryGetValue(msg.EntityId, out gaEnt))
+                    {
+                        _sortEntities = true;
+
+                        string objectName = ProtobufUtilities.ParseObjectName(msg, "<unknown>");
+
+                        gaEnt = new GameObject(objectName, typeof(GameAnalyticsEntity)).GetComponent<GameAnalyticsEntity>();
+                        gaEnt.transform.SetParent(entityRoot.transform, false);
+                        EntityNodes.Add(msg.EntityId, gaEnt);
+                    }
+
+                    gaEnt.UpdateData(msg);
+                });
+            }
+        }
+    }
+
+    void ProcessGameEntityDelete(RedisValue value)
+    {
+        Analytics.GameEntityDeleted msg = null;
+
+        bool jsonEncoded;
+        if (Analytics.GameEntityDeleted.Descriptor.TryGetOption<bool>(Analytics.AnalyticsExtensions.UseJsonEncoding, out jsonEncoded) && jsonEncoded)
+        {
+            try
+            {
+                string json = value;
+
+                msg = JsonParser.Default.Parse(json, Analytics.GameEntityDeleted.Descriptor) as Analytics.GameEntityDeleted;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogErrorFormat("Exception reading message {0}", ex);
+                return;
+            }
+        }
+        else
+        {
+            byte[] bytes = value;
+            using (var ms = new MemoryStream(bytes))
+            {
+                using (var instream = Google.Protobuf.CodedInputStream.CreateWithLimits(ms, bytes.Length, 2))
+                {
+                    try
+                    {
+                        msg = Analytics.GameEntityDeleted.Parser.ParseFrom(bytes);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogErrorFormat("Exception reading message {0}", ex);
+                    }
                 }
+            }
+        }
+
+        if(msg != null)
+        {
+            lock (_mainThreadQueue)
+            {
+                _mainThreadQueue.Enqueue(() =>
+                {
+                    if (DebugGameEntityInfo)
+                    {
+                        Debug.LogWarningFormat("Entity {0} marked for deletion", msg.EntityId);
+                    }
+
+                    GameAnalyticsEntity gaEnt;
+                    if (EntityNodes.TryGetValue(msg.EntityId, out gaEnt))
+                    {
+                        GameObject.Destroy(gaEnt.gameObject);
+                        EntityNodes.Remove(msg.EntityId);
+                    }
+                });
             }
         }
     }
@@ -503,14 +577,14 @@ public partial class GameAnalytics : MonoBehaviour
                 if (!SceneNodes.TryGetValue(nodePath, out gnode))
                 {
                     var go = new GameObject(nodePath.Replace(parentNodePath+":",""), typeof(GameAnalyticsNode));
-                    go.transform.parent = transform;
+                    go.transform.SetParent(transform, false);
                     gnode = go.GetComponent<GameAnalyticsNode>();
 
                     SceneNodes.Add(nodePath, gnode);
                 }
 
                 if (gnode.transform.parent != parentNode.transform)
-                    gnode.transform.parent = parentNode.transform;
+                    gnode.transform.SetParent(parentNode.transform, false);
             }
         }
         else
@@ -518,7 +592,7 @@ public partial class GameAnalytics : MonoBehaviour
             if (!SceneNodes.TryGetValue(nodePath, out gnode))
             {
                 var go = new GameObject(nodePath, typeof(GameAnalyticsNode));
-                go.transform.parent = transform;
+                go.transform.SetParent(transform, false);
                 gnode = go.GetComponent<GameAnalyticsNode>();
 
                 SceneNodes.Add(nodePath, gnode);
@@ -556,8 +630,9 @@ public partial class GameAnalytics : MonoBehaviour
             SubscribeToMessageType(Analytics.GameMeshData.Descriptor);
             SubscribeToMessageType(Analytics.GameNode.Descriptor);
             SubscribeToMessageType(Analytics.GameEntityInfo.Descriptor);
+            SubscribeToMessageType(Analytics.GameEntityDeleted.Descriptor);
             SubscribeToMessageType(Analytics.GameLogMessage.Descriptor);
-            SubscribeToMessageType(Analytics.GameWeaponFired.Descriptor);
+            //SubscribeToMessageType(Analytics.GameWeaponFired.Descriptor);
         }
     }
 
@@ -589,7 +664,7 @@ public partial class GameAnalytics : MonoBehaviour
             foreach (var fd in descriptor.Fields.InDeclarationOrder())
             {
                 Analytics.PointEvent pointEvent;
-                if (fd.CustomOptions.TryGetMessage(Analytics.Extensions.PointEventFieldNumber, out pointEvent))
+                if (fd.TryGetOption<Analytics.PointEvent>(Analytics.AnalyticsExtensions.PointEvent, out pointEvent))
                 {
                     string subscribeKey = string.Format("{0}:{1}", ActiveEventStream, descriptor.Name);
 
@@ -602,10 +677,10 @@ public partial class GameAnalytics : MonoBehaviour
                         _activeEventLayer = descriptor;
                     }
 
-                    int redisKeyType = 0;
-                    if (descriptor.CustomOptions.TryGetInt32(Analytics.Extensions.RediskeytypeFieldNumber, out redisKeyType))
+                    Analytics.RedisKeyType keytype;
+                    if (descriptor.TryGetOption<Analytics.RedisKeyType>(Analytics.AnalyticsExtensions.Rediskeytype, out keytype))
                     {
-                        switch ((Analytics.RedisKeyType)redisKeyType)
+                        switch (keytype)
                         {
                             case Analytics.RedisKeyType.Hmset:
                                 Db.HashGetAllAsync(subscribeKey).ContinueWith((task) =>
@@ -667,6 +742,13 @@ public partial class GameAnalytics : MonoBehaviour
                 ProcessGameEntityData(value);
             }   
         }
+        if (messageChannel.StartsWith(Analytics.GameEntityDeleted.Descriptor.Name))
+        {
+            using (ProfileBlock pb = new ProfileBlock("ProcessGameEntityDelete"))
+            {
+                ProcessGameEntityDelete(value);
+            }
+        }        
         else if (messageChannel.StartsWith(Analytics.GameMeshData.Descriptor.Name))
         {
             using (ProfileBlock pb = new ProfileBlock("ProcessMeshData"))

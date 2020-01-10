@@ -30,7 +30,7 @@
     <ProjectGuid>{2104FD7C-F7AA-4F69-BCD4-B842A61D87B5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameAnalytics</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -348,14 +348,14 @@
   <ItemGroup>
     <CustomBuild Include="analytics.proto">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
-$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF) --cpp_out=%(RootDir)%(Directory) %(FullPath)
+protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF) --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
 $(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
-$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release-Symbols|Win32'">$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
-$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF) --cpp_out=%(RootDir)%(Directory) %(FullPath)
+protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF) --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release-Symbols|Win32'">protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF) --cpp_out=%(RootDir)%(Directory) %(FullPath)
+protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF) --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
 $(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --csharp_out=$(ProjectDir)UnityAnalyticsViewer\UnityAnalyticsViewer\Assets\GameAnalytics\proto\ %(FullPath)</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release-Symbols|x64'">$(PROTOBUF)/compiler/protoc.exe -I=%(RootDir)%(Directory) -I=$(PROTOBUF)/src --cpp_out=%(RootDir)%(Directory) %(FullPath)
