@@ -233,7 +233,7 @@ public class GameAnalyticsEventList
                 var value = ff.Key.Accessor.GetValue(ev.Message);
 
                 FieldValue fv;
-                if (ff.Value.UniqueValues.TryGetValue(value, out fv))
+                if (ff.Value.UniqueValues.TryGetValue(value, out fv) && fv.Show)
                 {
                     return fv.Show;
                 }

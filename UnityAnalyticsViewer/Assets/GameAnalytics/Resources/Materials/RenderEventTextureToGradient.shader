@@ -56,7 +56,7 @@ Shader "Analytics/RenderEventTextureToGradient"
 			uniform int _AlphaGradientCount = 0;
 
 			// min/max range to remap event values from
-			float2 _RemapRange;
+			float2 _RemapRange = float2(0, 1);
 
 			v2f vert(appdata v)
 			{

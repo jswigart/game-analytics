@@ -418,9 +418,9 @@ public partial class GameAnalytics : MonoBehaviour
                         var vert2 = primitive.Vertices[i - 0];
 
                         TriangleData tri = new TriangleData();
-                        tri.Vertices[0] = new Vector3(vert0.X, vert0.Z, vert0.Y); // swizzled due to different coordinate system
-                        tri.Vertices[1] = new Vector3(vert1.X, vert1.Z, vert1.Y); // swizzled due to different coordinate system
-                        tri.Vertices[2] = new Vector3(vert2.X, vert2.Z, vert2.Y); // swizzled due to different coordinate system
+                        tri.Vertices[0] = new Vector3(vert0.X, vert0.Y, vert0.Z); // swizzled due to different coordinate system
+                        tri.Vertices[1] = new Vector3(vert1.X, vert1.Y, vert1.Z); // swizzled due to different coordinate system
+                        tri.Vertices[2] = new Vector3(vert2.X, vert2.Y, vert2.Z); // swizzled due to different coordinate system
 
                         tri.Colors[0] = IntToColor(vert0.Color);
                         tri.Colors[1] = IntToColor(vert1.Color);
@@ -439,18 +439,18 @@ public partial class GameAnalytics : MonoBehaviour
                         var vert3 = primitive.Vertices[i - 0];
 
                         TriangleData tri1 = new TriangleData();
-                        tri1.Vertices[0] = new Vector3(vert0.X, vert0.Z, vert0.Y); // swizzled due to different coordinate system
-                        tri1.Vertices[1] = new Vector3(vert1.X, vert1.Z, vert1.Y); // swizzled due to different coordinate system
-                        tri1.Vertices[2] = new Vector3(vert2.X, vert2.Z, vert2.Y); // swizzled due to different coordinate system
+                        tri1.Vertices[0] = new Vector3(vert0.X, vert0.Y, vert0.Z); // swizzled due to different coordinate system
+                        tri1.Vertices[1] = new Vector3(vert1.X, vert1.Y, vert1.Z); // swizzled due to different coordinate system
+                        tri1.Vertices[2] = new Vector3(vert2.X, vert2.Y, vert2.Z); // swizzled due to different coordinate system
                         tri1.Colors[0] = IntToColor(vert0.Color);
                         tri1.Colors[1] = IntToColor(vert1.Color);
                         tri1.Colors[2] = IntToColor(vert2.Color);
                         meshdata.Triangles.Add(tri1);
 
                         TriangleData tri2 = new TriangleData();
-                        tri2.Vertices[0] = new Vector3(vert0.X, vert0.Z, vert0.Y); // swizzled due to different coordinate system
-                        tri2.Vertices[1] = new Vector3(vert2.X, vert2.Z, vert2.Y); // swizzled due to different coordinate system
-                        tri2.Vertices[2] = new Vector3(vert3.X, vert3.Z, vert3.Y); // swizzled due to different coordinate system
+                        tri2.Vertices[0] = new Vector3(vert0.X, vert0.Y, vert0.Z); // swizzled due to different coordinate system
+                        tri2.Vertices[1] = new Vector3(vert2.X, vert2.Y, vert2.Z); // swizzled due to different coordinate system
+                        tri2.Vertices[2] = new Vector3(vert3.X, vert3.Y, vert3.Z); // swizzled due to different coordinate system
                         tri2.Colors[0] = IntToColor(vert0.Color);
                         tri2.Colors[1] = IntToColor(vert1.Color);
                         tri2.Colors[2] = IntToColor(vert2.Color);
@@ -499,12 +499,9 @@ public partial class GameAnalytics : MonoBehaviour
                         Vector3 v1 = tdata.Vertices[1];
                         Vector3 v2 = tdata.Vertices[2];
 
-                        triangles.Add(triangles.Count);
-                        vertices.Add(v0);
-                        triangles.Add(triangles.Count);
-                        vertices.Add(v1);
-                        triangles.Add(triangles.Count);
-                        vertices.Add(v2);
+                        triangles.Add(triangles.Count); vertices.Add(v0);
+                        triangles.Add(triangles.Count); vertices.Add(v1);
+                        triangles.Add(triangles.Count); vertices.Add(v2);
                         colors.Add(tdata.Colors[0]);
                         colors.Add(tdata.Colors[1]);
                         colors.Add(tdata.Colors[2]);
@@ -632,6 +629,7 @@ public partial class GameAnalytics : MonoBehaviour
             SubscribeToMessageType(Analytics.GameEntityInfo.Descriptor);
             SubscribeToMessageType(Analytics.GameEntityDeleted.Descriptor);
             SubscribeToMessageType(Analytics.GameLogMessage.Descriptor);
+            SubscribeToMessageType(Analytics.GameEntityPosition.Descriptor);
             //SubscribeToMessageType(Analytics.GameWeaponFired.Descriptor);
         }
     }

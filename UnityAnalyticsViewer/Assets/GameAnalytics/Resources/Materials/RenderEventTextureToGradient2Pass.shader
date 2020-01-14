@@ -102,7 +102,7 @@ Shader "Analytics/RenderEventTextureToGradient2Pass"
 			uniform int _AlphaGradientCount = 0;
 
 			// min/max range to remap event values from
-			float2 _RemapRange;
+			float2 _RemapRange = float2(0,1);
 
 			v2f vert(appdata v)
 			{
@@ -119,7 +119,7 @@ Shader "Analytics/RenderEventTextureToGradient2Pass"
 			// if there is no event weight for this sample, don't render the pixel
 			if (eventColor.r == 0.0f)
 			{
-				//discard;
+				discard;
 				//return float4(0, 0, 0, 0);
 			}
 

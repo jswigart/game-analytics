@@ -265,9 +265,12 @@ message GameEntityDeleted
 message GameEntityPosition
 {
 	option (rediskeytype) = RPUSH;
+	option (useJsonEncoding) = true;
+	option (redishmsetkey) = "entityId";
 
-	Pos3					position					= 1 [(point_event).radius = "32", (point_event).weight = "1"];
-	int32					team						= 2 [(track_event)=true];
+	Pos3					position					= 1 [(point_event).radius = "200", (point_event).weight = "1"];
+	string					entityType					= 2;
+	int32					team						= 3 [(track_event)=true];;
 }
 
 message GameNode
@@ -280,7 +283,7 @@ message GameNode
 	Pos3				translation		= 3;
 	string				meshName		= 4;
 
-	int32				entityId		= 10;
+	string				entityId		= 10;
 	string				entityName		= 11;
 	int32				activeState		= 12 [(enumkey)="MODEL_STATE"];
 	int64				navFlagsActive	= 13 [(enumkey)="NAV_FLAGS"];
@@ -293,7 +296,7 @@ message GameCardSpawned
 	option (rediskeytype) = RPUSH;
 	option (useJsonEncoding) = true;
 
-	Pos3					position					= 1 [(point_event).radius = "64", (point_event).weight = "1"];
+	Pos3					position					= 1 [(point_event).radius = "200", (point_event).weight = "1"];
 	string					cardId					    = 2 [(track_event)=true];
 	string					ownerId						= 3 [(track_event)=true];
 	int32					teamId						= 4 [(track_event)=true];
@@ -303,17 +306,7 @@ message GameDeath
 {
 	option (rediskeytype) = RPUSH;
 
-	Pos3					position					= 1 [(point_event).radius = "32", (point_event).weight = "1"];
-	int32					victimTeam					= 2 [(track_event)=true];
-	int32					attackTeam					= 3 [(track_event)=true];
-	string					meansOfDeath				= 4 [(track_event)=true];
-}
-
-message GameKilledSomeone
-{
-	option (rediskeytype) = RPUSH;
-
-	Pos3					position					= 1 [(point_event).radius = "32", (point_event).weight = "1"];
+	Pos3					position					= 1 [(point_event).radius = "200", (point_event).weight = "1"];
 	int32					victimTeam					= 2 [(track_event)=true];
 	int32					attackTeam					= 3 [(track_event)=true];
 	string					meansOfDeath				= 4 [(track_event)=true];
@@ -324,21 +317,7 @@ message GameTakeDamage
 	option (rediskeytype) = RPUSH;
 	option (useJsonEncoding) = true;
 
-	Pos3					position					= 1 [(point_event).radius = "32", (point_event).weight = "damageAmount"];
-	int32					attackTeam					= 2 [(track_event)=true];	
-    int32					victimTeam					= 3 [(track_event)=true];	
-	float					damageAmount				= 4;
-    string					damageType					= 5 [(track_event)=true];
-    string                  attackerType                = 6 [(track_event)=true];
-    string                  victimType                  = 7 [(track_event)=true];
-}
-
-message GameInflictDamage
-{
-	option (rediskeytype) = RPUSH;
-	option (useJsonEncoding) = true;
-
-	Pos3					position					= 1 [(point_event).radius = "32", (point_event).weight = "damageAmount"];
+	Pos3					position					= 1 [(point_event).radius = "200", (point_event).weight = "damageAmount"];
 	int32					attackTeam					= 2 [(track_event)=true];	
     int32					victimTeam					= 3 [(track_event)=true];	
 	float					damageAmount				= 4;

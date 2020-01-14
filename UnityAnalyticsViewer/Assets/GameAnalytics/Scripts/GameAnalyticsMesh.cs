@@ -44,8 +44,8 @@ public class GameAnalyticsMesh : MonoBehaviour
         {
             RenderTexture = new RenderTexture(TextureSize, TextureSize, 24, RenderTextureFormat.RFloat, RenderTextureReadWrite.Linear);
             RenderTexture.name = "EventRenderTexture";
-
-            RenderTextureRange = new RenderTexture(1, 1, 24, RenderTextureFormat.RGFloat, RenderTextureReadWrite.Linear);
+            
+            RenderTextureRange = new RenderTexture(1, 1, 24, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
             RenderTextureRange.name = "EventRenderTextureRange";
 
             //RangeMaterial = Resources.Load<Material>("Materials/ReduceRangeFull");

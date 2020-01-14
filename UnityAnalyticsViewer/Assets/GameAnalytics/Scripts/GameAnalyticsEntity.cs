@@ -22,7 +22,7 @@ public class GameAnalyticsEntity : MonoBehaviour
     {
         CachedInfo = info;
         
-        transform.eulerAngles = new Vector3(info.EulerRotation.Heading, info.EulerRotation.Pitch, info.EulerRotation.Roll);
+        transform.eulerAngles = new Vector3(info.EulerRotation.Pitch, info.EulerRotation.Heading, info.EulerRotation.Roll);
         transform.position = new Vector3(info.Position.X, info.Position.Y, info.Position.Z);
 
         //if(info.EyeOffset != null || info.EyeDir != null)
@@ -37,10 +37,10 @@ public class GameAnalyticsEntity : MonoBehaviour
         //    }
 
         //    if(info.EyeOffset != null)
-        //        _eye.transform.localPosition = new Vector3(info.EyeOffset.X, info.EyeOffset.Z, info.EyeOffset.Y);
+        //        _eye.transform.localPosition = new Vector3(info.EyeOffset.X, info.EyeOffset.Y, info.EyeOffset.Z);
         //    if(info.EyeDir != null)
         //    {
-        //        _eye.transform.rotation = Quaternion.LookRotation(new Vector3(info.EyeDir.X, info.EyeDir.Z, info.EyeDir.Y), transform.up);
+        //        _eye.transform.rotation = Quaternion.LookRotation(new Vector3(info.EyeDir.X, info.EyeDir.Y, info.EyeDir.Z), transform.up);
         //    }
         //}
         

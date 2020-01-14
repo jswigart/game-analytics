@@ -26,7 +26,7 @@ public class GameAnalyticsNode : MonoBehaviour
         }
 
         if (node.EulerRotation != null)
-            transform.eulerAngles = new Vector3(node.EulerRotation.Heading, node.EulerRotation.Pitch, node.EulerRotation.Roll);
+            transform.eulerAngles = new Vector3(node.EulerRotation.Pitch, node.EulerRotation.Heading, node.EulerRotation.Roll);
         if (node.Translation != null)
             transform.position = new Vector3(node.Translation.X, node.Translation.Y, node.Translation.Z);
     }

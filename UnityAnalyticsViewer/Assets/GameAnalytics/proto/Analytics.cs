@@ -73,76 +73,68 @@ namespace Analytics {
             "Ym91bmRzT3JpZ2luGAggASgLMg8uQW5hbHl0aWNzLlBvczMSJgoNYm91bmRz",
             "RXh0ZW50cxgJIAEoCzIPLkFuYWx5dGljcy5Qb3MzOizAuAIDyrgCCGVudGl0",
             "eUlk6rgCFEVudGl0eSglZW50aXR5TmFtZSUp2LgCASI3ChFHYW1lRW50aXR5",
-            "RGVsZXRlZBIQCghlbnRpdHlJZBgBIAEoCToQwLgCBMq4AghlbnRpdHlJZCJi",
-            "ChJHYW1lRW50aXR5UG9zaXRpb24SMgoIcG9zaXRpb24YASABKAsyDy5BbmFs",
-            "eXRpY3MuUG9zM0IP4voBBAoCMzLi+gEDEgExEhIKBHRlYW0YAiABKAVCBMj6",
-            "AQE6BMC4AgIi2wIKCEdhbWVOb2RlEhYKCG5vZGVQYXRoGAEgASgJQgTA+gEB",
-            "EicKDWV1bGVyUm90YXRpb24YAiABKAsyEC5BbmFseXRpY3MuRXVsZXISJAoL",
-            "dHJhbnNsYXRpb24YAyABKAsyDy5BbmFseXRpY3MuUG9zMxIQCghtZXNoTmFt",
-            "ZRgEIAEoCRIQCghlbnRpdHlJZBgKIAEoBRISCgplbnRpdHlOYW1lGAsgASgJ",
-            "EiQKC2FjdGl2ZVN0YXRlGAwgASgFQg+K+gELTU9ERUxfU1RBVEUSJQoObmF2",
-            "RmxhZ3NBY3RpdmUYDSABKANCDYr6AQlOQVZfRkxBR1MSKwoQbmF2RmxhZ3NP",
-            "dmVycmlkZRgOIAEoA0IRivoBCU5BVl9GTEFHU5D6AQESJAoJc2hhcGVNb2Rl",
-            "GA8gASgFQhGK+gEJU0hBUEVNT0RFkPoBAToQwLgCA8q4Aghub2RlUGF0aCKS",
-            "AQoPR2FtZUNhcmRTcGF3bmVkEjIKCHBvc2l0aW9uGAEgASgLMg8uQW5hbHl0",
-            "aWNzLlBvczNCD+L6AQQKAjY04voBAxIBMRIUCgZjYXJkSWQYAiABKAlCBMj6",
-            "AQESFQoHb3duZXJJZBgDIAEoCUIEyPoBARIUCgZ0ZWFtSWQYBCABKAVCBMj6",
-            "AQE6CMC4AgLYuAIBIpUBCglHYW1lRGVhdGgSMgoIcG9zaXRpb24YASABKAsy",
-            "Dy5BbmFseXRpY3MuUG9zM0IP4voBBAoCMzLi+gEDEgExEhgKCnZpY3RpbVRl",
-            "YW0YAiABKAVCBMj6AQESGAoKYXR0YWNrVGVhbRgDIAEoBUIEyPoBARIaCgxt",
-            "ZWFuc09mRGVhdGgYBCABKAlCBMj6AQE6BMC4AgIinQEKEUdhbWVLaWxsZWRT",
-            "b21lb25lEjIKCHBvc2l0aW9uGAEgASgLMg8uQW5hbHl0aWNzLlBvczNCD+L6",
-            "AQQKAjMy4voBAxIBMRIYCgp2aWN0aW1UZWFtGAIgASgFQgTI+gEBEhgKCmF0",
-            "dGFja1RlYW0YAyABKAVCBMj6AQESGgoMbWVhbnNPZkRlYXRoGAQgASgJQgTI",
-            "+gEBOgTAuAICIvMBCg5HYW1lVGFrZURhbWFnZRI9Cghwb3NpdGlvbhgBIAEo",
-            "CzIPLkFuYWx5dGljcy5Qb3MzQhri+gEECgIzMuL6AQ4SDGRhbWFnZUFtb3Vu",
-            "dBIYCgphdHRhY2tUZWFtGAIgASgFQgTI+gEBEhgKCnZpY3RpbVRlYW0YAyAB",
-            "KAVCBMj6AQESFAoMZGFtYWdlQW1vdW50GAQgASgCEhgKCmRhbWFnZVR5cGUY",
-            "BSABKAlCBMj6AQESGgoMYXR0YWNrZXJUeXBlGAYgASgJQgTI+gEBEhgKCnZp",
-            "Y3RpbVR5cGUYByABKAlCBMj6AQE6CMC4AgLYuAIBIvYBChFHYW1lSW5mbGlj",
-            "dERhbWFnZRI9Cghwb3NpdGlvbhgBIAEoCzIPLkFuYWx5dGljcy5Qb3MzQhri",
-            "+gEECgIzMuL6AQ4SDGRhbWFnZUFtb3VudBIYCgphdHRhY2tUZWFtGAIgASgF",
-            "QgTI+gEBEhgKCnZpY3RpbVRlYW0YAyABKAVCBMj6AQESFAoMZGFtYWdlQW1v",
-            "dW50GAQgASgCEhgKCmRhbWFnZVR5cGUYBSABKAlCBMj6AQESGgoMYXR0YWNr",
-            "ZXJUeXBlGAYgASgJQgTI+gEBEhgKCnZpY3RpbVR5cGUYByABKAlCBMj6AQE6",
-            "CMC4AgLYuAIBIqUBChBHYW1lUmFkaXVzRGFtYWdlEkcKCHBvc2l0aW9uGAEg",
-            "ASgLMg8uQW5hbHl0aWNzLlBvczNCJOL6AQ4KDGRhbWFnZVJhZGl1c+L6AQ4S",
-            "DGRhbWFnZUFtb3VudBISCgpkYW1hZ2VUeXBlGAIgASgJEhQKDGRhbWFnZUFt",
-            "b3VudBgDIAEoAhIUCgxkYW1hZ2VSYWRpdXMYBCABKAI6CMC4AgLYuAIBImEK",
-            "E0dhbWVOYXZpZ2F0aW9uU3R1Y2sSEAoIZW50aXR5SWQYASABKAUSMgoIcG9z",
-            "aXRpb24YAiABKAsyDy5BbmFseXRpY3MuUG9zM0IP4voBBAoCMzLi+gEDEgEx",
-            "OgTAuAICIoUBCg5HYW1lVm9pY2VNYWNybxIQCghlbnRpdHlJZBgBIAEoBRIn",
-            "Cgp2b2ljZU1hY3JvGAIgASgFQhOK+gELVk9JQ0VfTUFDUk/I+gEBEjIKCHBv",
-            "c2l0aW9uGAMgASgLMg8uQW5hbHl0aWNzLlBvczNCD+L6AQQKAjMy4voBAxIB",
-            "MToEwLgCAiJlCg5HYW1lTG9nTWVzc2FnZRIjCgdsb2dUeXBlGAEgASgOMhIu",
-            "QW5hbHl0aWNzLkxvZ1R5cGUSEgoKbG9nTWVzc2FnZRgCIAEoCRIUCgxsb2dF",
-            "eHRyYUluZm8YAyABKAk6BMC4AgIqRQoMUmVkaXNLZXlUeXBlEgsKB1VOS05P",
-            "V04QABIHCgNTRVQQARIJCgVSUFVTSBACEgkKBUhNU0VUEAMSCQoFSE1ERUwQ",
-            "BCo/Cg1QcmltaXRpdmVUeXBlEg0KCVRyaWFuZ2xlcxAAEgkKBUxpbmVzEAES",
-            "CgoGUG9pbnRzEAISCAoEUXVhZBADKjsKC0NvbXByZXNzaW9uEhQKEENvbXBy",
-            "ZXNzaW9uX05vbmUQABIWChJDb21wcmVzc2lvbl9GYXN0TFoQASoqCgdMb2dU",
-            "eXBlEgcKA0xvZxAAEgsKB1dhcm5pbmcQARIJCgVFcnJvchADOk8KDHJlZGlz",
-            "a2V5dHlwZRIfLmdvb2dsZS5wcm90b2J1Zi5NZXNzYWdlT3B0aW9ucxiIJyAB",
-            "KA4yFy5BbmFseXRpY3MuUmVkaXNLZXlUeXBlOjcKDXJlZGlzaG1zZXRrZXkS",
-            "Hy5nb29nbGUucHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYiScgASgJOjgKDnJl",
-            "ZGlza2V5c3VmZml4Eh8uZ29vZ2xlLnByb3RvYnVmLk1lc3NhZ2VPcHRpb25z",
-            "GIonIAEoCTo5Cg91c2VKc29uRW5jb2RpbmcSHy5nb29nbGUucHJvdG9idWYu",
-            "TWVzc2FnZU9wdGlvbnMYiycgASgIOjQKCm9iamVjdG5hbWUSHy5nb29nbGUu",
-            "cHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYjScgASgJOi8KB2VudW1rZXkSHS5n",
-            "b29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKEfIAEoCTowCghlZGl0YWJs",
-            "ZRIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYoh8gASgIOi8KB2V4",
-            "cGlyZXMSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKMfIAEoBTox",
-            "CgllbnVtZmxhZ3MSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKQf",
-            "IAEoCDovCgd0b29sdGlwEh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9u",
-            "cxilHyABKAk6LgoGaGlkZGVuEh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0",
-            "aW9ucximHyABKAg6OAoQZW51bWZsYWdzaW5kZXhlZBIdLmdvb2dsZS5wcm90",
-            "b2J1Zi5GaWVsZE9wdGlvbnMYpx8gASgIOjQKDGVkaXRhYmxlX2tleRIdLmdv",
-            "b2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYqB8gASgIOjMKC3RyYWNrX2V2",
-            "ZW50Eh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucxipHyABKAg6SgoL",
-            "cG9pbnRfZXZlbnQSHS5nb29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGKwf",
-            "IAEoCzIVLkFuYWx5dGljcy5Qb2ludEV2ZW50OkgKCmxpbmVfZXZlbnQSHS5n",
-            "b29nbGUucHJvdG9idWYuRmllbGRPcHRpb25zGK0fIAEoCzIULkFuYWx5dGlj",
-            "cy5MaW5lRXZlbnRiBnByb3RvMw=="));
+            "RGVsZXRlZBIQCghlbnRpdHlJZBgBIAEoCToQwLgCBMq4AghlbnRpdHlJZCKH",
+            "AQoSR2FtZUVudGl0eVBvc2l0aW9uEjMKCHBvc2l0aW9uGAEgASgLMg8uQW5h",
+            "bHl0aWNzLlBvczNCEOL6AQUKAzIwMOL6AQMSATESEgoKZW50aXR5VHlwZRgC",
+            "IAEoCRISCgR0ZWFtGAMgASgFQgTI+gEBOhTAuAIC2LgCAcq4AghlbnRpdHlJ",
+            "ZCLbAgoIR2FtZU5vZGUSFgoIbm9kZVBhdGgYASABKAlCBMD6AQESJwoNZXVs",
+            "ZXJSb3RhdGlvbhgCIAEoCzIQLkFuYWx5dGljcy5FdWxlchIkCgt0cmFuc2xh",
+            "dGlvbhgDIAEoCzIPLkFuYWx5dGljcy5Qb3MzEhAKCG1lc2hOYW1lGAQgASgJ",
+            "EhAKCGVudGl0eUlkGAogASgJEhIKCmVudGl0eU5hbWUYCyABKAkSJAoLYWN0",
+            "aXZlU3RhdGUYDCABKAVCD4r6AQtNT0RFTF9TVEFURRIlCg5uYXZGbGFnc0Fj",
+            "dGl2ZRgNIAEoA0INivoBCU5BVl9GTEFHUxIrChBuYXZGbGFnc092ZXJyaWRl",
+            "GA4gASgDQhGK+gEJTkFWX0ZMQUdTkPoBARIkCglzaGFwZU1vZGUYDyABKAVC",
+            "EYr6AQlTSEFQRU1PREWQ+gEBOhDAuAIDyrgCCG5vZGVQYXRoIpMBCg9HYW1l",
+            "Q2FyZFNwYXduZWQSMwoIcG9zaXRpb24YASABKAsyDy5BbmFseXRpY3MuUG9z",
+            "M0IQ4voBBQoDMjAw4voBAxIBMRIUCgZjYXJkSWQYAiABKAlCBMj6AQESFQoH",
+            "b3duZXJJZBgDIAEoCUIEyPoBARIUCgZ0ZWFtSWQYBCABKAVCBMj6AQE6CMC4",
+            "AgLYuAIBIpYBCglHYW1lRGVhdGgSMwoIcG9zaXRpb24YASABKAsyDy5BbmFs",
+            "eXRpY3MuUG9zM0IQ4voBBQoDMjAw4voBAxIBMRIYCgp2aWN0aW1UZWFtGAIg",
+            "ASgFQgTI+gEBEhgKCmF0dGFja1RlYW0YAyABKAVCBMj6AQESGgoMbWVhbnNP",
+            "ZkRlYXRoGAQgASgJQgTI+gEBOgTAuAICIvQBCg5HYW1lVGFrZURhbWFnZRI+",
+            "Cghwb3NpdGlvbhgBIAEoCzIPLkFuYWx5dGljcy5Qb3MzQhvi+gEFCgMyMDDi",
+            "+gEOEgxkYW1hZ2VBbW91bnQSGAoKYXR0YWNrVGVhbRgCIAEoBUIEyPoBARIY",
+            "Cgp2aWN0aW1UZWFtGAMgASgFQgTI+gEBEhQKDGRhbWFnZUFtb3VudBgEIAEo",
+            "AhIYCgpkYW1hZ2VUeXBlGAUgASgJQgTI+gEBEhoKDGF0dGFja2VyVHlwZRgG",
+            "IAEoCUIEyPoBARIYCgp2aWN0aW1UeXBlGAcgASgJQgTI+gEBOgjAuAIC2LgC",
+            "ASKlAQoQR2FtZVJhZGl1c0RhbWFnZRJHCghwb3NpdGlvbhgBIAEoCzIPLkFu",
+            "YWx5dGljcy5Qb3MzQiTi+gEOCgxkYW1hZ2VSYWRpdXPi+gEOEgxkYW1hZ2VB",
+            "bW91bnQSEgoKZGFtYWdlVHlwZRgCIAEoCRIUCgxkYW1hZ2VBbW91bnQYAyAB",
+            "KAISFAoMZGFtYWdlUmFkaXVzGAQgASgCOgjAuAIC2LgCASJhChNHYW1lTmF2",
+            "aWdhdGlvblN0dWNrEhAKCGVudGl0eUlkGAEgASgFEjIKCHBvc2l0aW9uGAIg",
+            "ASgLMg8uQW5hbHl0aWNzLlBvczNCD+L6AQQKAjMy4voBAxIBMToEwLgCAiKF",
+            "AQoOR2FtZVZvaWNlTWFjcm8SEAoIZW50aXR5SWQYASABKAUSJwoKdm9pY2VN",
+            "YWNybxgCIAEoBUITivoBC1ZPSUNFX01BQ1JPyPoBARIyCghwb3NpdGlvbhgD",
+            "IAEoCzIPLkFuYWx5dGljcy5Qb3MzQg/i+gEECgIzMuL6AQMSATE6BMC4AgIi",
+            "ZQoOR2FtZUxvZ01lc3NhZ2USIwoHbG9nVHlwZRgBIAEoDjISLkFuYWx5dGlj",
+            "cy5Mb2dUeXBlEhIKCmxvZ01lc3NhZ2UYAiABKAkSFAoMbG9nRXh0cmFJbmZv",
+            "GAMgASgJOgTAuAICKkUKDFJlZGlzS2V5VHlwZRILCgdVTktOT1dOEAASBwoD",
+            "U0VUEAESCQoFUlBVU0gQAhIJCgVITVNFVBADEgkKBUhNREVMEAQqPwoNUHJp",
+            "bWl0aXZlVHlwZRINCglUcmlhbmdsZXMQABIJCgVMaW5lcxABEgoKBlBvaW50",
+            "cxACEggKBFF1YWQQAyo7CgtDb21wcmVzc2lvbhIUChBDb21wcmVzc2lvbl9O",
+            "b25lEAASFgoSQ29tcHJlc3Npb25fRmFzdExaEAEqKgoHTG9nVHlwZRIHCgNM",
+            "b2cQABILCgdXYXJuaW5nEAESCQoFRXJyb3IQAzpPCgxyZWRpc2tleXR5cGUS",
+            "Hy5nb29nbGUucHJvdG9idWYuTWVzc2FnZU9wdGlvbnMYiCcgASgOMhcuQW5h",
+            "bHl0aWNzLlJlZGlzS2V5VHlwZTo3Cg1yZWRpc2htc2V0a2V5Eh8uZ29vZ2xl",
+            "LnByb3RvYnVmLk1lc3NhZ2VPcHRpb25zGIknIAEoCTo4Cg5yZWRpc2tleXN1",
+            "ZmZpeBIfLmdvb2dsZS5wcm90b2J1Zi5NZXNzYWdlT3B0aW9ucxiKJyABKAk6",
+            "OQoPdXNlSnNvbkVuY29kaW5nEh8uZ29vZ2xlLnByb3RvYnVmLk1lc3NhZ2VP",
+            "cHRpb25zGIsnIAEoCDo0CgpvYmplY3RuYW1lEh8uZ29vZ2xlLnByb3RvYnVm",
+            "Lk1lc3NhZ2VPcHRpb25zGI0nIAEoCTovCgdlbnVta2V5Eh0uZ29vZ2xlLnBy",
+            "b3RvYnVmLkZpZWxkT3B0aW9ucxihHyABKAk6MAoIZWRpdGFibGUSHS5nb29n",
+            "bGUucHJvdG9idWYuRmllbGRPcHRpb25zGKIfIAEoCDovCgdleHBpcmVzEh0u",
+            "Z29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucxijHyABKAU6MQoJZW51bWZs",
+            "YWdzEh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucxikHyABKAg6LwoH",
+            "dG9vbHRpcBIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYpR8gASgJ",
+            "Oi4KBmhpZGRlbhIdLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYph8g",
+            "ASgIOjgKEGVudW1mbGFnc2luZGV4ZWQSHS5nb29nbGUucHJvdG9idWYuRmll",
+            "bGRPcHRpb25zGKcfIAEoCDo0CgxlZGl0YWJsZV9rZXkSHS5nb29nbGUucHJv",
+            "dG9idWYuRmllbGRPcHRpb25zGKgfIAEoCDozCgt0cmFja19ldmVudBIdLmdv",
+            "b2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMYqR8gASgIOkoKC3BvaW50X2V2",
+            "ZW50Eh0uZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucxisHyABKAsyFS5B",
+            "bmFseXRpY3MuUG9pbnRFdmVudDpICgpsaW5lX2V2ZW50Eh0uZ29vZ2xlLnBy",
+            "b3RvYnVmLkZpZWxkT3B0aW9ucxitHyABKAsyFC5BbmFseXRpY3MuTGluZUV2",
+            "ZW50YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.Reflection.DescriptorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Analytics.RedisKeyType), typeof(global::Analytics.PrimitiveType), typeof(global::Analytics.Compression), typeof(global::Analytics.LogType), }, new pb::Extension[] { AnalyticsExtensions.Rediskeytype, AnalyticsExtensions.Redishmsetkey, AnalyticsExtensions.Rediskeysuffix, AnalyticsExtensions.UseJsonEncoding, AnalyticsExtensions.Objectname, AnalyticsExtensions.Enumkey, AnalyticsExtensions.Editable, AnalyticsExtensions.Expires, AnalyticsExtensions.Enumflags, AnalyticsExtensions.Tooltip, AnalyticsExtensions.Hidden, AnalyticsExtensions.Enumflagsindexed, AnalyticsExtensions.EditableKey, AnalyticsExtensions.TrackEvent, AnalyticsExtensions.PointEvent, AnalyticsExtensions.LineEvent }, new pbr::GeneratedClrTypeInfo[] {
@@ -171,13 +163,11 @@ namespace Analytics {
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameMeshData), global::Analytics.GameMeshData.Parser, new[]{ "CompressionType", "ModelName", "ModelBytes", "ModelBytesUncompressed" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityInfo), global::Analytics.GameEntityInfo.Parser, new[]{ "EntityId", "EntityName", "Team", "Position", "EulerRotation", "Health", "Mana", "BoundsOrigin", "BoundsExtents" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityDeleted), global::Analytics.GameEntityDeleted.Parser, new[]{ "EntityId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityPosition), global::Analytics.GameEntityPosition.Parser, new[]{ "Position", "Team" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameEntityPosition), global::Analytics.GameEntityPosition.Parser, new[]{ "Position", "EntityType", "Team" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNode), global::Analytics.GameNode.Parser, new[]{ "NodePath", "EulerRotation", "Translation", "MeshName", "EntityId", "EntityName", "ActiveState", "NavFlagsActive", "NavFlagsOverride", "ShapeMode" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameCardSpawned), global::Analytics.GameCardSpawned.Parser, new[]{ "Position", "CardId", "OwnerId", "TeamId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameDeath), global::Analytics.GameDeath.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "MeansOfDeath" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameKilledSomeone), global::Analytics.GameKilledSomeone.Parser, new[]{ "Position", "VictimTeam", "AttackTeam", "MeansOfDeath" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameTakeDamage), global::Analytics.GameTakeDamage.Parser, new[]{ "Position", "AttackTeam", "VictimTeam", "DamageAmount", "DamageType", "AttackerType", "VictimType" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameInflictDamage), global::Analytics.GameInflictDamage.Parser, new[]{ "Position", "AttackTeam", "VictimTeam", "DamageAmount", "DamageType", "AttackerType", "VictimType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameRadiusDamage), global::Analytics.GameRadiusDamage.Parser, new[]{ "Position", "DamageType", "DamageAmount", "DamageRadius" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameNavigationStuck), global::Analytics.GameNavigationStuck.Parser, new[]{ "EntityId", "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.GameVoiceMacro), global::Analytics.GameVoiceMacro.Parser, new[]{ "EntityId", "VoiceMacro", "Position" }, null, null, null, null),
@@ -5070,6 +5060,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public GameEntityPosition(GameEntityPosition other) : this() {
       position_ = other.position_ != null ? other.position_.Clone() : null;
+      entityType_ = other.entityType_;
       team_ = other.team_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -5090,8 +5081,19 @@ namespace Analytics {
       }
     }
 
+    /// <summary>Field number for the "entityType" field.</summary>
+    public const int EntityTypeFieldNumber = 2;
+    private string entityType_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string EntityType {
+      get { return entityType_; }
+      set {
+        entityType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "team" field.</summary>
-    public const int TeamFieldNumber = 2;
+    public const int TeamFieldNumber = 3;
     private int team_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Team {
@@ -5115,6 +5117,7 @@ namespace Analytics {
         return true;
       }
       if (!object.Equals(Position, other.Position)) return false;
+      if (EntityType != other.EntityType) return false;
       if (Team != other.Team) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -5123,6 +5126,7 @@ namespace Analytics {
     public override int GetHashCode() {
       int hash = 1;
       if (position_ != null) hash ^= Position.GetHashCode();
+      if (EntityType.Length != 0) hash ^= EntityType.GetHashCode();
       if (Team != 0) hash ^= Team.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -5141,8 +5145,12 @@ namespace Analytics {
         output.WriteRawTag(10);
         output.WriteMessage(Position);
       }
+      if (EntityType.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(EntityType);
+      }
       if (Team != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(24);
         output.WriteInt32(Team);
       }
       if (_unknownFields != null) {
@@ -5155,6 +5163,9 @@ namespace Analytics {
       int size = 0;
       if (position_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
+      }
+      if (EntityType.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityType);
       }
       if (Team != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Team);
@@ -5175,6 +5186,9 @@ namespace Analytics {
           Position = new global::Analytics.Pos3();
         }
         Position.MergeFrom(other.Position);
+      }
+      if (other.EntityType.Length != 0) {
+        EntityType = other.EntityType;
       }
       if (other.Team != 0) {
         Team = other.Team;
@@ -5197,7 +5211,11 @@ namespace Analytics {
             input.ReadMessage(Position);
             break;
           }
-          case 16: {
+          case 18: {
+            EntityType = input.ReadString();
+            break;
+          }
+          case 24: {
             Team = input.ReadInt32();
             break;
           }
@@ -5296,12 +5314,12 @@ namespace Analytics {
 
     /// <summary>Field number for the "entityId" field.</summary>
     public const int EntityIdFieldNumber = 10;
-    private int entityId_;
+    private string entityId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int EntityId {
+    public string EntityId {
       get { return entityId_; }
       set {
-        entityId_ = value;
+        entityId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -5393,7 +5411,7 @@ namespace Analytics {
       if (eulerRotation_ != null) hash ^= EulerRotation.GetHashCode();
       if (translation_ != null) hash ^= Translation.GetHashCode();
       if (MeshName.Length != 0) hash ^= MeshName.GetHashCode();
-      if (EntityId != 0) hash ^= EntityId.GetHashCode();
+      if (EntityId.Length != 0) hash ^= EntityId.GetHashCode();
       if (EntityName.Length != 0) hash ^= EntityName.GetHashCode();
       if (ActiveState != 0) hash ^= ActiveState.GetHashCode();
       if (NavFlagsActive != 0L) hash ^= NavFlagsActive.GetHashCode();
@@ -5428,9 +5446,9 @@ namespace Analytics {
         output.WriteRawTag(34);
         output.WriteString(MeshName);
       }
-      if (EntityId != 0) {
-        output.WriteRawTag(80);
-        output.WriteInt32(EntityId);
+      if (EntityId.Length != 0) {
+        output.WriteRawTag(82);
+        output.WriteString(EntityId);
       }
       if (EntityName.Length != 0) {
         output.WriteRawTag(90);
@@ -5472,8 +5490,8 @@ namespace Analytics {
       if (MeshName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(MeshName);
       }
-      if (EntityId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EntityId);
+      if (EntityId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityId);
       }
       if (EntityName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(EntityName);
@@ -5519,7 +5537,7 @@ namespace Analytics {
       if (other.MeshName.Length != 0) {
         MeshName = other.MeshName;
       }
-      if (other.EntityId != 0) {
+      if (other.EntityId.Length != 0) {
         EntityId = other.EntityId;
       }
       if (other.EntityName.Length != 0) {
@@ -5570,8 +5588,8 @@ namespace Analytics {
             MeshName = input.ReadString();
             break;
           }
-          case 80: {
-            EntityId = input.ReadInt32();
+          case 82: {
+            EntityId = input.ReadString();
             break;
           }
           case 90: {
@@ -6038,225 +6056,6 @@ namespace Analytics {
 
   }
 
-  public sealed partial class GameKilledSomeone : pb::IMessage<GameKilledSomeone> {
-    private static readonly pb::MessageParser<GameKilledSomeone> _parser = new pb::MessageParser<GameKilledSomeone>(() => new GameKilledSomeone());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameKilledSomeone> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[29]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameKilledSomeone() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameKilledSomeone(GameKilledSomeone other) : this() {
-      position_ = other.position_ != null ? other.position_.Clone() : null;
-      victimTeam_ = other.victimTeam_;
-      attackTeam_ = other.attackTeam_;
-      meansOfDeath_ = other.meansOfDeath_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameKilledSomeone Clone() {
-      return new GameKilledSomeone(this);
-    }
-
-    /// <summary>Field number for the "position" field.</summary>
-    public const int PositionFieldNumber = 1;
-    private global::Analytics.Pos3 position_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Pos3 Position {
-      get { return position_; }
-      set {
-        position_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "victimTeam" field.</summary>
-    public const int VictimTeamFieldNumber = 2;
-    private int victimTeam_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int VictimTeam {
-      get { return victimTeam_; }
-      set {
-        victimTeam_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "attackTeam" field.</summary>
-    public const int AttackTeamFieldNumber = 3;
-    private int attackTeam_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int AttackTeam {
-      get { return attackTeam_; }
-      set {
-        attackTeam_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "meansOfDeath" field.</summary>
-    public const int MeansOfDeathFieldNumber = 4;
-    private string meansOfDeath_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string MeansOfDeath {
-      get { return meansOfDeath_; }
-      set {
-        meansOfDeath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as GameKilledSomeone);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameKilledSomeone other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!object.Equals(Position, other.Position)) return false;
-      if (VictimTeam != other.VictimTeam) return false;
-      if (AttackTeam != other.AttackTeam) return false;
-      if (MeansOfDeath != other.MeansOfDeath) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (position_ != null) hash ^= Position.GetHashCode();
-      if (VictimTeam != 0) hash ^= VictimTeam.GetHashCode();
-      if (AttackTeam != 0) hash ^= AttackTeam.GetHashCode();
-      if (MeansOfDeath.Length != 0) hash ^= MeansOfDeath.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (position_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Position);
-      }
-      if (VictimTeam != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(VictimTeam);
-      }
-      if (AttackTeam != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(AttackTeam);
-      }
-      if (MeansOfDeath.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(MeansOfDeath);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (position_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
-      }
-      if (VictimTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VictimTeam);
-      }
-      if (AttackTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackTeam);
-      }
-      if (MeansOfDeath.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(MeansOfDeath);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameKilledSomeone other) {
-      if (other == null) {
-        return;
-      }
-      if (other.position_ != null) {
-        if (position_ == null) {
-          Position = new global::Analytics.Pos3();
-        }
-        Position.MergeFrom(other.Position);
-      }
-      if (other.VictimTeam != 0) {
-        VictimTeam = other.VictimTeam;
-      }
-      if (other.AttackTeam != 0) {
-        AttackTeam = other.AttackTeam;
-      }
-      if (other.MeansOfDeath.Length != 0) {
-        MeansOfDeath = other.MeansOfDeath;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            if (position_ == null) {
-              Position = new global::Analytics.Pos3();
-            }
-            input.ReadMessage(Position);
-            break;
-          }
-          case 16: {
-            VictimTeam = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            AttackTeam = input.ReadInt32();
-            break;
-          }
-          case 34: {
-            MeansOfDeath = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class GameTakeDamage : pb::IMessage<GameTakeDamage> {
     private static readonly pb::MessageParser<GameTakeDamage> _parser = new pb::MessageParser<GameTakeDamage>(() => new GameTakeDamage());
     private pb::UnknownFieldSet _unknownFields;
@@ -6265,7 +6064,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6560,309 +6359,6 @@ namespace Analytics {
 
   }
 
-  public sealed partial class GameInflictDamage : pb::IMessage<GameInflictDamage> {
-    private static readonly pb::MessageParser<GameInflictDamage> _parser = new pb::MessageParser<GameInflictDamage>(() => new GameInflictDamage());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameInflictDamage> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[31]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameInflictDamage() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameInflictDamage(GameInflictDamage other) : this() {
-      position_ = other.position_ != null ? other.position_.Clone() : null;
-      attackTeam_ = other.attackTeam_;
-      victimTeam_ = other.victimTeam_;
-      damageAmount_ = other.damageAmount_;
-      damageType_ = other.damageType_;
-      attackerType_ = other.attackerType_;
-      victimType_ = other.victimType_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameInflictDamage Clone() {
-      return new GameInflictDamage(this);
-    }
-
-    /// <summary>Field number for the "position" field.</summary>
-    public const int PositionFieldNumber = 1;
-    private global::Analytics.Pos3 position_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Analytics.Pos3 Position {
-      get { return position_; }
-      set {
-        position_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "attackTeam" field.</summary>
-    public const int AttackTeamFieldNumber = 2;
-    private int attackTeam_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int AttackTeam {
-      get { return attackTeam_; }
-      set {
-        attackTeam_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "victimTeam" field.</summary>
-    public const int VictimTeamFieldNumber = 3;
-    private int victimTeam_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int VictimTeam {
-      get { return victimTeam_; }
-      set {
-        victimTeam_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "damageAmount" field.</summary>
-    public const int DamageAmountFieldNumber = 4;
-    private float damageAmount_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float DamageAmount {
-      get { return damageAmount_; }
-      set {
-        damageAmount_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "damageType" field.</summary>
-    public const int DamageTypeFieldNumber = 5;
-    private string damageType_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string DamageType {
-      get { return damageType_; }
-      set {
-        damageType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "attackerType" field.</summary>
-    public const int AttackerTypeFieldNumber = 6;
-    private string attackerType_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string AttackerType {
-      get { return attackerType_; }
-      set {
-        attackerType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "victimType" field.</summary>
-    public const int VictimTypeFieldNumber = 7;
-    private string victimType_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string VictimType {
-      get { return victimType_; }
-      set {
-        victimType_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as GameInflictDamage);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameInflictDamage other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!object.Equals(Position, other.Position)) return false;
-      if (AttackTeam != other.AttackTeam) return false;
-      if (VictimTeam != other.VictimTeam) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(DamageAmount, other.DamageAmount)) return false;
-      if (DamageType != other.DamageType) return false;
-      if (AttackerType != other.AttackerType) return false;
-      if (VictimType != other.VictimType) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (position_ != null) hash ^= Position.GetHashCode();
-      if (AttackTeam != 0) hash ^= AttackTeam.GetHashCode();
-      if (VictimTeam != 0) hash ^= VictimTeam.GetHashCode();
-      if (DamageAmount != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(DamageAmount);
-      if (DamageType.Length != 0) hash ^= DamageType.GetHashCode();
-      if (AttackerType.Length != 0) hash ^= AttackerType.GetHashCode();
-      if (VictimType.Length != 0) hash ^= VictimType.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (position_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Position);
-      }
-      if (AttackTeam != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(AttackTeam);
-      }
-      if (VictimTeam != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(VictimTeam);
-      }
-      if (DamageAmount != 0F) {
-        output.WriteRawTag(37);
-        output.WriteFloat(DamageAmount);
-      }
-      if (DamageType.Length != 0) {
-        output.WriteRawTag(42);
-        output.WriteString(DamageType);
-      }
-      if (AttackerType.Length != 0) {
-        output.WriteRawTag(50);
-        output.WriteString(AttackerType);
-      }
-      if (VictimType.Length != 0) {
-        output.WriteRawTag(58);
-        output.WriteString(VictimType);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (position_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
-      }
-      if (AttackTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackTeam);
-      }
-      if (VictimTeam != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(VictimTeam);
-      }
-      if (DamageAmount != 0F) {
-        size += 1 + 4;
-      }
-      if (DamageType.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DamageType);
-      }
-      if (AttackerType.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(AttackerType);
-      }
-      if (VictimType.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(VictimType);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameInflictDamage other) {
-      if (other == null) {
-        return;
-      }
-      if (other.position_ != null) {
-        if (position_ == null) {
-          Position = new global::Analytics.Pos3();
-        }
-        Position.MergeFrom(other.Position);
-      }
-      if (other.AttackTeam != 0) {
-        AttackTeam = other.AttackTeam;
-      }
-      if (other.VictimTeam != 0) {
-        VictimTeam = other.VictimTeam;
-      }
-      if (other.DamageAmount != 0F) {
-        DamageAmount = other.DamageAmount;
-      }
-      if (other.DamageType.Length != 0) {
-        DamageType = other.DamageType;
-      }
-      if (other.AttackerType.Length != 0) {
-        AttackerType = other.AttackerType;
-      }
-      if (other.VictimType.Length != 0) {
-        VictimType = other.VictimType;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            if (position_ == null) {
-              Position = new global::Analytics.Pos3();
-            }
-            input.ReadMessage(Position);
-            break;
-          }
-          case 16: {
-            AttackTeam = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            VictimTeam = input.ReadInt32();
-            break;
-          }
-          case 37: {
-            DamageAmount = input.ReadFloat();
-            break;
-          }
-          case 42: {
-            DamageType = input.ReadString();
-            break;
-          }
-          case 50: {
-            AttackerType = input.ReadString();
-            break;
-          }
-          case 58: {
-            VictimType = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class GameRadiusDamage : pb::IMessage<GameRadiusDamage> {
     private static readonly pb::MessageParser<GameRadiusDamage> _parser = new pb::MessageParser<GameRadiusDamage>(() => new GameRadiusDamage());
     private pb::UnknownFieldSet _unknownFields;
@@ -6871,7 +6367,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7090,7 +6586,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[33]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7253,7 +6749,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[34]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7444,7 +6940,7 @@ namespace Analytics {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[35]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
